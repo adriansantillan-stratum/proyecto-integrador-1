@@ -1,0 +1,308 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_P06" targetNamespace="https://ecoroute.pe/procesos-negocio">
+  <bpmn:process id="Process_P06" name="Habilitar recursos de reparto" isExecutable="false">
+    <bpmn:documentation>Modelo de negocio MICOTRANS. La empresa determina si el personal y el vehículo están aptos antes de asignarlos. Las pantallas de Conductores y Vehículos registran datos, capacidades y condición activa. El servidor rechaza la planificación con recursos inactivos y los conflictos de reserva por fecha. El vínculo con una cuenta DRIVER es una operación de identidad separada del alta de datos del conductor. Las revisiones documentales, licencias vigentes, mantenimiento físico y disponibilidad real requieren documentos y decisiones humanas. isActive no equivale a un control automático de vencimientos. Si el recurso no cumple, no se habilita para la jornada y la gestión debe corregirlo o seleccionar un sustituto. No se presenta un CRUD como certificación de aptitud.</bpmn:documentation>
+    <bpmn:laneSet id="LaneSet_P06">
+      <bpmn:lane id="Lane_P06_0" name="Jefatura logística">
+        <bpmn:flowNodeRef>P06_S</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P06_A1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P06_A4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P06_G3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P06_A5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P06_E2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P06_A9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P06_E4</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_P06_1" name="Administrador">
+        <bpmn:flowNodeRef>P06_A2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P06_G1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P06_A3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P06_G2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P06_E1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P06_A6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P06_M_A2</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_P06_2" name="Dispatcher">
+        <bpmn:flowNodeRef>P06_A7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P06_G4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P06_A8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P06_E3</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="P06_S" name="Necesidad de recurso">
+      <bpmn:outgoing>Flow_P06_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="P06_A1" name="Definir perfil o capacidad requerida">
+      <bpmn:incoming>Flow_P06_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_P06_2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="P06_A2" name="Recibir documentos y datos">
+      <bpmn:incoming>Flow_P06_19</bpmn:incoming>
+      <bpmn:outgoing>Flow_P06_3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="P06_G1" name="¿Información completa?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_P06_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_P06_4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_P06_5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="P06_A3" name="Solicitar subsanación">
+      <bpmn:incoming>Flow_P06_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_P06_6</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="P06_G2" name="¿Se subsana en plazo?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_P06_6</bpmn:incoming>
+      <bpmn:outgoing>Flow_P06_7</bpmn:outgoing>
+      <bpmn:outgoing>Flow_P06_8</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="P06_E1" name="Solicitud archivada">
+      <bpmn:incoming>Flow_P06_8</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="P06_A4" name="Verificar licencia o estado del vehículo">
+      <bpmn:incoming>Flow_P06_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_P06_9</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="P06_G3" name="¿Recurso apto?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_P06_9</bpmn:incoming>
+      <bpmn:outgoing>Flow_P06_10</bpmn:outgoing>
+      <bpmn:outgoing>Flow_P06_11</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="P06_A5" name="Bloquear recurso e informar motivo">
+      <bpmn:incoming>Flow_P06_11</bpmn:incoming>
+      <bpmn:outgoing>Flow_P06_12</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="P06_E2" name="Recurso no habilitado">
+      <bpmn:incoming>Flow_P06_12</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="P06_A6" name="Registrar conductor o vehículo">
+      <bpmn:incoming>Flow_P06_10</bpmn:incoming>
+      <bpmn:outgoing>Flow_P06_13</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="P06_A7" name="Validar capacidad y disponibilidad">
+      <bpmn:incoming>Flow_P06_13</bpmn:incoming>
+      <bpmn:outgoing>Flow_P06_14</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="P06_G4" name="¿Disponible para jornada?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_P06_14</bpmn:incoming>
+      <bpmn:outgoing>Flow_P06_15</bpmn:outgoing>
+      <bpmn:outgoing>Flow_P06_16</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="P06_A8" name="Programar disponibilidad futura">
+      <bpmn:incoming>Flow_P06_16</bpmn:incoming>
+      <bpmn:outgoing>Flow_P06_17</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="P06_E3" name="Recurso en espera">
+      <bpmn:incoming>Flow_P06_17</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="P06_A9" name="Liberar recurso para asignación">
+      <bpmn:incoming>Flow_P06_15</bpmn:incoming>
+      <bpmn:outgoing>Flow_P06_18</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="P06_E4" name="Recurso habilitado → P02">
+      <bpmn:incoming>Flow_P06_18</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="P06_M_A2" name="" gatewayDirection="Converging">
+      <bpmn:incoming>Flow_P06_2</bpmn:incoming>
+      <bpmn:incoming>Flow_P06_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_P06_19</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_P06_1" sourceRef="P06_S" targetRef="P06_A1"/>
+    <bpmn:sequenceFlow id="Flow_P06_2" sourceRef="P06_A1" targetRef="P06_M_A2"/>
+    <bpmn:sequenceFlow id="Flow_P06_3" sourceRef="P06_A2" targetRef="P06_G1"/>
+    <bpmn:sequenceFlow id="Flow_P06_4" sourceRef="P06_G1" targetRef="P06_A4" name="Sí">
+      <bpmn:documentation>Rama de decisión: Sí</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_P06_5" sourceRef="P06_G1" targetRef="P06_A3" name="No">
+      <bpmn:documentation>Rama de decisión: No</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_P06_6" sourceRef="P06_A3" targetRef="P06_G2"/>
+    <bpmn:sequenceFlow id="Flow_P06_7" sourceRef="P06_G2" targetRef="P06_M_A2" name="Sí">
+      <bpmn:documentation>Rama de decisión: Sí</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_P06_8" sourceRef="P06_G2" targetRef="P06_E1" name="No">
+      <bpmn:documentation>Rama de decisión: No</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_P06_9" sourceRef="P06_A4" targetRef="P06_G3"/>
+    <bpmn:sequenceFlow id="Flow_P06_10" sourceRef="P06_G3" targetRef="P06_A6" name="Sí">
+      <bpmn:documentation>Rama de decisión: Sí</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_P06_11" sourceRef="P06_G3" targetRef="P06_A5" name="No">
+      <bpmn:documentation>Rama de decisión: No</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_P06_12" sourceRef="P06_A5" targetRef="P06_E2"/>
+    <bpmn:sequenceFlow id="Flow_P06_13" sourceRef="P06_A6" targetRef="P06_A7"/>
+    <bpmn:sequenceFlow id="Flow_P06_14" sourceRef="P06_A7" targetRef="P06_G4"/>
+    <bpmn:sequenceFlow id="Flow_P06_15" sourceRef="P06_G4" targetRef="P06_A9" name="Sí">
+      <bpmn:documentation>Rama de decisión: Sí</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_P06_16" sourceRef="P06_G4" targetRef="P06_A8" name="No">
+      <bpmn:documentation>Rama de decisión: No</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_P06_17" sourceRef="P06_A8" targetRef="P06_E3"/>
+    <bpmn:sequenceFlow id="Flow_P06_18" sourceRef="P06_A9" targetRef="P06_E4"/>
+    <bpmn:sequenceFlow id="Flow_P06_19" sourceRef="P06_M_A2" targetRef="P06_A2"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_P06">
+    <bpmndi:BPMNPlane id="Plane_P06" bpmnElement="Process_P06">
+      <bpmndi:BPMNShape id="Shape_Lane_P06_0" bpmnElement="Lane_P06_0" isHorizontal="true">
+        <dc:Bounds x="24" y="148" width="3954" height="300"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_P06_1" bpmnElement="Lane_P06_1" isHorizontal="true">
+        <dc:Bounds x="24" y="448" width="3954" height="300"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_P06_2" bpmnElement="Lane_P06_2" isHorizontal="true">
+        <dc:Bounds x="24" y="748" width="3954" height="300"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P06_S" bpmnElement="P06_S">
+        <dc:Bounds x="232" y="270" width="56" height="56"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P06_A1" bpmnElement="P06_A1">
+        <dc:Bounds x="491" y="246" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P06_A2" bpmnElement="P06_A2">
+        <dc:Bounds x="831" y="546" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P06_G1" bpmnElement="P06_G1">
+        <dc:Bounds x="1237" y="555" width="86" height="86"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P06_A3" bpmnElement="P06_A3">
+        <dc:Bounds x="1511" y="621" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P06_G2" bpmnElement="P06_G2">
+        <dc:Bounds x="1917" y="630" width="86" height="86"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P06_E1" bpmnElement="P06_E1">
+        <dc:Bounds x="2272" y="645" width="56" height="56"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P06_A4" bpmnElement="P06_A4">
+        <dc:Bounds x="1511" y="171" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P06_G3" bpmnElement="P06_G3">
+        <dc:Bounds x="1917" y="180" width="86" height="86"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P06_A5" bpmnElement="P06_A5">
+        <dc:Bounds x="2191" y="321" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P06_E2" bpmnElement="P06_E2">
+        <dc:Bounds x="2612" y="345" width="56" height="56"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P06_A6" bpmnElement="P06_A6">
+        <dc:Bounds x="2191" y="471" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P06_A7" bpmnElement="P06_A7">
+        <dc:Bounds x="2531" y="771" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P06_G4" bpmnElement="P06_G4">
+        <dc:Bounds x="2937" y="780" width="86" height="86"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P06_A8" bpmnElement="P06_A8">
+        <dc:Bounds x="3211" y="921" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P06_E3" bpmnElement="P06_E3">
+        <dc:Bounds x="3632" y="945" width="56" height="56"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P06_A9" bpmnElement="P06_A9">
+        <dc:Bounds x="3211" y="171" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P06_E4" bpmnElement="P06_E4">
+        <dc:Bounds x="3632" y="195" width="56" height="56"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P06_M_A2" bpmnElement="P06_M_A2">
+        <dc:Bounds x="727.0" y="555" width="86.0" height="86"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_P06_1" bpmnElement="Flow_P06_1">
+        <di:waypoint x="288" y="298"/>
+        <di:waypoint x="491" y="298"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P06_2" bpmnElement="Flow_P06_2">
+        <di:waypoint x="709" y="298"/>
+        <di:waypoint x="718" y="298"/>
+        <di:waypoint x="718" y="598"/>
+        <di:waypoint x="727" y="598"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P06_3" bpmnElement="Flow_P06_3">
+        <di:waypoint x="1049" y="598"/>
+        <di:waypoint x="1237" y="598"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P06_4" bpmnElement="Flow_P06_4">
+        <di:waypoint x="1323" y="598"/>
+        <di:waypoint x="1417" y="598"/>
+        <di:waypoint x="1417" y="223"/>
+        <di:waypoint x="1511" y="223"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P06_5" bpmnElement="Flow_P06_5">
+        <di:waypoint x="1323" y="598"/>
+        <di:waypoint x="1417" y="598"/>
+        <di:waypoint x="1417" y="673"/>
+        <di:waypoint x="1511" y="673"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P06_6" bpmnElement="Flow_P06_6">
+        <di:waypoint x="1729" y="673"/>
+        <di:waypoint x="1917" y="673"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P06_7" bpmnElement="Flow_P06_7">
+        <di:waypoint x="1960" y="725"/>
+        <di:waypoint x="1960" y="1082"/>
+        <di:waypoint x="770" y="1082"/>
+        <di:waypoint x="770" y="650"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P06_8" bpmnElement="Flow_P06_8">
+        <di:waypoint x="2003" y="673"/>
+        <di:waypoint x="2272" y="673"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P06_9" bpmnElement="Flow_P06_9">
+        <di:waypoint x="1729" y="223"/>
+        <di:waypoint x="1917" y="223"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P06_10" bpmnElement="Flow_P06_10">
+        <di:waypoint x="2003" y="223"/>
+        <di:waypoint x="2097" y="223"/>
+        <di:waypoint x="2097" y="523"/>
+        <di:waypoint x="2191" y="523"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P06_11" bpmnElement="Flow_P06_11">
+        <di:waypoint x="2003" y="223"/>
+        <di:waypoint x="2097" y="223"/>
+        <di:waypoint x="2097" y="373"/>
+        <di:waypoint x="2191" y="373"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P06_12" bpmnElement="Flow_P06_12">
+        <di:waypoint x="2409" y="373"/>
+        <di:waypoint x="2612" y="373"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P06_13" bpmnElement="Flow_P06_13">
+        <di:waypoint x="2409" y="523"/>
+        <di:waypoint x="2470" y="523"/>
+        <di:waypoint x="2470" y="823"/>
+        <di:waypoint x="2531" y="823"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P06_14" bpmnElement="Flow_P06_14">
+        <di:waypoint x="2749" y="823"/>
+        <di:waypoint x="2937" y="823"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P06_15" bpmnElement="Flow_P06_15">
+        <di:waypoint x="3023" y="823"/>
+        <di:waypoint x="3117" y="823"/>
+        <di:waypoint x="3117" y="223"/>
+        <di:waypoint x="3211" y="223"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P06_16" bpmnElement="Flow_P06_16">
+        <di:waypoint x="3023" y="823"/>
+        <di:waypoint x="3117" y="823"/>
+        <di:waypoint x="3117" y="973"/>
+        <di:waypoint x="3211" y="973"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P06_17" bpmnElement="Flow_P06_17">
+        <di:waypoint x="3429" y="973"/>
+        <di:waypoint x="3632" y="973"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P06_18" bpmnElement="Flow_P06_18">
+        <di:waypoint x="3429" y="223"/>
+        <di:waypoint x="3632" y="223"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P06_19" bpmnElement="Flow_P06_19">
+        <di:waypoint x="813" y="598"/>
+        <di:waypoint x="831" y="598"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,788 @@
+{
+  "checked_at_utc": "2026-10-23T01:09:01.9723755Z",
+  "scope": "LOCAL_READ_ONLY_SQL_AND_INSTALLATION_INVENTORY",
+  "endpoint": "127.0.0.1:5433",
+  "database": "ecoroute",
+  "credentials_reference": ".env: DB_USER/DB_PASSWORD (existing ignored file; value not included)",
+  "psql_path": "C:/Program Files/PostgreSQL/18/bin/psql.exe",
+  "powerbi_executable_checks": [
+    {
+      "path": "C:/Program Files/Microsoft Power BI Desktop/bin/PBIDesktop.exe",
+      "exists": false
+    },
+    {
+      "path": "C:/Program Files/Microsoft Power BI Desktop/PBIDesktop.exe",
+      "exists": false
+    },
+    {
+      "path": "C:/Program Files (x86)/Microsoft Power BI Desktop/bin/PBIDesktop.exe",
+      "exists": false
+    },
+    {
+      "path": "C:\\Users\\USUARIO\\AppData\\Local\\Microsoft\\WindowsApps\\PBIDesktop.exe",
+      "exists": false
+    }
+  ],
+  "powerbi_store_inventory_status": "checked",
+  "powerbi_store_packages": [],
+  "installed_database_or_bi_products": [
+    {
+      "DisplayName": "PostgreSQL 18 ",
+      "DisplayVersion": "18.1-2",
+      "InstallLocation": "C:\\Program Files\\PostgreSQL\\18"
+    }
+  ],
+  "postgres_odbc_drivers": [],
+  "postgres_odbc_dsns": [],
+  "available_odbc_driver_count": 23,
+  "pbi_tools_available": false,
+  "sql_connection_authenticated": true,
+  "four_views_counted_as_reader": true,
+  "base_orders_select_denied": true,
+  "sql_checks": [
+    {
+      "check": "connection",
+      "database": "ecoroute",
+      "session_user": "user",
+      "server_version": "14.21",
+      "session_user_is_superuser": true,
+      "server_address": "172.20.0.2",
+      "server_port": 5432,
+      "transaction_read_only": "on",
+      "ssl_in_use": false
+    },
+    {
+      "check": "reader_role",
+      "role": "ecoroute_bi_reader",
+      "login": false,
+      "superuser": false,
+      "create_db": false,
+      "create_role": false,
+      "replication": false,
+      "bypass_rls": false,
+      "config": null
+    },
+    {
+      "check": "reader_login_members",
+      "members": []
+    },
+    {
+      "check": "migrations",
+      "versions": [
+        {
+          "version": "12",
+          "success": true
+        },
+        {
+          "version": "15",
+          "success": true
+        }
+      ]
+    },
+    {
+      "check": "returned_terminal_view",
+      "present": true
+    },
+    {
+      "check": "reader_session",
+      "current_user": "ecoroute_bi_reader",
+      "transaction_read_only": "on",
+      "public_schema_usage": true,
+      "public_schema_create": true,
+      "database_create": false,
+      "database_temp": true
+    },
+    {
+      "check": "view_count",
+      "view": "analytics_order_facts",
+      "rows": 47
+    },
+    {
+      "check": "view_count",
+      "view": "analytics_route_facts",
+      "rows": 21
+    },
+    {
+      "check": "view_count",
+      "view": "analytics_goal_facts",
+      "rows": 5
+    },
+    {
+      "check": "view_count",
+      "view": "analytics_goal_history_facts",
+      "rows": 0
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "analytics_goal_facts",
+      "kind": "v",
+      "select": true,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "analytics_goal_history",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "analytics_goal_history_facts",
+      "kind": "v",
+      "select": true,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "analytics_goals",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "analytics_order_facts",
+      "kind": "v",
+      "select": true,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "analytics_route_facts",
+      "kind": "v",
+      "select": true,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "auth_action",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "auth_module",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "auth_permission",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "auth_resource",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "auth_role",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "auth_user_role",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "business_audit_events",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "corp_branches",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "corp_contracts",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "corp_customers",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "corp_departments",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "corp_employees",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "corp_fleet_types",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "corp_invoices",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "corp_maintenance_logs",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "corp_warehouses",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "delivery_outbox",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "delivery_proofs",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "driver_contracts",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "driver_shifts",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "drivers",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "flyway_schema_history",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "fuel_logs",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "hubs",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "improvement_actions",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "incidents",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "local_evidence_backups",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "notifications",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "order_attempts",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "order_business_data",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "order_items",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "order_status_history",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "orders",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "products",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "purchases",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "route_dispatch_reviews",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "route_expenses",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "routes",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "vehicle_gps_history",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "vehicle_maintenance_logs",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "relation_privileges",
+      "relation": "vehicles",
+      "kind": "r",
+      "select": false,
+      "any_write_privilege": false
+    },
+    {
+      "check": "view_columns",
+      "view": "analytics_goal_facts",
+      "columns": [
+        {
+          "name": "code",
+          "type": "text"
+        },
+        {
+          "name": "target",
+          "type": "numeric"
+        },
+        {
+          "name": "updated_by",
+          "type": "character varying"
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone"
+        }
+      ]
+    },
+    {
+      "check": "view_columns",
+      "view": "analytics_goal_history_facts",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint"
+        },
+        {
+          "name": "code",
+          "type": "character varying"
+        },
+        {
+          "name": "previous_target",
+          "type": "numeric"
+        },
+        {
+          "name": "target",
+          "type": "numeric"
+        },
+        {
+          "name": "changed_by",
+          "type": "character varying"
+        },
+        {
+          "name": "effective_at",
+          "type": "timestamp with time zone"
+        }
+      ]
+    },
+    {
+      "check": "view_columns",
+      "view": "analytics_order_facts",
+      "columns": [
+        {
+          "name": "order_id",
+          "type": "bigint"
+        },
+        {
+          "name": "tracking_number",
+          "type": "character varying"
+        },
+        {
+          "name": "external_reference",
+          "type": "character varying"
+        },
+        {
+          "name": "status",
+          "type": "character varying"
+        },
+        {
+          "name": "route_id",
+          "type": "bigint"
+        },
+        {
+          "name": "driver_id",
+          "type": "bigint"
+        },
+        {
+          "name": "driver_name",
+          "type": "text"
+        },
+        {
+          "name": "operation_date",
+          "type": "date"
+        },
+        {
+          "name": "district",
+          "type": "text"
+        },
+        {
+          "name": "recipient_name",
+          "type": "character varying"
+        },
+        {
+          "name": "delivery_address",
+          "type": "text"
+        },
+        {
+          "name": "latitude",
+          "type": "numeric"
+        },
+        {
+          "name": "longitude",
+          "type": "numeric"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone"
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone"
+        },
+        {
+          "name": "estimated_delivery_window_start",
+          "type": "timestamp with time zone"
+        },
+        {
+          "name": "estimated_delivery_window_end",
+          "type": "timestamp with time zone"
+        },
+        {
+          "name": "recipient_ruc",
+          "type": "character varying"
+        },
+        {
+          "name": "customer_accepted",
+          "type": "boolean"
+        },
+        {
+          "name": "address_verified",
+          "type": "boolean"
+        },
+        {
+          "name": "coverage_verified",
+          "type": "boolean"
+        },
+        {
+          "name": "agreement_note",
+          "type": "text"
+        },
+        {
+          "name": "confirmed_by",
+          "type": "character varying"
+        },
+        {
+          "name": "confirmed_at",
+          "type": "timestamp with time zone"
+        },
+        {
+          "name": "proof_id",
+          "type": "bigint"
+        },
+        {
+          "name": "image_url",
+          "type": "text"
+        },
+        {
+          "name": "signature_data_url",
+          "type": "text"
+        },
+        {
+          "name": "receiver_name",
+          "type": "character varying"
+        },
+        {
+          "name": "receiver_dni",
+          "type": "character varying"
+        },
+        {
+          "name": "proof_latitude",
+          "type": "numeric"
+        },
+        {
+          "name": "proof_longitude",
+          "type": "numeric"
+        },
+        {
+          "name": "verified_at",
+          "type": "timestamp with time zone"
+        },
+        {
+          "name": "captured_at",
+          "type": "timestamp with time zone"
+        },
+        {
+          "name": "received_at",
+          "type": "timestamp with time zone"
+        },
+        {
+          "name": "image_sha256",
+          "type": "character varying"
+        },
+        {
+          "name": "signature_sha256",
+          "type": "character varying"
+        },
+        {
+          "name": "valid_ruc",
+          "type": "boolean"
+        },
+        {
+          "name": "valid_gps",
+          "type": "boolean"
+        },
+        {
+          "name": "has_photo",
+          "type": "boolean"
+        },
+        {
+          "name": "has_signature",
+          "type": "boolean"
+        },
+        {
+          "name": "scheduled",
+          "type": "boolean"
+        },
+        {
+          "name": "delivered",
+          "type": "boolean"
+        },
+        {
+          "name": "iid_valid",
+          "type": "boolean"
+        },
+        {
+          "name": "digital_evidence",
+          "type": "boolean"
+        },
+        {
+          "name": "ontime_evaluable",
+          "type": "boolean"
+        },
+        {
+          "name": "on_time",
+          "type": "boolean"
+        },
+        {
+          "name": "delayed",
+          "type": "boolean"
+        },
+        {
+          "name": "complete_pod",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "check": "view_columns",
+      "view": "analytics_route_facts",
+      "columns": [
+        {
+          "name": "route_id",
+          "type": "bigint"
+        },
+        {
+          "name": "label",
+          "type": "text"
+        },
+        {
+          "name": "driver_id",
+          "type": "bigint"
+        },
+        {
+          "name": "vehicle_id",
+          "type": "bigint"
+        },
+        {
+          "name": "operation_date",
+          "type": "date"
+        },
+        {
+          "name": "status",
+          "type": "character varying"
+        },
+        {
+          "name": "actual_start_time",
+          "type": "timestamp with time zone"
+        },
+        {
+          "name": "actual_end_time",
+          "type": "timestamp with time zone"
+        },
+        {
+          "name": "planned_distance_km",
+          "type": "double precision"
+        },
+        {
+          "name": "planned_duration_min",
+          "type": "double precision"
+        },
+        {
+          "name": "order_count",
+          "type": "bigint"
+        },
+        {
+          "name": "delivered_count",
+          "type": "bigint"
+        },
+        {
+          "name": "terminal_stop_count",
+          "type": "bigint"
+        },
+        {
+          "name": "gps_sample_count",
+          "type": "bigint"
+        },
+        {
+          "name": "first_gps_at",
+          "type": "timestamp with time zone"
+        },
+        {
+          "name": "last_gps_at",
+          "type": "timestamp with time zone"
+        },
+        {
+          "name": "actual_gps_distance_km",
+          "type": "double precision"
+        },
+        {
+          "name": "operation_minutes",
+          "type": "double precision"
+        },
+        {
+          "name": "km_per_delivery",
+          "type": "double precision"
+        },
+        {
+          "name": "time_per_stop_min",
+          "type": "double precision"
+        },
+        {
+          "name": "distance_source",
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "powerbi_desktop_connection_verified": false,
+  "native_powerquery_evaluation_executed": false,
+  "provision_or_credential_changes_executed": false
+}

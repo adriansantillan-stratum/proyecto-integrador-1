@@ -1,0 +1,838 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "startedAtUtc": "2026-10-27T13:08:54.914749+00:00",
+  "finishedAtUtc": "2026-10-27T13:09:18.975036+00:00",
+  "durationSeconds": 24.062,
+  "command": "C:\\Windows\\system32\\cmd.exe /d /s /c \"<TEMP_QA>\\backend\\gradlew.bat test --offline --no-daemon --console=plain --max-workers=2 --rerun-tasks\"",
+  "workingDirectory": "<TEMP_QA>\\backend",
+  "log": "backend_test.log",
+  "counts": {
+    "tests": 106,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 18,
+    "passed": 88
+  },
+  "xmlSuiteCount": 20,
+  "sourceSha256": "e276adbc402450796ac3881377859accaff5c5f64ed891c00a3686999954955d",
+  "suites": [
+    {
+      "name": "com.ecoroute.backend.application.services.BusinessOperationsServiceTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "resolvedIncidentIsIdempotentForSameOutcome()",
+          "className": "com.ecoroute.backend.application.services.BusinessOperationsServiceTest",
+          "status": "PASS",
+          "seconds": "1.406"
+        },
+        {
+          "name": "actionCannotSkipExecutionBeforeVerification()",
+          "className": "com.ecoroute.backend.application.services.BusinessOperationsServiceTest",
+          "status": "PASS",
+          "seconds": "0.015"
+        },
+        {
+          "name": "finalClosureRequiresManagement()",
+          "className": "com.ecoroute.backend.application.services.BusinessOperationsServiceTest",
+          "status": "PASS",
+          "seconds": "0.004"
+        },
+        {
+          "name": "verificationRequiresMeasuredResult()",
+          "className": "com.ecoroute.backend.application.services.BusinessOperationsServiceTest",
+          "status": "PASS",
+          "seconds": "0.002"
+        },
+        {
+          "name": "retryNeverReopensOriginalOrder()",
+          "className": "com.ecoroute.backend.application.services.BusinessOperationsServiceTest",
+          "status": "PASS",
+          "seconds": "0.02"
+        },
+        {
+          "name": "closedJourneyRequiresReplan()",
+          "className": "com.ecoroute.backend.application.services.BusinessOperationsServiceTest",
+          "status": "PASS",
+          "seconds": "0.003"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.application.services.DashboardAnalyticsServiceTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "invalidFiltersAndGoalsAreRejectedBeforePersistence()",
+          "className": "com.ecoroute.backend.application.services.DashboardAnalyticsServiceTest",
+          "status": "PASS",
+          "seconds": "0.054"
+        },
+        {
+          "name": "formulasUseDifferentUniversesAndTrendsUseTheSameFormula()",
+          "className": "com.ecoroute.backend.application.services.DashboardAnalyticsServiceTest",
+          "status": "PASS",
+          "seconds": "0.024"
+        },
+        {
+          "name": "goalBoundaryValuesAndClearingArePersistedWithActor()",
+          "className": "com.ecoroute.backend.application.services.DashboardAnalyticsServiceTest",
+          "status": "PASS",
+          "seconds": "0.002"
+        },
+        {
+          "name": "biUsesIdenticalFilterAndZeroDenominatorsStayNull()",
+          "className": "com.ecoroute.backend.application.services.DashboardAnalyticsServiceTest",
+          "status": "PASS",
+          "seconds": "0.004"
+        },
+        {
+          "name": "summaryAndLegacyMethodsPassAllFilters()",
+          "className": "com.ecoroute.backend.application.services.DashboardAnalyticsServiceTest",
+          "status": "PASS",
+          "seconds": "0.003"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.application.services.LocalEvidenceDurabilityTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "developmentReadRecoversOriginalBytesAfterS3EmulatorLoss()",
+          "className": "com.ecoroute.backend.application.services.LocalEvidenceDurabilityTest",
+          "status": "PASS",
+          "seconds": "0.358"
+        },
+        {
+          "name": "nonProofKeysAreRejected()",
+          "className": "com.ecoroute.backend.application.services.LocalEvidenceDurabilityTest",
+          "status": "PASS",
+          "seconds": "0.0"
+        },
+        {
+          "name": "productionReadDoesNotSilentlyFallBackToLocalStore()",
+          "className": "com.ecoroute.backend.application.services.LocalEvidenceDurabilityTest",
+          "status": "PASS",
+          "seconds": "0.001"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.application.usecases.DeliveryProofRulesTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "deliveredRetryReturnsExistingProofWithoutUploads()",
+          "className": "com.ecoroute.backend.application.usecases.DeliveryProofRulesTest",
+          "status": "PASS",
+          "seconds": "0.123"
+        },
+        {
+          "name": "pendingOrderCannotAcquireDeliveredProof()",
+          "className": "com.ecoroute.backend.application.usecases.DeliveryProofRulesTest",
+          "status": "PASS",
+          "seconds": "0.004"
+        },
+        {
+          "name": "zeroCoordinatesRejectedBeforeStorage()",
+          "className": "com.ecoroute.backend.application.usecases.DeliveryProofRulesTest",
+          "status": "PASS",
+          "seconds": "0.002"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.application.usecases.DistanceCalculationTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "testDistanceBetweenLimaPoints()",
+          "className": "com.ecoroute.backend.application.usecases.DistanceCalculationTest",
+          "status": "PASS",
+          "seconds": "0.001"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.application.usecases.OrderLifecycleTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "noPendingCanBeMarkedInTransitDirectly()",
+          "className": "com.ecoroute.backend.application.usecases.OrderLifecycleTest",
+          "status": "PASS",
+          "seconds": "0.017"
+        },
+        {
+          "name": "allClosedOutcomesAreTerminal()",
+          "className": "com.ecoroute.backend.application.usecases.OrderLifecycleTest",
+          "status": "PASS",
+          "seconds": "0.003"
+        },
+        {
+          "name": "failureRequiresReason()",
+          "className": "com.ecoroute.backend.application.usecases.OrderLifecycleTest",
+          "status": "PASS",
+          "seconds": "0.002"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.application.usecases.OrderUseCasesImplTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "rejectReopeningClosedOrder()",
+          "className": "com.ecoroute.backend.application.usecases.OrderUseCasesImplTest",
+          "status": "PASS",
+          "seconds": "0.007"
+        },
+        {
+          "name": "createOrder()",
+          "className": "com.ecoroute.backend.application.usecases.OrderUseCasesImplTest",
+          "status": "PASS",
+          "seconds": "0.018"
+        },
+        {
+          "name": "getOrderById()",
+          "className": "com.ecoroute.backend.application.usecases.OrderUseCasesImplTest",
+          "status": "PASS",
+          "seconds": "0.003"
+        },
+        {
+          "name": "newDeliveryWindowRequiresFreshCustomerAcceptance()",
+          "className": "com.ecoroute.backend.application.usecases.OrderUseCasesImplTest",
+          "status": "PASS",
+          "seconds": "0.01"
+        },
+        {
+          "name": "noWindowChangeAfterDispatch()",
+          "className": "com.ecoroute.backend.application.usecases.OrderUseCasesImplTest",
+          "status": "PASS",
+          "seconds": "0.002"
+        },
+        {
+          "name": "assignExistingPendingWithoutDuplicating()",
+          "className": "com.ecoroute.backend.application.usecases.OrderUseCasesImplTest",
+          "status": "PASS",
+          "seconds": "0.007"
+        },
+        {
+          "name": "rejectDeliveredThroughManualEndpoint()",
+          "className": "com.ecoroute.backend.application.usecases.OrderUseCasesImplTest",
+          "status": "PASS",
+          "seconds": "0.001"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.application.usecases.ProofIdempotencyExceptionsTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "repeatedDeliveredRequestsReturnStoredProofWithoutSecondBusinessEffect()",
+          "className": "com.ecoroute.backend.application.usecases.ProofIdempotencyExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.003"
+        },
+        {
+          "name": "deliveredWithoutStoredProofRequiresReconciliationAndDoesNotReupload()",
+          "className": "com.ecoroute.backend.application.usecases.ProofIdempotencyExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.003"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.application.usecases.RouteUseCasesImplTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "createRoute_Success()",
+          "className": "com.ecoroute.backend.application.usecases.RouteUseCasesImplTest",
+          "status": "PASS",
+          "seconds": "0.101"
+        },
+        {
+          "name": "updateRouteStatus_ToInProgress_SetsStartTime()",
+          "className": "com.ecoroute.backend.application.usecases.RouteUseCasesImplTest",
+          "status": "PASS",
+          "seconds": "0.037"
+        },
+        {
+          "name": "rejectEmptyDispatch()",
+          "className": "com.ecoroute.backend.application.usecases.RouteUseCasesImplTest",
+          "status": "PASS",
+          "seconds": "0.004"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.application.usecases.WorkflowActorExceptionsTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "anonymousCannotApproveOrResolve()",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowActorExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.185"
+        },
+        {
+          "name": "administratorCannotImpersonateDriverAcceptance()",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowActorExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.009"
+        },
+        {
+          "name": "dispatcherCannotApproveManagementPlan()",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowActorExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.158"
+        },
+        {
+          "name": "administratorApprovalUsesAuthenticatedSubject()",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowActorExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.061"
+        },
+        {
+          "name": "driverCannotResolveOperationalIncident()",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowActorExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.01"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.application.usecases.WorkflowDecisionExceptionsTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "ownerCannotAcceptUnapprovedPlan()",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowDecisionExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.002"
+        },
+        {
+          "name": "resolvedIncidentCannotChangeDecisionOrCreateAnotherAttempt()",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowDecisionExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.001"
+        },
+        {
+          "name": "driverCannotAcceptAnotherDriversSheet()",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowDecisionExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.0"
+        },
+        {
+          "name": "replanRejectsAnAlreadyDispatchedDestinationWithoutCreatingAttempt()",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowDecisionExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.002"
+        },
+        {
+          "name": "managerCloseCasePreservesOrderAndDoesNotCreateAttempt()",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowDecisionExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.002"
+        },
+        {
+          "name": "dispatcherCannotCloseDefinitively[1] outcome=CLOSE_FAILED",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowDecisionExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.013"
+        },
+        {
+          "name": "dispatcherCannotCloseDefinitively[2] outcome=CLOSE_CASE",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowDecisionExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.001"
+        },
+        {
+          "name": "commercialChangeInvalidatesPlanAndPersistsAuthenticatedActor()",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowDecisionExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.005"
+        },
+        {
+          "name": "replanCreatesLinkedAssignedAttemptAndRevokesCommercialAcceptanceAndPlan()",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowDecisionExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.007"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+      "tests": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "dispatchedSourceRouteCannotBeReassigned()",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+          "status": "PASS",
+          "seconds": "0.005"
+        },
+        {
+          "name": "closedRouteCannotRestart[1] status=COMPLETED",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+          "status": "PASS",
+          "seconds": "0.001"
+        },
+        {
+          "name": "closedRouteCannotRestart[2] status=CANCELLED",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+          "status": "PASS",
+          "seconds": "0.002"
+        },
+        {
+          "name": "cancellationWithTerminalStopsPreservesTheirOutcomes()",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+          "status": "PASS",
+          "seconds": "0.003"
+        },
+        {
+          "name": "reassignmentInvalidatesBothPlansBeforeSavingSameOrder()",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+          "status": "PASS",
+          "seconds": "0.005"
+        },
+        {
+          "name": "emptyRouteCancellationDoesNotCreateOrCancelOrders()",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+          "status": "PASS",
+          "seconds": "0.002"
+        },
+        {
+          "name": "cancellationWithOpenStopsIsRejected[1] status=PENDING",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+          "status": "PASS",
+          "seconds": "0.001"
+        },
+        {
+          "name": "cancellationWithOpenStopsIsRejected[2] status=ASSIGNED",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+          "status": "PASS",
+          "seconds": "0.001"
+        },
+        {
+          "name": "cancellationWithOpenStopsIsRejected[3] status=PICKED_UP",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+          "status": "PASS",
+          "seconds": "0.001"
+        },
+        {
+          "name": "cancellationWithOpenStopsIsRejected[4] status=IN_TRANSIT",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+          "status": "PASS",
+          "seconds": "0.001"
+        },
+        {
+          "name": "unconfirmedReassignmentDoesNotSubscribeInvalidationsOrSave()",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+          "status": "PASS",
+          "seconds": "0.001"
+        },
+        {
+          "name": "dispatchedOrTerminalOrderCannotBeReassigned[1] status=PICKED_UP",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+          "status": "PASS",
+          "seconds": "0.001"
+        },
+        {
+          "name": "dispatchedOrTerminalOrderCannotBeReassigned[2] status=IN_TRANSIT",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+          "status": "PASS",
+          "seconds": "0.001"
+        },
+        {
+          "name": "dispatchedOrTerminalOrderCannotBeReassigned[3] status=DELIVERED",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+          "status": "PASS",
+          "seconds": "0.001"
+        },
+        {
+          "name": "dispatchedOrTerminalOrderCannotBeReassigned[4] status=FAILED",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+          "status": "PASS",
+          "seconds": "0.001"
+        },
+        {
+          "name": "dispatchedOrTerminalOrderCannotBeReassigned[5] status=RETURNED",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+          "status": "PASS",
+          "seconds": "0.001"
+        },
+        {
+          "name": "dispatchWithoutReviewDoesNotSubscribePlanningOrSave()",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+          "status": "PASS",
+          "seconds": "0.002"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.application.usecases.WorkflowReviewGateExceptionsTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "dispatchRequiresBothDecisions[1] approved=false,accepted=false",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowReviewGateExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.062"
+        },
+        {
+          "name": "dispatchRequiresBothDecisions[2] approved=false,accepted=true",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowReviewGateExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.0"
+        },
+        {
+          "name": "dispatchRequiresBothDecisions[3] approved=true,accepted=false",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowReviewGateExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.0"
+        },
+        {
+          "name": "dispatchRequiresBothDecisions[4] approved=true,accepted=true",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowReviewGateExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.0"
+        },
+        {
+          "name": "assignmentRequiresEveryCommercialCheck[1] accepted=false,address=true,coverage=true",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowReviewGateExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.001"
+        },
+        {
+          "name": "assignmentRequiresEveryCommercialCheck[2] accepted=true,address=false,coverage=true",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowReviewGateExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.001"
+        },
+        {
+          "name": "assignmentRequiresEveryCommercialCheck[3] accepted=true,address=true,coverage=false",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowReviewGateExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.001"
+        },
+        {
+          "name": "assignmentRequiresEveryCommercialCheck[4] accepted=true,address=true,coverage=true",
+          "className": "com.ecoroute.backend.application.usecases.WorkflowReviewGateExceptionsTest",
+          "status": "PASS",
+          "seconds": "0.0"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsControllerTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "allExistingRoutesBindIsoDatesAndPreserveWireFields()",
+          "className": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsControllerTest",
+          "status": "PASS",
+          "seconds": "0.108"
+        },
+        {
+          "name": "optionalFiltersBindNull()",
+          "className": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsControllerTest",
+          "status": "PASS",
+          "seconds": "0.045"
+        },
+        {
+          "name": "invalidRangeIsBadRequest()",
+          "className": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsControllerTest",
+          "status": "PASS",
+          "seconds": "0.032"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsSecurityTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "adminGoalWriteUsesAuthenticatedSubject()",
+          "className": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsSecurityTest",
+          "status": "PASS",
+          "seconds": "0.028"
+        },
+        {
+          "name": "anonymousCannotReadBiOrGoals()",
+          "className": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsSecurityTest",
+          "status": "PASS",
+          "seconds": "0.006"
+        },
+        {
+          "name": "adminCanReadAnUnconfiguredGoalAsNull()",
+          "className": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsSecurityTest",
+          "status": "PASS",
+          "seconds": "0.014"
+        },
+        {
+          "name": "driverCannotReadOrChangeGlobalAnalytics()",
+          "className": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsSecurityTest",
+          "status": "PASS",
+          "seconds": "0.007"
+        },
+        {
+          "name": "dispatcherCannotReadGlobalAnalytics()",
+          "className": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsSecurityTest",
+          "status": "PASS",
+          "seconds": "0.003"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.infrastructure.input.rest.OrderControllerIntegrationTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1,
+      "cases": [
+        {
+          "name": "createOrder()",
+          "className": "com.ecoroute.backend.infrastructure.input.rest.OrderControllerIntegrationTest",
+          "status": "SKIP",
+          "seconds": "0.001"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.infrastructure.input.rest.OrderCsvParserTest",
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "unterminatedQuotesAreRejected()",
+          "className": "com.ecoroute.backend.infrastructure.input.rest.OrderCsvParserTest",
+          "status": "PASS",
+          "seconds": "0.0"
+        },
+        {
+          "name": "quotedCommasAndEscapedQuotesArePreserved()",
+          "className": "com.ecoroute.backend.infrastructure.input.rest.OrderCsvParserTest",
+          "status": "PASS",
+          "seconds": "0.013"
+        },
+        {
+          "name": "duplicateTrackingIsRejected()",
+          "className": "com.ecoroute.backend.infrastructure.input.rest.OrderCsvParserTest",
+          "status": "PASS",
+          "seconds": "0.009"
+        },
+        {
+          "name": "preassignedImportIsRejected()",
+          "className": "com.ecoroute.backend.infrastructure.input.rest.OrderCsvParserTest",
+          "status": "PASS",
+          "seconds": "0.001"
+        },
+        {
+          "name": "invalidPhoneCannotBypassHttpValidation()",
+          "className": "com.ecoroute.backend.infrastructure.input.rest.OrderCsvParserTest",
+          "status": "PASS",
+          "seconds": "0.01"
+        },
+        {
+          "name": "malformedRowRejectsEntireBatchWithRowNumber()",
+          "className": "com.ecoroute.backend.infrastructure.input.rest.OrderCsvParserTest",
+          "status": "PASS",
+          "seconds": "0.006"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.infrastructure.input.rest.PurchaseValidationTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "rejectEmptySupplierDescriptionAndNonPositiveAmount()",
+          "className": "com.ecoroute.backend.infrastructure.input.rest.PurchaseValidationTest",
+          "status": "PASS",
+          "seconds": "0.068"
+        },
+        {
+          "name": "validPurchaseHasPositiveMoneyAndKnownStatus()",
+          "className": "com.ecoroute.backend.infrastructure.input.rest.PurchaseValidationTest",
+          "status": "PASS",
+          "seconds": "0.007"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsGpsQualityIntegrationTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 7,
+      "cases": [
+        {
+          "name": "zeroOrOneSampleIsUnavailableAndOutsideWindowPointsAreNotCounted()",
+          "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsGpsQualityIntegrationTest",
+          "status": "SKIP",
+          "seconds": "0.0"
+        },
+        {
+          "name": "invalidReportingConfigurationCannotCreateAnApparentlyValidDistance()",
+          "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsGpsQualityIntegrationTest",
+          "status": "SKIP",
+          "seconds": "0.0"
+        },
+        {
+          "name": "plausibleTraceAndStationaryTraceRemainAvailableWithoutPlanFallback()",
+          "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsGpsQualityIntegrationTest",
+          "status": "SKIP",
+          "seconds": "0.0"
+        },
+        {
+          "name": "gapsTimestampsAndInvalidCoordinatesHaveDistinctQualityReasons()",
+          "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsGpsQualityIntegrationTest",
+          "status": "SKIP",
+          "seconds": "0.0"
+        },
+        {
+          "name": "configuredBoundsAreAppliedAndReportedSeparatelyFromViewDefaults()",
+          "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsGpsQualityIntegrationTest",
+          "status": "SKIP",
+          "seconds": "0.0"
+        },
+        {
+          "name": "jumpsInvalidateWholeTraceRatherThanPublishingASumOfAcceptedSegments()",
+          "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsGpsQualityIntegrationTest",
+          "status": "SKIP",
+          "seconds": "0.0"
+        },
+        {
+          "name": "v15JumpIsReproducedAndV16LeavesAllOperationalRowsIntact()",
+          "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsGpsQualityIntegrationTest",
+          "status": "SKIP",
+          "seconds": "0.0"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 10,
+      "cases": [
+        {
+          "name": "goalsPersistAndAuditEveryChangeWithActorAndTime()",
+          "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+          "status": "SKIP",
+          "seconds": "0.0"
+        },
+        {
+          "name": "goalHttpPutPersistsAndRejectsOutOfRangeValues()",
+          "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+          "status": "SKIP",
+          "seconds": "0.0"
+        },
+        {
+          "name": "fullBiReportUsesRealCountersAndQuality()",
+          "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+          "status": "SKIP",
+          "seconds": "0.0"
+        },
+        {
+          "name": "emptyPeriodProducesFiveNullPercentagesAndNoSyntheticTarget()",
+          "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+          "status": "SKIP",
+          "seconds": "0.0"
+        },
+        {
+          "name": "districtsAndSameNameDriversRemainDistinctAndCausesDoNotMultiply()",
+          "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+          "status": "SKIP",
+          "seconds": "0.0"
+        },
+        {
+          "name": "biReaderCanSelectViewsButCannotReadOrMutateBaseTables()",
+          "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+          "status": "SKIP",
+          "seconds": "0.0"
+        },
+        {
+          "name": "returnedOrdersCountAsTerminalStopsWithoutChangingSharedSeed()",
+          "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+          "status": "SKIP",
+          "seconds": "0.0"
+        },
+        {
+          "name": "httpBiAndSummaryReadActualSqlWithTheSameInclusiveFilters()",
+          "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+          "status": "SKIP",
+          "seconds": "0.0"
+        },
+        {
+          "name": "gpsQualityDoesNotBridgeInvalidSamplesOrUsePlannedDistance()",
+          "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+          "status": "SKIP",
+          "seconds": "0.0"
+        },
+        {
+          "name": "filtersUseRouteDateAndLimaMidnightAndRouteOwner()",
+          "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+          "status": "SKIP",
+          "seconds": "0.0"
+        }
+      ]
+    }
+  ],
+  "integrationPolicy": "Unmodified disabledWithoutDocker annotations; no daemon started."
+}

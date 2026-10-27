@@ -1,0 +1,333 @@
+erDiagram
+    orders {
+        BIGSERIAL id PK
+        VARCHAR_255 tracking_number
+        VARCHAR_50 status
+        BIGINT driver_id
+        VARCHAR_100 external_reference
+        BIGINT route_id FK
+        VARCHAR_255 recipient_name
+        VARCHAR_20 recipient_phone
+        VARCHAR_100 recipient_email
+        TEXT delivery_address
+        VARCHAR_100 delivery_city
+        VARCHAR_100 delivery_district
+        DECIMAL_10_8 latitude
+        DECIMAL_11_8 longitude
+        INTEGER priority
+        TIMESTAMP_WITH_TIME_ZONE estimated_delivery_window_start
+        TIMESTAMP_WITH_TIME_ZONE estimated_delivery_window_end
+        TIMESTAMP_WITH_TIME_ZONE created_at
+        TIMESTAMP_WITH_TIME_ZONE updated_at
+        INT stop_sequence
+    }
+    drivers {
+        BIGSERIAL id PK
+        VARCHAR_50 external_id UK
+        VARCHAR_100 first_name
+        VARCHAR_100 last_name
+        VARCHAR_50 license_number UK
+        VARCHAR_20 phone_number
+        VARCHAR_100 email UK
+        BOOLEAN is_active
+        TIMESTAMP_WITH_TIME_ZONE created_at
+        TIMESTAMP_WITH_TIME_ZONE updated_at
+    }
+    vehicles {
+        BIGSERIAL id PK
+        VARCHAR_20 plate_number UK
+        VARCHAR_100 model
+        VARCHAR_100 brand
+        DECIMAL_10_2 capacity_kg
+        DECIMAL_10_2 capacity_m3
+        BOOLEAN is_active
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    delivery_proofs {
+        BIGSERIAL id PK
+        BIGINT order_id FK,UK
+        TEXT image_url
+        TEXT signature_data_url
+        VARCHAR_255 receiver_name
+        VARCHAR_20 receiver_dni
+        TIMESTAMP_WITH_TIME_ZONE verified_at
+        DECIMAL_10_8 latitude
+        DECIMAL_11_8 longitude
+    }
+    auth_module {
+        BIGSERIAL module_id PK
+        VARCHAR_50 module_name UK
+        VARCHAR_255 description
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    auth_resource {
+        BIGSERIAL resource_id PK
+        VARCHAR_50 resource_name
+        VARCHAR_255 description
+        BIGINT module_id FK
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    auth_action {
+        BIGSERIAL action_id PK
+        VARCHAR_50 action_name UK
+        VARCHAR_255 description
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    auth_role {
+        BIGSERIAL role_id PK
+        VARCHAR_50 role_name
+        VARCHAR_255 description
+        VARCHAR_5 country_code
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    auth_permission {
+        BIGSERIAL permission_id PK
+        BIGINT role_id FK
+        BIGINT resource_id FK
+        BIGINT action_id FK
+        TIMESTAMP_WITH_TIME_ZONE granted_at
+    }
+    auth_user_role {
+        BIGSERIAL id PK
+        VARCHAR_50 user_external_id
+        BIGINT role_id FK
+        TIMESTAMP_WITH_TIME_ZONE assigned_at
+    }
+    corp_branches {
+        BIGSERIAL branch_id PK
+        VARCHAR_100 name
+        TEXT address
+        VARCHAR_50 city
+        BOOLEAN is_active
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    corp_departments {
+        BIGSERIAL dept_id PK
+        VARCHAR_100 name
+        BIGINT branch_id FK
+    }
+    corp_employees {
+        BIGSERIAL emp_id PK
+        VARCHAR_100 first_name
+        VARCHAR_100 last_name
+        VARCHAR_20 dni UK
+        VARCHAR_100 email UK
+        DATE hire_date
+        BIGINT dept_id FK
+        DECIMAL_12_2 salary
+        VARCHAR_20 status
+    }
+    corp_fleet_types {
+        BIGSERIAL type_id PK
+        VARCHAR_50 category
+        TEXT description
+    }
+    corp_maintenance_logs {
+        BIGSERIAL log_id PK
+        BIGINT vehicle_id
+        DATE maintenance_date
+        TEXT description
+        DECIMAL_10_2 cost
+        VARCHAR_100 provider_name
+    }
+    corp_customers {
+        BIGSERIAL customer_id PK
+        VARCHAR_200 company_name
+        VARCHAR_20 ruc UK
+        VARCHAR_100 contact_person
+        VARCHAR_100 contact_email
+        TEXT billing_address
+        VARCHAR_50 segment
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    corp_contracts {
+        BIGSERIAL contract_id PK
+        BIGINT customer_id FK
+        DATE start_date
+        DATE end_date
+        VARCHAR_50 pricing_model
+        BOOLEAN is_active
+    }
+    corp_warehouses {
+        BIGSERIAL warehouse_id PK
+        BIGINT branch_id FK
+        DECIMAL_12_2 total_capacity_m3
+        INTEGER security_level
+    }
+    corp_invoices {
+        BIGSERIAL invoice_id PK
+        BIGINT customer_id FK
+        VARCHAR_50 invoice_number UK
+        DECIMAL_15_2 amount
+        DECIMAL_15_2 tax
+        DATE issue_date
+        DATE due_date
+        VARCHAR_20 payment_status
+    }
+    routes {
+        BIGSERIAL id PK
+        BIGINT driver_id FK
+        BIGINT vehicle_id FK
+        DATE route_date
+        VARCHAR_50 status
+        TIMESTAMP_WITH_TIME_ZONE estimated_start_time
+        TIMESTAMP_WITH_TIME_ZONE actual_start_time
+        TIMESTAMP_WITH_TIME_ZONE actual_end_time
+        DECIMAL_10_2 total_distance_km
+        TIMESTAMP_WITH_TIME_ZONE created_at
+        TEXT geometry
+        DOUBLE_PRECISION total_duration_min
+    }
+    vehicle_gps_history {
+        BIGSERIAL id PK
+        BIGINT vehicle_id FK
+        BIGINT driver_id FK
+        DECIMAL_10_8 latitude
+        DECIMAL_11_8 longitude
+        DECIMAL_10_2 speed_kmh
+        INTEGER heading_degrees
+        TIMESTAMP_WITH_TIME_ZONE ping_time
+    }
+    order_status_history {
+        BIGSERIAL id PK
+        BIGINT order_id FK
+        VARCHAR_50 status
+        TEXT reason
+        DECIMAL_10_8 location_lat
+        DECIMAL_11_8 location_lon
+        VARCHAR_100 changed_by
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    hubs {
+        BIGSERIAL id PK
+        VARCHAR_100 name
+        VARCHAR_20 code UK
+        TEXT address
+        VARCHAR_50 city
+        DECIMAL_10_8 latitude
+        DECIMAL_11_8 longitude
+        BOOLEAN is_active
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    products {
+        BIGSERIAL id PK
+        VARCHAR_50 sku UK
+        VARCHAR_255 name
+        TEXT description
+        VARCHAR_50 category
+        DECIMAL_10_2 unit_weight_kg
+        DECIMAL_10_4 unit_volume_m3
+        DECIMAL_12_2 price
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    order_items {
+        BIGSERIAL id PK
+        BIGINT order_id FK
+        BIGINT product_id FK
+        INTEGER quantity
+        DECIMAL_12_2 unit_price
+        DECIMAL_12_2 total_price
+    }
+    vehicle_maintenance_logs {
+        BIGSERIAL id PK
+        BIGINT vehicle_id FK
+        DATE service_date
+        VARCHAR_50 service_type
+        TEXT description
+        INTEGER odometer_reading
+        DECIMAL_12_2 cost
+        VARCHAR_100 workshop_name
+        DATE next_service_date
+    }
+    fuel_logs {
+        BIGSERIAL id PK
+        BIGINT vehicle_id FK
+        BIGINT driver_id FK
+        TIMESTAMP_WITH_TIME_ZONE fuel_date
+        DECIMAL_10_2 liters
+        DECIMAL_12_2 total_cost
+        INTEGER odometer_reading
+        VARCHAR_100 gas_station
+    }
+    route_expenses {
+        BIGSERIAL id PK
+        BIGINT route_id FK
+        VARCHAR_50 expense_type
+        DECIMAL_10_2 amount
+        TEXT description
+        TEXT receipt_url
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    incidents {
+        BIGSERIAL id PK
+        BIGINT route_id FK
+        VARCHAR_50 incident_type
+        VARCHAR_20 severity
+        TEXT description
+        DECIMAL_10_8 location_lat
+        DECIMAL_11_8 location_lon
+        TIMESTAMP_WITH_TIME_ZONE reported_at
+        TIMESTAMP_WITH_TIME_ZONE resolved_at
+    }
+    driver_contracts {
+        BIGSERIAL id PK
+        BIGINT driver_id FK,UK
+        VARCHAR_50 contract_type
+        DATE start_date
+        DATE end_date
+        DECIMAL_12_2 base_salary
+    }
+    driver_shifts {
+        BIGSERIAL id PK
+        BIGINT driver_id FK
+        TIMESTAMP_WITH_TIME_ZONE shift_start
+        TIMESTAMP_WITH_TIME_ZONE shift_end
+        VARCHAR_20 status
+    }
+    purchases {
+        BIGSERIAL id PK
+        VARCHAR_500 description
+        VARCHAR_255 supplier
+        DECIMAL_12_2 amount
+        VARCHAR_50 status
+        VARCHAR_100 category
+        TEXT notes
+        TIMESTAMP_WITH_TIME_ZONE created_at
+        TIMESTAMP_WITH_TIME_ZONE updated_at
+    }
+    notifications {
+        BIGSERIAL id PK
+        VARCHAR_50 type
+        VARCHAR_255 title
+        TEXT message
+        BIGINT order_id FK
+        BOOLEAN is_read
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    orders ||--o| delivery_proofs : "order_id → id"
+    auth_module ||--o{ auth_resource : "module_id → module_id"
+    auth_role ||--o{ auth_permission : "role_id → role_id"
+    auth_resource ||--o{ auth_permission : "resource_id → resource_id"
+    auth_action ||--o{ auth_permission : "action_id → action_id"
+    auth_role ||--o{ auth_user_role : "role_id → role_id"
+    corp_branches o|--o{ corp_departments : "branch_id → branch_id"
+    corp_departments o|--o{ corp_employees : "dept_id → dept_id"
+    corp_customers o|--o{ corp_contracts : "customer_id → customer_id"
+    corp_branches o|--o{ corp_warehouses : "branch_id → branch_id"
+    corp_customers o|--o{ corp_invoices : "customer_id → customer_id"
+    drivers o|--o{ routes : "driver_id → id"
+    vehicles o|--o{ routes : "vehicle_id → id"
+    vehicles o|--o{ vehicle_gps_history : "vehicle_id → id"
+    drivers o|--o{ vehicle_gps_history : "driver_id → id"
+    orders o|--o{ order_status_history : "order_id → id"
+    routes o|--o{ orders : "route_id → id"
+    orders o|--o{ order_items : "order_id → id"
+    products o|--o{ order_items : "product_id → id"
+    vehicles o|--o{ vehicle_maintenance_logs : "vehicle_id → id"
+    vehicles o|--o{ fuel_logs : "vehicle_id → id"
+    drivers o|--o{ fuel_logs : "driver_id → id"
+    routes o|--o{ route_expenses : "route_id → id"
+    routes o|--o{ incidents : "route_id → id"
+    drivers o|--o| driver_contracts : "driver_id → id"
+    drivers o|--o{ driver_shifts : "driver_id → id"
+    orders o|--o{ notifications : "order_id → id"

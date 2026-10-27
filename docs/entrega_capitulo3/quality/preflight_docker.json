@@ -1,0 +1,10 @@
+{
+  "status": "FAIL",
+  "exitCode": 1,
+  "startedAtUtc": "2026-10-27T13:08:26.613374+00:00",
+  "finishedAtUtc": "2026-10-27T13:08:26.819724+00:00",
+  "durationSeconds": 0.203,
+  "command": "docker version --format {{.Server.Version}}",
+  "workingDirectory": "<WORKSPACE>",
+  "log": "preflight_docker.log"
+}

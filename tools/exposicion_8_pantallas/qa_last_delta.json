@@ -1,0 +1,21 @@
+{
+  "reviewer": "principal",
+  "renderDirectory": "docs/exposicion_8_pantallas/_qa/render_deliverable",
+  "pages": [
+    60,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    77,
+    78,
+    79
+  ],
+  "issues": [],
+  "status": "PASS",
+  "notes": "Cada PNG abierto individualmente a resolución original. Encabezado P05 con filas, código duplicado retirado, fuentes agrupadas, legibilidad y bordes correctos. Las demás páginas conservan cuerpos idénticos según comparación de píxeles."
+}

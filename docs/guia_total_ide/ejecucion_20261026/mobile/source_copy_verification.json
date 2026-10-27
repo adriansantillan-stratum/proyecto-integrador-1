@@ -1,0 +1,352 @@
+{
+  "at": "2026-10-26T17:42:05.567Z",
+  "source": "C:\\Users\\USUARIO\\OneDrive\\Escritorio\\Proyecto Integrador Desarrollo de Software 3\\mobile-app",
+  "target": "Directorio temporal de compilación local",
+  "reason": "Bloqueo de acceso en archivos generados de OneDrive; fuentes conservadas e idénticas.",
+  "hashes": [
+    {
+      "file": "lib/core/cache/local_cache.dart",
+      "sha256": "7cad5723de68ad32be4e48f60480cb38eb3a1426380f80c800f946687fa90f3f"
+    },
+    {
+      "file": "lib/core/di/injection_container.dart",
+      "sha256": "ae695b94a47e3c78c83f96e7d789b66e325f3bb3faa73ae61bdb30020eeadf84"
+    },
+    {
+      "file": "lib/core/error/exceptions.dart",
+      "sha256": "693340e9c4443eb6364e681d6dfeb82494f456de93fce9b08554fd2232e53521"
+    },
+    {
+      "file": "lib/core/error/failures.dart",
+      "sha256": "5e60e223333c8d856bd80e2cddcf34bc8d546cfcb1eaa70ef10d43c308216f20"
+    },
+    {
+      "file": "lib/core/network/api_config.dart",
+      "sha256": "f12b63dc122d896eb6b075d6084f83957c77cb69391b7395d0e528f3baed2aa5"
+    },
+    {
+      "file": "lib/core/network/auth_interceptor.dart",
+      "sha256": "08482d233ba599237923a80839f18841d3cf6bac2aed6a286fe3130e41b7c459"
+    },
+    {
+      "file": "lib/core/network/map_tiles.dart",
+      "sha256": "9abd677a5e7aaff4bfdfda9ba08f1e14580cf3f8af092964e63baca5aafc246f"
+    },
+    {
+      "file": "lib/core/network/session_refresh.dart",
+      "sha256": "c417f720223ad85287e95374fea06d24ef0d2012b1f45128fc9fe4b3d3002d8c"
+    },
+    {
+      "file": "lib/core/notifications/notification_helper.dart",
+      "sha256": "605627c811f0093e5821c10edabd6991cbe92596374a65030f4d25ed1ab5f3c6"
+    },
+    {
+      "file": "lib/core/router/app_router.dart",
+      "sha256": "09ec2935d687753cbee585602435de3f17c197bd9652f4784d1b26ef770170ef"
+    },
+    {
+      "file": "lib/core/sync/proof_sync.dart",
+      "sha256": "e9dac32b03d6cb5d4a531c6d91d33501ac5549cd5bedaf3675273388ed7eed90"
+    },
+    {
+      "file": "lib/core/sync/sync_page.dart",
+      "sha256": "45a8d52b536ffd2108d4afea3c596fb0bf1a68ce0543a1cc1e0f369ed758d213"
+    },
+    {
+      "file": "lib/core/theme/app_theme.dart",
+      "sha256": "7ff9627dddd9e6f3dd5c789cb44d4b6a81b32b67a679d37247536a284f3edfdb"
+    },
+    {
+      "file": "lib/core/theme/theme_bloc.dart",
+      "sha256": "6f14e620fd3e37e3ce5ebbe5e531ebdc3ce81b9aab454c6ad5a83a08f550f01a"
+    },
+    {
+      "file": "lib/core/utils/path_throttle.dart",
+      "sha256": "14a40cf6af7cdc298569184b11b6b3a7786413793c67aab64cbd03bd60c6599c"
+    },
+    {
+      "file": "lib/core/utils/polyline_decoder.dart",
+      "sha256": "7bbac285c4592a6b6813b6945c29ebfd6aa52210916de0281ff142aa3a866ffc"
+    },
+    {
+      "file": "lib/core/utils/valid_coordinates.dart",
+      "sha256": "4a443cbf0e9565b125634c8c82b3da035a284a86431e3e9193e00664d89bc82d"
+    },
+    {
+      "file": "lib/features/auth/data/datasources/auth_local_data_source.dart",
+      "sha256": "2080969e76666ae4572cceb4435d9dced59efe3f5f2d0740c9b9c5165a24ec3a"
+    },
+    {
+      "file": "lib/features/auth/data/datasources/auth_remote_data_source.dart",
+      "sha256": "fd45b483b6fe6fda285269bc986984ad5c6b40797ae4804c4cf9fcb8604cb4e1"
+    },
+    {
+      "file": "lib/features/auth/data/models/user_model.dart",
+      "sha256": "8ab6f63d0bf9a074ead01f5a0d991357220c3d67736e1c8e5b608396e240e439"
+    },
+    {
+      "file": "lib/features/auth/data/repositories/auth_repository_impl.dart",
+      "sha256": "b4116c7705d2444e6fa2c50a04623b9e699f355c6c483d3d0bd641626d73b4c7"
+    },
+    {
+      "file": "lib/features/auth/domain/entities/user.dart",
+      "sha256": "397a3d304ff5659b50b3030af94ee5ad77188acb2a08398b8b7326c252b1779e"
+    },
+    {
+      "file": "lib/features/auth/domain/repositories/auth_repository.dart",
+      "sha256": "6f0106752720b2c18ce722412de4de48a5b47281af998d60eab46aa0f158fa7f"
+    },
+    {
+      "file": "lib/features/auth/domain/usecases/login_usecase.dart",
+      "sha256": "59022a27647f6c8418ba6e4376a11c9ad7136832130297cd32bee7a0c34cca01"
+    },
+    {
+      "file": "lib/features/auth/presentation/bloc/auth_bloc.dart",
+      "sha256": "d44ccf19d3cf51c6c4281cb1f9f97fcbd6ff9bf0efceab43bac4d2a0862cb1bf"
+    },
+    {
+      "file": "lib/features/auth/presentation/bloc/auth_event.dart",
+      "sha256": "89c9cf4b5f325c062e7e58666ad168ecd47b957ef4e375fc4988a7e9af8f69d5"
+    },
+    {
+      "file": "lib/features/auth/presentation/bloc/auth_state.dart",
+      "sha256": "88b5439a2409ddb12e78d0f205f849f11b226bcd24aa3f8bd385b9de0a3535fd"
+    },
+    {
+      "file": "lib/features/auth/presentation/pages/login_page.dart",
+      "sha256": "100e1763dc7583b890a66b4521dad63b3d5860a1b69847ba77a8c46e387c5abb"
+    },
+    {
+      "file": "lib/features/gps/data/datasources/gps_sensor_data_source.dart",
+      "sha256": "2291340bf2a3e1956c35ce5436d7cfb3f5fca0b60102ac69a18d2ef16fe761ec"
+    },
+    {
+      "file": "lib/features/gps/data/repositories/gps_repository_impl.dart",
+      "sha256": "e6688c8b4af68746aa6e7811fe3c586d47fc74b157b5a66d6632d52340220eba"
+    },
+    {
+      "file": "lib/features/gps/domain/repositories/gps_repository.dart",
+      "sha256": "a91d84f97f12414da17fbb0522c4259fcbf1f400353c8d6443a4fe761da4449b"
+    },
+    {
+      "file": "lib/features/gps/presentation/bloc/gps_bloc.dart",
+      "sha256": "1f3b891eaba277dd23c30a24c21ef8105f75de1c8485f1462030dcb91f19daf3"
+    },
+    {
+      "file": "lib/features/gps/presentation/bloc/gps_event.dart",
+      "sha256": "2352ed41b27ac547ca7964bd0903d7c68943cb34baab6a99b22b9da5bd0901f8"
+    },
+    {
+      "file": "lib/features/gps/presentation/bloc/gps_state.dart",
+      "sha256": "f8b39879d67234f370a0460ed3d65ad08eb00697e0fd8ba2f03cf7883abc4f7e"
+    },
+    {
+      "file": "lib/features/history/data/datasources/history_remote_data_source.dart",
+      "sha256": "19b3c4749b730d593aff4e090924fdc9dfa2008b13e7cd35ea79c5eb89b0aaba"
+    },
+    {
+      "file": "lib/features/history/data/models/delivery_history_model.dart",
+      "sha256": "5af713afc6b6c8abdcbfb31f5cf2d1def8b352c8a6373684b5cf781dcdb1ba62"
+    },
+    {
+      "file": "lib/features/history/data/repositories/history_repository_impl.dart",
+      "sha256": "ca507e542fbbe2c636310eac73bc2535a13036951d86337efd17c6028e09ae3e"
+    },
+    {
+      "file": "lib/features/history/domain/entities/delivery_history.dart",
+      "sha256": "43ea417e6fcdf83c41412decb52d2fc494fa0ee9f7905fcacc90570690d111a6"
+    },
+    {
+      "file": "lib/features/history/domain/repositories/history_repository.dart",
+      "sha256": "cbedca8f76216e454497974844be37f747bdeeda16e3e6000436f67b70a75347"
+    },
+    {
+      "file": "lib/features/history/presentation/bloc/history_bloc.dart",
+      "sha256": "b67a24703b1851d4423e455b37ae53c0f63b6a8cff7d2e88d6ab17ed07f5c55c"
+    },
+    {
+      "file": "lib/features/history/presentation/bloc/history_event.dart",
+      "sha256": "4e8fc4874f521310a0a0b325fbbb4f5f816d3b09e63c3ff4187ca3affc64aa2f"
+    },
+    {
+      "file": "lib/features/history/presentation/bloc/history_state.dart",
+      "sha256": "77eeb0d89d9657b23f7c904a96f003b220fd9318c0f9d5598ee42049d70b4874"
+    },
+    {
+      "file": "lib/features/history/presentation/pages/history_page.dart",
+      "sha256": "c8c48d7dc50e0c75e8534f07925fa462082ae7166d098e183eaf6b8e18af2835"
+    },
+    {
+      "file": "lib/features/orders/data/datasources/order_remote_data_source.dart",
+      "sha256": "f16f36b5077f57df1f54c75ff18ee8452a04885887ee3bb65896e03b3f4dd6f2"
+    },
+    {
+      "file": "lib/features/orders/data/models/order_model.dart",
+      "sha256": "9f60aaac7a58d85230e3fb9f15a61aa6bea9e356ed85eb24eb0ec7fb7e2eb246"
+    },
+    {
+      "file": "lib/features/orders/data/repositories/order_repository_impl.dart",
+      "sha256": "653c9c84d208bd0da7df83c23ed96c63ee094a8353ec911b69be1755d7b17cbf"
+    },
+    {
+      "file": "lib/features/orders/domain/entities/order.dart",
+      "sha256": "69880b16aeb2c510cc92cf11d5d112c0c09b3c3f9eb8e27ff82afe5bce763f06"
+    },
+    {
+      "file": "lib/features/orders/domain/repositories/order_repository.dart",
+      "sha256": "a9a767f6bb842d1a9b64b822bd4c09924618c5628e59aa7b9f7a21ce125f6932"
+    },
+    {
+      "file": "lib/features/orders/domain/usecases/get_orders_by_route.dart",
+      "sha256": "0e25be0cfe9615eaad04a35004609382c4ac23b3d2fd4a2bef9b6ddcf64a3994"
+    },
+    {
+      "file": "lib/features/orders/domain/usecases/update_order_status.dart",
+      "sha256": "ecf4974eb48875fd37796f54bc973e570f3e735d8eaf75a19998621a4201ff6a"
+    },
+    {
+      "file": "lib/features/orders/presentation/bloc/order_bloc.dart",
+      "sha256": "3fa60037bb68be895fce076a530392f7d4aae22691f29d22c12d1c0769c2e2c5"
+    },
+    {
+      "file": "lib/features/orders/presentation/bloc/order_event.dart",
+      "sha256": "884635bc7e4b22437d62a7b32de8fa6a42f71b91fa40581e912f4cfac8a822e0"
+    },
+    {
+      "file": "lib/features/orders/presentation/bloc/order_state.dart",
+      "sha256": "4c738341bbd2f4f3a8e8578f9f767110f3e2d9acfd9411df2dffb2560bccecb9"
+    },
+    {
+      "file": "lib/features/orders/presentation/pages/order_detail_page.dart",
+      "sha256": "1cf01646a9799fff73089d32ed2bd83d693330c746480101198870e16b157546"
+    },
+    {
+      "file": "lib/features/orders/presentation/widgets/signature_pad.dart",
+      "sha256": "ddcbbe39dd0bc32f0ca0c56c180be00dd01016418b24bcd897eda96c5e9fb214"
+    },
+    {
+      "file": "lib/features/profile/presentation/pages/profile_page.dart",
+      "sha256": "d3b8e33bce53730ad9fefc4687c80cd621dbe066ad35a8c755d601bf4532b7e4"
+    },
+    {
+      "file": "lib/features/routes/data/datasources/route_remote_data_source.dart",
+      "sha256": "b9907e0a48dce4e8670992cd8734705b33b6ac0b75b7bcbed980d39c6e172473"
+    },
+    {
+      "file": "lib/features/routes/data/models/route_model.dart",
+      "sha256": "0932a786e7712aa3c9399bdaf0210821dfdb902d747cd8fb939a6053f81374ff"
+    },
+    {
+      "file": "lib/features/routes/data/models/route_path_model.dart",
+      "sha256": "46bff89a6c9544a7151eb949e3402161fa7c934e796547df21c6459a520e731f"
+    },
+    {
+      "file": "lib/features/routes/data/repositories/route_repository_impl.dart",
+      "sha256": "ab9f33c12596abbe932558dea159071bae6fc27ad74ab6e7045b6ce644ac3a91"
+    },
+    {
+      "file": "lib/features/routes/domain/entities/route.dart",
+      "sha256": "351a3c39abbb67f4817b5bf94673a71eec10beaa3f4064fd5aa5218dd87e5c66"
+    },
+    {
+      "file": "lib/features/routes/domain/repositories/route_repository.dart",
+      "sha256": "0e2fc348014f6cca7c9216e7b18f9ce23b3269db7e933d89c8636e3e17f6687f"
+    },
+    {
+      "file": "lib/features/routes/domain/usecases/get_driver_routes.dart",
+      "sha256": "144658c5e57e5302a7eb31f250be07dc72fe9d424278fc6d8f7b1845343e384e"
+    },
+    {
+      "file": "lib/features/routes/presentation/bloc/route_bloc.dart",
+      "sha256": "36bb532867c20b4b2580a096e4c31edaa459fe3ad749490cfec8a2498e6b9d42"
+    },
+    {
+      "file": "lib/features/routes/presentation/bloc/route_event.dart",
+      "sha256": "a15a29ee5457852346448a7c7446990bee2a09f57162a8b39c8bfede48a81b37"
+    },
+    {
+      "file": "lib/features/routes/presentation/bloc/route_state.dart",
+      "sha256": "4a84450c08679c9ffa4e36c9128e295326ee773e358d9814b5528205a5be0094"
+    },
+    {
+      "file": "lib/features/routes/presentation/pages/routes_page.dart",
+      "sha256": "2c0f9792dc36189617675503652f88d9ff11746640237ed4b0a8596f0c833f4f"
+    },
+    {
+      "file": "lib/features/routes/presentation/widgets/recoverable_tile_layer.dart",
+      "sha256": "d4def68e588184d49a7c605b13e6bbc06a9574bce91f3acf3735d8f3be5b39bb"
+    },
+    {
+      "file": "lib/main.dart",
+      "sha256": "6ef2d2b4d6bc6b0b3c4feebf69e78089e3a71478408de6f59149a8ba90cb3a05"
+    },
+    {
+      "file": "android/app/src/debug/AndroidManifest.xml",
+      "sha256": "b01a4541a8144c15bc617bab7eb267c99fa1476368fbbda5a12cdbf4e316a34c"
+    },
+    {
+      "file": "android/app/src/main/AndroidManifest.xml",
+      "sha256": "cfc1059f54e352fd693c5f7a879f0b7b47d48c4f2e663a6b6e8c278ecb1f8231"
+    },
+    {
+      "file": "android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java",
+      "sha256": "2490691ff7e5b9fec7fb79f4405879cff3efc1f69b2c42ec3021c27ec0d82a1d"
+    },
+    {
+      "file": "android/app/src/main/kotlin/com/example/ecoroute_driver_app/MainActivity.kt",
+      "sha256": "fbd8c68f317699e2a68466fe6741ad506736c0f2cfcfb7c1a5597dfb95dfa997"
+    },
+    {
+      "file": "android/app/src/main/res/drawable/launch_background.xml",
+      "sha256": "2df60e2cfbee873ce2858088cf003e6b93498f2f568476da437610467ea1a9d7"
+    },
+    {
+      "file": "android/app/src/main/res/drawable-v21/launch_background.xml",
+      "sha256": "dca312ec77de83e43ef70a825c299b51451247286c29167d62f19165750b8793"
+    },
+    {
+      "file": "android/app/src/main/res/mipmap-hdpi/ic_launcher.png",
+      "sha256": "6a7c8f0d703e3682108f9662f813302236240d3f8f638bb391e32bfb96055fef"
+    },
+    {
+      "file": "android/app/src/main/res/mipmap-mdpi/ic_launcher.png",
+      "sha256": "c7c0c0189145e4e32a401c61c9bdc615754b0264e7afae24e834bb81049eaf81"
+    },
+    {
+      "file": "android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+      "sha256": "e14aa40904929bf313fded22cf7e7ffcbf1d1aac4263b5ef1be8bfce650397aa"
+    },
+    {
+      "file": "android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+      "sha256": "4d470bf22d5c17d84edc5f82516d1ba8a1c09559cd761cefb792f86d9f52b540"
+    },
+    {
+      "file": "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+      "sha256": "3c34e1f298d0c9ea3455d46db6b7759c8211a49e9ec6e44b635fc5c87dfb4180"
+    },
+    {
+      "file": "android/app/src/main/res/values/styles.xml",
+      "sha256": "cca15a99b59380a548bf6a890f7ca5380ee509b1f9bbb2f5f9ec3589fa25c2f7"
+    },
+    {
+      "file": "android/app/src/main/res/values-night/styles.xml",
+      "sha256": "ea763597dc1a84c8034251caee98d7753e0fbf57340ffc94677427de4b537516"
+    },
+    {
+      "file": "android/app/src/profile/AndroidManifest.xml",
+      "sha256": "b01a4541a8144c15bc617bab7eb267c99fa1476368fbbda5a12cdbf4e316a34c"
+    },
+    {
+      "file": "android/app/build.gradle.kts",
+      "sha256": "4e875d61a1ac0621b706fd18afce9d88ff3eb8a75c205c73300a226c4e9783a1"
+    },
+    {
+      "file": "pubspec.yaml",
+      "sha256": "e9a0538795103049226448f62fb3b4b167ce3291fc69797f866c54afaed13ff5"
+    },
+    {
+      "file": "pubspec.lock",
+      "sha256": "fc9764e69fc365621c86dde9f6168d3621cb8bb09c98dc18eea41a33fb8243d2"
+    }
+  ]
+}

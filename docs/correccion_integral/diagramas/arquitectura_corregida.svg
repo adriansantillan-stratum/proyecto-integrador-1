@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1160" viewBox="0 0 1800 1160"><defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto"><path d="M0 0 L9 4 L0 8" fill="none" stroke="#315675" stroke-width="1.6"/></marker></defs><rect width="100%" height="100%" fill="white"/>
+<text x="35" y="48" font-family="Arial" font-size="30" font-weight="700" fill="#1c3448" text-anchor="start">Arquitectura implementada de EcoRoute</text>
+<rect x="40" y="105" width="430" height="185" rx="8" fill="#eff4f8" stroke="#315675" stroke-width="2"/>
+<text x="57" y="138" font-family="Arial" font-size="23" font-weight="700" fill="#1c3448" text-anchor="start">Consola web React 19</text>
+<text x="57" y="171" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">TypeScript y Vite</text>
+<text x="57" y="197" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Context de sesión, hooks, servicios</text>
+<text x="57" y="223" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">HTTP</text>
+<text x="57" y="249" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Nginx /api y /ws en Docker</text>
+<rect x="40" y="360" width="430" height="225" rx="8" fill="#eff4f8" stroke="#315675" stroke-width="2"/>
+<text x="57" y="393" font-family="Arial" font-size="23" font-weight="700" fill="#1c3448" text-anchor="start">Aplicación Flutter</text>
+<text x="57" y="426" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">BLoC y casos de uso</text>
+<text x="57" y="452" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Dio con refresh de sesión</text>
+<text x="57" y="478" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Caché y outbox local por cuenta</text>
+<text x="57" y="504" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">GPS, cámara y firma</text>
+<rect x="620" y="105" width="500" height="185" rx="8" fill="#eff4f8" stroke="#315675" stroke-width="2"/>
+<text x="637" y="138" font-family="Arial" font-size="23" font-weight="700" fill="#1c3448" text-anchor="start">Identidad Keycloak</text>
+<text x="637" y="171" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">OIDC y JWT firmados</text>
+<text x="637" y="197" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">PKCE web, credenciales en móvil</text>
+<text x="637" y="223" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Realm ecoroute y roles de aplicación</text>
+<text x="637" y="249" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">H2 de desarrollo en volumen separado</text>
+<rect x="620" y="360" width="500" height="365" rx="8" fill="#eff4f8" stroke="#315675" stroke-width="2"/>
+<text x="637" y="393" font-family="Arial" font-size="23" font-weight="700" fill="#1c3448" text-anchor="start">Backend modular Spring Boot</text>
+<text x="637" y="426" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Adaptadores REST y WebSocket</text>
+<text x="637" y="452" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">JWT, propiedad del conductor y RBAC</text>
+<text x="637" y="478" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Servicios de aplicación y transacciones</text>
+<text x="637" y="504" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Dominio, políticas y puertos</text>
+<text x="637" y="530" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Adaptadores R2DBC, OSRM y AWS</text>
+<text x="637" y="556" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Un servicio desplegable, no microservicios</text>
+<rect x="1280" y="105" width="465" height="230" rx="8" fill="#eff4f8" stroke="#315675" stroke-width="2"/>
+<text x="1297" y="138" font-family="Arial" font-size="23" font-weight="700" fill="#1c3448" text-anchor="start">PostgreSQL 14</text>
+<text x="1297" y="171" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Pedidos, rutas, POD, historial e</text>
+<text x="1297" y="197" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">incidencias</text>
+<text x="1297" y="223" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Revisiones, intentos, acciones y metas</text>
+<text x="1297" y="249" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Outbox y notificaciones</text>
+<text x="1297" y="275" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Vistas de lectura analítica</text>
+<rect x="1280" y="395" width="465" height="145" rx="8" fill="#eff4f8" stroke="#315675" stroke-width="2"/>
+<text x="1297" y="428" font-family="Arial" font-size="23" font-weight="700" fill="#1c3448" text-anchor="start">Redis</text>
+<text x="1297" y="461" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Límite de peticiones y revocación</text>
+<text x="1297" y="487" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">PubSub de GPS entre conexiones</text>
+<rect x="1280" y="600" width="465" height="145" rx="8" fill="#eff4f8" stroke="#315675" stroke-width="2"/>
+<text x="1297" y="633" font-family="Arial" font-size="23" font-weight="700" fill="#1c3448" text-anchor="start">OSRM autohospedado</text>
+<text x="1297" y="666" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Red vial del Perú</text>
+<text x="1297" y="692" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Orden y geometría, sin tráfico en vivo</text>
+<rect x="620" y="870" width="500" height="210" rx="8" fill="#eff4f8" stroke="#315675" stroke-width="2"/>
+<text x="637" y="903" font-family="Arial" font-size="23" font-weight="700" fill="#1c3448" text-anchor="start">Evidencias S3 y eventos SQS</text>
+<text x="637" y="936" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">LocalStack simula AWS en desarrollo</text>
+<text x="637" y="962" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Respaldo local de bytes en PostgreSQL</text>
+<text x="637" y="988" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Worker reenvía eventos no confirmados</text>
+<text x="637" y="1014" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Producción requiere servicios durables</text>
+<rect x="1280" y="870" width="465" height="210" rx="8" fill="#eff4f8" stroke="#315675" stroke-width="2"/>
+<text x="1297" y="903" font-family="Arial" font-size="23" font-weight="700" fill="#1c3448" text-anchor="start">Consumo analítico</text>
+<text x="1297" y="936" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Paneles y reportes React</text>
+<text x="1297" y="962" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">CSV operativo con filtros</text>
+<text x="1297" y="988" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Power BI puede consultar vistas</text>
+<text x="1297" y="1014" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">Conexión Power BI real aún pendiente</text>
+<polyline points="470,170 620,170" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="545.0" y="158" font-family="Arial" font-size="16" font-weight="400" fill="#1c3448" text-anchor="middle">OIDC</text>
+<polyline points="470,225 545,225 545,420 620,420" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="582.5" y="408" font-family="Arial" font-size="16" font-weight="400" fill="#1c3448" text-anchor="middle">REST / WS</text>
+<polyline points="620,420 545,420 545,225 470,225" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="300,360 300,320 590,320 590,250 620,250" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="445" y="311" font-family="Arial" font-size="16" font-weight="400" fill="#1c3448" text-anchor="middle">OIDC móvil</text>
+<polyline points="470,450 620,450" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="545.0" y="438" font-family="Arial" font-size="16" font-weight="400" fill="#1c3448" text-anchor="middle">REST y GPS</text>
+<polyline points="860,360 860,290" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="872" y="320.0" font-family="Arial" font-size="16" font-weight="400" fill="#1c3448" text-anchor="start">JWKS y API Admin</text>
+<polyline points="1120,415 1200,415 1200,220 1280,220" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1240.0" y="208" font-family="Arial" font-size="16" font-weight="400" fill="#1c3448" text-anchor="middle">R2DBC</text>
+<polyline points="1120,485 1280,485" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1200.0" y="473" font-family="Arial" font-size="16" font-weight="400" fill="#1c3448" text-anchor="middle">Redis</text>
+<polyline points="1120,650 1280,650" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1200.0" y="638" font-family="Arial" font-size="16" font-weight="400" fill="#1c3448" text-anchor="middle">HTTP</text>
+<polyline points="870,725 870,870" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="882" y="792.5" font-family="Arial" font-size="16" font-weight="400" fill="#1c3448" text-anchor="start">SDK AWS</text>
+<polyline points="1510,335 1770,335 1770,840 1510,840 1510,870" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1522" y="850.0" font-family="Arial" font-size="16" font-weight="400" fill="#1c3448" text-anchor="start">Vistas BI</text>
+<text x="45" y="1125" font-family="Arial" font-size="21" font-weight="400" fill="#1c3448" text-anchor="start">Los puestos del negocio se modelan en BPMN. Estos recuadros representan componentes técnicos, no actores del negocio.</text></svg>

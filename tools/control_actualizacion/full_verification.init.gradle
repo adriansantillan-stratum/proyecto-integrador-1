@@ -1,0 +1,4 @@
+// Separate generated outputs from previous runs and OneDrive-locked classes.
+gradle.projectsLoaded {
+    gradle.rootProject.layout.buildDirectory.set(gradle.rootProject.file('build/full_actualizacion_20261022'))
+}

@@ -1,0 +1,44 @@
+{
+  "version": "2026-10-19.1",
+  "status": "implementation contract; execution evidence in analytics_fix_notes.md",
+  "filters": {
+    "driverId": "optional positive integer; route owner, otherwise order driver",
+    "startDate": "optional ISO date inclusive",
+    "endDate": "optional ISO date inclusive; >= startDate",
+    "operationDate": "COALESCE(routes.route_date,(orders.created_at AT TIME ZONE 'America/Lima')::date)",
+    "timezone": "America/Lima",
+    "appliesTo": ["/dashboard/orders-by-status", "/dashboard/delivery-performance", "/dashboard/deliveries-by-driver", "/dashboard/orders-by-district", "/reports/orders-summary", "/reports/driver-performance", "/reports/route-efficiency", "/reports/bi"]
+  },
+  "GET /reports/bi": {
+    "driverId": "number|null", "startDate": "YYYY-MM-DD|null", "endDate": "YYYY-MM-DD|null", "timezone": "America/Lima",
+    "kpis": [{"code": "IID|CHR|TDE|SUCCESS|ONTIME", "name": "string", "numerator": "integer", "denominator": "integer", "percentage": "number|null", "target": "number|null", "gap": "number|null (percentage-target)", "status": "NO_DATA|NO_TARGET|MET|BELOW_TARGET"}],
+    "trends": [{"date": "YYYY-MM-DD", "kpis": "same five KPI objects; target is current configured target"}],
+    "byDriver": [{"driverId": "number|null", "name": "string", "count": "delivered integer", "total": "integer", "failed": "integer"}],
+    "byDistrict": [{"name": "string; blank/null => Sin distrito", "count": "all orders integer"}],
+    "causes": [{"source": "STATUS_HISTORY|INCIDENT", "reason": "string", "count": "integer; events, not distinct orders"}],
+    "efficiency": [{"routeId": "number", "label": "string", "orderCount": "integer", "plannedDistanceKm": "number|null", "actualGpsDistanceKm": "number|null", "operationMinutes": "number|null", "kmPerDelivery": "number|null; actual GPS / delivered", "timePerStopMin": "number|null; operation minutes / (delivered+failed+returned); V15", "distanceSource": "GPS_HAVERSINE|UNAVAILABLE"}],
+    "goals": [{"code": "IID|CHR|TDE|SUCCESS|ONTIME", "target": "number|null", "updatedBy": "JWT subject|null", "updatedAt": "ISO timestamp|null"}],
+    "quality": {"totalOrders": "integer", "scheduledOrders": "integer", "completePodOrders": "integer; distinct from TDE", "missingRucOrders": "integer", "invalidGpsOrders": "integer", "missingWindowOrders": "integer", "routesWithoutGps": "integer", "unconfirmedOrders": "integer", "unverifiedAddressOrders": "integer", "unverifiedCoverageOrders": "integer"}
+  },
+  "GET /reports/goals/{code}": {"code": "IID|CHR|TDE|SUCCESS|ONTIME (case insensitive)", "target": "number|null", "updatedBy": "string|null", "updatedAt": "ISO timestamp|null"},
+  "PUT /reports/goals/{code}": {"request": {"target": "number 0..100 inclusive; null clears target"}, "response": "same as GET; persisted with immutable history, actor from authentication", "invalid": "HTTP 400", "authorization": "existing ADMIN reports security"},
+  "GET /reports/route-efficiency": "array matching efficiency; one row per route; includes empty routes",
+  "legacy": {
+    "/dashboard/orders-by-status": [{"status": "string", "count": "integer"}],
+    "/dashboard/delivery-performance": {"onTime": "integer", "delayed": "integer"},
+    "/dashboard/deliveries-by-driver and /reports/driver-performance": [{"name": "string", "count": "integer"}],
+    "/dashboard/orders-by-district": [{"name": "string", "count": "integer"}],
+    "/reports/orders-summary": {"ordersByStatus": "array", "onTimeDeliveries": "integer", "delayedDeliveries": "integer"}
+  },
+  "formulas": {
+    "IID": "orders with 11 ASCII digit recipient RUC + nonblank recipient/address + valid nonzero lat/lon / all orders *100",
+    "CHR": "DELIVERED scheduled orders / scheduled orders (route_id present) *100",
+    "TDE": "scheduled orders with nonblank photo OR signature / scheduled orders *100",
+    "SUCCESS": "DELIVERED / all orders *100",
+    "ONTIME": "DELIVERED with POD verified_at <= promised window end / DELIVERED with POD verified_at and window end *100",
+    "zeroDenominator": null,
+    "completePOD": "photo AND signature AND receiver AND 8 digit DNI AND nonzero valid GPS AND two SHA256 hashes AND captured_at AND received_at; metadata check, no remote object verification",
+    "efficiency": "Haversine sum over LAG GPS ordered by ping_time,id within route actual time interval and vehicle; >=2 valid samples; no route start => unavailable. timePerStopMin is operation minutes per terminal stop, NOT service time."
+  },
+  "historicalComparison": "CSV pretest TDE denominator says executed services; current uses scheduled orders. CHR visited points differs from DELIVERED. IID legacy reference is not a validated RUC. No causal or direct like-for-like comparison is claimed."
+}

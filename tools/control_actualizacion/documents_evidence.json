@@ -1,0 +1,349 @@
+{
+  "scope": "LOCAL_DOCUMENTAL_NO_UAT",
+  "documentReviewDate": "2026-10-26",
+  "testEvidenceCutoff": "2026-10-22 America/Lima",
+  "processMapping": [
+    "La trazabilidad completa se conserva en docs/control_actualizacion/inventario_trazabilidad.json, excepciones_trazabilidad.json y excepciones_trazabilidad.csv. trace_checks.json identifica nueve procesos, 199 nodos y 135 requisitos, con 81 RF y 54 RNF. Localizar una función o un caso no acredita el nodo, el requisito ni el proceso completo. Los 96 casos UAT son planificación de aceptación; no se convierten en ejecuciones humanas.",
+    "P01 Confirmar pedidos vincula EXC-09 con las condiciones comerciales y la ventana de entrega. P02 Preparar la jornada de reparto relaciona EXC-01, EXC-02, EXC-03, EXC-05, EXC-07 y EXC-09 con asignación, revisión, despacho y cancelación. Las comprobaciones técnicas no sustituyen la conformidad comercial, documental ni del conductor.",
+    "P03 Ejecutar entregas relaciona EXC-08 con idempotencia y reglas del POD; la corrección de sesión evita perder acceso por un replay 400 y la recuperación de tiles mejora la consulta del recorrido. P04 Resolver incidencias relaciona EXC-04, EXC-05, EXC-06 y EXC-07. RETRY, REPLAN y CLOSE_FAILED conservan significados distintos; el ensayo de cierre definitivo no acredita las otras dos decisiones.",
+    "P05 Evaluar resultados mantiene trazabilidad estática y dispone de evidencia específica API y SQL para los cinco indicadores y calidad GPS. P06 Habilitar recursos de reparto conserva su trazabilidad estática y sus comprobaciones humanas. Ninguno tiene nuevas aserciones de excepción en el manifiesto de excepciones; no se atribuye cobertura por compartir componentes.",
+    "P07 Supervisar la jornada conserva trazabilidad estática y recibe el soporte técnico del mapa y GPS; no tiene nuevas aserciones de excepción en ese manifiesto. P08 Administrar accesos relaciona EXC-06 y EXC-07 y las pruebas de sesión y permisos. P09 Registrar compras operativas mantiene trazabilidad estática, sin nuevas aserciones de excepción en el mismo manifiesto.",
+    "El manifiesto de excepciones registra 63 casos Java y 53 web en su ejecución específica; la regresión global posterior registra 106 Java y 53 web. Son ejecuciones solapadas y no se suman. El JSON conserva por aserción la fuente y el XML de ejecución; el CSV desglosa los nodos. Los repositorios y transportes sustituidos no prueban concurrencia SQL, transacciones reales ni aceptación MICOTRANS."
+  ],
+  "evidence": [
+    {
+      "id": "E01",
+      "file": "docs/control_integral_20261022/e2e_cierre/server_final.json",
+      "description": "Lectura final del ensayo de ruta 20 con pedido 44 entregado, pedido 45 fallido e incidencia 12. Mantener su población separada del video posterior",
+      "includeInDocument": true
+    },
+    {
+      "id": "E02",
+      "file": "docs/videos/ecoroute_e2e_20261022/server_final.json",
+      "description": "Lectura final del video de ruta 21 con pedido 46 DELIVERED, pedido 47 FAILED e incidencia 13 RESOLVED con CLOSE_FAILED, 26 comprobaciones correctas de 26",
+      "includeInDocument": true
+    },
+    {
+      "id": "E03",
+      "file": "docs/control_integral_20261022/e2e_cierre/calidad_mobile_final.json",
+      "description": "Informe móvil anterior con 81 host correctas y ocho opt in omitidas en esa ejecución; las ocho de contrato se ejecutan aparte y pasan. No representa una ejecución posterior a los cambios actuales de mapa",
+      "includeInDocument": false
+    },
+    {
+      "id": "E04",
+      "file": "docs/control_integral_20261022/e2e_cierre/native_session_navigation.json",
+      "description": "Tres ciclos nativos Sync Back History Back de la APK 8004 registrados PASS. No son pruebas de recuperación de la nueva capa de tiles",
+      "includeInDocument": false
+    },
+    {
+      "id": "S01",
+      "file": "mobile-app/lib/core/network/auth_interceptor.dart",
+      "description": "AuthInterceptor.onError distingue un error del recurso repetido de un rechazo de renovación de credenciales",
+      "includeInDocument": false
+    },
+    {
+      "id": "S02",
+      "file": "mobile-app/test/session_navigation_auth_test.dart",
+      "description": "Aserciones sobre renovación, replay y pertenencia de cuenta, leídas junto con el manifiesto móvil de ejecución",
+      "includeInDocument": false
+    },
+    {
+      "id": "S03",
+      "file": "mobile-app/test/session_navigation_router_test.dart",
+      "description": "Pruebas de navegación e historial después de volver de sincronización; distinguirlas de recorridos con personas de MICOTRANS",
+      "includeInDocument": false
+    },
+    {
+      "id": "M01",
+      "file": "docs/control_actualizacion/evidencias/mobile/mapa_autenticado.png",
+      "description": "Captura anterior a la corrección con cartografía OSM visible tras arranque online",
+      "includeInDocument": false
+    },
+    {
+      "id": "M02",
+      "file": "docs/control_actualizacion/evidencias/mobile/12_offline_reinicio.png",
+      "description": "Reapertura sin conexión usada en la reproducción del mapa gris",
+      "includeInDocument": false
+    },
+    {
+      "id": "M03",
+      "file": "docs/control_actualizacion/evidencias/mobile/mapa_reconexion_antes.png",
+      "description": "Captura anterior a la corrección con fondo gris y datos locales de jornada todavía visibles después de restaurar red",
+      "includeInDocument": false
+    },
+    {
+      "id": "S04",
+      "file": "mobile-app/lib/core/network/map_tiles.dart",
+      "description": "Proveedor de tiles con CachedNetworkImageProvider, User Agent de EcoRoute y URL y atribución configurables; solo solicita el viewport visto",
+      "includeInDocument": false
+    },
+    {
+      "id": "S05",
+      "file": "mobile-app/lib/features/routes/presentation/widgets/recoverable_tile_layer.dart",
+      "description": "Error de cartografía visible, Reintentar mapa y recreación exclusiva de TileLayer; reintento al reanudar si había error",
+      "includeInDocument": false
+    },
+    {
+      "id": "S06",
+      "file": "mobile-app/test/map_recovery_test.dart",
+      "description": "Tres tests host nuevos de proveedor, reintento y resume; no verifican recuperación nativa ni disponibilidad del proveedor público",
+      "includeInDocument": false
+    },
+    {
+      "id": "E05",
+      "file": "docs/control_actualizacion/evidencias/calidad_mobile_final.json",
+      "description": "Ejecución actual de Flutter analyze exit 0, 84 host correctas con ocho opt in omitidas intencionalmente y ocho contratos correctos ejecutados aparte",
+      "includeInDocument": true
+    },
+    {
+      "id": "E06",
+      "file": "docs/control_actualizacion/evidencias/apk_4005.json",
+      "description": "APK Flutter build 4005, Android versionCode 8005, instalada con reemplazo sin borrar datos; 85 archivos contrastados",
+      "includeInDocument": true
+    },
+    {
+      "id": "E07",
+      "file": "docs/control_actualizacion/evidencias/mapa_native.json",
+      "description": "Seis comprobaciones nativas correctas de fallo, reintento y caché de revisitas, red restaurada; capturas inspeccionadas",
+      "includeInDocument": true
+    },
+    {
+      "id": "E08",
+      "file": "docs/control_actualizacion/MAPA_MOVIL.md",
+      "description": "Defecto cartográfico reproducido, cambio de proveedor y capa de reintento, relación P03 P07 y alcance de la prueba nativa",
+      "includeInDocument": false
+    },
+    {
+      "id": "E09",
+      "file": "docs/control_actualizacion/evidencias/api_v16.json",
+      "description": "Auditoría actual de solo lectura API y SQL con nueve checks correctos; calidad GPS de rutas 20 y 21 y cinco KPI sin variación",
+      "includeInDocument": true
+    },
+    {
+      "id": "E10",
+      "file": "docs/control_actualizacion/evidencias/deploy_after.json",
+      "description": "Flyway 16 activo en Docker local y ocho tablas de negocio con conteos y MD5 sin cambios",
+      "includeInDocument": true
+    },
+    {
+      "id": "E11",
+      "file": "docs/control_actualizacion/evidencias/e2e_post_update/server_final.json",
+      "description": "Relectura final posterior a V16 de ruta 21, pedidos 46 y 47 e incidencia 13, 26 checks correctos",
+      "includeInDocument": true
+    },
+    {
+      "id": "E12",
+      "file": "docs/control_actualizacion/documentos/_qa/baseline/backend_current_tests.json",
+      "description": "Lectura de cinco XML actuales de analítica V16, 30 pruebas sin fallos, errores ni omitidas; no es la suite global",
+      "includeInDocument": true
+    },
+    {
+      "id": "E13",
+      "file": "tools/control_actualizacion/web_quality_2026-10-22T202320-0500.json",
+      "description": "Verificación específica web con 53 tests correctos, incluidos 16 nuevos de calidad GPS, TypeScript y ESLint correctos",
+      "includeInDocument": true
+    },
+    {
+      "id": "E14",
+      "file": "docs/control_actualizacion/WEB_CALIDAD_GPS.md",
+      "description": "Contrato y presentación de calidad GPS en tabla, gráficos y CSV; build y QA visual web a cargo del principal",
+      "includeInDocument": false
+    },
+    {
+      "id": "E15",
+      "file": "docs/control_actualizacion/evidencias/sql_v16.json",
+      "description": "Validación aislada del instalador V1 a V16, fuente e instaladores anteriores conservados; no acredita nuevas tablas",
+      "includeInDocument": true
+    },
+    {
+      "id": "S07",
+      "file": "src/main/resources/db/migration/V16__analytics_gps_quality.sql",
+      "description": "Función analytics_route_gps_quality y extensión de analytics_route_facts; sin CREATE TABLE",
+      "includeInDocument": false
+    },
+    {
+      "id": "S08",
+      "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+      "description": "Consulta de calidad GPS con política parametrizada; causas incluyen FAILED RETURNED CANCELLED",
+      "includeInDocument": false
+    },
+    {
+      "id": "M04",
+      "file": "docs/control_actualizacion/evidencias/mobile/mapa_4005_estado.png",
+      "description": "Captura nativa con aviso de fallo y botón Reintentar mapa",
+      "includeInDocument": false
+    },
+    {
+      "id": "M05",
+      "file": "docs/control_actualizacion/evidencias/mobile/mapa_4005_reintento.png",
+      "description": "Captura nativa con calles OSM visibles tras pulsar Reintentar mapa",
+      "includeInDocument": false
+    },
+    {
+      "id": "M06",
+      "file": "docs/control_actualizacion/evidencias/mobile/mapa_4005_cache_offline.png",
+      "description": "Captura nativa con teselas ya visitadas visibles después de force stop y reapertura offline",
+      "includeInDocument": false
+    },
+    {
+      "id": "E16",
+      "file": "docs/control_actualizacion/evidencias/calidad_integrada_1792718833047.json",
+      "description": "Regresión global actual PASS con 106 Java sin fallos, errores ni omitidas, 53 web, TypeScript y ESLint correctos",
+      "includeInDocument": true
+    },
+    {
+      "id": "E17",
+      "file": "docs/control_actualizacion/evidencias/web/run_1792719021669/result_1792719031028.json",
+      "description": "Seis checks de navegador real: filtros, cinco KPI, GPS no evaluable, CSV vacío para ruta 20 y POD conservado, sin errores de página ni escrituras",
+      "includeInDocument": true
+    },
+    {
+      "id": "T01",
+      "file": "docs/control_actualizacion/inventario_trazabilidad.json",
+      "description": "Mapa completo P01 a P09 con nodos, requisitos, código y límites de la trazabilidad estática",
+      "includeInDocument": true
+    },
+    {
+      "id": "T02",
+      "file": "docs/control_actualizacion/excepciones_trazabilidad.json",
+      "description": "Excepciones con aserciones, resultados reales y fuentes por función; no acredita UAT",
+      "includeInDocument": true
+    },
+    {
+      "id": "T03",
+      "file": "docs/control_actualizacion/excepciones_trazabilidad.csv",
+      "description": "Desglose de excepciones por nodo y límite de evidencia",
+      "includeInDocument": true
+    },
+    {
+      "id": "T04",
+      "file": "docs/control_actualizacion/trace_checks.json",
+      "description": "Resumen estructural de nueve procesos, 199 nodos, 135 requisitos y 96 UAT previstos",
+      "includeInDocument": false
+    }
+  ],
+  "externalSources": [
+    {
+      "url": "https://operations.osmfoundation.org/policies/tiles/",
+      "title": "OSMF Tile Usage Policy",
+      "verifiedDate": "2026-10-22",
+      "relevantSections": [
+        "Availability",
+        "3.2 Caching",
+        "4 Prohibited bulk downloading and offline use"
+      ],
+      "summary": "OSM ofrece tiles best effort sin SLA. Exige atribución y caché HTTP, permite revisitas desde caché y prohíbe descargas masivas o prefetch de ciudades. La caché local no constituye un servicio cartográfico offline garantizado."
+    }
+  ],
+  "updateParagraphs": [
+    "La revisión documental se redacta el 26 de octubre de 2026 y conserva el diseño y los procesos del capítulo 2. La evidencia técnica corresponde al 22 de octubre en America/Lima; algunas marcas UTC ya corresponden al día 23. No se presenta como una nueva ejecución del 26 de octubre. La ruta 20 y la ruta 21 son ensayos diferentes: la primera contiene los pedidos 44 y 45 y la incidencia 12; la segunda, registrada para el video, contiene los pedidos 46 y 47 y la incidencia 13. Sus comprobaciones se mantienen separadas de la eficacia empresarial.",
+    "El informe final del video acredita 26 comprobaciones correctas y ninguna fallida. El pedido 46 está DELIVERED con POD y el 47 permanece FAILED; la incidencia 13 figura RESOLVED con CLOSE_FAILED. El cierre administrativo no convierte el pedido fallido en entrega ni crea un nuevo intento. El reporte distingue además la consulta del recorrido de las operaciones que guardan el despacho.",
+    "AuthInterceptor separa el resultado de renovar credenciales del resultado de repetir la petición original. Tras una renovación satisfactoria, un 400 del recurso llega a su manejador como error de negocio y conserva la sesión; un segundo 401 activa la expiración para la misma cuenta. La cola de POD sigue conservando datos hasta confirmación del servidor. Cambiar esa clasificación evita un cierre de sesión indebido, sin prometer que cualquier fallo sea reintentable.",
+    "La verificación móvil actual acredita Flutter analyze sin observaciones, 84 pruebas host correctas y ocho contratos correctos ejecutados aparte. Ocho opt in se omiten intencionalmente en la ejecución host; no se duplican en el total. El informe anterior de 81 host y tres ciclos nativos de navegación se conserva como antecedente. La APK Flutter build 4005, Android versionCode 8005, fue instalada con reemplazo sin borrar datos y con 85 archivos contrastados. El mapa actual cuenta con seis comprobaciones nativas y capturas de recuperación; esos resultados siguen siendo técnicos y locales.",
+    "La aceptación empresarial de MICOTRANS continúa pendiente. El alcance de esta revisión es local y no exige publicación ni pago productivo. No se acredita una conexión nativa real a Power BI. La interpretación del resultado requiere conservar fecha, versión, población e IDs del reporte correspondiente.",
+    "La regresión global actual acredita 106 pruebas Java sin fallos, errores ni omitidas, 53 web correctas y TypeScript y ESLint con salida cero. Son sus totales propios; las treinta pruebas específicas V16 y las 53 del worker web no se añaden nuevamente a ese resultado. La comprobación de navegador real pasa seis checks, exporta vacías las métricas GPS no evaluables de la ruta 20 y conserva la lectura del POD anterior, sin errores de página ni escrituras."
+  ],
+  "reportSections": [
+    {
+      "title": "Sesión móvil y errores de la petición repetida",
+      "paragraphs": [
+        "El defecto corregido confundía la renovación válida de sesión con el fallo posterior de una petición a un recurso. AuthInterceptor.onError ahora maneja el replay dentro de un bloque separado: propaga un 400 del recurso sin llamar a expiración y conserva el tratamiento de un segundo 401. El alcance se vincula a P08 y al uso de P03 después de regresar desde sincronización.",
+        "session_navigation_auth_test.dart y session_navigation_router_test.dart localizan las aserciones de credencial rechazada, replay, cambio de cuenta e historial después de sincronización. La ejecución actual calidad_mobile_final.json registra analyze correcto, 84 host correctas y ocho contratos correctos. El informe anterior de 81 host y tres ciclos nativos se conserva por fecha y versión. No se suman las pruebas opt in omitidas ni se interpretan como aceptación empresarial."
+      ]
+    },
+    {
+      "title": "Cola de POD y cierre administrativo",
+      "paragraphs": [
+        "La cola persiste foto, firma y metadatos por cuenta antes del envío y los retira al recibir confirmación satisfactoria. Un POD pendiente no es un pedido DELIVERED en el servidor. El replay de la petición, los estados visibles en la cola y la respuesta persistida deben contrastarse sin borrar pendientes para obtener un resultado esperado.",
+        "Los ensayos finalizados enlazan una entrega con evidencia y un resultado fallido de la misma jornada. La incidencia se resuelve mediante CLOSE_FAILED sin reabrir el pedido original. RETRY y REPLAN permanecen como operaciones diferentes que crean intentos vinculados; el video no prueba esas dos salidas por haber cerrado una excepción."
+      ]
+    },
+    {
+      "title": "Cartografía y disponibilidad del mapa base",
+      "paragraphs": [
+        "La reproducción anterior a la corrección muestra OSM visible después de un arranque online y un fondo gris tras forzar el cierre, reabrir sin red y restaurar la conexión. mapa_autenticado.png, 12_offline_reinicio.png y mapa_reconexion_antes.png registran esos estados. La información de la jornada y el mapa base tienen fuentes y ciclos de recuperación distintos.",
+        "La APK Flutter build 4005, Android versionCode 8005, incorpora CachedMapTileProvider y RecoverableTileLayer. Reutiliza la caché HTTP, muestra el fallo y ofrece Reintentar mapa, que recrea exclusivamente TileLayer. Al reanudar con error también intenta recuperar la capa. PolylineLayer y MarkerLayer conservan su ciclo independiente. El informe de seis checks y las capturas mapa_4005_estado, mapa_4005_reintento y mapa_4005_cache_offline acreditan el aviso, calles visibles después del botón y las teselas previamente visitadas visibles tras reabrir sin red; la red quedó restaurada.",
+        "La vinculación técnica corresponde a P03 y P07, con RNF-16 sobre cartografía abierta, RNF-18 sobre mensajes y RNF-52 sobre configuración externa. La disponibilidad se trata como comportamiento observable de recuperación, sin inventar un SLA ni convertir RNF-25, referido al motor de ruteo, en una garantía del servidor de tiles. No requiere alterar BPMN de negocio.",
+        "OSM ofrece tiles best effort sin SLA. Requiere atribución y caché HTTP; permite revisitas desde caché y prohíbe descargas masivas o prefetch de ciudades. Fuente: https://operations.osmfoundation.org/policies/tiles/ ."
+      ]
+    },
+    {
+      "title": "Reportes y criterios de interpretación",
+      "paragraphs": [
+        "V16 añade la función de consulta analytics_route_gps_quality y amplía analytics_route_facts con calidad y contadores de muestras y segmentos. No crea tablas operativas, no altera sus relaciones ni justifica dibujar entidades nuevas en el ERD. La función conserva la suma observada para diagnóstico y solo expone distancia GPS operativa cuando la traza supera los controles configurados.",
+        "deploy_after.json acredita V16 activo en Docker local y digests sin variación en ocho tablas. api_v16.json conserva nueve comprobaciones correctas. La ruta 20 tiene observedDistanceKm de 7433.283426, pero actualGpsDistanceKm y kmPerDelivery son null, la fuente es UNAVAILABLE y gpsQuality es IMPLAUSIBLE_SPEED. La suma observada es dato de auditoría, no un recorrido físico. La ruta 21 mantiene cero GPS admitido por dos muestras coincidentes; ese cero no se usa para reemplazar una traza rechazada.",
+        "IID 4/4, CHR 2/4, TDE 2/4, SUCCESS 2/4 y ONTIME 2/2 se mantienen en el corte del conductor 1 y fecha operativa 22 de octubre, que incluye ambas jornadas de ensayo. No son KPI exclusivos de la ruta 21 ni resultados empresariales. Las metas siguen null y NO_TARGET. El recorrido de solo lectura posterior conserva 26 comprobaciones correctas.",
+        "La verificación específica de analítica V16 reúne 30 tests correctos y el worker web, 53, incluidos 16 nuevos sobre calidad GPS. La ejecución global posterior calidad_integrada_1792718833047.json acredita 106 Java sin fallos, errores ni omitidas, 53 web y TypeScript y ESLint con salida cero. No se suman ejecuciones solapadas. El primer intento fallido del harness se conserva como antecedente y no se usa como cierre del producto.",
+        "El navegador real acredita seis checks correctos en dashboard, indicadores, eficiencia y POD. La ruta 20 muestra GPS no evaluable con su motivo; al exportar CSV, actualGpsDistanceKm y kmPerDelivery quedan vacíos y no aparece la suma de 7433 km. El reporte no registra errores de página ni escrituras de negocio. Al 26 de octubre el usuario informa Power BI Desktop instalado. La conexión, carga y actualización permanecen pendientes de un reporte verificable; las consultas SQL y M preparadas no acreditan una sesión Desktop conectada."
+      ]
+    },
+    {
+      "title": "Instalador SQL y conservación del modelo",
+      "paragraphs": [
+        "El instalador completo V1 a V16 contiene quince migraciones SQL porque el historial no tiene V11. sql_v16.json registra validación aislada PASS y conservación de las migraciones e instaladores históricos. El nombre del rango no implica dieciséis archivos ni una migración inventada. V16 incorpora un modelo de lectura y calidad de traza; el ERD de tablas y relaciones operativas se mantiene."
+      ]
+    }
+  ],
+  "currentGates": {
+    "mapa": {
+      "status": "REVISADO_CON_FUENTE_CONCRETA",
+      "file": "docs/control_actualizacion/evidencias/mapa_native.json",
+      "title": "Cartografía recuperada en el emulador local",
+      "paragraphs": [
+        "La reproducción anterior mostraba un mapa gris después de reinicio offline y restauración de red. La APK Android 8005 muestra ahora el fallo con un botón; mapa_4005_reintento.png conserva calles visibles tras pulsarlo y mapa_4005_cache_offline.png acredita la revisita de las mismas teselas después de cerrar y reabrir sin red. mapa_native.json registra seis checks correctos y red restaurada. La inspección visual complementa el estado de los controles: la ausencia de un aviso no se usa sola para afirmar que hubo píxeles cartográficos.",
+        "CachedMapTileProvider utiliza la caché HTTP y RecoverableTileLayer recrea exclusivamente la capa de tiles al reintentar o reanudar con error. Las pruebas nuevas verifican proveedor, mensaje y conservación de polilínea; la suite móvil actual contiene 84 host correctas y ocho contratos correctos ejecutados aparte. P03 y P07 reciben soporte técnico; no se modifican BPMN. La caché de revisitas no equivale a descargar ciudades ni a garantizar cobertura offline."
+      ],
+      "localizedPatches": [
+        {
+          "document": "manual",
+          "paragraphIndex": 1185,
+          "replacement": "_fetchPath mantiene el refresco de quince segundos y PathThrottle para GET /routes/{id}/path; _revision descarta respuestas de otra selección. El recorrido OSRM, las paradas y los marcadores son capas independientes del mapa base. CachedMapTileProvider reutiliza las teselas HTTP visitadas; RecoverableTileLayer informa un fallo y ofrece Reintentar mapa, que recrea solo TileLayer. Al reanudar con error intenta otra vez. La atribución permanece visible. La APK Android 8005 acredita reintento y revisita desde caché en seis checks locales; no hay descarga de ciudades ni cobertura offline garantizada."
+        },
+        {
+          "document": "guion",
+          "paragraphIndex": 136,
+          "replacement": "“_fetchPath mantiene el refresco de quince segundos y PathThrottle para GET /routes/{id}/path; _revision descarta respuestas de otra selección. El recorrido OSRM, las paradas y los marcadores son capas independientes del mapa base. CachedMapTileProvider reutiliza las teselas HTTP visitadas; RecoverableTileLayer informa un fallo y ofrece Reintentar mapa, que recrea solo TileLayer. Al reanudar con error intenta otra vez. La atribución permanece visible. La APK Android 8005 acredita reintento y revisita desde caché en seis checks locales; no hay descarga de ciudades ni cobertura offline garantizada.”"
+        }
+      ]
+    },
+    "gps": {
+      "status": "REVISADO_CON_FUENTE_CONCRETA",
+      "file": "docs/control_actualizacion/evidencias/api_v16.json",
+      "title": "Calidad de la traza GPS con V16",
+      "paragraphs": [
+        "El despliegue local incorpora V16; deploy_after.json conserva conteos y MD5 idénticos en ocho tablas de negocio. La migración añade una función de consulta y columnas de la vista analytics_route_facts, sin tablas ni relaciones nuevas en el ERD. La API usa límites configurables; la vista SQL usa sus valores predeterminados. Para contrastarlas deben emplearse las mismas políticas.",
+        "La política predeterminada es 160 km/h y 900 segundos entre muestras; es una decisión técnica local, no norma de transporte ni aprobación de MICOTRANS. Las coordenadas aceptan ecuador y meridiano, pero excluyen el par 0,0 como posición ausente. Segmentos no consecutivos a través de un punto inválido no se enlazan. Las anomalías de coordenadas, tiempo, velocidad o intervalo impiden presentar la distancia como operativa.",
+        "La auditoría API y SQL de rutas 20 y 21 pasa nueve checks. La suma observada de la ruta 20 supera 7433 km y se conserva para diagnóstico; su calidad IMPLAUSIBLE_SPEED mantiene distancia operativa y km por entrega nulos y fuente UNAVAILABLE. La ruta 21, con muestras coincidentes admitidas, conserva cero como cero. Nunca se reemplaza ausencia por plan ni se publica la suma bruta como recorrido real. Los treinta tests específicos de analítica no son una nueva suite global."
+      ],
+      "localizedPatches": [
+        {
+          "document": "manual",
+          "paragraphIndex": 1239,
+          "replacement": "V16 conserva la base Haversine y evalúa muestras consecutivas del vehículo dentro del intervalo real de la ruta, ordenadas por ping_time e id. analytics_route_gps_quality informa muestras insuficientes, coordenadas inválidas, tiempo no positivo, velocidad implausible e intervalos excesivos. No une segmentos a través de puntos inválidos. Si cualquier control rechaza la traza, actual_gps_distance_km y km_per_delivery quedan null y distance_source es UNAVAILABLE; observed_distance_km permanece como suma de auditoría, sin etiquetarse como recorrido físico. Los valores predeterminados de 160 km/h y 900 segundos son política local parametrizable, no un estándar de transporte. Los minutos por parada siguen dividiendo la duración operativa entre DELIVERED, FAILED y RETURNED."
+        },
+        {
+          "document": "manual",
+          "paragraphIndex": 1242,
+          "replacement": "V9 agrega reservas únicas, metadatos POD, delivery_outbox y notificación única. V10 añade confirmación comercial, revisiones de salida, intentos, acciones y auditoría. V13 conserva el origen LEGACY_UNATTRIBUTED de cierres históricos; V14 añade respaldo local del emulador. V15 alinea el divisor terminal con DELIVERED, FAILED y RETURNED. V16 agrega analytics_route_gps_quality y amplía la vista analytics_route_facts con contadores y calidad; no añade tablas operativas ni modifica las relaciones del ERD. Los instaladores anteriores permanecen como antecedentes."
+        }
+      ]
+    },
+    "kpi": {
+      "status": "REVISADO_CON_FUENTE_CONCRETA",
+      "file": "docs/control_actualizacion/evidencias/api_v16.json",
+      "title": "Cinco indicadores sin variación y cierre posterior",
+      "paragraphs": [
+        "El corte API y SQL del conductor 1 para la fecha operativa 22 de octubre incluye cuatro pedidos de ambas jornadas locales. Mantiene IID 4/4 igual a 100 por ciento, CHR 2/4 igual a 50, TDE 2/4 igual a 50, SUCCESS 2/4 igual a 50 y ONTIME 2/2 igual a 100. Todos conservan target y gap nulos y estado NO_TARGET. Esos números describen la población técnica identificada, no cuatro entregas exitosas ni una mejora empresarial.",
+        "El reporte e2e_post_update/server_final.json vuelve a leer ruta 21 y pedidos 46 y 47 después del cambio, con 26 checks correctos. El primero permanece DELIVERED y el segundo FAILED; la incidencia 13 sigue RESOLVED con CLOSE_FAILED. La corrección de calidad GPS no cambia las fórmulas de los cinco KPI ni los resultados persistidos del ensayo.",
+        "La regresión integrada del 22 de octubre pasa 106 pruebas Java y 53 web; TypeScript y ESLint terminan con salida cero. La auditoría del navegador pasa seis checks y confirma filtros y KPI, GPS no evaluable con motivo, CSV con métricas GPS ausentes como vacíos y acceso al POD anterior; no registra errores de página ni escrituras. Esas ejecuciones no se suman a las parciales ni equivalen a UAT. El usuario informa Power BI Desktop instalado al 26 de octubre; la conexión real queda pendiente de reporte."
+      ],
+      "localizedPatches": [
+        {
+          "document": "manual",
+          "paragraphIndex": 1161,
+          "replacement": "EfficiencyTable muestra plan, GPS evaluable, minutos de operación, km por entrega, minutos por parada y calidad recibida. La tabla y los gráficos usan routeGpsMetrics: solo muestran distancia operativa cuando gpsQuality es AVAILABLE, la fuente es GPS_HAVERSINE y el valor es finito y no negativo. Sin calidad o con rechazo se muestra no evaluable, conservando el plan separado. efficiencyCsv preserva sus nueve columnas; exporta métricas GPS ausentes como celdas vacías y no exporta la suma bruta observedDistanceKm. El CSV del navegador no es un proyecto Power BI."
+        }
+      ]
+    }
+  }
+}

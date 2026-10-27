@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1260" viewBox="0 0 1800 1260"><defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto"><path d="M0 0 L9 4 L0 8" fill="none" stroke="#315675" stroke-width="1.6"/></marker></defs><rect width="100%" height="100%" fill="white"/>
+<text x="35" y="48" font-family="Arial" font-size="30" font-weight="700" fill="#1c3448" text-anchor="start">Sesión efectiva y administración de acceso</text>
+<text x="130.0" y="100" font-family="Arial" font-size="20" font-weight="700" fill="#1c3448" text-anchor="middle">Web o móvil</text>
+<line x1="130.0" y1="150" x2="130.0" y2="1235" stroke="#b1bdc8" stroke-dasharray="6 5"/>
+<text x="515.0" y="100" font-family="Arial" font-size="20" font-weight="700" fill="#1c3448" text-anchor="middle">Keycloak</text>
+<line x1="515.0" y1="150" x2="515.0" y2="1235" stroke="#b1bdc8" stroke-dasharray="6 5"/>
+<text x="900.0" y="100" font-family="Arial" font-size="20" font-weight="700" fill="#1c3448" text-anchor="middle">Backend</text>
+<line x1="900.0" y1="150" x2="900.0" y2="1235" stroke="#b1bdc8" stroke-dasharray="6 5"/>
+<text x="1285.0" y="100" font-family="Arial" font-size="20" font-weight="700" fill="#1c3448" text-anchor="middle">Redis</text>
+<line x1="1285.0" y1="150" x2="1285.0" y2="1235" stroke="#b1bdc8" stroke-dasharray="6 5"/>
+<text x="1670.0" y="100" font-family="Arial" font-size="20" font-weight="700" fill="#1c3448" text-anchor="middle">PostgreSQL</text>
+<line x1="1670.0" y1="150" x2="1670.0" y2="1235" stroke="#b1bdc8" stroke-dasharray="6 5"/>
+<polyline points="130.0,210 515.0,210" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="142.0" y="192" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">1. Autentica usuario y obtiene JWT más refresh token</text>
+<polyline points="130.0,315 900.0,315" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="142.0" y="297" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">2. Authorization Bearer en solicitudes protegidas</text>
+<polyline points="900.0,420 515.0,420" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="527.0" y="402" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">3. Valida firma mediante JWK, issuer y expiración</text>
+<polyline points="900.0,525 1285.0,525" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="912.0" y="507" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">4. Comprueba revocación por subject antes de autorizar</text>
+<polyline points="900.0,630 1670.0,630" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="912.0" y="612" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">5. Conductor se resuelve por drivers.external_id igual al sub validado</text>
+<polyline points="900.0,735 130.0,735" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="142.0" y="717" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">6. session/me devuelve identidad efectiva y driverId vinculado</text>
+<polyline points="130.0,840 900.0,840" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="142.0" y="822" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">7. Administrador solicita cambio de roles o habilitación</text>
+<polyline points="900.0,945 515.0,945" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="527.0" y="927" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">8. Cliente técnico local gestiona solo identidades humanas</text>
+<polyline points="900.0,1050 1285.0,1050" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="912.0" y="1032" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">9. Revoca JWT anterior y cierra sesiones en Keycloak</text>
+<polyline points="900.0,1155 1670.0,1155" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="912.0" y="1137" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">10. Audita el cambio sin guardar contraseñas ni tokens</text></svg>

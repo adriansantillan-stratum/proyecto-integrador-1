@@ -1,0 +1,50 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  config:
+    activate:
+      on-profile: docker
+  
+  codec:
+    max-in-memory-size: 20MB
+  
+  r2dbc:
+    url: r2dbc:postgresql://postgres:5432/${DB_NAME:ecoroute}
+    username: ${DB_USER:user}
+    password: ${DB_PASSWORD:password}
+  
+  flyway:
+    enabled: true
+    url: jdbc:postgresql://postgres:5432/${DB_NAME:ecoroute}
+    user: ${DB_USER:user}
+    password: ${DB_PASSWORD:password}
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/ecoroute
+          jwk-set-uri: http://keycloak:8080/realms/ecoroute/protocol/openid-connect/certs
+
+aws:
+  endpoint: http://localstack:4566
+  s3:
+    local-durable-backup: true
+  sqs:
+    queue-url: http://localstack:4566/000000000000/ecoroute-notifications
+
+server:
+  port: 8081
+
+logging:
+  level:
+    com.ecoroute.backend: DEBUG
+    org.springframework.security: INFO
+    org.springframework.web: INFO
+
+osrm:
+  base-url: http://osrm:5000
+
+keycloak:
+  admin-base-url: http://keycloak:8080
+  admin-client-secret: ${KEYCLOAK_ADMIN_CLIENT_SECRET:}

@@ -1,0 +1,72 @@
+{
+  "mode": "IN_MEMORY_FIXTURES_ONLY",
+  "scenarios": [
+    {
+      "name": "ASSIGNED replan opens current window in Lima even when browser is in Tokyo",
+      "pass": true
+    },
+    {
+      "name": "unsaved window blocks commercial confirmation; discard restores it",
+      "pass": true
+    },
+    {
+      "name": "window PATCH sends offsets/reason only and clears stale acceptance while preserving RUC/address/coverage",
+      "pass": true
+    },
+    {
+      "name": "commercial agreement is explicitly reconfirmed separately on the same ID",
+      "pass": true
+    },
+    {
+      "name": "409 preserves the edited window and server reason without resetting agreement",
+      "pass": true
+    },
+    {
+      "name": "past end is rejected locally without an API request",
+      "pass": true
+    },
+    {
+      "name": "DISPATCHER can edit planned PENDING, but IN_PROGRESS or terminal orders stay readonly",
+      "pass": true
+    }
+  ],
+  "fixtureWrites": [
+    {
+      "endpoint": "/orders/31/delivery-window",
+      "body": {
+        "estimatedDeliveryWindowStart": "2099-10-20T08:00:00-05:00",
+        "estimatedDeliveryWindowEnd": "2099-10-20T11:00:00-05:00",
+        "reason": "Cliente solicitó reprogramación"
+      }
+    },
+    {
+      "endpoint": "/orders/31/business-data",
+      "body": {
+        "recipientRuc": "20123456789",
+        "customerAccepted": true,
+        "addressVerified": true,
+        "coverageVerified": true,
+        "agreementNote": "Cliente aceptó la nueva ventana hasta las 11:00 Lima",
+        "confirmedBy": "fixture-admin",
+        "confirmedAt": "2026-10-20T02:37:03.800Z"
+      }
+    },
+    {
+      "endpoint": "/orders/31/delivery-window",
+      "body": {
+        "estimatedDeliveryWindowStart": "2099-10-20T08:00:00-05:00",
+        "estimatedDeliveryWindowEnd": "2099-10-20T12:00:00-05:00",
+        "reason": "Segundo cambio solicitado"
+      }
+    }
+  ],
+  "forwardedOperationalWrites": 0,
+  "realPodRequests": 0,
+  "screenshots": [
+    "01_window_saved_acceptance_pending_fixture.png",
+    "02_agreement_reconfirmed_fixture.png",
+    "03_conflict_preserves_draft_fixture.png",
+    "04_terminal_window_readonly_fixture.png"
+  ],
+  "pageErrors": []
+}

@@ -1,0 +1,121 @@
+{
+  "startedAt": "2026-10-22T20:23:20-05:00",
+  "timezone": "America/Lima",
+  "scope": "LOCAL_WEB_GPS_QUALITY_TECHNICAL_ONLY",
+  "businessAcceptance": "NOT_ATTESTED",
+  "backendDeployment": "NOT_PERFORMED_BY_THIS_TASK",
+  "uiOrAdbUsed": false,
+  "apiRequestsPerformed": false,
+  "dockerCommandsPerformed": false,
+  "nodeVersion": "v25.4.0",
+  "sourceHashesBefore": {
+    "web-admin/src/services/analyticsTypes.ts": "5392c0902c574fa1f0768de9c1b3858a231ef67c4ddabc02230e85b60f243bd7",
+    "web-admin/src/components/EfficiencyTable.tsx": "e0afa9bcfc32320c7869aa3fd65ad44438e38629ac179eb67f7d836a6de6312c",
+    "web-admin/src/pages/BusinessIntelligence.tsx": "cf4ec759a1ce5c5e18fd2dc0157dbd030929b476413fd50852293cf9703d8ea2",
+    "web-admin/src/utils/analytics.ts": "1a2ab178f78b1aa0fda6b96e553e77a3fa6d5f4134ef38ff9a816b3bd2d3a7a5",
+    "web-admin/tests/gps-quality.test.mjs": "a18e735d87e7d8e5bdb7ddd2a46c16a03fbf701c6c55e146ba5ce7bc1959590d",
+    "tools/control_actualizacion/analytics_gps_contract.json": "7cccf3276bea2b54db2124131c28d87361e5f761a32a3d1082eda0facc15fc13",
+    "src/main/java/com/ecoroute/backend/domain/model/analytics/AnalyticsModels.java": "ba6f926c3137bdc945bbc3dde72658df4353ccac8b67bf9ca196f7845c3bf985",
+    "web-admin/src/components/AnalyticsChart.tsx": "79b3bd825517465321ef4c78113050893b49d3b60381a43009bc96532d8c876e",
+    "web-admin/src/components/Operations.tsx": "8f5b3a36b5cb3a182417b0583afe2cdb94b4abc13c1d2630ebde5c5473d55420",
+    "web-admin/src/utils/operation.ts": "d8bd97d9a025f846a777fe5da37f61c7f33a3f5215583bc9f4790a15f9edabf6",
+    "web-admin/tsconfig.app.json": "922bc5bfb41bdc0768023b2487d54b3ae23c587d999024d4f32cde879ae6f4d8",
+    "web-admin/tsconfig.node.json": "c3dd0fb522feba3596713f51b95bd53d781d845d24aedbfa2ac093d8b39c5120"
+  },
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "TypeScript app",
+      "cwd": "C:\\Users\\USUARIO\\OneDrive\\Escritorio\\Proyecto Integrador Desarrollo de Software 3\\web-admin",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/typescript/bin/tsc",
+        "--project",
+        "tsconfig.app.json",
+        "--noEmit"
+      ],
+      "startedAt": "2026-10-22T20:23:20-05:00",
+      "finishedAt": "2026-10-22T20:23:22-05:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "TypeScript node config",
+      "cwd": "C:\\Users\\USUARIO\\OneDrive\\Escritorio\\Proyecto Integrador Desarrollo de Software 3\\web-admin",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/typescript/bin/tsc",
+        "--project",
+        "tsconfig.node.json",
+        "--noEmit"
+      ],
+      "startedAt": "2026-10-22T20:23:20-05:00",
+      "finishedAt": "2026-10-22T20:23:21-05:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "ESLint assigned TS/TSX files",
+      "cwd": "C:\\Users\\USUARIO\\OneDrive\\Escritorio\\Proyecto Integrador Desarrollo de Software 3\\web-admin",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "node_modules/eslint/bin/eslint.js",
+        "src/services/analyticsTypes.ts",
+        "src/components/EfficiencyTable.tsx",
+        "src/pages/BusinessIntelligence.tsx",
+        "src/utils/analytics.ts"
+      ],
+      "startedAt": "2026-10-22T20:23:20-05:00",
+      "finishedAt": "2026-10-22T20:23:27-05:00",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "Node web tests",
+      "cwd": "C:\\Users\\USUARIO\\OneDrive\\Escritorio\\Proyecto Integrador Desarrollo de Software 3\\web-admin",
+      "executable": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "--test",
+        "--test-reporter=tap",
+        "tests/delivery-window.test.mjs",
+        "tests/exceptions-services.test.mjs",
+        "tests/gps-quality.test.mjs",
+        "tests/notification-position.test.mjs",
+        "tests/operation.test.mjs",
+        "tests/terminal-labels.test.mjs"
+      ],
+      "startedAt": "2026-10-22T20:23:20-05:00",
+      "finishedAt": "2026-10-22T20:23:20-05:00",
+      "exitCode": 0,
+      "stdout": "TAP version 13\n# Subtest: existing offset windows display in Lima, independent of browser timezone\nok 1 - existing offset windows display in Lima, independent of browser timezone\n  ---\n  duration_ms: 24.6071\n  type: 'test'\n  ...\n# Subtest: delivery window request includes ISO offsets and a trimmed reason, without business fields\nok 2 - delivery window request includes ISO offsets and a trimmed reason, without business fields\n  ---\n  duration_ms: 1.0708\n  type: 'test'\n  ...\n# Subtest: start may be past, but end must be strictly future at Lima midnight boundary\nok 3 - start may be past, but end must be strictly future at Lima midnight boundary\n  ---\n  duration_ms: 1.1975\n  type: 'test'\n  ...\n# Subtest: equal or inverted windows are rejected\nok 4 - equal or inverted windows are rejected\n  ---\n  duration_ms: 0.6028\n  type: 'test'\n  ...\n# Subtest: invalid dates, missing endpoints and whitespace-only or short reasons are rejected\nok 5 - invalid dates, missing endpoints and whitespace-only or short reasons are rejected\n  ---\n  duration_ms: 0.5137\n  type: 'test'\n  ...\n# Subtest: only PENDING or ASSIGNED with no route or a verified PLANNED route can edit\nok 6 - only PENDING or ASSIGNED with no route or a verified PLANNED route can edit\n  ---\n  duration_ms: 0.1334\n  type: 'test'\n  ...\n# Subtest: EXC-W01 assignment uses existing order PATCH and propagates commercial conflict\nok 7 - EXC-W01 assignment uses existing order PATCH and propagates commercial conflict\n  ---\n  duration_ms: 1.7312\n  type: 'test'\n  ...\n# Subtest: EXC-W02 RETRY transports decision and reason without recreating the original order\nok 8 - EXC-W02 RETRY transports decision and reason without recreating the original order\n  ---\n  duration_ms: 0.2925\n  type: 'test'\n  ...\n# Subtest: EXC-W03 REPLAN sends target route and preserves linked attempt returned by server\nok 9 - EXC-W03 REPLAN sends target route and preserves linked attempt returned by server\n  ---\n  duration_ms: 0.1857\n  type: 'test'\n  ...\n# Subtest: EXC-W04 cancellation rejection remains an error and never falls back to changing orders\nok 10 - EXC-W04 cancellation rejection remains an error and never falls back to changing orders\n  ---\n  duration_ms: 0.2501\n  type: 'test'\n  ...\n# Subtest: EXC-W05 definitive closure permission error is propagated without a second request\nok 11 - EXC-W05 definitive closure permission error is propagated without a second request\n  ---\n  duration_ms: 0.7828\n  type: 'test'\n  ...\n# Subtest: AVAILABLE uses only the API operational values and never the observed audit sum\nok 12 - AVAILABLE uses only the API operational values and never the observed audit sum\n  ---\n  duration_ms: 21.7949\n  type: 'test'\n  ...\n# Subtest: INVALID_CONFIGURATION hides even stale non-null operational fields in UI and CSV\nok 13 - INVALID_CONFIGURATION hides even stale non-null operational fields in UI and CSV\n  ---\n  duration_ms: 2.5531\n  type: 'test'\n  ...\n# Subtest: INSUFFICIENT_SAMPLES hides even stale non-null operational fields in UI and CSV\nok 14 - INSUFFICIENT_SAMPLES hides even stale non-null operational fields in UI and CSV\n  ---\n  duration_ms: 3.3844\n  type: 'test'\n  ...\n# Subtest: INVALID_COORDINATES hides even stale non-null operational fields in UI and CSV\nok 15 - INVALID_COORDINATES hides even stale non-null operational fields in UI and CSV\n  ---\n  duration_ms: 3.558\n  type: 'test'\n  ...\n# Subtest: NON_POSITIVE_TIME hides even stale non-null operational fields in UI and CSV\nok 16 - NON_POSITIVE_TIME hides even stale non-null operational fields in UI and CSV\n  ---\n  duration_ms: 4.2248\n  type: 'test'\n  ...\n# Subtest: IMPLAUSIBLE_SPEED hides even stale non-null operational fields in UI and CSV\nok 17 - IMPLAUSIBLE_SPEED hides even stale non-null operational fields in UI and CSV\n  ---\n  duration_ms: 5.0508\n  type: 'test'\n  ...\n# Subtest: EXCESSIVE_GAP hides even stale non-null operational fields in UI and CSV\nok 18 - EXCESSIVE_GAP hides even stale non-null operational fields in UI and CSV\n  ---\n  duration_ms: 5.2751\n  type: 'test'\n  ...\n# Subtest: null actual distance never falls back to planned, raw observed or zero\nok 19 - null actual distance never falls back to planned, raw observed or zero\n  ---\n  duration_ms: 3.0962\n  type: 'test'\n  ...\n# Subtest: valid stationary zero remains zero in table and CSV\nok 20 - valid stationary zero remains zero in table and CSV\n  ---\n  duration_ms: 2.2071\n  type: 'test'\n  ...\n# Subtest: absent or null optional quality supports older APIs without claiming passed controls\nok 21 - absent or null optional quality supports older APIs without claiming passed controls\n  ---\n  duration_ms: 3.5786\n  type: 'test'\n  ...\n# Subtest: unknown quality or UNAVAILABLE source cannot become operational GPS\nok 22 - unknown quality or UNAVAILABLE source cannot become operational GPS\n  ---\n  duration_ms: 0.1533\n  type: 'test'\n  ...\n# Subtest: non-finite or negative operational values never leak to the chart/table/CSV projection\nok 23 - non-finite or negative operational values never leak to the chart/table/CSV projection\n  ---\n  duration_ms: 0.1795\n  type: 'test'\n  ...\n# Subtest: all rejection counters remain visible despite precedence of one status\nok 24 - all rejection counters remain visible despite precedence of one status\n  ---\n  duration_ms: 1.2962\n  type: 'test'\n  ...\n# Subtest: efficiency CSV keeps its nine-column schema and excludes raw audit distance\nok 25 - efficiency CSV keeps its nine-column schema and excludes raw audit distance\n  ---\n  duration_ms: 0.1214\n  type: 'test'\n  ...\n# Subtest: GPS quality does not change five KPI period/day exports, driver or Lima dates\nok 26 - GPS quality does not change five KPI period/day exports, driver or Lima dates\n  ---\n  duration_ms: 0.5125\n  type: 'test'\n  ...\n# Subtest: efficiency charts consume the same guarded GPS projection as table and CSV\nok 27 - efficiency charts consume the same guarded GPS projection as table and CSV\n  ---\n  duration_ms: 0.5019\n  type: 'test'\n  ...\n# Subtest: notification fits full viewport 1440 collapsed=false\nok 28 - notification fits full viewport 1440 collapsed=false\n  ---\n  duration_ms: 0.8934\n  type: 'test'\n  ...\n# Subtest: notification fits full viewport 1024 collapsed=false\nok 29 - notification fits full viewport 1024 collapsed=false\n  ---\n  duration_ms: 0.1173\n  type: 'test'\n  ...\n# Subtest: notification fits full viewport 390 collapsed=false\nok 30 - notification fits full viewport 390 collapsed=false\n  ---\n  duration_ms: 0.0839\n  type: 'test'\n  ...\n# Subtest: notification fits full viewport 320 collapsed=false\nok 31 - notification fits full viewport 320 collapsed=false\n  ---\n  duration_ms: 0.0687\n  type: 'test'\n  ...\n# Subtest: notification fits full viewport 1440 collapsed=true\nok 32 - notification fits full viewport 1440 collapsed=true\n  ---\n  duration_ms: 0.0745\n  type: 'test'\n  ...\n# Subtest: notification fits full viewport 1024 collapsed=true\nok 33 - notification fits full viewport 1024 collapsed=true\n  ---\n  duration_ms: 0.0828\n  type: 'test'\n  ...\n# Subtest: notification fits full viewport 390 collapsed=true\nok 34 - notification fits full viewport 390 collapsed=true\n  ---\n  duration_ms: 0.1254\n  type: 'test'\n  ...\n# Subtest: notification fits full viewport 320 collapsed=true\nok 35 - notification fits full viewport 320 collapsed=true\n  ---\n  duration_ms: 0.1582\n  type: 'test'\n  ...\n# Subtest: bottom-edge trigger opens upward without clipping\nok 36 - bottom-edge trigger opens upward without clipping\n  ---\n  duration_ms: 0.1838\n  type: 'test'\n  ...\n# Subtest: Lima stays on previous date until 05:00 UTC\nok 37 - Lima stays on previous date until 05:00 UTC\n  ---\n  duration_ms: 14.9232\n  type: 'test'\n  ...\n# Subtest: tomorrow handles month, leap year and year boundaries\nok 38 - tomorrow handles month, leap year and year boundaries\n  ---\n  duration_ms: 0.553\n  type: 'test'\n  ...\n# Subtest: polyline5 decodes official example, including negative longitude\nok 39 - polyline5 decodes official example, including negative longitude\n  ---\n  duration_ms: 0.769\n  type: 'test'\n  ...\n# Subtest: empty geometry is empty and truncated / invalid geometry fails explicitly\nok 40 - empty geometry is empty and truncated / invalid geometry fails explicitly\n  ---\n  duration_ms: 0.379\n  type: 'test'\n  ...\n# Subtest: RUC is optional but strictly eleven ASCII digits when supplied\nok 41 - RUC is optional but strictly eleven ASCII digits when supplied\n  ---\n  duration_ms: 0.2859\n  type: 'test'\n  ...\n# Subtest: all three P01 checks are required independently\nok 42 - all three P01 checks are required independently\n  ---\n  duration_ms: 0.1714\n  type: 'test'\n  ...\n# Subtest: assignment only allows confirmed PENDING into PLANNED\nok 43 - assignment only allows confirmed PENDING into PLANNED\n  ---\n  duration_ms: 0.1408\n  type: 'test'\n  ...\n# Subtest: manual lifecycle never permits DELIVERED and all terminal states are readonly\nok 44 - manual lifecycle never permits DELIVERED and all terminal states are readonly\n  ---\n  duration_ms: 0.1423\n  type: 'test'\n  ...\n# Subtest: every analytics filter survives encoding, empty filters are omitted, invalid range rejected\nok 45 - every analytics filter survives encoding, empty filters are omitted, invalid range rejected\n  ---\n  duration_ms: 0.4869\n  type: 'test'\n  ...\n# Subtest: error helper preserves business reasons and shows unavailable/configuration status\nok 46 - error helper preserves business reasons and shows unavailable/configuration status\n  ---\n  duration_ms: 0.4103\n  type: 'test'\n  ...\n# Subtest: CSV quotes commas, embedded quotes and multiline fields, neutralizes spreadsheet formulas\nok 47 - CSV quotes commas, embedded quotes and multiline fields, neutralizes spreadsheet formulas\n  ---\n  duration_ms: 0.3391\n  type: 'test'\n  ...\n# Subtest: efficiency CSV is one row per route, preserves nulls and separates GPS from plan\nok 48 - efficiency CSV is one row per route, preserves nulls and separates GPS from plan\n  ---\n  duration_ms: 0.229\n  type: 'test'\n  ...\n# Subtest: BI export preserves zero denominator as missing, with scope, filters and formula\nok 49 - BI export preserves zero denominator as missing, with scope, filters and formula\n  ---\n  duration_ms: 0.2184\n  type: 'test'\n  ...\n# Subtest: GPS parser rejects wrong vehicle, zero coordinate pair, invalid dates and malformed frames\nok 50 - GPS parser rejects wrong vehicle, zero coordinate pair, invalid dates and malformed frames\n  ---\n  duration_ms: 0.3756\n  type: 'test'\n  ...\n# Subtest: WebSocket fallback preserves authentication callback, polls after error/close and cleans up\nok 51 - WebSocket fallback preserves authentication callback, polls after error/close and cleans up\n  ---\n  duration_ms: 116.2031\n  type: 'test'\n  ...\n# Subtest: Efficiency chart describes all V15 terminal statuses\nok 52 - Efficiency chart describes all V15 terminal statuses\n  ---\n  duration_ms: 1.238\n  type: 'test'\n  ...\n# Subtest: Efficiency table describes returned stops without claiming service time\nok 53 - Efficiency table describes returned stops without claiming service time\n  ---\n  duration_ms: 0.4446\n  type: 'test'\n  ...\n1..53\n# tests 53\n# suites 0\n# pass 53\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 610.9055\n",
+      "stderr": ""
+    }
+  ],
+  "testSummary": {
+    "tests": 53,
+    "pass": 53,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "sourceHashesAfter": {
+    "web-admin/src/services/analyticsTypes.ts": "5392c0902c574fa1f0768de9c1b3858a231ef67c4ddabc02230e85b60f243bd7",
+    "web-admin/src/components/EfficiencyTable.tsx": "e0afa9bcfc32320c7869aa3fd65ad44438e38629ac179eb67f7d836a6de6312c",
+    "web-admin/src/pages/BusinessIntelligence.tsx": "cf4ec759a1ce5c5e18fd2dc0157dbd030929b476413fd50852293cf9703d8ea2",
+    "web-admin/src/utils/analytics.ts": "1a2ab178f78b1aa0fda6b96e553e77a3fa6d5f4134ef38ff9a816b3bd2d3a7a5",
+    "web-admin/tests/gps-quality.test.mjs": "a18e735d87e7d8e5bdb7ddd2a46c16a03fbf701c6c55e146ba5ce7bc1959590d",
+    "tools/control_actualizacion/analytics_gps_contract.json": "7cccf3276bea2b54db2124131c28d87361e5f761a32a3d1082eda0facc15fc13",
+    "src/main/java/com/ecoroute/backend/domain/model/analytics/AnalyticsModels.java": "ba6f926c3137bdc945bbc3dde72658df4353ccac8b67bf9ca196f7845c3bf985",
+    "web-admin/src/components/AnalyticsChart.tsx": "79b3bd825517465321ef4c78113050893b49d3b60381a43009bc96532d8c876e",
+    "web-admin/src/components/Operations.tsx": "8f5b3a36b5cb3a182417b0583afe2cdb94b4abc13c1d2630ebde5c5473d55420",
+    "web-admin/src/utils/operation.ts": "d8bd97d9a025f846a777fe5da37f61c7f33a3f5215583bc9f4790a15f9edabf6",
+    "web-admin/tsconfig.app.json": "922bc5bfb41bdc0768023b2487d54b3ae23c587d999024d4f32cde879ae6f4d8",
+    "web-admin/tsconfig.node.json": "c3dd0fb522feba3596713f51b95bd53d781d845d24aedbfa2ac093d8b39c5120"
+  },
+  "sourcesUnchangedDuringChecks": true,
+  "finishedAt": "2026-10-22T20:23:27-05:00"
+}

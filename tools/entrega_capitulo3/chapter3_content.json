@@ -1,0 +1,2347 @@
+{
+  "schemaVersion": "1.0",
+  "title": "CAPÍTULO 3. DESARROLLO",
+  "project": "EcoRoute · Grupo MICOTRANS",
+  "asOf": "2026-10-27",
+  "renderContract": {
+    "sectionTitles": "3.1–3.8; preservar numeración y estilo del documento principal",
+    "paragraphs": "intro y blocks.kind=paragraph",
+    "headings": "blocks.kind=heading",
+    "tables": "headers y rows; celdas de texto",
+    "images": "file relativo a la raíz, PNG; SVG editable homónimo",
+    "code": "extracto literal del archivo actual entre start y end inclusivos; explanation acompaña al extracto",
+    "useCases": "Los 18 casos se integran en 3.1 en el orden de useCaseIds. Cada caso contiene flujo numerado y alternativas; no duplicar todo el catálogo como anexo."
+  },
+  "sections": [
+    {
+      "title": "3.1 Casos de uso",
+      "intro": [
+        "Los casos de uso describen cómo EcoRoute apoya los procesos P01–P09 de Grupo MICOTRANS. El recorrido principal conserva el mismo pedido desde su registro sin ruta hasta la confirmación comercial, asignación, aprobación del plan, aceptación del conductor, despacho, resultado de entrega y análisis. La numeración CU identifica esta especificación del capítulo; no reemplaza la numeración de requerimientos.",
+        "Se distinguen responsabilidades de negocio y permisos técnicos. La jefatura revisa decisiones de salida y cierre; para ejecutarlas en la aplicación requiere una cuenta ADMIN autorizada. El operador o dispatcher prepara y coordina la jornada, y el conductor ejecuta sus propias paradas. Keycloak es un sistema externo de soporte de identidad; EcoRoute constituye el límite del sistema y no se incorpora como actor humano."
+      ],
+      "blocks": [
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Actores, alcance y trazabilidad"
+        },
+        {
+          "kind": "table",
+          "headers": [
+            "Actor o participante",
+            "Interacción y límite"
+          ],
+          "rows": [
+            [
+              "Operador logístico / dispatcher",
+              "Registra solicitudes, declara condiciones, planifica y despacha; coordina incidencias. ADMIN o DISPATCHER según operación."
+            ],
+            [
+              "Jefatura / administrador autorizado",
+              "Aprueba planes, cierra casos, consulta BI y verifica acciones. ADMIN es permiso técnico; no acredita el nombramiento empresarial."
+            ],
+            [
+              "Conductor",
+              "Consulta ruta propia, acepta hoja, remite GPS, registra POD o no entrega; rol DRIVER y vínculo activo."
+            ],
+            [
+              "Keycloak",
+              "Soporte externo OIDC y administración de identidad; conserva una base H2 independiente."
+            ],
+            [
+              "Cliente, receptor y proveedor",
+              "Participan en acuerdos, recepción o adquisiciones humanos; no se acredita un portal propio para ellos."
+            ]
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "El catálogo Excel contiene 81 RF numerados del 01 al 81. La auditoría histórica contiene esos 81 RF y 54 RNF, por lo que sus 135 filas no deben interpretarse como 135 RF. No se confirma un total de 79 en las fuentes consultadas. La vinculación de cada caso se realiza por el enunciado verificable y se advierten diferencias entre el levantamiento y el código vigente. En particular, RF-19 describe asignación durante el registro, mientras createOrder rechaza un routeId inicial."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Las funciones posteriores de confirmación comercial, aprobación y aceptación, sincronización offline, resolución de incidencias y acciones de mejora tienen trazabilidad a procesos, endpoints y SQL, pero no reciben un número RF nuevo inventado. Un vínculo funcional parcial se identifica como tal y no constituye prueba de cumplimiento integral."
+        },
+        {
+          "kind": "image",
+          "file": "docs/entrega_capitulo3/diagramas/01_casos_uso_planificacion.png",
+          "caption": "Casos de uso de acceso, recursos, pedido y planificación. Keycloak aparece fuera de EcoRoute como soporte externo."
+        },
+        {
+          "kind": "image",
+          "file": "docs/entrega_capitulo3/diagramas/02_casos_uso_ejecucion.png",
+          "caption": "Casos de uso de despacho, ejecución, incidencias y evaluación. Las asociaciones indican participación, no orden temporal."
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Especificación de los casos CU-01 a CU-18"
+        },
+        {
+          "kind": "paragraph",
+          "text": "Las fichas siguientes detallan actor, precondiciones, flujo básico, alternativas y resultado. Sus referencias al código apuntan a símbolos y líneas actuales; la evidencia observada se limita al ensayo local indicado."
+        }
+      ],
+      "useCaseIds": [
+        "CU-01",
+        "CU-02",
+        "CU-03",
+        "CU-04",
+        "CU-05",
+        "CU-06",
+        "CU-07",
+        "CU-08",
+        "CU-09",
+        "CU-10",
+        "CU-11",
+        "CU-12",
+        "CU-13",
+        "CU-14",
+        "CU-15",
+        "CU-16",
+        "CU-17",
+        "CU-18"
+      ]
+    },
+    {
+      "title": "3.2 Arquitectura de software",
+      "intro": [
+        "EcoRoute se implementa como un backend Java 17 con Spring Boot 3.5.8, un panel React 19 y una aplicación Flutter. El backend es un único proceso modular organizado en dominio, aplicación e infraestructura. Las dependencias de persistencia, identidad, mensajería, archivos y ruteo operan fuera de ese proceso; no se describen como microservicios propios de negocio.",
+        "La arquitectura sigue el enfoque de puertos y adaptadores: los contratos del dominio expresan operaciones de negocio y persistencia; los servicios de aplicación coordinan reglas y los adaptadores materializan las llamadas HTTP, SQL o SDK. Se documentan los acoplamientos concretos que aún existen para representar la implementación real."
+      ],
+      "blocks": [
+        {
+          "kind": "image",
+          "file": "docs/entrega_capitulo3/diagramas/03_arquitectura_local.png",
+          "caption": "Ejecución local de referencia: React/Vite, Java y Flutter nativos; PostgreSQL, Redis, Keycloak, LocalStack y OSRM en Docker."
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Organización del backend y acceso a datos"
+        },
+        {
+          "kind": "paragraph",
+          "text": "domain/model contiene records como Order, Route y DeliveryProof y reglas como OrderLifecycle. domain/ports/in declara acciones, por ejemplo CreateOrderUseCase y AssignOrderUseCase; domain/ports/out define OrderRepository, RoutingPort y contratos de workflow, operaciones y analítica. application/usecases implementa los casos principales y application/services coordina revisión comercial, incidencias, indicadores, documentos y servicios de integración. infrastructure/input recibe REST y WebSocket; infrastructure/output implementa persistencia y ruteo."
+        },
+        {
+          "kind": "paragraph",
+          "text": "WebFlux utiliza Mono para cero o un resultado y Flux para secuencias. R2DBC ejecuta la persistencia operativa reactiva; Flyway usa JDBC para evolucionar el esquema al arranque. Esta coexistencia no significa que las consultas operativas se hagan mediante JPA o Hibernate. Las anotaciones transaccionales de servicios agrupan cambios SQL reactivos, por ejemplo estado, historial y outbox, pero no convierten una subida S3 ni una modificación de Keycloak en una transacción distribuida."
+        },
+        {
+          "kind": "paragraph",
+          "text": "El diseño no es una separación tecnológica absoluta. BusinessWorkflowController y BusinessOperationsController llaman directamente a servicios de aplicación; CreateDeliveryProofUseCaseImpl utiliza S3Service y NotificationService concretos. Esos puntos se muestran en componentes y se reconocen como decisiones de implementación, sin sustituirlos por interfaces inexistentes."
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Clientes y estado de presentación"
+        },
+        {
+          "kind": "paragraph",
+          "text": "El panel usa funciones de React, hooks y servicios TypeScript con Axios. AuthProvider obtiene identidad efectiva del backend; ProtectedRoute aplica navegación por roles. useQuery identifica cada consulta por URL, ámbito y revisión, cancela la petición anterior mediante AbortController y evita mostrar respuestas de otro filtro. Las páginas implementan carga, resultado vacío, error recuperable y recarga. El backend sigue siendo la autoridad de permisos y estado."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Flutter organiza funcionalidades por presentación, dominio y datos. BLoC recibe eventos y emite estados de carga, error y resultado; GetIt compone dependencias y Dio realiza HTTP. No toda acción sigue exactamente la misma cadena: RoutesPage._accept llama al RouteRemoteDataSource registrado en GetIt. ProofSync es un ChangeNotifier con observación del ciclo de vida y cola privada por cuenta. Atribuir esas acciones a un BLoC inexistente impediría seguir el código real."
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Integraciones y configuración local"
+        },
+        {
+          "kind": "table",
+          "headers": [
+            "Componente",
+            "Función y separación"
+          ],
+          "rows": [
+            [
+              "PostgreSQL 14",
+              "Pedidos, rutas, recursos, POD, auditoría y vistas; host 5433, puerto interno 5432."
+            ],
+            [
+              "Keycloak 23.0.0",
+              "Realm ecoroute; OIDC/JWT; H2 de identidad en volumen propio. No comparte tablas con la base de negocio."
+            ],
+            [
+              "Redis 7",
+              "Pub/Sub de posiciones y marcas de revocación por subject; puerto host 16379 en el perfil IDE."
+            ],
+            [
+              "LocalStack 3.8",
+              "Emula S3 y SQS; HTTP 4566. No acredita uso efectivo de AWS en producción."
+            ],
+            [
+              "OSRM / mapa de Perú",
+              "Orden sugerido de visita, geometría, distancia y duración de plan; HTTP 5000. No incorpora tráfico actual."
+            ],
+            [
+              "Servicios cartográficos de cliente",
+              "Teselas y geocodificación dependen de servicios externos; requieren conectividad y pueden fallar."
+            ]
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "En el ensayo del 26 de octubre, Java se inició con Gradle y perfiles local,ide; Vite atendió el panel en 3000 y Flutter ejecutó un APK debug en el emulador. Los contenedores de aplicaciones estaban detenidos y las cinco dependencias permanecían activas. Los tres espacios de trabajo del IDE permitían adjuntar depuradores a procesos existentes. Esta topología observada convive con Dockerfile y Compose para otro modo local de arranque."
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Identidad y autorización de extremo a extremo"
+        },
+        {
+          "kind": "paragraph",
+          "text": "El panel usa Authorization Code con PKCE S256. El móvil actual solicita credenciales con password grant al cliente mobile-app y después exige /session/me para validar DRIVER y vínculo activo. El backend valida firma, emisor y vencimiento del JWT; extrae roles de realm_access y consulta Redis para revocación. OperationalAccess deriva el conductor desde el subject, comparado con drivers.external_id. Ese campo varchar representa un enlace lógico, sin FK hacia Keycloak."
+        },
+        {
+          "kind": "paragraph",
+          "text": "El handshake de /ws/gps está permitido en la cadena HTTP, pero GpsWebSocketHandler exige token y vehículo en el primer frame antes de publicar posiciones. La autorización de objetos se añade a la comprobación de rol; conocer un id no concede acceso. La configuración y las pruebas locales no acreditan TLS productivo, SLA, alta disponibilidad ni políticas empresariales de seguridad aprobadas."
+        }
+      ]
+    },
+    {
+      "title": "3.3 Diagrama de componentes",
+      "intro": [
+        "El diagrama permite seguir una acción desde el formulario hasta su efecto persistido y diferenciar componentes propios de dependencias externas. Los nombres corresponden a clases, paquetes y clientes reales. Las flechas expresan uso de un contrato o servicio, sin sugerir que cada caja se despliega por separado."
+      ],
+      "blocks": [
+        {
+          "kind": "image",
+          "file": "docs/entrega_capitulo3/diagramas/04_componentes_hexagonales.png",
+          "caption": "Componentes reales de presentación, entradas, aplicación, dominio, adaptadores y servicios externos."
+        },
+        {
+          "kind": "table",
+          "headers": [
+            "Responsabilidad",
+            "Componentes principales",
+            "Resultado observable"
+          ],
+          "rows": [
+            [
+              "Pedidos y planificación",
+              "OrderController; OrderUseCasesImpl; RouteController; RouteUseCasesImpl",
+              "Creación PENDING, asignación del mismo id, revisión previa y despacho en cascada."
+            ],
+            [
+              "Revisión de negocio",
+              "BusinessWorkflowController; BusinessWorkflowService; BusinessWorkflowPort; R2dbcBusinessWorkflowAdapter",
+              "Condiciones comerciales y aprobación/aceptación persistidas; invalidación ante cambios."
+            ],
+            [
+              "Ejecución y POD",
+              "DeliveryProofController; CreateDeliveryProofUseCaseImpl; S3Service; ProofIntegrityPort",
+              "Estado DELIVERED, evidencia, hashes, timestamps, historial y evento outbox."
+            ],
+            [
+              "Excepciones y mejora",
+              "BusinessOperationsController; BusinessOperationsService; BusinessOperationsPort",
+              "Incidencia resuelta, nuevo intento vinculado o acción con resultado verificado."
+            ],
+            [
+              "Analítica",
+              "DashboardController; ReportController; DashboardService; AnalyticsQueryPort; R2dbcAnalyticsAdapter",
+              "Agregados y métricas con filtros, calidad, metas e historial."
+            ],
+            [
+              "Identidad y acceso",
+              "SecurityConfig; OperationalAccess; KeycloakAdministration; RevocableJwtConfiguration",
+              "Identidad efectiva, permisos de objeto y revocación."
+            ],
+            [
+              "Seguimiento y avisos",
+              "GpsController; GpsWebSocketHandler; NotificationService; DeliveryEventWorker",
+              "Posiciones autorizadas, historial GPS y notificación de entrega deduplicada."
+            ]
+          ]
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Secuencia de persistencia y límites de consistencia"
+        },
+        {
+          "kind": "paragraph",
+          "text": "En el registro de un POD, la entrada valida acceso al pedido y la aplicación exige IN_TRANSIT. Antes de confirmar SQL se suben las imágenes a S3 emulado; se guardan sus referencias, integridad y estado del pedido. NotificationService escribe el evento en delivery_outbox dentro del flujo transaccional. DeliveryEventWorker publica mensajes pendientes a SQS y consume la cola para insertar notifications; la unicidad por pedido/tipo evita duplicar una notificación confirmada."
+        },
+        {
+          "kind": "paragraph",
+          "text": "El publicador consulta lotes con FOR UPDATE SKIP LOCKED y registra intentos, hora de envío y error. La mensajería tiene reintentos y consumo idempotente; no se afirma entrega exactamente una vez del transporte. Un fallo después de subir una imagen y antes de confirmar SQL puede dejar un objeto sin referencia: las transacciones SQL no deshacen la operación remota."
+        },
+        {
+          "kind": "paragraph",
+          "text": "La durabilidad del emulador se atiende mediante el respaldo de bytes originales local_evidence_backups cuando el perfil lo habilita. La lectura S3 puede recuperarlos si el catálogo del emulador pierde la referencia. Este soporte local no equivale a una copia de seguridad productiva ni demuestra persistencia nativa de S3. Se conserva fuera del ERD de negocio, pero se documenta como componente técnico."
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Contratos de cambio entre componentes"
+        },
+        {
+          "kind": "paragraph",
+          "text": "La modificación comercial y la reasignación de pedidos invalidan la revisión de salida. El dispatcher no puede resolver ese bloqueo iniciando otra vez la misma ruta: debe recuperar confirmación, aprobación y aceptación vigentes. El retorno desde una incidencia utiliza un pedido nuevo de intento y guarda order_attempts; de esa forma el análisis conserva la no entrega original. Estos contratos conectan P01, P02, P03 y P04 sin duplicar silenciosamente la solicitud."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Las dependencias operativas se resuelven con inyección de Spring o GetIt, pero la composición no demuestra que todos los adaptadores estén disponibles. El diagnóstico requiere comprobar HTTP autorizado, conectividad a PostgreSQL/Redis, realm y cliente de identidad, objetos y cola local, y datos OSRM. La prueba de cada componente debe conservar su alcance."
+        }
+      ]
+    },
+    {
+      "title": "3.4 Diagrama de clases",
+      "intro": [
+        "Las clases de dominio son records Java con datos inmutables y reglas de transición explícitas. Los objetos de persistencia usan anotaciones de Spring Data Relational. Se separan dos vistas: las asociaciones del dominio y sus representaciones SQL, y la colaboración entre contrato de caso de uso, implementación y repositorio."
+      ],
+      "blocks": [
+        {
+          "kind": "image",
+          "file": "docs/entrega_capitulo3/diagramas/05_clases_dominio_persistencia.png",
+          "caption": "Records de dominio, asociaciones por identificadores y entidades R2DBC. La multiplicidad describe el vínculo persistente, no una colección ORM."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Order declara id, trackingNumber, routeId, status, receptor, dirección, coordenadas, prioridad, ventanas y timestamps. withAssignment conserva la identidad y reconstruye el record con la ruta y condición nuevas; withStatus reutiliza ese procedimiento. Route contiene conductor, vehículo, fecha, condición, horas y distancia de plan. La geometría y la duración del recorrido se escriben mediante operaciones específicas del repositorio; no son atributos declarados del record Route."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Un conductor y un vehículo pueden participar en varias rutas históricas, aunque los índices parciales impiden más de una ruta activa por recurso y fecha. Un pedido puede carecer de ruta al nacer. Cada DeliveryProof pertenece a un pedido, y la restricción UNIQUE de order_id permite como máximo una prueba persistida por pedido. BusinessWorkflow.Confirmation y Review son records anidados reales, con clave de pedido o ruta, que representan revisión comercial y aprobación/aceptación."
+        },
+        {
+          "kind": "image",
+          "file": "docs/entrega_capitulo3/diagramas/06_clases_servicios_repositorios.png",
+          "caption": "Dependencias de creación de pedido: controlador, puerto de entrada, servicio, puerto de salida, adaptador y repositorio reactivo."
+        },
+        {
+          "kind": "paragraph",
+          "text": "OrderController recibe CreateOrderUseCase, cuya realización es OrderUseCasesImpl. El servicio depende de OrderRepository; R2dbcOrderRepository implementa ese puerto y delega en SpringDataOrderRepository, que opera OrderEntity. Los mappers traducen entre record y entidad. Las interfaces expresan capacidades, mientras los sufijos Impl o Adapter identifican implementaciones; no implican por sí solos otra unidad de despliegue."
+        },
+        {
+          "kind": "paragraph",
+          "text": "OrderLifecycle concentra la definición de estados terminales y la validación manual. DELIVERED, FAILED y RETURNED son terminales. La entrega exitosa solo se registra mediante POD; la transición manual exige motivo para no entrega y rechaza la reapertura. BusinessOperationsService crea un pedido distinto si se autoriza RETRY o REPLAN. Esa relación es asociación histórica de intentos, no modificación del objeto original."
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Correspondencia entre clases, campos y reglas"
+        },
+        {
+          "kind": "table",
+          "headers": [
+            "Elemento real",
+            "Decisión documentada"
+          ],
+          "rows": [
+            [
+              "BusinessWorkflow.Confirmation.complete()",
+              "Devuelve la conjunción de aceptación de cliente, verificación de dirección y cobertura. No certifica una firma del cliente."
+            ],
+            [
+              "BusinessWorkflow.Review",
+              "Conserva aprobación y aceptación diferenciadas, sus actores y fechas, carga y nota."
+            ],
+            [
+              "BusinessOperations.Incident / Improvement",
+              "Records de operaciones que representan resolución, intento y ciclo de mejora sin clases inventadas."
+            ],
+            [
+              "AnalyticsModels.Kpi.of(...)",
+              "Calcula porcentaje a dos decimales, desviación respecto a meta y estado NO_DATA/NO_TARGET/MET/BELOW_TARGET."
+            ],
+            [
+              "DeliveryProofEntity",
+              "Representa datos POD de R2DBC; los metadatos de integridad adicionales se escriben a través de ProofIntegrityPort."
+            ]
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "La representación evita incluir todas las clases del repositorio en una única imagen ilegible. Las vistas muestran nueve y siete elementos de colaboración, respectivamente, y el catálogo de funciones del apartado 3.7 completa los enlaces a archivos y líneas. No se dibujan métodos de una clase KpiReportService porque el cálculo actual reside en DashboardService y AnalyticsModels."
+        }
+      ]
+    },
+    {
+      "title": "3.5 Modelamiento de base de datos",
+      "intro": [
+        "La base operativa usa PostgreSQL 14 y evoluciona con Flyway. Existen quince archivos de migración entre V1 y V16, con salto de V11; ese salto no se rellena con un script supuesto. El modelo de negocio conserva 26 tablas, cuatro vistas y 27 claves foráneas físicas. Keycloak mantiene su identidad en una H2 independiente y no forma parte de este esquema.",
+        "El diccionario de partida procede del catálogo físico exportado para V15. Se contrastó con los SQL actuales: V16 agrega una función de calidad GPS y nueve columnas al final de analytics_route_facts, sin agregar tablas o FK de negocio. La actualización documental no se presenta como una nueva extracción del catálogo en vivo."
+      ],
+      "blocks": [
+        {
+          "kind": "image",
+          "file": "docs/entrega_capitulo3/diagramas/07_erd_global_v16.png",
+          "caption": "Inventario global V1–V16: 26 tablas y cuatro vistas. Los detalles siguientes y el registro de relaciones complementan los campos resumidos."
+        },
+        {
+          "kind": "image",
+          "file": "docs/entrega_capitulo3/diagramas/08_relaciones_erd_v16.png",
+          "caption": "Las 27 FK físicas del modelo; se explicita la multiplicidad sin inventar relaciones por coincidencia de nombres."
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Entidades y separación de responsabilidades"
+        },
+        {
+          "kind": "table",
+          "headers": [
+            "Grupo",
+            "Objetos",
+            "Uso en el sistema"
+          ],
+          "rows": [
+            [
+              "Recursos y planificación",
+              "drivers, vehicles, routes, route_dispatch_reviews",
+              "Identificación del recurso, reserva diaria, plan y revisión de salida."
+            ],
+            [
+              "Datos de solicitud y entrega",
+              "orders, order_business_data, delivery_proofs, order_status_history",
+              "Pedido, condiciones comerciales, evidencia e historial de resultados."
+            ],
+            [
+              "Detalle y catálogo",
+              "order_items, products, hubs",
+              "Estructuras de detalle y apoyo; su presencia en SQL no demuestra un formulario CRUD operativo para cada tabla."
+            ],
+            [
+              "Excepciones e intentos",
+              "incidents, order_attempts",
+              "Motivos, resolución y vínculo entre resultado original y nuevo intento."
+            ],
+            [
+              "Supervisión y soporte operativo",
+              "vehicle_gps_history, route_expenses, fuel_logs, vehicle_maintenance_logs, driver_contracts, driver_shifts",
+              "Telemetría y estructuras auxiliares. No se atribuyen a todas las tablas funciones de pantalla no verificadas."
+            ],
+            [
+              "Administración y mejora",
+              "purchases, improvement_actions, business_audit_events",
+              "Compras, seguimiento de acciones y auditoría polimórfica."
+            ],
+            [
+              "Eventos y notificaciones",
+              "delivery_outbox, notifications",
+              "Persistencia de eventos y avisos con restricciones de deduplicación."
+            ],
+            [
+              "Metas",
+              "analytics_goals, analytics_goal_history",
+              "Meta vigente por indicador e historial inmutable de cambios."
+            ]
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "orders.route_id es nullable y permite que P01 registre la solicitud antes de planificar. order_business_data.order_id y route_dispatch_reviews.route_id son simultáneamente PK y FK: extienden opcionalmente un pedido o ruta sin cambiar su identidad. delivery_proofs.order_id es UNIQUE. Los índices únicos parciales de rutas aseguran exclusión por conductor/día y vehículo/día solo cuando la condición es PLANNED o IN_PROGRESS. La verificación de aplicación mejora el mensaje, mientras la base resuelve la carrera entre solicitudes concurrentes."
+        },
+        {
+          "kind": "paragraph",
+          "text": "order_attempts referencia pedido original, pedido de reintento e incidencia; retry_order_id e incident_id son únicos. Las FK next_route_id y retry_order_id añadidas a incidents permiten consultar el destino de una resolución. En cambio, orders.driver_id no tiene FK física exportada, improvement_actions.metric_code no referencia analytics_goals y business_audit_events utiliza entity_type/entity_id sin una FK a cada entidad. Esas relaciones conceptuales no se dibujan como integridad referencial."
+        },
+        {
+          "kind": "image",
+          "file": "docs/entrega_capitulo3/diagramas/07_01_recursos_planificacion.png",
+          "caption": "Detalle físico reutilizado de recursos y planificación; columnas y FK no cambiadas por V16."
+        },
+        {
+          "kind": "image",
+          "file": "docs/entrega_capitulo3/diagramas/07_02_pedidos_evidencias.png",
+          "caption": "Detalle físico reutilizado de pedidos y evidencia: datos comerciales, POD, historial y eventos."
+        },
+        {
+          "kind": "image",
+          "file": "docs/entrega_capitulo3/diagramas/07_03_incidencias_mejora.png",
+          "caption": "Detalle físico reutilizado de incidencias V13, nuevos intentos, mejora y metas."
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Migraciones y soporte local"
+        },
+        {
+          "kind": "paragraph",
+          "text": "V1–V8 establecen estructura inicial, recursos, ampliaciones y geometría/secuencia. V9 incorpora restricciones de concurrencia, integridad de archivos y outbox. V10 agrega revisión comercial, revisión de despacho, intentos, mejora y auditoría. V12 crea vistas y metas; V13 amplía la resolución de incidencias; V14 respalda originales locales; V15 incluye RETURNED en paradas terminales del modelo analítico; V16 aplica criterios de calidad a la distancia GPS. No deben editarse migraciones ya aplicadas para simular un historial diferente."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Se excluyen del ERD de negocio nueve tablas corp_* de referencia heredada y seis auth_* legacy. Esas tablas pueden continuar en el SQL completo; su exclusión del dibujo no supone borrarlas. local_evidence_backups y flyway_schema_history son soporte técnico. El archivo EcoRoute_BD_Completa_V1-V16.sql es material de reconstrucción de una base vacía y no se importa encima de una base con Flyway aplicado."
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Modelo de lectura, indicadores y fórmulas actuales"
+        },
+        {
+          "kind": "image",
+          "file": "docs/entrega_capitulo3/diagramas/09_modelo_analitico_v16.png",
+          "caption": "Actualización V16 de la función de calidad y la vista de rutas; dependencias de lectura SQL sin FK ficticias."
+        },
+        {
+          "kind": "paragraph",
+          "text": "analytics_order_facts consolida pedido, ruta, conductor, datos comerciales y POD. La fecha operativa usa route_date y, sin ruta, el día de creación en America/Lima. analytics_route_facts consolida distancia planificada, tiempos reales y telemetría; analytics_goal_facts incluye los cinco códigos aunque no tengan meta, y analytics_goal_history_facts expone su historial. El rol ecoroute_bi_reader es NOLOGIN y recibe lectura de vistas; V16 restringe ejecución de su función a ese rol. Tener esos objetos no demuestra un informe Power BI publicado ni una conexión de usuario ya preparada."
+        },
+        {
+          "kind": "table",
+          "headers": [
+            "Indicador",
+            "Numerador / denominador × 100",
+            "Interpretación y límite"
+          ],
+          "rows": [
+            [
+              "IID",
+              "Pedidos iid_valid / todos los pedidos",
+              "RUC de once dígitos, nombre y dirección no vacíos y GPS válido según la vista. No incorpora por sí solo aceptación comercial."
+            ],
+            [
+              "CHR",
+              "Pedidos programados DELIVERED / pedidos con ruta",
+              "Cumplimiento de entregas de la hoja; una ruta COMPLETED no hace que CHR sea 100."
+            ],
+            [
+              "TDE",
+              "Pedidos programados con foto O firma / pedidos con ruta",
+              "Disponibilidad de evidencia digital; no equivale a POD completo ni verifica disponibilidad remota de objetos."
+            ],
+            [
+              "SUCCESS",
+              "Pedidos DELIVERED / todos los pedidos",
+              "Incluye también pedidos sin ruta en el denominador."
+            ],
+            [
+              "ONTIME",
+              "Entregas con verified_at ≤ fin de ventana / entregas DELIVERED con POD y fin de ventana evaluables",
+              "Compara contra fin de ventana, no exige verificación posterior a su inicio y no usa captured_at como hora de evaluación."
+            ]
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Kpi.of devuelve null si el denominador es cero y redondea con HALF_UP a dos decimales. La brecha es porcentaje menos meta. NO_DATA indica ausencia de denominador; NO_TARGET significa que existe medición sin meta; MET y BELOW_TARGET comparan con el objetivo configurado. La meta de una acción de mejora es un valor del caso y no configura automáticamente analytics_goals."
+        },
+        {
+          "kind": "paragraph",
+          "text": "La vista V12 considera válidos para IID y POD completo los componentes de GPS distintos de cero de forma individual; V16 usa el criterio diferente de excluir solo el par 0,0, respetando ecuador y meridiano. Se conserva esa diferencia de implementación para evitar atribuir una única regla uniforme. La existencia de hashes en SQL permite evaluar integridad declarada, pero comprobar los bytes exige leer los archivos y compararlos."
+        },
+        {
+          "kind": "paragraph",
+          "text": "La distancia de plan procede de OSRM o de la aproximación Haversine y no es la distancia recorrida. V16 calcula segmentos consecutivos dentro del intervalo real de la ruta, con LAG por ping_time,id y radio terrestre 6371.0088 km. Requiere al menos dos muestras y rechaza coordenadas inválidas, tiempos sin avance, velocidad superior al máximo o gap superior al umbral. Los valores por defecto 160 km/h y 900 s son parámetros locales de reporte, no norma de transporte ni política empresarial aprobada."
+        },
+        {
+          "kind": "paragraph",
+          "text": "actual_gps_distance_km solo existe cuando la calidad es AVAILABLE. km_per_delivery divide esa distancia por entregas DELIVERED; sin divisor válido permanece NULL. time_per_stop_min divide minutos transcurridos entre inicio y fin por todas las paradas terminales DELIVERED/FAILED/RETURNED: no mide atención individual al receptor. observed_distance_km conserva una suma no validada y no debe presentarse como recorrido real. La API usa los parámetros configurados de GpsQualityPolicy; la vista autónoma usa sus valores por defecto."
+        },
+        {
+          "kind": "paragraph",
+          "text": "En el período final de la ruta 22 se documentan IID 66.67% (2/3), CHR/TDE/SUCCESS 33.33% (1/3) y ONTIME 100% (1/1). Las metas globales permanecen sin configurar. La pausa prolongada del ensayo genera un gap GPS superior a 900 s: distancia y km por entrega se muestran no evaluables. Los minutos incluyen pausas de exposición y no justifican una conclusión de productividad real."
+        }
+      ]
+    },
+    {
+      "title": "3.6 Entorno visual de los formularios",
+      "intro": [
+        "El entorno visual comprende trece pantallas web y seis móviles. El inventario las identifica como W01–W13 y M01–M06 para seguir una acción desde el proceso hasta el componente de presentación y el endpoint. Son pantallas implementadas; varios formularios, diálogos y estados pertenecen a una misma ruta y no se contabilizan como módulos adicionales.",
+        "La sesión del 26 de octubre contiene 71 entradas de captura, incluidas vistas y depuración IDE. Esa cifra expresa evidencia visual del recorrido y no 71 pruebas funcionales distintas. La guía total de 113 páginas desarrolla todas las pantallas y su código. Las figuras de este apartado muestran el registro, la planificación, la aceptación, la operación offline, la resolución de incidencias y la lectura de indicadores."
+      ],
+      "blocks": [
+        {
+          "kind": "table",
+          "headers": [
+            "Pantalla",
+            "Ruta de interfaz",
+            "Procesos relacionados",
+            "Capturas en manifest"
+          ],
+          "rows": [
+            [
+              "W01 · Acceso web y retorno OIDC",
+              "/login",
+              "P08",
+              "2"
+            ],
+            [
+              "W02 · Inicio y navegación",
+              "/",
+              "P08, P01, P02, P04, P05, P06, P09",
+              "2"
+            ],
+            [
+              "W03 · Pedidos",
+              "/orders",
+              "P01, P02, P03",
+              "6"
+            ],
+            [
+              "W04 · Gestión de despacho",
+              "/routes",
+              "P02, P03, P07",
+              "4"
+            ],
+            [
+              "W05 · Incidencias y decisiones · P04",
+              "/incidents",
+              "P04, P02, P03",
+              "4"
+            ],
+            [
+              "W06 · Acciones de mejora · P05",
+              "/improvement-actions",
+              "P05, P09",
+              "5"
+            ],
+            [
+              "W07 · Dashboard web: panel de control logístico",
+              "/dashboard",
+              "P05, P07",
+              "2"
+            ],
+            [
+              "W08 · Conductores",
+              "/drivers",
+              "P06, P02, P08",
+              "2"
+            ],
+            [
+              "W09 · Vehículos",
+              "/vehicles",
+              "P06, P02, P09",
+              "2"
+            ],
+            [
+              "W10 · Usuarios e identidades",
+              "/users",
+              "P08, P06",
+              "2"
+            ],
+            [
+              "W11 · Compras operativas",
+              "/purchases",
+              "P09, P06, P05",
+              "2"
+            ],
+            [
+              "W12 · Reportes operativos",
+              "/reports",
+              "P05, P07",
+              "2"
+            ],
+            [
+              "W13 · Inteligencia de negocio",
+              "/bi",
+              "P05, P06, P07",
+              "11"
+            ],
+            [
+              "M01 · Acceso del conductor",
+              "/login",
+              "P08",
+              "1"
+            ],
+            [
+              "M02 · Mis rutas y hoja de reparto",
+              "/routes",
+              "P02, P03, P07",
+              "7"
+            ],
+            [
+              "M03 · Detalle de pedido y prueba de entrega POD",
+              "/orders/:id",
+              "P03, P04",
+              "10"
+            ],
+            [
+              "M04 · Historial de entregas",
+              "/history",
+              "P03, P05",
+              "1"
+            ],
+            [
+              "M05 · Perfil del conductor",
+              "/profile",
+              "P08, P06, P03",
+              "1"
+            ],
+            [
+              "M06 · Sincronización de evidencias",
+              "/sync",
+              "P03, P04",
+              "2"
+            ]
+          ]
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Criterios de interacción implementados"
+        },
+        {
+          "kind": "paragraph",
+          "text": "En Pedidos el operador distingue solicitud, datos comerciales y asignación. La selección de ruta ocurre después de crear y confirmar el pedido; no se propone crear una segunda solicitud. Gestión de despacho muestra plan, paradas, carga y estado de revisión: jefatura aprueba mediante ADMIN, el conductor acepta en su móvil y el dispatcher despacha. La disponibilidad visual de una acción no sustituye la comprobación del servidor."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Los formularios web proporcionan campos, validación y mensajes de API; las consultas con useQuery separan carga, ausencia de datos y error. Un filtro cambia el ámbito de la consulta; los gráficos y tablas no deben conservar datos de un período anterior mientras se presenta otro. En páginas reservadas, ProtectedRoute controla navegación y SecurityConfig exige el rol correspondiente al endpoint."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Mis rutas presenta mapa y paradas numeradas con geometría OSRM cuando existe. Una aproximación sin geometría se representa por segmentos directos y no se anuncia como calle recorrida. El detalle móvil recoge foto, firma, receptor/DNI y GPS. La pantalla de sincronización distingue elementos pendientes o bloqueados y confirmación remota; volver al formulario no demuestra que el servidor haya recibido el POD."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Incidencias ofrece decisiones cuyo efecto se explica junto al resultado original. Acciones de mejora diferencia registro, ejecución y verificación del resultado. Dashboard, Reportes y BI muestran valores ausentes y calidad: «No evaluable» para distancia GPS rechazada y «Sin meta» para indicadores no configurados. Un 0% medido no es equivalente a un porcentaje ausente."
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Capturas representativas del recorrido local"
+        },
+        {
+          "kind": "image",
+          "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_final_pedido_alta.jpg",
+          "caption": "Registro de pedido sin ruta; distinguir formulario y persistencia. Formulario real de alta sin ruta: datos de pedido, ventana y confirmación comercial, cancelado sin guardar."
+        },
+        {
+          "kind": "image",
+          "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_despacho_aprobado.jpg",
+          "caption": "Planificación y despacho, con revisión y aceptación antes de salir. Ruta 22 de hoy: aprobación administrativa y aceptación del conductor verificadas antes del despacho."
+        },
+        {
+          "kind": "image",
+          "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m02_aceptacion_control.png",
+          "caption": "Aceptación de la hoja por el conductor. Continuación de la revisión con observaciones y botón de aceptación."
+        },
+        {
+          "kind": "image",
+          "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m03_offline_guardado.png",
+          "caption": "POD conservado localmente antes de su confirmación remota. Evidencia de pedido48 guardada sin conexión; el estado remoto aún no está confirmado."
+        },
+        {
+          "kind": "image",
+          "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_incidencia_resolucion.jpg",
+          "caption": "Resolución administrativa de la incidencia 14: justificación del cierre, preservando el resultado del pedido fallido."
+        },
+        {
+          "kind": "image",
+          "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_final_bi_kpis.jpg",
+          "caption": "Indicadores finales del fixture sintético; explicitar numeradores y denominadores. BI final del 26/10/2026: IID66.67% (2/3), CHR/TDE/SUCCESS33.33% (1/3) y ONTIME100% (1/1). Las metas administrativas no están configuradas."
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Cobertura y guía complementaria"
+        },
+        {
+          "kind": "paragraph",
+          "text": "El manifest conserva ruta 22 y pedidos 48, 49 y 50 como identificadores del fixture sintético. Las imágenes se interpretan junto con GET/SQL final, porque una pantalla aislada no acredita integridad del servidor. business_final.json registra 33 checks PASS, con alcance declarado de corte secuencial de solo lectura y sin inspeccionar por sí mismo la cola local móvil. Las comprobaciones IDE conservan la procedencia de la observación: el verificador del corte GET/SQL no inspeccionó por sí mismo todas las capturas de depuración."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Las capturas se leen junto con la identificación de pantalla, el estado observado y la leyenda del ensayo. Cada figura enlaza su imagen original para ampliar campos y columnas. La guía complementaria conserva el conjunto de formularios y estados de las 19 pantallas, mientras que el manifiesto permite seguir su secuencia y procedencia. Una imagen del formulario no demuestra por sí sola que sus datos se hayan guardado."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Material complementario: docs/guia_total_ide/EcoRoute_Guia_Total_Recorrido_y_IDE.md y su guía de 113 páginas; tools/guia_total_ide/inventario_pantallas.json; docs/guia_total_ide/ejecucion_20261026/manifest.json. Las 19 fichas y sus referencias actuales se incluyen también en source_audit.json para facilitar el enlace entre interfaz y código."
+        }
+      ],
+      "screenIds": [
+        "W01",
+        "W02",
+        "W03",
+        "W04",
+        "W05",
+        "W06",
+        "W07",
+        "W08",
+        "W09",
+        "W10",
+        "W11",
+        "W12",
+        "W13",
+        "M01",
+        "M02",
+        "M03",
+        "M04",
+        "M05",
+        "M06"
+      ],
+      "representativeScreens": [
+        {
+          "screenId": "W03",
+          "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_final_pedido_alta.jpg",
+          "caption": "Registro de pedido sin ruta; distinguir formulario y persistencia. Formulario real de alta sin ruta: datos de pedido, ventana y confirmación comercial, cancelado sin guardar."
+        },
+        {
+          "screenId": "W04",
+          "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_despacho_aprobado.jpg",
+          "caption": "Planificación y despacho, con revisión y aceptación antes de salir. Ruta 22 de hoy: aprobación administrativa y aceptación del conductor verificadas antes del despacho."
+        },
+        {
+          "screenId": "M02",
+          "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m02_aceptacion_control.png",
+          "caption": "Aceptación de la hoja por el conductor. Continuación de la revisión con observaciones y botón de aceptación."
+        },
+        {
+          "screenId": "M03",
+          "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m03_offline_guardado.png",
+          "caption": "POD conservado localmente antes de su confirmación remota. Evidencia de pedido48 guardada sin conexión; el estado remoto aún no está confirmado."
+        },
+        {
+          "screenId": "W05",
+          "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_incidencia_generada.jpg",
+          "caption": "Resolución administrativa de la incidencia; no cambia el resultado histórico. Incidencia generada desde la no entrega móvil del pedido49, con actor registrado por el servidor."
+        },
+        {
+          "screenId": "W13",
+          "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_final_bi_kpis.jpg",
+          "caption": "Indicadores finales del fixture sintético; explicitar numeradores y denominadores. BI final del 26/10/2026: IID66.67% (2/3), CHR/TDE/SUCCESS33.33% (1/3) y ONTIME100% (1/1). Las metas administrativas no están configuradas."
+        }
+      ],
+      "screenInventorySource": "tools/guia_total_ide/inventario_pantallas.json"
+    },
+    {
+      "title": "3.7 Código fuente",
+      "intro": [
+        "El código se expone mediante funciones que materializan las decisiones de negocio. Las referencias incluyen archivo, símbolo y línea vigente; se evita copiar páginas completas que no expliquen una regla. Los extractos siguientes se obtienen literalmente de esas fuentes al integrar el capítulo y no constituyen implementaciones alternativas.",
+        "El recorrido técnico atraviesa cliente, endpoint, servicio y persistencia. Para reproducirlo se registra una solicitud PENDING sin ruta, se confirma su información, se asigna el mismo id y se exige aprobación y aceptación antes de despachar. El resultado se registra por POD o por no entrega y después se revisa en incidencias y BI."
+      ],
+      "blocks": [
+        {
+          "kind": "table",
+          "headers": [
+            "Función o símbolo real",
+            "Archivo y línea",
+            "Regla principal"
+          ],
+          "rows": [
+            [
+              "public Mono<Order> createOrder(",
+              "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java:51",
+              "Rechaza routeId inicial, establece PENDING y conserva historial de registro."
+            ],
+            [
+              "public Mono<Confirmation> confirm(",
+              "src/main/java/com/ecoroute/backend/application/services/BusinessWorkflowService.java:23",
+              "Bloquea el pedido, valida condiciones y ubicación e invalida la revisión de ruta."
+            ],
+            [
+              "public Mono<Order> assignOrder(",
+              "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java:74",
+              "Exige PLANNED y confirmación; conserva id y pasa a ASSIGNED."
+            ],
+            [
+              "public Mono<Review> approve(",
+              "src/main/java/com/ecoroute/backend/application/services/BusinessWorkflowService.java:43",
+              "Comprueba conductor, vehículo, peso y todos los pedidos confirmados."
+            ],
+            [
+              "public Mono<Review> accept(",
+              "src/main/java/com/ecoroute/backend/application/services/BusinessWorkflowService.java:63",
+              "Exige conductor correspondiente y aprobación previa."
+            ],
+            [
+              "public Mono<Route> updateRouteStatus(",
+              "src/main/java/com/ecoroute/backend/application/usecases/RouteUseCasesImpl.java:61",
+              "Comprueba revisión de salida, cascada IN_TRANSIT y reglas terminales."
+            ],
+            [
+              "public Mono<OptimizedPath> plan(",
+              "src/main/java/com/ecoroute/backend/application/services/RoutePlannerService.java:32",
+              "Intenta RoutingPort y degrada tras error o timeout de cinco segundos."
+            ],
+            [
+              "public Mono<DeliveryProof> createDeliveryProof(",
+              "src/main/java/com/ecoroute/backend/application/usecases/CreateDeliveryProofUseCaseImpl.java:41",
+              "Valida evidencia y estado; persiste integridad, entrega e historial."
+            ],
+            [
+              "Future<SubmissionResult> submit(",
+              "mobile-app/lib/core/sync/proof_sync.dart:56",
+              "Escribe la cola antes del HTTP y distingue confirmada, pendiente o rechazada."
+            ],
+            [
+              "Future<void> _drain(",
+              "mobile-app/lib/core/sync/proof_sync.dart:88",
+              "Deduplica vuelos y bloquea errores de negocio sin perder archivos."
+            ],
+            [
+              "public Mono<Order> updateStatusManual(",
+              "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java:134",
+              "Valida transición y motivo, crea incidencia y evalúa fin de ruta."
+            ],
+            [
+              "public Mono<Incident> resolve(",
+              "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java:48",
+              "Permisos de cierre; nuevo intento para RETRY/REPLAN; original inmutable."
+            ],
+            [
+              "public Mono<BiReport> getBi(",
+              "src/main/java/com/ecoroute/backend/application/services/DashboardService.java:48",
+              "Agrega fuentes y aplica fórmulas sobre numeradores/denominadores."
+            ],
+            [
+              "public static Kpi of(",
+              "src/main/java/com/ecoroute/backend/domain/model/analytics/AnalyticsModels.java:38",
+              "Null sin denominador; dos decimales; estados según dato y meta."
+            ],
+            [
+              "public Mono<Improvement> createAction(",
+              "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java:105",
+              "Valida responsable, fecha, indicador y valores."
+            ],
+            [
+              "public Mono<Improvement> updateAction(",
+              "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java:116",
+              "Exige ADMIN y resultado para VERIFIED; no exige alcanzar meta."
+            ],
+            [
+              "export async function redirectToKeycloakLogin",
+              "web-admin/src/services/keycloak.ts:38",
+              "Gestiona autenticación de panel con proveedor externo."
+            ],
+            [
+              "export function useQuery",
+              "web-admin/src/hooks/useQuery.ts:6",
+              "Cancela petición previa y evita datos de otro filtro."
+            ],
+            [
+              "Future<void> _accept(",
+              "mobile-app/lib/features/routes/presentation/pages/routes_page.dart:162",
+              "Llama al DataSource real por GetIt, sin inventar paso BLoC."
+            ],
+            [
+              "public Mono<Void> roles(",
+              "src/main/java/com/ecoroute/backend/infrastructure/security/KeycloakAdministration.java:68",
+              "Actualiza Keycloak, valida vínculo y revoca sesiones."
+            ]
+          ]
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Registro, confirmación y conservación de identidad"
+        },
+        {
+          "kind": "code",
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+          "start": 51,
+          "end": 64,
+          "anchor": "public Mono<Order> createOrder(",
+          "explanation": "La guarda inicial impide registrar el pedido ya asociado a ruta. PENDING identifica la solicitud en revisión; el flujo autorizado continúa con confirmación y asignación."
+        },
+        {
+          "kind": "code",
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+          "start": 74,
+          "end": 94,
+          "anchor": "public Mono<Order> assignOrder(",
+          "explanation": "El bloqueo de ruta y pedido acompaña la validación de planificación. En la continuación del método se exige requireConfirmed, se invalidan revisiones y se guarda order.withAssignment con el mismo id."
+        },
+        {
+          "kind": "paragraph",
+          "text": "La confirmación comercial exige nota descriptiva y RUC de once dígitos si se informa; completar las tres declaraciones requiere ubicación válida. Cambiar la ventana de entrega antes de despachar exige fecha vigente y motivo, revoca customerAccepted e invalida el plan. De este modo el código no conserva una aprobación emitida para condiciones distintas. La consulta posterior debe confirmar que no se creó otra solicitud."
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Despacho y estados terminales"
+        },
+        {
+          "kind": "code",
+          "file": "src/main/java/com/ecoroute/backend/domain/model/OrderLifecycle.java",
+          "start": 12,
+          "end": 28,
+          "anchor": "public static void validateManual(",
+          "explanation": "La entrega exitosa no se registra con un PATCH manual: requiere POD. El método rechaza reapertura de resultados terminales y limita transiciones y motivos de no entrega."
+        },
+        {
+          "kind": "paragraph",
+          "text": "RouteUseCasesImpl exige requireDispatchReview antes de IN_PROGRESS y valida que existan pedidos, que no estén cerrados y que sus coordenadas sean válidas. La transacción aplica la cascada de estado e historial y registra inicio. Los métodos de cierre consultan OrderLifecycle.terminal, por lo que una ruta completa puede contener fallas y devoluciones. No debe deducirse éxito de entrega desde la palabra COMPLETED."
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "POD, reintentos y efectos remotos"
+        },
+        {
+          "kind": "code",
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/CreateDeliveryProofUseCaseImpl.java",
+          "start": 41,
+          "end": 59,
+          "anchor": "public Mono<DeliveryProof> createDeliveryProof(",
+          "explanation": "La validación de coordenadas, receptor, DNI y momento de captura precede al bloqueo del pedido. Los métodos posteriores decodifican imágenes y escriben el resultado con su evidencia."
+        },
+        {
+          "kind": "code",
+          "file": "mobile-app/lib/core/sync/proof_sync.dart",
+          "start": 56,
+          "end": 71,
+          "anchor": "Future<SubmissionResult> submit(",
+          "explanation": "submit confirma primero la escritura privada. Solo después intenta sincronizar y consulta si el elemento sigue pendiente o está bloqueado; el mensaje de interfaz depende de ese resultado."
+        },
+        {
+          "kind": "paragraph",
+          "text": "La idempotencia real del POD descansa en el bloqueo del pedido, el retorno de la prueba existente para DELIVERED y la unicidad de delivery_proofs.order_id. El móvil envía además Idempotency-Key basado en orderId, pero la presencia de ese header no demuestra un almacén genérico de claves idempotentes. Los hashes se calculan sobre bytes decodificados; la carga válida admite PNG/JPEG y límites diferenciados para foto y firma."
+        },
+        {
+          "kind": "paragraph",
+          "text": "El comprobante PDF se genera con los datos de entrega y evidencia disponible. Consultar metadatos POD no prueba que el archivo sea accesible; por ello el ensayo final lee foto, firma y PDF y compara hashes de archivos. La transacción de negocio y outbox no garantiza rollback de objetos S3 previamente subidos; un diseño de consistencia eventual exige mantener esa distinción."
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Incidencias y aprendizaje administrativo"
+        },
+        {
+          "kind": "code",
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+          "start": 48,
+          "end": 63,
+          "anchor": "public Mono<Incident> resolve(",
+          "explanation": "La resolución valida motivos y permisos. RETRY/REPLAN continúan creando un intento nuevo y vinculándolo mediante order_attempts; CLOSE_FAILED/CLOSE_CASE requieren ADMIN."
+        },
+        {
+          "kind": "code",
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+          "start": 116,
+          "end": 134,
+          "anchor": "public Mono<Improvement> updateAction(",
+          "explanation": "La verificación exige resultado y paso previo por IN_PROGRESS. La comparación resultado/meta corresponde a la interpretación del análisis; el servicio no exige alcanzar la meta."
+        },
+        {
+          "kind": "paragraph",
+          "text": "La acción 8 de la prueba ilustra esa separación: VERIFIED conserva resultado 33.33 y objetivo 90, junto con una nota de limitación causal. Es revisión documentada de un ensayo por debajo del objetivo, no demostración de beneficio empresarial. La consulta de causas utiliza historial e incidencias con su fuente para evitar interpretar eventos de distinto origen como pedidos únicos."
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Indicadores y calidad del dato"
+        },
+        {
+          "kind": "code",
+          "file": "src/main/java/com/ecoroute/backend/domain/model/analytics/AnalyticsModels.java",
+          "start": 38,
+          "end": 47,
+          "anchor": "public static Kpi of(",
+          "explanation": "El porcentaje conserva numerador y denominador, devuelve null sin datos y calcula brecha respecto a una meta opcional. Un resultado sin meta no se clasifica como objetivo alcanzado."
+        },
+        {
+          "kind": "paragraph",
+          "text": "DashboardService realiza composición con Mono.zip y construye KPIs a partir de AnalyticsQueryPort. R2dbcAnalyticsAdapter proyecta explícitamente la calidad GPS y llama a analytics_route_gps_quality con parámetros configurados; así evita filtrar inadvertidamente el valor por defecto de una vista al contrato API. React y la exportación aplican la misma regla de presentación: distancia ausente si la calidad no permite reportarla."
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Validación técnica y procedencia de los resultados"
+        },
+        {
+          "kind": "paragraph",
+          "text": "La comprobación de negocio del 26 de octubre es una lectura GET/SQL secuencial después de acciones de la sesión. Verifica pedidos 48–50, ruta 22, aceptación, POD único, archivos e integridad, outbox/notificación, cierres de incidencia y acción de mejora. El JSON aclara que no escribe negocio, no ejecuta la cola móvil y no acredita por sí solo toda la interacción UI/IDE. Su resultado debe leerse con las capturas y registros de origen."
+        },
+        {
+          "kind": "paragraph",
+          "text": "Los reportes técnicos del 27 de octubre registran 106 pruebas backend: 88 aprobadas, 18 omitidas y cero fallos/errores; 62 pruebas web aprobadas; y 84 pruebas Flutter aprobadas con ocho omitidas. Los procesos devolvieron código de salida cero; Analyze, Lint y Build figuran PASS. Los reportes conservan hashes de las fuentes ensayadas y logs. Docker estaba inactivo, por lo que las pruebas omitidas no se consideran integración ejecutada. Estos resultados complementan el E2E del 26 de octubre y no acreditan una instalación limpia completa, aceptación empresarial firmada ni operación productiva."
+        },
+        {
+          "kind": "table",
+          "headers": [
+            "Comprobación 27/10",
+            "Resultado",
+            "Evidencia"
+          ],
+          "rows": [
+            [
+              "Backend",
+              "106 descubiertas: 88 PASS, 18 SKIP, 0 fallos/errores; exit 0",
+              "docs/entrega_capitulo3/quality/backend_test.json"
+            ],
+            [
+              "Web",
+              "62 PASS, 0 fallos, 0 omitidas; exit 0",
+              "docs/entrega_capitulo3/quality/web_test.json"
+            ],
+            [
+              "Flutter",
+              "84 PASS, 8 SKIP, 0 fallos; exit 0",
+              "docs/entrega_capitulo3/quality/flutter_test.json"
+            ],
+            [
+              "Analyze / Lint / Build",
+              "PASS de controles técnicos; no equivalen a despliegue",
+              "docs/entrega_capitulo3/quality/quality_summary.json"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "title": "3.8 Manual de instalación",
+      "intro": [
+        "El procedimiento describe una instalación local de demostración y separa un entorno nuevo de uno ya configurado. La instalación nueva debe crear su configuración, infraestructura, identidad y recursos de negocio; una base vacía migrada por Flyway no contiene los conductores ni vehículos del fixture de exposición. Los identificadores de la ruta 22 y los pedidos 48–50 pertenecen únicamente a la prueba del 26 de octubre.",
+        "Los comandos se ejecutan desde la raíz del proyecto salvo indicación contraria. El 27 de octubre se revisaron fuentes y sintaxis de los preparadores y se ejecutaron pruebas de código, pero Docker estaba inactivo; no se acredita una instalación nueva completa ni la ejecución de la descarga y preparación de mapas ese día."
+      ],
+      "blocks": [
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Requisitos y puertos"
+        },
+        {
+          "kind": "paragraph",
+          "text": "Se requiere Java 17, el wrapper Gradle del proyecto, un Node compatible con Vite 7, Flutter con las dependencias declaradas, Android SDK y emulador operativo, Docker Engine/Compose y PowerShell. El proyecto exige Flutter ≥3.35 y Dart ≥3,<4 en pubspec.yaml; las versiones efectivas de la verificación se registran en quality/dependency_versions.json. Deben estar disponibles la red para dependencias y el extracto de Perú, y espacio para los datos OSRM que superan aproximadamente 1 GB tras su preparación."
+        },
+        {
+          "kind": "table",
+          "headers": [
+            "Servicio",
+            "Dirección local",
+            "Interpretación"
+          ],
+          "rows": [
+            [
+              "Panel web",
+              "http://localhost:3000",
+              "Vite nativo o panel Docker; evitar ocupar simultáneamente el puerto."
+            ],
+            [
+              "API",
+              "http://localhost:8081",
+              "REST sin prefijo /api interno; el proxy web elimina ese prefijo."
+            ],
+            [
+              "Keycloak",
+              "http://localhost:8080",
+              "Realm ecoroute y consola administrativa en sesión separada."
+            ],
+            [
+              "PostgreSQL",
+              "127.0.0.1:5433",
+              "Docker publica el 5432 interno. application-ide.yml usa IDE_DB_PORT=5433."
+            ],
+            [
+              "Redis en IDE",
+              "127.0.0.1:16379",
+              "Override docker-compose.ide.yml hacia 6379 del contenedor."
+            ],
+            [
+              "LocalStack",
+              "http://localhost:4566",
+              "S3 y SQS locales."
+            ],
+            [
+              "OSRM",
+              "http://localhost:5000",
+              "Servicio MLD con archivos de Perú preparados."
+            ],
+            [
+              "Emulador Android",
+              "http://10.0.2.2:8081 y :8080",
+              "10.0.2.2 permite llegar a los servicios del host."
+            ],
+            [
+              "Depuración Java",
+              "127.0.0.1:5005",
+              "Adjuntar al proceso ya iniciado con el script IDE."
+            ]
+          ]
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Instalación nueva: configuración y mapas"
+        },
+        {
+          "kind": "paragraph",
+          "text": "1. Conservar la estructura del proyecto y comprobar los requisitos. Ejecutar node tools/entrega_capitulo3/init_local_env.mjs. El helper crea .env desde .env.example solo si no existe y genera aleatoriamente KEYCLOAK_ADMIN_CLIENT_SECRET; si existe, lo conserva. No mostrar el secreto ni reemplazarlo por un valor del informe. La configuración de demostración no constituye configuración productiva."
+        },
+        {
+          "kind": "paragraph",
+          "text": "2. Preparar los mapas si infra/osrm no contiene una preparación compatible: powershell -NoProfile -File tools/entrega_capitulo3/Prepare-OsrmPeru.ps1. El preparador descarga peru-latest.osm.pbf de Geofabrik y ejecuta osrm-extract con perfil car, osrm-partition y osrm-customize con la imagen osrm/osrm-backend, la misma del Compose. El extracto es de aproximadamente 245 MB según la referencia consultada el 27/10; el tamaño puede cambiar. Los archivos generados de más de 1 GB no forman parte de la entrega de fuentes."
+        },
+        {
+          "kind": "paragraph",
+          "text": "El script conserva una preparación marcada como lista, rechaza la regeneración si ya encuentra archivos OSRM y no elimina recursivamente ni sobrescribe mapas previos. Registra imagen, algoritmo MLD y SHA256 del PBF. Si detecta una descarga parcial o datos de procedencia distinta, revisar ese estado antes de repetir en un directorio adecuado; no borrar los datos para forzar una demostración. La página de origen es https://download.geofabrik.de/south-america/peru.html. La preparación fue revisada, pero no ejecutada en la sesión del 27 de octubre."
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Instalación nueva: infraestructura e identidad"
+        },
+        {
+          "kind": "paragraph",
+          "text": "3. Iniciar solo las dependencias: docker compose -f docker-compose.yml -f docker-compose.ide.yml up -d postgres redis keycloak localstack osrm. Consultar docker compose -f docker-compose.yml -f docker-compose.ide.yml ps y esperar disponibilidad de PostgreSQL, Keycloak, Redis, LocalStack y OSRM. El servicio LocalStack monta infra/localstack/init-aws.sh para inicializar bucket y colas de forma idempotente. Un contenedor iniciado no demuestra que el realm o el mapa estén listos."
+        },
+        {
+          "kind": "paragraph",
+          "text": "4. Solo en una instalación nueva de Keycloak, ejecutar powershell -NoProfile -File setup-keycloak.ps1 para crear el realm, clientes, roles y cuentas de demostración. El script restablece contraseñas mediante set-password incluso si una cuenta ya existe: no se ejecuta como mantenimiento de un entorno ya configurado. Si el realm y usuarios ya existen, se omite este paso y se conserva su configuración. Las contraseñas de ensayo no se incorporan al informe como secretos reutilizables."
+        },
+        {
+          "kind": "paragraph",
+          "text": "5. Con el realm ecoroute disponible y .env configurado, ejecutar node tools/setup_identity_service.mjs. El script provisiona o actualiza el cliente confidencial ecoroute-operations-service usando el secreto local y concede los roles realm-management manage-users, view-users y view-realm a su cuenta de servicio. Conserva usuarios y contraseñas existentes y ajusta el cliente móvil a tokens de 600 segundos. Esos tres permisos pertenecen a la cuenta técnica; no son roles de negocio de conductor o jefatura."
+        },
+        {
+          "kind": "paragraph",
+          "text": "6. Iniciar o reiniciar el backend después de configurar el secreto para que cargue el entorno actual. En modo IDE se utiliza el script de arranque del siguiente apartado, que lee .env sin evaluarlo como código. En modo Docker, recrear el contenedor de aplicación para incorporar el secreto, por ejemplo docker compose up -d --build --force-recreate ecoroute-backend ecoroute-web-admin. Debe elegirse un solo modo de aplicación por puerto; no mantener Java/Vite y sus contenedores atendiendo simultáneamente 8081/3000. Flyway aplica las migraciones al arranque."
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Arranque con tres espacios de trabajo y depuración"
+        },
+        {
+          "kind": "paragraph",
+          "text": "7. Para el modo usado en la demostración, abrir terminales separadas y ejecutar powershell -NoProfile -File tools/guia_total_ide/Start-EcoRouteIDE.ps1 -Component Backend y powershell -NoProfile -File tools/guia_total_ide/Start-EcoRouteIDE.ps1 -Component Web. El primero selecciona Java 17 y usa Gradle bootRun con perfiles local,ide y depuración JVM; el segundo arranca Vite en 127.0.0.1:3000 con strictPort. En una preparación nueva del panel ejecutar antes npm ci dentro de web-admin."
+        },
+        {
+          "kind": "paragraph",
+          "text": "8. Preparar Android y consultar flutter devices. Si OneDrive bloquea archivos generados, ejecutar node tools/guia_total_ide/prepare_mobile_copy.mjs | Out-Null y después powershell -NoProfile -File tools/guia_total_ide/Start-EcoRouteIDE.ps1 -Component Flutter -Device emulator-5556 -IsolatedAndroidBuild, usando el identificador real del emulador autorizado. La rama aislada verifica fuentes y compila un APK debug; no modifica la lógica del producto. La evidencia del 26/10 conserva 86 hashes de archivos para explicar la correspondencia entre original y copia temporal."
+        },
+        {
+          "kind": "paragraph",
+          "text": "El arranque normal de Flutter requiere flutter pub get dentro de mobile-app y flutter run sobre el emulador elegido con API_BASE_URL=http://10.0.2.2:8081 y KEYCLOAK_BASE_URL=http://10.0.2.2:8080. La compilación correcta no demuestra acceso al servidor: verificar sesión efectiva y datos. No desinstalar ni borrar el almacenamiento de una aplicación que conserve POD pendientes."
+        },
+        {
+          "kind": "paragraph",
+          "text": "9. Abrir EcoRoute_Backend_IDE.code-workspace y adjuntar JVM 5005 al proceso existente. Abrir EcoRoute_Web_IDE.code-workspace para depurar React con Vite ya iniciado. Para Flutter ejecutar powershell -NoProfile -File tools/guia_total_ide/Prepare-FlutterDebugger.ps1 y abrir EcoRoute_Flutter_IDE.code-workspace: la configuración Dart attach usa el archivo privado flutter_service.json con la URI HTTP del servicio, terminada en barra y sin /ws."
+        },
+        {
+          "kind": "paragraph",
+          "text": "El adaptador Dart se conecta directamente a la app ya en ejecución. Pausar, observar pila y continuar demuestra control del depurador; la barra de herramientas por sí sola no basta. Si el APK procede de la copia temporal, inspeccionar sus fuentes cargadas y su correspondencia SHA256; no hacer hot reload desde el árbol original esperando actualizar la copia. La URI autenticada y logs privados de depuración no se incluyen en capturas ni en el documento."
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Crear recursos y vincular conductor en una base nueva"
+        },
+        {
+          "kind": "paragraph",
+          "text": "10. Ingresar al panel con la cuenta ADMIN de la instalación. Crear un conductor en Conductores con datos válidos y estado activo; crear un vehículo en Vehículos con placa y capacidades. Conservar los identificadores devueltos por la base, sin suponer conductor 1 o vehículo 1. En Usuarios e identidades seleccionar la cuenta humana que usará el móvil, asignar DRIVER y vincularla al conductor recién registrado. Las cuentas se crean en Keycloak; el formulario de usuarios administra roles, habilitación y vínculo."
+        },
+        {
+          "kind": "paragraph",
+          "text": "11. Cerrar y volver a iniciar sesión cuando se cambien roles o vínculo. En el móvil comprobar que /session/me devuelve el conductor efectivo y que Mis rutas filtra su operación. Si falta el vínculo, corregirlo desde Usuarios; no insertar un driverId fijo en el cliente para evitar la denegación. En una base nueva no existen la ruta 22 ni los pedidos 48–50 del registro anterior."
+        },
+        {
+          "kind": "paragraph",
+          "text": "12. Ejecutar un recorrido mínimo nuevo: registrar pedido sin ruta; confirmar aceptación, dirección y cobertura; crear ruta; asignar el mismo pedido; revisar y aprobar con ADMIN; aceptar desde el conductor; despachar con el operador; registrar POD o no entrega; y consultar resultado, incidencia y BI. Enviar el POD sin red debe mostrar pendiente hasta confirmar recepción; FAILED/RETURNED manuales no usan esa misma cola offline."
+        },
+        {
+          "kind": "heading",
+          "level": 3,
+          "text": "Conservar datos existentes y resolver fallos de arranque"
+        },
+        {
+          "kind": "paragraph",
+          "text": "En un entorno ya configurado se conserva .env, no se repite setup-keycloak.ps1 y no se importan schema.sql, scripts populate ni EcoRoute_BD_Completa_V1-V16.sql sobre la base activa. Se inicia infraestructura/aplicación y Flyway aplica solo cambios pendientes. No usar docker compose down -v como reinicio: elimina volúmenes y datos de demostración. El SQL completo se reserva para una base vacía controlada y no sustituye el historial Flyway de una base existente."
+        },
+        {
+          "kind": "table",
+          "headers": [
+            "Síntoma",
+            "Comprobación y corrección local"
+          ],
+          "rows": [
+            [
+              "No conecta a PostgreSQL",
+              "Revisar 5433 host frente a 5432 interno, perfil local,ide y variables IDE_DB_*; no recrear el esquema para corregir un puerto."
+            ],
+            [
+              "Usuarios devuelve indisponible",
+              "Revisar cliente de servicio, tres permisos y secreto cargado; reiniciar/recrear el backend después del cambio de entorno."
+            ],
+            [
+              "DRIVER sin acceso",
+              "Confirmar cuenta habilitada, rol DRIVER, conductor activo y vínculo por subject; renovar sesión."
+            ],
+            [
+              "Sin trazado OSRM",
+              "Revisar datos MLD, imagen compatible y puerto 5000; identificar fallback Haversine y no confundirlo con recorrido vial."
+            ],
+            [
+              "POD pendiente o rechazado",
+              "Revisar M06, red y mensaje de negocio; conservar la evidencia y distinguir reintento transitorio de bloqueo."
+            ],
+            [
+              "Puerto 3000/8081 ocupado",
+              "Elegir modo IDE o aplicación Docker; verificar el dueño del puerto antes de iniciar otra instancia."
+            ]
+          ]
+        },
+        {
+          "kind": "paragraph",
+          "text": "Para aceptar la instalación deben comprobarse salud y petición autenticada, acceso por rol y propiedad, ruta aprobada/aceptada, evidencia y notificación consultables, y resultados de BI coherentes. La revisión de scripts y los tests del 27 de octubre no sustituyen esa ejecución fresca. El E2E del 26 es evidencia complementaria sobre un entorno local previamente preparado; no certifica despliegue productivo, operación empresarial ni UAT firmada."
+        }
+      ],
+      "sources": [
+        {
+          "file": "tools/entrega_capitulo3/init_local_env.mjs",
+          "anchor": "if(fs.existsSync(target))",
+          "line": 8
+        },
+        {
+          "file": ".env.example",
+          "anchor": "DB_NAME=",
+          "line": 2
+        },
+        {
+          "file": "setup-keycloak.ps1",
+          "anchor": "# EcoRoute Keycloak Setup Script",
+          "line": 1
+        },
+        {
+          "file": "tools/setup_identity_service.mjs",
+          "anchor": "for(const role of",
+          "line": 13
+        },
+        {
+          "file": "tools/entrega_capitulo3/Prepare-OsrmPeru.ps1",
+          "anchor": "param(",
+          "line": 1
+        },
+        {
+          "file": "tools/guia_total_ide/Start-EcoRouteIDE.ps1",
+          "anchor": "switch($Component)",
+          "line": 20
+        },
+        {
+          "file": "tools/guia_total_ide/Prepare-FlutterDebugger.ps1",
+          "anchor": "$ErrorActionPreference",
+          "line": 1
+        }
+      ]
+    }
+  ],
+  "useCases": [
+    {
+      "id": "CU-01",
+      "title": "Autenticar y cerrar la sesión web",
+      "processes": [
+        "P08"
+      ],
+      "actor": "Administrador u operador con perfil ADMIN o DISPATCHER",
+      "preconditions": [
+        "Realm ecoroute y cliente web-admin disponibles; URI de retorno registrada."
+      ],
+      "basicFlow": [
+        "El usuario abre Acceso e inicia la redirección al proveedor.",
+        "El cliente genera PKCE S256 y estado; Keycloak autentica y devuelve un código al callback.",
+        "exchangeCodeForTokens canjea el código con su verificador; AuthProvider consulta /session/me para obtener la identidad efectiva.",
+        "La navegación habilita únicamente las pantallas del rol; al salir se ejecuta el cierre OIDC y se limpia la sesión de la aplicación."
+      ],
+      "alternatives": [
+        "Si el retorno no corresponde al estado esperado, no se establece sesión.",
+        "Ante 401 el interceptor intenta renovar; si falla, la aplicación solicita autenticación. Esto es renovación reactiva, no anticipada al vencimiento.",
+        "La respuesta 403 conserva la denegación de acceso; ocultar un menú no sustituye la autorización del backend."
+      ],
+      "postcondition": "Sesión efectiva vinculada a un subject validado, o salida sin permisos de aplicación.",
+      "requirements": [
+        "RF-01",
+        "RF-03",
+        "RF-05",
+        "RF-06"
+      ],
+      "requirementMappingNote": "RF-03 conserva una diferencia con su enunciado original «antes de que expire»: la implementación renueva ante 401.",
+      "sources": [
+        {
+          "file": "web-admin/src/services/keycloak.ts",
+          "anchor": "export async function redirectToKeycloakLogin",
+          "line": 38
+        },
+        {
+          "file": "web-admin/src/services/keycloak.ts",
+          "anchor": "export async function exchangeCodeForTokens",
+          "line": 54
+        },
+        {
+          "file": "web-admin/src/context/AuthContext.tsx",
+          "anchor": "export function AuthProvider",
+          "line": 17
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/config/SecurityConfig.java",
+          "anchor": "public SecurityWebFilterChain securityWebFilterChain(",
+          "line": 34
+        }
+      ],
+      "evidence": "W01/W02; manifest 26/10 y security_check.json."
+    },
+    {
+      "id": "CU-02",
+      "title": "Autenticar al conductor y restaurar su identidad",
+      "processes": [
+        "P08"
+      ],
+      "actor": "Conductor con rol DRIVER",
+      "preconditions": [
+        "Cuenta habilitada en Keycloak, vinculada por subject a un conductor activo. API y cliente mobile-app configurados."
+      ],
+      "basicFlow": [
+        "El conductor introduce sus credenciales en M01.",
+        "AuthRemoteDataSourceImpl solicita access_token y refresh_token al endpoint token con grant_type=password.",
+        "La aplicación consulta /session/me usando el token; exige driverId positivo, subject y ROLE_DRIVER.",
+        "La sesión se conserva en almacenamiento seguro y se establece el ámbito de cuenta del caché y de la cola POD."
+      ],
+      "alternatives": [
+        "Credenciales incorrectas, red inaccesible o sesión incompleta producen un mensaje recuperable.",
+        "Una cuenta sin vínculo activo no recibe una identidad local elegida por el cliente; se rechaza y se intenta cerrar la sesión remota.",
+        "Restaurar credenciales locales exige revalidar la sesión efectiva; no autoriza a consultar pedidos de otra cuenta."
+      ],
+      "postcondition": "El conductor entra con su identidad efectiva y consulta sus rutas; no se presume que driverId sea 1.",
+      "requirements": [
+        "RF-02",
+        "RF-04",
+        "RF-05",
+        "RF-06"
+      ],
+      "requirementMappingNote": "El script actual configura el token móvil a 600 segundos; la observación histórica de ocho horas del Excel no describe la configuración actual.",
+      "sources": [
+        {
+          "file": "mobile-app/lib/features/auth/data/datasources/auth_remote_data_source.dart",
+          "anchor": "Future<UserModel> login(",
+          "line": 7
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/security/OperationalAccess.java",
+          "anchor": "public Mono<Long> driverId(",
+          "line": 32
+        },
+        {
+          "file": "mobile-app/lib/core/di/injection_container.dart",
+          "anchor": "GetIt.instance",
+          "line": 42
+        }
+      ],
+      "evidence": "M01/M05; el fixture usa conductor 1 solo en la sesión sintética registrada."
+    },
+    {
+      "id": "CU-03",
+      "title": "Administrar roles y vínculo de una identidad",
+      "processes": [
+        "P08",
+        "P06"
+      ],
+      "actor": "Administrador técnico autorizado",
+      "preconditions": [
+        "Sesión ADMIN; cliente confidencial ecoroute-operations-service configurado y secreto cargado por el backend. Cuenta humana existente en Keycloak."
+      ],
+      "basicFlow": [
+        "El administrador abre Usuarios e identidades y consulta las cuentas humanas.",
+        "Selecciona roles ADMIN, DISPATCHER o DRIVER; si corresponde DRIVER, elige el registro de conductor creado previamente.",
+        "IdentityController remite la operación a KeycloakAdministration, que valida el vínculo y actualiza los roles en Keycloak.",
+        "La operación revoca sesiones/tokens previos mediante el proveedor y Redis; registra el evento de auditoría. El usuario vuelve a autenticarse para obtener sus roles efectivos."
+      ],
+      "alternatives": [
+        "Si falta el secreto del cliente de servicio, la operación informa indisponibilidad; no se sustituye con auth_user_role legacy.",
+        "Se impide retirar el propio rol ADMIN y vincular un conductor ocupado por otra identidad existente.",
+        "Una cuenta técnica no se administra desde este panel; los fallos del proveedor no se interpretan como éxito."
+      ],
+      "postcondition": "Roles actualizados en la autoridad de identidad y vínculo lógico verificable con drivers.external_id.",
+      "requirements": [
+        "RF-07",
+        "RF-06"
+      ],
+      "requirementMappingNote": "RF-07 sí corresponde a asignar roles; habilitar/deshabilitar y revocar se documentan como controles actuales sin inventar nuevos números.",
+      "sources": [
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/IdentityController.java",
+          "anchor": "class IdentityController",
+          "line": 11
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/security/KeycloakAdministration.java",
+          "anchor": "public Mono<Void> roles(",
+          "line": 68
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/config/RevocableJwtConfiguration.java",
+          "anchor": "public ReactiveJwtDecoder jwtDecoder(",
+          "line": 11
+        }
+      ],
+      "evidence": "W10; inspección del código actual. La responsabilidad empresarial de autorizar un acceso precede a la acción técnica."
+    },
+    {
+      "id": "CU-04",
+      "title": "Habilitar conductor y vehículo para una jornada",
+      "processes": [
+        "P06",
+        "P09"
+      ],
+      "actor": "Administrador de recursos",
+      "preconditions": [
+        "Sesión ADMIN para los formularios web; datos de ensayo de licencia, contacto, placa y capacidad disponibles."
+      ],
+      "basicFlow": [
+        "Registra un conductor en W08 y revisa los campos obligatorios.",
+        "Registra un vehículo en W09 con placa, marca, modelo, capacidad en kg y m³ y estado activo.",
+        "Consulta el resultado persistido; modifica o desactiva el recurso cuando corresponde.",
+        "Vincula la cuenta DRIVER en Usuarios y permite que planificación seleccione ambos recursos por sus identificadores devueltos."
+      ],
+      "alternatives": [
+        "Un formato inválido se rechaza y se conserva la posibilidad de corregir.",
+        "Un conductor o vehículo inactivo no puede habilitar un nuevo despacho aunque exista en el catálogo.",
+        "Eliminar recursos referenciados puede infringir FK; una baja administrativa no se describe como borrado del historial operativo."
+      ],
+      "postcondition": "Recursos registrados y elegibles; su existencia no acredita inspección mecánica ni contrato empresarial.",
+      "requirements": [
+        "RF-09",
+        "RF-10",
+        "RF-11",
+        "RF-12",
+        "RF-13",
+        "RF-14",
+        "RF-15",
+        "RF-16"
+      ],
+      "requirementMappingNote": "El caso agrupa mantenimiento de recursos; la habilitación física de la flota sigue siendo una decisión humana.",
+      "sources": [
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/DriverUseCasesImpl.java",
+          "anchor": "class DriverUseCasesImpl",
+          "line": 14
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/VehicleUseCasesImpl.java",
+          "anchor": "class VehicleUseCasesImpl",
+          "line": 14
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/RouteUseCasesImpl.java",
+          "anchor": "public Mono<Route> createRoute(",
+          "line": 43
+        }
+      ],
+      "evidence": "W08/W09. Los formularios web se reservan a ADMIN; ciertas operaciones backend admiten también DISPATCHER."
+    },
+    {
+      "id": "CU-05",
+      "title": "Registrar y consultar un pedido sin ruta",
+      "processes": [
+        "P01"
+      ],
+      "actor": "Operador logístico con ADMIN o DISPATCHER",
+      "preconditions": [
+        "Solicitud del cliente con tracking, receptor, contacto, dirección y coordenadas revisables."
+      ],
+      "basicFlow": [
+        "Abre Pedidos y completa la solicitud, o carga un CSV y revisa la vista previa.",
+        "Corrige coordenadas cuando la geocodificación externa devuelve una ubicación ambigua.",
+        "Confirma el registro sin routeId: createOrder crea un pedido PENDING y devuelve su mismo id persistido.",
+        "Consulta el detalle y prepara la revisión comercial del caso CU-06; búsqueda y filtros de presentación ayudan a localizarlo."
+      ],
+      "alternatives": [
+        "Si se intenta crear con routeId, el servicio exige registrar y confirmar primero; no crea otra copia para resolverlo.",
+        "CSV inválido utiliza el mismo parser en vista previa e importación; la vista previa no escribe.",
+        "Campos obligatorios o formatos incorrectos generan error; un fallo de geocodificación requiere corrección y no demuestra cobertura."
+      ],
+      "postcondition": "Pedido persistido PENDING, sin ruta, con historial inicial y un identificador que se conserva durante la planificación.",
+      "requirements": [
+        "RF-17",
+        "RF-18",
+        "RF-20",
+        "RF-21",
+        "RF-22"
+      ],
+      "requirementMappingNote": "RF-19 no se atribuye a este paso: su texto de asignación durante el registro contradice la guarda actual del backend.",
+      "sources": [
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+          "anchor": "public Mono<Order> createOrder(",
+          "line": 51
+        },
+        {
+          "file": "web-admin/src/pages/Orders.tsx",
+          "anchor": "export default function Orders",
+          "line": 203
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/OrderImportService.java",
+          "anchor": "class OrderImportService",
+          "line": 11
+        }
+      ],
+      "evidence": "W03; secuencia de negocio del recorrido 26/10. No se ejecutó una nueva importación para redactar este capítulo."
+    },
+    {
+      "id": "CU-06",
+      "title": "Confirmar las condiciones comerciales y la promesa",
+      "processes": [
+        "P01"
+      ],
+      "actor": "Operador logístico autorizado",
+      "preconditions": [
+        "Pedido PENDING o ASSIGNED; ubicación válida para completar la confirmación; condiciones acordadas con el cliente."
+      ],
+      "basicFlow": [
+        "Consulta el mismo pedido y registra RUC cuando se dispone de él.",
+        "Declara aceptación del cliente, verificación de dirección y de cobertura, y una nota de al menos cinco caracteres.",
+        "BusinessWorkflowService bloquea el pedido, valida el RUC de once dígitos si fue informado y guarda order_business_data.",
+        "El servicio registra COMMERCIAL_REVIEW e invalida la revisión de la ruta afectada. Si cambia la ventana, se registra motivo y se requiere nueva aceptación antes de continuar."
+      ],
+      "alternatives": [
+        "Un RUC informado con formato incorrecto o GPS inválido impide completar la revisión.",
+        "Un pedido despachado no admite modificación comercial de este caso.",
+        "Cambiar la ventana exige inicio/fin válidos y fin futuro; se revoca customerAccepted y la aprobación anterior no habilita el despacho."
+      ],
+      "postcondition": "Confirmación comercial trazable; customerAccepted es una declaración del operador y no firma certificada del cliente.",
+      "requirements": [],
+      "requirementMappingNote": "No hay RF numerado explícito para esta revisión en el catálogo de 81; se traza a P01, SQL V10 y al servicio real. RF-17 solo cubre el registro de pedido.",
+      "sources": [
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessWorkflowService.java",
+          "anchor": "public Mono<Confirmation> confirm(",
+          "line": 23
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+          "anchor": "public Mono<Order> changeDeliveryWindow(",
+          "line": 105
+        }
+      ],
+      "evidence": "W03; order_business_data y business_audit_events. Cobertura técnica de reglas; no aceptación empresarial firmada."
+    },
+    {
+      "id": "CU-07",
+      "title": "Preparar ruta y asignar el pedido confirmado",
+      "processes": [
+        "P02"
+      ],
+      "actor": "Dispatcher u operador logístico",
+      "preconditions": [
+        "Conductor y vehículo activos; fecha seleccionada; pedido confirmado sin despacho previo."
+      ],
+      "basicFlow": [
+        "Crea una ruta PLANNED con conductor, vehículo y hora prevista.",
+        "El servidor revisa conflictos activos del día y la base aplica índices únicos parciales por conductor/fecha y vehículo/fecha.",
+        "Selecciona el pedido existente y ejecuta PATCH /orders/{id}/route.",
+        "assignOrder bloquea ruta y pedido, exige confirmación y conserva el id del pedido; lo deja ASSIGNED e invalida revisiones afectadas."
+      ],
+      "alternatives": [
+        "Si un recurso ya está reservado en una ruta PLANNED o IN_PROGRESS, la creación se rechaza incluso ante concurrencia por el índice de la base.",
+        "Una ruta que ya salió no recibe asignaciones de planificación.",
+        "Un pedido terminal o sin confirmación no se reasigna; se corrige la revisión o se tramita un nuevo intento por incidencia."
+      ],
+      "postcondition": "Ruta y pedido vinculados sin duplicar la solicitud ni alterar resultados históricos.",
+      "requirements": [
+        "RF-26",
+        "RF-27",
+        "RF-28"
+      ],
+      "requirementMappingNote": "RF-19 mantiene afinidad funcional con la asignación, pero su temporalidad «en el momento del registro» no coincide; vínculo parcial, no cumplimiento literal.",
+      "sources": [
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/RouteUseCasesImpl.java",
+          "anchor": "public Mono<Route> createRoute(",
+          "line": 43
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+          "anchor": "public Mono<Order> assignOrder(",
+          "line": 74
+        }
+      ],
+      "evidence": "W04; ruta 22 y pedidos 48–50 en la evidencia, identificadores exclusivos de ese fixture."
+    },
+    {
+      "id": "CU-08",
+      "title": "Revisar el recorrido y aprobar el plan",
+      "processes": [
+        "P02"
+      ],
+      "actor": "Jefatura logística mediante una cuenta ADMIN autorizada",
+      "preconditions": [
+        "Ruta PLANNED con pedidos confirmados y recursos activos. Peso de carga y comprobaciones humanas disponibles."
+      ],
+      "basicFlow": [
+        "Consulta el recorrido propuesto, la secuencia de paradas y la duración estimada.",
+        "El planificador intenta OSRM sobre la red vial de Perú; obtiene orden de visita y geometría cuando está disponible.",
+        "La jefatura declara capacidad, ventanas y vehículo revisados, informa peso positivo y una nota.",
+        "approve verifica peso frente a capacidad en kg, pedidos confirmados y recursos activos; persiste aprobación y evento PLAN_APPROVED."
+      ],
+      "alternatives": [
+        "Sin pedidos, con carga superior a capacidad o recurso inactivo, no se aprueba.",
+        "Si OSRM falla o vence el límite de cinco segundos, plan devuelve una aproximación Haversine sin geometría y con duración cero; debe identificarse como estimación.",
+        "Cambiar pedidos o condiciones invalida revisión y aceptación; se requiere revisar de nuevo."
+      ],
+      "postcondition": "Plan aprobado, pendiente de aceptación del conductor; no equivale a salida de la ruta.",
+      "requirements": [
+        "RF-33",
+        "RF-34",
+        "RF-35",
+        "RF-37"
+      ],
+      "requirementMappingNote": "Los RF cubren ruteo y degradación. La aprobación humana y su registro no tienen número explícito en el catálogo; no se inventa uno.",
+      "sources": [
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessWorkflowService.java",
+          "anchor": "public Mono<Review> approve(",
+          "line": 43
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/RoutePlannerService.java",
+          "anchor": "public Mono<OptimizedPath> plan(",
+          "line": 32
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/RouteUseCasesImpl.java",
+          "anchor": "private Mono<Double> calculateRouteDistance(",
+          "line": 132
+        }
+      ],
+      "evidence": "W04 y M02. La fecha y el actor de aprobación se conservan en route_dispatch_reviews."
+    },
+    {
+      "id": "CU-09",
+      "title": "Aceptar la hoja de ruta desde el móvil",
+      "processes": [
+        "P02"
+      ],
+      "actor": "Conductor asignado con rol DRIVER",
+      "preconditions": [
+        "Identidad DRIVER vinculada; ruta propia PLANNED; revisión de jefatura vigente."
+      ],
+      "basicFlow": [
+        "Abre Mis rutas del día y selecciona la jornada que le corresponde.",
+        "Consulta hoja, carga, vehículo y observaciones de revisión.",
+        "Pulsa Aceptar hoja de ruta: _accept invoca directamente RouteRemoteDataSource mediante GetIt.",
+        "El backend deriva driverId del token, comprueba correspondencia y aprobación, registra DRIVER_ACCEPTED y devuelve la revisión aceptada."
+      ],
+      "alternatives": [
+        "Sin aprobación el botón no permite continuar y el servidor también lo impide.",
+        "Otro conductor recibe denegación aunque conozca el id de ruta.",
+        "Un fallo de red no muestra aceptación remota; el conductor consulta o reintenta. Una ruta ya fuera de planificación no se acepta por este procedimiento."
+      ],
+      "postcondition": "Aceptación registrada por el servidor; aún corresponde al dispatcher iniciar el despacho.",
+      "requirements": [
+        "RF-38",
+        "RF-39",
+        "RF-41"
+      ],
+      "requirementMappingNote": "Estos RF sustentan consulta de rutas y paradas; la aceptación expresa se traza a P02 y al endpoint actual sin número RF propio.",
+      "sources": [
+        {
+          "file": "mobile-app/lib/features/routes/presentation/pages/routes_page.dart",
+          "anchor": "Future<void> _accept(",
+          "line": 162
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessWorkflowService.java",
+          "anchor": "public Mono<Review> accept(",
+          "line": 63
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/security/OperationalAccess.java",
+          "anchor": "public Mono<Long> driverId(",
+          "line": 32
+        }
+      ],
+      "evidence": "M02; business_final.json registra approved=true, accepted=true y un evento DRIVER_ACCEPTED."
+    },
+    {
+      "id": "CU-10",
+      "title": "Despachar y cerrar técnicamente la jornada",
+      "processes": [
+        "P02",
+        "P03",
+        "P07"
+      ],
+      "actor": "Dispatcher; cierre automático por reglas de resultado",
+      "preconditions": [
+        "Ruta planificada con aprobación y aceptación vigentes; todos los pedidos confirmados y con coordenadas válidas."
+      ],
+      "basicFlow": [
+        "El dispatcher inicia el despacho desde W04.",
+        "updateRouteStatus bloquea la ruta y exige requireDispatchReview, recursos activos y al menos una parada válida.",
+        "El servidor calcula y persiste plan y secuencias, cambia los pedidos a IN_TRANSIT y registra hora real de salida.",
+        "Durante la ejecución, cuando todos los pedidos alcanzan DELIVERED, FAILED o RETURNED, registra COMPLETED y hora de fin."
+      ],
+      "alternatives": [
+        "Una ruta vacía, con pedidos terminales o ubicación inválida no sale.",
+        "Solicitar la misma condición de ruta devuelve el estado existente; no permite reabrir una ruta cerrada.",
+        "COMPLETED no significa todas las entregas exitosas: basta que no existan paradas pendientes."
+      ],
+      "postcondition": "Ruta iniciada con cascada de estados o cerrada con resultados preservados y tiempos registrados.",
+      "requirements": [
+        "RF-29",
+        "RF-30",
+        "RF-31"
+      ],
+      "requirementMappingNote": "RF-31 coincide con el conjunto terminal actual. No confundir el nombre allDelivered de una variable con la regla real OrderLifecycle.terminal.",
+      "sources": [
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/RouteUseCasesImpl.java",
+          "anchor": "public Mono<Route> updateRouteStatus(",
+          "line": 61
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+          "anchor": "public Mono<Order> updateStatusManual(",
+          "line": 134
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/CreateDeliveryProofUseCaseImpl.java",
+          "anchor": "public Mono<DeliveryProof> createDeliveryProof(",
+          "line": 41
+        }
+      ],
+      "evidence": "Ruta 22 COMPLETED con un DELIVERED, un FAILED y un RETURNED; evidencia local final."
+    },
+    {
+      "id": "CU-11",
+      "title": "Registrar GPS y supervisar la ruta",
+      "processes": [
+        "P07",
+        "P03"
+      ],
+      "actor": "Conductor emisor y dispatcher supervisor",
+      "preconditions": [
+        "Sesión válida, vehículo autorizado y ruta seleccionada; permiso de ubicación del dispositivo."
+      ],
+      "basicFlow": [
+        "La aplicación toma posiciones y envía el ping de vehículo.",
+        "El backend valida acceso y persiste vehicle_gps_history; Redis difunde las posiciones al canal del vehículo.",
+        "El panel abre /ws/gps y envía el token y vehicleId en el primer frame para autenticar la suscripción.",
+        "TrackingMap combina posición, paradas y trazado; el camino pendiente puede recalcularse desde coordenadas actuales."
+      ],
+      "alternatives": [
+        "Sin frame autorizado no se emiten posiciones aunque el handshake HTTP esté permitido.",
+        "Un token vencido o un vehículo ajeno corta o rechaza la suscripción.",
+        "GPS ausente, permiso denegado o conectividad interrumpida no se reemplazan por una ubicación real inventada; el análisis V16 declara calidad y distancia no evaluable cuando corresponde."
+      ],
+      "postcondition": "Historial y supervisión de posiciones autorizadas, con limitaciones explícitas de origen y continuidad.",
+      "requirements": [
+        "RF-36",
+        "RF-56",
+        "RF-57",
+        "RF-58",
+        "RF-59"
+      ],
+      "requirementMappingNote": "Estos RF no acreditan tráfico en vivo ni autenticidad física del movimiento del vehículo.",
+      "sources": [
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/GpsController.java",
+          "anchor": "class GpsController",
+          "line": 21
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/websocket/GpsWebSocketHandler.java",
+          "anchor": "public Mono<Void> handle(",
+          "line": 33
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/security/OperationalAccess.java",
+          "anchor": "public Mono<Long> driverId(",
+          "line": 32
+        },
+        {
+          "file": "src/main/resources/db/migration/V16__analytics_gps_quality.sql",
+          "anchor": "CREATE FUNCTION analytics_route_gps_quality(",
+          "line": 4
+        }
+      ],
+      "evidence": "W04/M02; la sesión 26/10 presenta un gap mayor de 900 s y no permite reportar distancia recorrida válida."
+    },
+    {
+      "id": "CU-12",
+      "title": "Confirmar una entrega mediante POD completo",
+      "processes": [
+        "P03"
+      ],
+      "actor": "Conductor autorizado sobre el pedido",
+      "preconditions": [
+        "Pedido propio IN_TRANSIT; cámara o imagen válida, firma, nombre y DNI de receptor y posición GPS disponibles."
+      ],
+      "basicFlow": [
+        "Abre el detalle M03, captura foto y firma e informa receptor y DNI de ocho dígitos.",
+        "Guarda el momento de captura y las coordenadas; la solicitud se conserva primero en la cola local.",
+        "createDeliveryProof valida datos e imágenes PNG/JPEG, bloquea el pedido y sube foto y firma a S3 local emulado.",
+        "La transacción persiste el POD, hashes SHA256 y tiempos, estado DELIVERED, historial y outbox; el usuario consulta después evidencia o comprobante PDF."
+      ],
+      "alternatives": [
+        "No se permite llegar a DELIVERED mediante el cambio manual de estado.",
+        "Foto ausente o inválida, firma ausente, DNI erróneo, 0,0 o fecha de captura más de cinco minutos futura provocan rechazo.",
+        "Ante repetición de un pedido ya entregado se devuelve su POD existente; si figura entregado sin prueba, se exige conciliación."
+      ],
+      "postcondition": "Entrega con evidencia referenciable e integridad verificable; el cliente distingue confirmación remota y envío pendiente.",
+      "requirements": [
+        "RF-25",
+        "RF-48",
+        "RF-49",
+        "RF-50",
+        "RF-51",
+        "RF-52",
+        "RF-53",
+        "RF-54",
+        "RF-55",
+        "RF-60"
+      ],
+      "requirementMappingNote": "La firma dibujada y el hash de archivo no se presentan como firma digital certificada ni como prueba de identidad biométrica.",
+      "sources": [
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/CreateDeliveryProofUseCaseImpl.java",
+          "anchor": "public Mono<DeliveryProof> createDeliveryProof(",
+          "line": 41
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/S3Service.java",
+          "anchor": "public static byte[] decodeImage(",
+          "line": 59
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/S3Service.java",
+          "anchor": "public Mono<String> uploadBase64(",
+          "line": 35
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/PdfService.java",
+          "anchor": "generateDeliveryReceipt(",
+          "line": 18
+        }
+      ],
+      "evidence": "Pedido 48 DELIVERED, una prueba, foto/firma/PDF accesibles y hashes coincidentes según business_final.json."
+    },
+    {
+      "id": "CU-13",
+      "title": "Conservar y sincronizar POD pendiente",
+      "processes": [
+        "P03"
+      ],
+      "actor": "Conductor con una sesión efectiva",
+      "preconditions": [
+        "Cuenta establecida en LocalCache; evidencia POD capturada; almacenamiento privado escribible."
+      ],
+      "basicFlow": [
+        "submit completa la escritura durable antes de intentar HTTP.",
+        "ProofSync procesa la cola de esa cuenta con una sola ejecución simultánea por propietario.",
+        "Si hay conectividad envía /delivery-proofs y retira el elemento únicamente después de una respuesta satisfactoria.",
+        "La pantalla M06 informa pendientes, bloqueados y confirmados; reintenta en primer plano, cada treinta segundos y al reanudar."
+      ],
+      "alternatives": [
+        "Sin red o con error transitorio la evidencia permanece pendiente.",
+        "Los 4xx de negocio se bloquean para revisión, salvo 401, 408 y 429; no se borran automáticamente.",
+        "Un cambio de cuenta impide drenar elementos de otro propietario. Cerrar o matar la app no garantiza ejecución del worker en segundo plano."
+      ],
+      "postcondition": "POD confirmado por el servidor o conservado para reintento sin anunciar una entrega remota ficticia.",
+      "requirements": [],
+      "requirementMappingNote": "El catálogo de 81 no contiene un RF específico de sincronización offline; vínculo técnico a P03 y a los RF POD relacionados, sin equivalencia inventada.",
+      "sources": [
+        {
+          "file": "mobile-app/lib/core/sync/proof_sync.dart",
+          "anchor": "Future<SubmissionResult> submit(",
+          "line": 56
+        },
+        {
+          "file": "mobile-app/lib/core/sync/proof_sync.dart",
+          "anchor": "Future<void> _drain(",
+          "line": 88
+        },
+        {
+          "file": "mobile-app/lib/core/cache/local_cache.dart",
+          "anchor": "class LocalCache",
+          "line": 6
+        }
+      ],
+      "evidence": "M03/M06 y business_offline.json; la verificación final de servidor no inspecciona por sí sola la cola móvil."
+    },
+    {
+      "id": "CU-14",
+      "title": "Registrar no entrega o devolución",
+      "processes": [
+        "P03",
+        "P04"
+      ],
+      "actor": "Conductor o usuario operativo autorizado sobre el pedido",
+      "preconditions": [
+        "Pedido en una condición permitida por OrderLifecycle; motivo conocido y sesión con acceso."
+      ],
+      "basicFlow": [
+        "Abre el detalle del pedido y elige FAILED o RETURNED según el resultado de la parada.",
+        "Informa un motivo de al menos cinco caracteres y envía PATCH de estado.",
+        "El servidor bloquea el pedido, valida transición y registra historial, actor y motivo.",
+        "Para FAILED o RETURNED con ruta crea una incidencia abierta DELIVERY_FAILED; si ya no quedan pendientes, completa la jornada."
+      ],
+      "alternatives": [
+        "Una condición terminal no se reabre y no se convierte en entregada mediante este formulario.",
+        "RETURNED se admite desde IN_TRANSIT; FAILED desde PICKED_UP o IN_TRANSIT, conforme al switch real.",
+        "Una repetición del mismo estado retorna el pedido sin duplicar efectos; una transición distinta fuera de regla se rechaza."
+      ],
+      "postcondition": "Pedido con resultado terminal e incidencia para decisión posterior; no se genera un POD de entrega exitosa.",
+      "requirements": [
+        "RF-23",
+        "RF-43",
+        "RF-44",
+        "RF-78"
+      ],
+      "requirementMappingNote": "RF-78 corresponde al motivo de no entrega; no comprende por sí solo la resolución administrativa de incidencias.",
+      "sources": [
+        {
+          "file": "src/main/java/com/ecoroute/backend/domain/model/OrderLifecycle.java",
+          "anchor": "public static void validateManual(",
+          "line": 12
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+          "anchor": "public Mono<Order> updateStatusManual(",
+          "line": 134
+        }
+      ],
+      "evidence": "Pedidos 49 FAILED y 50 RETURNED; sin POD; incidencias 14/15 registradas una vez en el corte final."
+    },
+    {
+      "id": "CU-15",
+      "title": "Resolver la incidencia conservando el intento original",
+      "processes": [
+        "P04",
+        "P02"
+      ],
+      "actor": "Dispatcher para RETRY/REPLAN; jefatura mediante ADMIN para cierres",
+      "preconditions": [
+        "Incidencia OPEN; motivo de resolución; pedido/ruta existentes cuando la decisión los requiere."
+      ],
+      "basicFlow": [
+        "Consulta la incidencia y elige RETRY, REPLAN, CLOSE_FAILED o CLOSE_CASE.",
+        "El servidor exige ADMIN para cierre definitivo y bloquea los registros pertinentes.",
+        "RETRY crea otro pedido en la misma ruta IN_PROGRESS; REPLAN crea otro pedido en una ruta PLANNED e invalida su revisión.",
+        "Relaciona original, nuevo intento e incidencia; un cierre guarda outcome, motivo y responsable sin cambiar el resultado terminal original."
+      ],
+      "alternatives": [
+        "Si la jornada terminó, RETRY se rechaza y corresponde evaluar REPLAN.",
+        "Un pedido DELIVERED no se cierra como fallido; una incidencia general sin pedido usa CLOSE_CASE.",
+        "Una incidencia resuelta devuelve el resultado ante la misma resolución, pero rechaza una resolución diferente. REPLAN exige acordar otra ventana y renovar aceptación."
+      ],
+      "postcondition": "Caso resuelto con trazabilidad de intentos o cierre, sin reabrir ni maquillar el pedido histórico.",
+      "requirements": [],
+      "requirementMappingNote": "No existe RF numerado explícito de resolución P04 en el catálogo de 81; RF-79 analiza motivos y no sustituye este caso.",
+      "sources": [
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+          "anchor": "public Mono<Incident> resolve(",
+          "line": 48
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+          "anchor": "public Mono<Order> changeDeliveryWindow(",
+          "line": 105
+        }
+      ],
+      "evidence": "Incidencias 14 y 15 RESOLVED/CLOSE_FAILED con un evento de cierre cada una."
+    },
+    {
+      "id": "CU-16",
+      "title": "Consultar resultados, causas, eficiencia y metas",
+      "processes": [
+        "P05",
+        "P07"
+      ],
+      "actor": "Jefatura asistida por usuario técnico ADMIN",
+      "preconditions": [
+        "Sesión ADMIN y filtros de conductor/fechas coherentes; vistas analíticas migradas."
+      ],
+      "basicFlow": [
+        "Abre Dashboard, Reportes o BI y define el mismo período de análisis.",
+        "DashboardService obtiene agregados, tendencias, causas, eficiencia y metas desde AnalyticsQueryPort.",
+        "Consulta IID, CHR, TDE, SUCCESS y ONTIME con numerador y denominador, calidad y datos faltantes.",
+        "Exporta CSV o consulta las vistas con ecoroute_bi_reader; cuando corresponde configura una meta entre cero y cien y revisa su historial."
+      ],
+      "alternatives": [
+        "Con denominador cero el porcentaje es null/NO_DATA; sin meta es NO_TARGET.",
+        "Un gap GPS excesivo hace null la distancia real y los km por entrega; no se toma la distancia planeada como sustituto.",
+        "El análisis de causas mantiene fuente STATUS_HISTORY o INCIDENT: sumar filas no equivale necesariamente a pedidos únicos."
+      ],
+      "postcondition": "Resultado reproducible por filtros y fórmulas; la vista de solo lectura no demuestra conexión instalada a Power BI.",
+      "requirements": [
+        "RF-63",
+        "RF-64",
+        "RF-65",
+        "RF-66",
+        "RF-67",
+        "RF-68",
+        "RF-69",
+        "RF-70",
+        "RF-75",
+        "RF-76",
+        "RF-77",
+        "RF-79",
+        "RF-80",
+        "RF-81"
+      ],
+      "requirementMappingNote": "RF-69 menciona eficiencia por distrito en el Excel, pero el endpoint actual entrega eficiencia por ruta; se conserva la diferencia semántica.",
+      "sources": [
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "anchor": "public Mono<BiReport> getBi(",
+          "line": 48
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/domain/model/analytics/AnalyticsModels.java",
+          "anchor": "public static Kpi of(",
+          "line": 38
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "anchor": "public Flux<RouteEfficiency> efficiency(",
+          "line": 118
+        },
+        {
+          "file": "src/main/resources/db/migration/V12__analytics_views.sql",
+          "anchor": "CREATE VIEW analytics_order_facts",
+          "line": 3
+        },
+        {
+          "file": "src/main/resources/db/migration/V16__analytics_gps_quality.sql",
+          "anchor": "CREATE FUNCTION analytics_route_gps_quality(",
+          "line": 4
+        }
+      ],
+      "evidence": "En el corte final IID=2/3, CHR=TDE=SUCCESS=1/3 y ONTIME=1/1. Metas globales sin configurar."
+    },
+    {
+      "id": "CU-17",
+      "title": "Registrar, ejecutar y verificar una acción de mejora",
+      "processes": [
+        "P05",
+        "P09"
+      ],
+      "actor": "Dispatcher registra/actualiza; jefatura con ADMIN verifica o descarta",
+      "preconditions": [
+        "Causa y responsable identificados, fecha compromiso, indicador permitido y valores de referencia disponibles."
+      ],
+      "basicFlow": [
+        "Registra título, causa, responsable declarado, fecha, indicador, línea base y meta.",
+        "La acción nace OPEN y pasa a IN_PROGRESS con nota de ejecución.",
+        "El verificador ADMIN informa resultado medido y evidencia para pasar a VERIFIED; también puede descartar con motivo.",
+        "La auditoría conserva el ciclo de decisión y la lectura permite comparar resultado y objetivo."
+      ],
+      "alternatives": [
+        "VERIFIED requiere resultado y estado previo IN_PROGRESS.",
+        "Un valor fuera de 0–100, indicador desconocido o nota breve se rechaza; una acción cerrada no se modifica.",
+        "El código no exige alcanzar la meta para verificar: la verificación documenta revisión del resultado, no éxito automático ni efecto causal."
+      ],
+      "postcondition": "Acción con seguimiento y cierre documentados, preservando una lectura honesta del resultado.",
+      "requirements": [],
+      "requirementMappingNote": "El catálogo no contiene un RF numerado propio de gestión de acciones; se traza directamente a P05/P09 y BusinessOperationsService.",
+      "sources": [
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+          "anchor": "public Mono<Improvement> createAction(",
+          "line": 105
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+          "anchor": "public Mono<Improvement> updateAction(",
+          "line": 116
+        }
+      ],
+      "evidence": "Acción 8 VERIFIED, CHR observado 33.33 frente a objetivo propio 90; no acredita mejora causal."
+    },
+    {
+      "id": "CU-18",
+      "title": "Registrar y mantener compras operativas",
+      "processes": [
+        "P09",
+        "P06"
+      ],
+      "actor": "Administrador de compras operativas",
+      "preconditions": [
+        "Sesión ADMIN para W11; descripción, proveedor, importe y categoría disponibles."
+      ],
+      "basicFlow": [
+        "Abre Compras y registra la adquisición con sus datos.",
+        "El backend valida y guarda mediante PurchaseUseCasesImpl y PurchaseRepository.",
+        "Consulta el listado y corrige información o estado de acuerdo con las opciones implementadas.",
+        "Relaciona la información en la explicación de recursos, sin atribuir un vínculo automático con pedidos o rutas que el esquema no declara."
+      ],
+      "alternatives": [
+        "Errores de validación o de API se presentan para corrección y no se consideran compras confirmadas.",
+        "Eliminar una compra registrada por error es una operación explícita; no se deduce del cierre de una ruta.",
+        "La documentación no acredita autorización contable, pago bancario, factura tributaria ni una política de adquisiciones."
+      ],
+      "postcondition": "Compra operativa persistida y consultable en el alcance del módulo existente.",
+      "requirements": [
+        "RF-71",
+        "RF-72",
+        "RF-73",
+        "RF-74"
+      ],
+      "requirementMappingNote": "La compra es apoyo administrativo del proceso P09; purchases no tiene FK directa al reparto en el ERD actual.",
+      "sources": [
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/PurchaseUseCasesImpl.java",
+          "anchor": "class PurchaseUseCasesImpl",
+          "line": 18
+        }
+      ],
+      "evidence": "W11; revisión estática y capturas del inventario. No se declara aprobación empresarial de adquisiciones."
+    }
+  ],
+  "functions": [
+    {
+      "name": "public Mono<Order> createOrder(",
+      "title": "Crear solicitud sin ruta",
+      "behavior": "Rechaza routeId inicial, establece PENDING y conserva historial de registro.",
+      "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+      "anchor": "public Mono<Order> createOrder(",
+      "line": 51
+    },
+    {
+      "name": "public Mono<Confirmation> confirm(",
+      "title": "Confirmar revisión comercial",
+      "behavior": "Bloquea el pedido, valida condiciones y ubicación e invalida la revisión de ruta.",
+      "file": "src/main/java/com/ecoroute/backend/application/services/BusinessWorkflowService.java",
+      "anchor": "public Mono<Confirmation> confirm(",
+      "line": 23
+    },
+    {
+      "name": "public Mono<Order> assignOrder(",
+      "title": "Asignar el pedido existente",
+      "behavior": "Exige PLANNED y confirmación; conserva id y pasa a ASSIGNED.",
+      "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+      "anchor": "public Mono<Order> assignOrder(",
+      "line": 74
+    },
+    {
+      "name": "public Mono<Review> approve(",
+      "title": "Aprobar el plan",
+      "behavior": "Comprueba conductor, vehículo, peso y todos los pedidos confirmados.",
+      "file": "src/main/java/com/ecoroute/backend/application/services/BusinessWorkflowService.java",
+      "anchor": "public Mono<Review> approve(",
+      "line": 43
+    },
+    {
+      "name": "public Mono<Review> accept(",
+      "title": "Aceptar hoja",
+      "behavior": "Exige conductor correspondiente y aprobación previa.",
+      "file": "src/main/java/com/ecoroute/backend/application/services/BusinessWorkflowService.java",
+      "anchor": "public Mono<Review> accept(",
+      "line": 63
+    },
+    {
+      "name": "public Mono<Route> updateRouteStatus(",
+      "title": "Iniciar/cerrar ruta",
+      "behavior": "Comprueba revisión de salida, cascada IN_TRANSIT y reglas terminales.",
+      "file": "src/main/java/com/ecoroute/backend/application/usecases/RouteUseCasesImpl.java",
+      "anchor": "public Mono<Route> updateRouteStatus(",
+      "line": 61
+    },
+    {
+      "name": "public Mono<OptimizedPath> plan(",
+      "title": "Proponer recorrido",
+      "behavior": "Intenta RoutingPort y degrada tras error o timeout de cinco segundos.",
+      "file": "src/main/java/com/ecoroute/backend/application/services/RoutePlannerService.java",
+      "anchor": "public Mono<OptimizedPath> plan(",
+      "line": 32
+    },
+    {
+      "name": "public Mono<DeliveryProof> createDeliveryProof(",
+      "title": "Registrar POD",
+      "behavior": "Valida evidencia y estado; persiste integridad, entrega e historial.",
+      "file": "src/main/java/com/ecoroute/backend/application/usecases/CreateDeliveryProofUseCaseImpl.java",
+      "anchor": "public Mono<DeliveryProof> createDeliveryProof(",
+      "line": 41
+    },
+    {
+      "name": "Future<SubmissionResult> submit(",
+      "title": "Enviar evidencia durable",
+      "behavior": "Escribe la cola antes del HTTP y distingue confirmada, pendiente o rechazada.",
+      "file": "mobile-app/lib/core/sync/proof_sync.dart",
+      "anchor": "Future<SubmissionResult> submit(",
+      "line": 56
+    },
+    {
+      "name": "Future<void> _drain(",
+      "title": "Reintentar cola por cuenta",
+      "behavior": "Deduplica vuelos y bloquea errores de negocio sin perder archivos.",
+      "file": "mobile-app/lib/core/sync/proof_sync.dart",
+      "anchor": "Future<void> _drain(",
+      "line": 88
+    },
+    {
+      "name": "public Mono<Order> updateStatusManual(",
+      "title": "Registrar no entrega",
+      "behavior": "Valida transición y motivo, crea incidencia y evalúa fin de ruta.",
+      "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+      "anchor": "public Mono<Order> updateStatusManual(",
+      "line": 134
+    },
+    {
+      "name": "public Mono<Incident> resolve(",
+      "title": "Resolver caso",
+      "behavior": "Permisos de cierre; nuevo intento para RETRY/REPLAN; original inmutable.",
+      "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+      "anchor": "public Mono<Incident> resolve(",
+      "line": 48
+    },
+    {
+      "name": "public Mono<BiReport> getBi(",
+      "title": "Construir BI",
+      "behavior": "Agrega fuentes y aplica fórmulas sobre numeradores/denominadores.",
+      "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+      "anchor": "public Mono<BiReport> getBi(",
+      "line": 48
+    },
+    {
+      "name": "public static Kpi of(",
+      "title": "Calcular porcentaje y brecha",
+      "behavior": "Null sin denominador; dos decimales; estados según dato y meta.",
+      "file": "src/main/java/com/ecoroute/backend/domain/model/analytics/AnalyticsModels.java",
+      "anchor": "public static Kpi of(",
+      "line": 38
+    },
+    {
+      "name": "public Mono<Improvement> createAction(",
+      "title": "Registrar acción",
+      "behavior": "Valida responsable, fecha, indicador y valores.",
+      "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+      "anchor": "public Mono<Improvement> createAction(",
+      "line": 105
+    },
+    {
+      "name": "public Mono<Improvement> updateAction(",
+      "title": "Verificar acción",
+      "behavior": "Exige ADMIN y resultado para VERIFIED; no exige alcanzar meta.",
+      "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+      "anchor": "public Mono<Improvement> updateAction(",
+      "line": 116
+    },
+    {
+      "name": "export async function redirectToKeycloakLogin",
+      "title": "Iniciar PKCE",
+      "behavior": "Gestiona autenticación de panel con proveedor externo.",
+      "file": "web-admin/src/services/keycloak.ts",
+      "anchor": "export async function redirectToKeycloakLogin",
+      "line": 38
+    },
+    {
+      "name": "export function useQuery",
+      "title": "Consultar estado React",
+      "behavior": "Cancela petición previa y evita datos de otro filtro.",
+      "file": "web-admin/src/hooks/useQuery.ts",
+      "anchor": "export function useQuery",
+      "line": 6
+    },
+    {
+      "name": "Future<void> _accept(",
+      "title": "Aceptar desde pantalla móvil",
+      "behavior": "Llama al DataSource real por GetIt, sin inventar paso BLoC.",
+      "file": "mobile-app/lib/features/routes/presentation/pages/routes_page.dart",
+      "anchor": "Future<void> _accept(",
+      "line": 162
+    },
+    {
+      "name": "public Mono<Void> roles(",
+      "title": "Cambiar roles de identidad",
+      "behavior": "Actualiza Keycloak, valida vínculo y revoca sesiones.",
+      "file": "src/main/java/com/ecoroute/backend/infrastructure/security/KeycloakAdministration.java",
+      "anchor": "public Mono<Void> roles(",
+      "line": 68
+    }
+  ],
+  "limits": [
+    "Validación técnica local con datos sintéticos; no UAT empresarial firmada ni operación productiva.",
+    "Las reglas y umbrales descritos se obtienen del código actual; no se presentan como políticas aprobadas de MICOTRANS.",
+    "La guía de 71 capturas documenta una sesión; no equivale a 71 pruebas independientes."
+  ]
+}

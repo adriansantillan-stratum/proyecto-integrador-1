@@ -1,0 +1,133 @@
+{
+  "reviewer": "principal",
+  "renderDirectory": "docs/exposicion_8_pantallas/_qa/render_verified",
+  "pages": [
+    {
+      "page": 53,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 54,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 55,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 56,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 57,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 58,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 59,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 60,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 61,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 62,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 63,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 64,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 65,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 66,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 67,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 68,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 69,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 70,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 71,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 72,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 73,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 74,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 75,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 76,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    },
+    {
+      "page": 77,
+      "status": "PASS",
+      "notes": "Inspección individual a resolución nativa por el principal; fuente POD agrupada, capturas y código legibles."
+    }
+  ],
+  "summary": "25 páginas inspeccionadas directamente tras no estar disponible el revisor paralelo. Se detectó cabecera huérfana en63 y duplicación de código en explicaciones; corregidas en el render posterior.",
+  "issues": []
+}

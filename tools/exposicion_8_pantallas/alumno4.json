@@ -1,0 +1,215 @@
+[
+  {
+    "id": "07",
+    "title": "Dashboard web: panel de control logístico",
+    "student": "Santillan Velasquez Adrian Nicolas",
+    "platform": "Web: React, TypeScript y API Spring WebFlux",
+    "route": "/dashboard",
+    "actor": "Administrador del sistema, como soporte a la jefatura logística de Grupo MICOTRANS. El rol técnico exigido por esta ruta es ADMIN; no basta con representar verbalmente al dispatcher.",
+    "processes": [
+      "P05 — Evaluar resultados: consolidar datos y preparar indicadores. Fuente BPMN: docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P05_negocio.bpmn:3,38-79. El panel apoya esas decisiones humanas; no ejecuta todo el proceso BPMN."
+    ],
+    "purpose": "Guía de exposición revisada el 26/10/2026. Explicar cómo EcoRoute transforma los registros de reparto de Grupo MICOTRANS en cuatro perspectivas comparables: estados, puntualidad evaluable, entregas por conductor y pedidos por distrito. La captura y el resultado local conservados corresponden al 22/10/2026 en Lima; esta preparación documental no ejecutó pruebas nuevas ni acredita aceptación empresarial. Fuentes de pantalla: web-admin/src/pages/Dashboard.tsx:12-46; evidencia histórica: docs/control_actualizacion/evidencias/web/run_1792719021669/result_1792719031028.json:2-32,96-97.",
+    "preconditions": [
+      "Exposición con sesión ADMIN ya disponible, sin mostrar credenciales. Dashboard.tsx:12-22 define las consultas; el control del permiso también existe en el servidor, SecurityConfig.java:47. No realizar instalaciones ni iniciar servicios durante esta guía.",
+      "Para reproducir la población de la captura histórica: conductor 1, desde 2026-10-22 hasta 2026-10-22. La captura permite ver cuatro pedidos y dos entregados; no convertir esas cifras de ensayo en volumen habitual de MICOTRANS.",
+      "Si no hay una sesión operativa, explicar usando la captura existente. Ninguna instrucción de demo de este archivo significa que ya se haya ejecutado hoy."
+    ],
+    "demo": [
+      "Presentar /dashboard y señalar el título Panel de control logístico. Explicar que el alumno 4 continúa desde los registros operativos presentados por sus compañeros.",
+      "Señalar conductor, Desde y Hasta. Si la sesión está disponible, elegir una misma población para los cuatro gráficos; para explicar el corte histórico, usar conductor 1 y el día 22/10/2026.",
+      "Leer Total pedidos antes de leer Entregados. En la captura: cuatro pedidos y dos entregados. Aclarar que las tarjetas En tránsito y Pendientes/asignados no enumeran todos los estados posibles.",
+      "Recorrer estados, puntualidad, conductor y distrito. Explicar que puntualidad solo clasifica entregas con verified_at y fin de ventana, mientras el total de pedidos incluye otros estados.",
+      "Describir la sección de flota al pie usando el código si no está visible en el recorte: corresponde a hoy en Lima y no al período histórico de los gráficos. No atribuir a la captura información que quedó fuera de su encuadre.",
+      "Mostrar los dos fragmentos de código indicados y pasar a /bi para convertir los mismos hechos en indicadores con denominadores explícitos."
+    ],
+    "flow": [
+      "El cambio de filtros actualiza useState y genera una query común; si el rango es inválido, las cuatro URL analíticas se vuelven null. Dashboard.tsx:13-19.",
+      "useQuery ejecuta GET con Axios, conserva datos/error por clave y cancela la petición anterior mediante AbortController al cambiar dependencias. useQuery.ts:6-24.",
+      "Axios utiliza baseURL /api y agrega el token de la sesión; el controlador recibe AnalyticsFilter y delega en DashboardService. api.ts:5-19; DashboardController.java:17-34.",
+      "DashboardService llama al puerto AnalyticsQueryPort; R2dbcAnalyticsAdapter ejecuta SELECT parametrizados sobre analytics_order_facts. DashboardService.java:21-30; AnalyticsQueryPort.java:9-14; R2dbcAnalyticsAdapter.java:35-95.",
+      "La vista deriva fecha operativa, conductor y banderas desde pedidos, rutas, conductores, datos comerciales y POD; la respuesta vuelve como proyecciones JSON y React construye tarjetas y gráficos. V12__analytics_views.sql:3-43; Dashboard.tsx:25-44."
+    ],
+    "frontend": [
+      "La página usa hooks React, no BLoC. useState contiene driverId/startDate/endDate; las cuatro solicitudes comparten query. Los catálogos /drivers, /vehicles y /routes se cargan independientemente. No hay búsqueda mediante dashboardService en esta página: los GET se realizan directamente con useQuery. Fuente: Dashboard.tsx:1-23.",
+      "useQuery diferencia la identidad de la fuente con URL y scope. Un cambio de URL deja de exponer los resultados de la población anterior; el efecto aborta solicitudes anteriores y reload incrementa una revisión. Al recargar la misma URL puede mantenerse temporalmente el dato anterior junto al estado de carga; no presentar esto como refresco automático continuo. Fuente: useQuery.ts:6-24.",
+      "Las tarjetas derivan del array de estados recibido. Total suma todos los grupos; En tránsito busca IN_TRANSIT; Entregados busca DELIVERED; Pendientes/asignados suma PENDING y ASSIGNED. El cero de un estado ausente se muestra cuando ya existe stats.data; no sustituye un error de red. Fuente: Dashboard.tsx:25-30,34-39.",
+      "Los cuatro gráficos reciben proyecciones distintas de la misma selección de conductor y fechas. Por conductor se visualizan entregas DELIVERED, no todos sus pedidos. La flota, en cambio, cruza recursos activos con rutas de hoy cuyo estado no es COMPLETED ni CANCELLED. Es un conteo de disponibilidad según esos registros, no una certificación de capacidad física ni un pronóstico. Fuente: Dashboard.tsx:23-24,36-44."
+    ],
+    "backend": [
+      "DashboardController recibe filtros mediante @ModelAttribute. Los cuatro métodos retornan Flux<StatusCount>, Mono<DeliveryPerformance> o Flux<NameCount>; son proyecciones de salida, no entidades completas de pedidos. DashboardService coordina y adapta los agregados: puntualidad toma onTime/delayed de Totals y el gráfico por conductor conserva name/count. Fuentes: DashboardController.java:17-34; DashboardService.java:21-30.",
+      "El puerto separa las operaciones analíticas de su tecnología de almacenamiento. El adaptador R2DBC enlaza parámetros con bind/bindNull, sin concatenar valores del usuario en el SQL. El WHERE utiliza igualdad de conductor y límites inclusivos sobre operation_date. Fuentes: AnalyticsQueryPort.java:9-14; R2dbcAnalyticsAdapter.java:35-39,59-95.",
+      "Misma población significa iguales filtros de negocio, no iguales subconjuntos en todos los gráficos. Estados y distrito cuentan pedidos; entregas por conductor cuenta delivered; puntualidad solo tiene on_time/delayed. El agrupamiento SQL por conductor incluye driver_id y driver_name, por lo que dos personas homónimas no se fusionan allí, aunque el gráfico rotule únicamente el nombre. Fuente: R2dbcAnalyticsAdapter.java:40-56,82-95.",
+      "La fecha no se obtiene truncando UTC: se usa route_date cuando hay ruta o la fecha de created_at en America/Lima en caso contrario. El conductor prioriza el de la ruta mediante COALESCE. El servidor calcula on_time cuando DELIVERED y verified_at <= fin de ventana; no comprueba en esa expresión el inicio de ventana. No llamar a ese gráfico tiempo de conducción. Fuente: V12__analytics_views.sql:5-8,30-42.",
+      "Esta lectura no registra entregas ni corrige POD. Los cuatro GET son solicitudes separadas y el servicio no establece una transacción común para toda la página: compartir filtros no garantiza una instantánea única frente a escrituras concurrentes. El backend exige ADMIN para /dashboard/**. Fuente: DashboardService.java:21-30; SecurityConfig.java:47."
+    ],
+    "persistence": [
+      "analytics_order_facts es una vista, no una tabla de porcentajes precargados. Sus LEFT JOIN unen orders, routes, drivers, order_business_data y delivery_proofs. Los alias calculados son el contrato que consume el adaptador. V12__analytics_views.sql:3-43.",
+      "El adaptador agrupa con COUNT y devuelve números agregados; esta pantalla no necesita descargar la foto o la firma para contar entregas. Una bandera sobre metadatos de POD no certifica que un objeto remoto sea accesible. V12__analytics_views.sql:14-21,37-42; R2dbcAnalyticsAdapter.java:40-56.",
+      "La disponibilidad se calcula en el navegador sobre catálogos y rutas recibidos. No escribe una reserva de vehículo ni cambia isActive. Dashboard.tsx:20-24,41-44."
+    ],
+    "endpoints": [
+      {"method":"GET","path":"/api/dashboard/orders-by-status?driverId=1&startDate=2026-10-22&endDate=2026-10-22","purpose":"Sin body; devuelve array {status,count}. El controlador está mapeado como /dashboard/orders-by-status. DashboardController.java:17-19; Dashboard.tsx:16."},
+      {"method":"GET","path":"/api/dashboard/delivery-performance","purpose":"Mismos query parameters opcionales; devuelve {onTime,delayed}. DashboardController.java:22-24; DashboardService.java:24-25."},
+      {"method":"GET","path":"/api/dashboard/deliveries-by-driver","purpose":"Mismos filtros; array {name,count} de entregas. DashboardController.java:27-29; DashboardService.java:27-28."},
+      {"method":"GET","path":"/api/dashboard/orders-by-district","purpose":"Mismos filtros; array {name,count} de pedidos por distrito. DashboardController.java:32-34; R2dbcAnalyticsAdapter.java:92-95."},
+      {"method":"GET","path":"/api/drivers","purpose":"Catálogo para selector y conteo de conductores activos; no recibe los filtros analíticos de esta página. Dashboard.tsx:20,43."},
+      {"method":"GET","path":"/api/vehicles","purpose":"Catálogo de vehículos para disponibilidad actual; solicitud independiente. Dashboard.tsx:21,44."},
+      {"method":"GET","path":"/api/routes","purpose":"Rutas que el navegador cruza con la fecha de hoy y los recursos activos. Dashboard.tsx:22-24,43-44."}
+    ],
+    "exceptions": [
+      "Un rango invertido impide las cuatro solicitudes analíticas; el backend también valida filtros mediante AnalyticsFilter. No demostrarlo ejecutando una petición inválida como si fuera evidencia nueva. Dashboard.tsx:14-19; DashboardController.java:18-34.",
+      "Un error de una fuente se muestra con SourceState y reintento propio; no borra por diseño las otras fuentes. No interpretar un gráfico sin datos como cero entregas exitosas sin revisar el estado de carga/error. Dashboard.tsx:34-42; useQuery.ts:13-23.",
+      "ADMIN es requisito real de autorización: un rol DRIVER no obtiene el dashboard global. SecurityConfig.java:47. Si la API no responde durante la exposición, usar la captura fechada sin declarar el sistema conectado hoy."
+    ],
+    "code": [
+      {"file":"web-admin/src/pages/Dashboard.tsx","start":12,"end":30,"explanation":["Fragmento real de 19 líneas. Identificar useState, validación del rango y las cuatro URL que comparten query.","Explicar los GET de catálogos como fuentes independientes y señalar todayRoutes: su día es operationDate(), no el rango elegido.","Seguir cards: el total suma estados y cada tarjeta usa condiciones concretas; no son valores escritos manualmente para la exposición."]},
+      {"file":"src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java","start":82,"end":95,"explanation":["Fragmento real de 14 líneas. byDriver cuenta delivered, total y FAILED, agrupando por identificador y nombre.","byDistrict cuenta todos los pedidos por distrito. Ambas consultas añaden el mismo FILTER y mapean columnas SQL a proyecciones Java.","Relacionar el resultado del adaptador con el puerto y con el gráfico: el frontend representa agregados; el SELECT decide la población."]}
+    ],
+    "speech": [
+      "Soy Adrian Santillan y presentaré las dos pantallas finales. Después del registro, la ejecución y la atención de incidencias, Grupo MICOTRANS necesita revisar qué ocurrió en la jornada. Esta pantalla ofrece una lectura resumida de los registros que EcoRoute tiene disponibles. En los BPMN revisados, el proceso relacionado es P05, Evaluar resultados. Apoya la consolidación y la preparación de indicadores; las decisiones siguen correspondiendo a las personas responsables.",
+      "Primero defino a quién y a qué período estoy observando. El conductor y las dos fechas generan el mismo filtro para los cuatro gráficos. Las fechas son inclusivas y representan días operativos en Lima. En el ejemplo conservado del 22 de octubre se seleccionó al conductor 1 y aparecen cuatro pedidos, de los cuales dos están entregados. Estos números pertenecen a una comprobación local histórica; no son una afirmación sobre la productividad habitual de MICOTRANS.",
+      "Cada gráfico responde una pregunta diferente. Estados muestra cómo se distribuyen los pedidos. Por conductor contamos los que llegaron a DELIVERED. Por distrito contamos pedidos. En puntualidad separamos a tiempo y retrasadas únicamente cuando existe la información necesaria para evaluar la entrega. Por eso no debo exigir que la suma de esa gráfica sea siempre igual a todos los pedidos: comparten el filtro, pero la regla de evaluación reduce su subconjunto.",
+      "Técnicamente, React conserva los filtros con useState. El hook useQuery realiza la petición, controla carga y error y cancela una solicitud anterior cuando cambia la selección. El controlador de Spring recibe el filtro, el servicio aplica las responsabilidades de análisis y el puerto permite consultar sin depender directamente de PostgreSQL. El adaptador realiza el SELECT parametrizado. Así puedo seguir una cifra desde su tarjeta hasta el agregado SQL que la produce.",
+      "La vista analítica reúne pedidos, rutas, conductor, datos comerciales y prueba de entrega. La fecha prioriza el día de ruta; si no existe, convierte la creación del pedido al calendario de Lima. Para puntualidad, la regla actual compara la verificación del POD con el fin de la ventana. Debo describir esa regla exacta y no atribuirle una medición de duración o una comprobación de ambos extremos de la ventana que el código no realiza.",
+      "Finalmente, la sección de flota tiene otro alcance: muestra recursos activos libres según las rutas registradas para hoy. No cambia cuando seleccionamos un período histórico en los gráficos. Tampoco reserva recursos ni comprueba físicamente su estado. Con este panel ubicamos la situación; en la siguiente pantalla explicaré sus cinco indicadores, sus denominadores y cómo se evita presentar un dato ausente como un resultado favorable."
+    ],
+    "questions": [
+      {"q":"¿Por qué usar el mismo filtro no obliga a tener el mismo total en los cuatro gráficos?","a":"Porque la selección de conductor y fecha es común, pero puntualidad exige entregas evaluables y el gráfico por conductor cuenta DELIVERED. R2dbcAnalyticsAdapter.java:40-49,82-95."},
+      {"q":"¿El dashboard actualiza la entrega?","a":"No. Los métodos analíticos son GET y SELECT; muestran proyecciones. DashboardController.java:17-34; R2dbcAnalyticsAdapter.java:66-95."},
+      {"q":"¿Hay actualización en tiempo real?","a":"Esta página usa solicitudes HTTP mediante useQuery. No hay temporizador ni suscripción WebSocket en Dashboard.tsx:12-46. No debe prometerse refresco continuo."},
+      {"q":"¿La flota corresponde al rango elegido?","a":"No. todayRoutes usa la fecha actual en Lima y excluye COMPLETED/CANCELLED. Dashboard.tsx:23,41-44."},
+      {"q":"¿MICOTRANS aceptó formalmente el resultado?","a":"No se acredita aquí. El resultado histórico declara businessAcceptance=NOT_ATTESTED; la guía del 26 de octubre no altera ese alcance."}
+    ],
+    "tests": [
+      {"file":"src/test/java/com/ecoroute/backend/infrastructure/input/rest/AnalyticsControllerTest.java","name":"allExistingRoutesBindIsoDatesAndPreserveWireFields","scope":"Prueba existente, líneas 25-40: fechas ISO, nombres del contrato HTTP y cuatro endpoints. Leída, no ejecutada en esta tarea."},
+      {"file":"src/test/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsIntegrationTest.java","name":"filtersUseRouteDateAndLimaMidnightAndRouteOwner","scope":"Prueba existente, líneas 96-111: fecha de ruta/Lima, conductor y límites abiertos. Requiere PostgreSQL de prueba; no se ejecutó ahora."},
+      {"file":"docs/control_actualizacion/evidencias/web/run_1792719021669/result_1792719031028.json","name":"Dashboard filtered by same date/driver","scope":"Evidencia histórica PASS, líneas 2-8. 2026-10-23T01:30Z equivale al 22/10/2026 por la noche en Lima; no es una prueba nueva del 26."}
+    ],
+    "screenshot": {"file":"docs/control_actualizacion/evidencias/web/run_1792719021669/01_dashboard.png","caption":"Captura existente revisada visualmente: Dashboard web, estado filtrado por conductor Juan Pérez y 22/10/2026. Visibles cuatro pedidos, dos entregados y parte de los gráficos; la sección de flota queda fuera del recorte. Evidencia histórica del 22 de octubre, no captura nueva ni aceptación de MICOTRANS."},
+    "handoff": "Continuar con la pantalla 08 del mismo alumno: /bi. Mantener conductor y período al comparar, aclarando que cada navegación inicia su propio estado de filtros. El siguiente bloque interpreta resultados; no abre Power BI ni presupone una conexión nativa verificada.",
+    "source_map": [
+      {"file":"web-admin/src/pages/Dashboard.tsx","symbol":"Dashboard, líneas 12-46","purpose":"Frontend: filtros, GET directos, tarjetas y separación de flota actual."},
+      {"file":"web-admin/src/hooks/useQuery.ts","symbol":"useQuery, líneas 6-24","purpose":"Servicio de lectura reutilizable de la página: efecto, cancelación y recarga."},
+      {"file":"web-admin/src/services/api.ts","symbol":"api e interceptores, líneas 5-19,46-69","purpose":"Cliente HTTP con base /api y manejo de sesión; no exponer tokens."},
+      {"file":"src/main/java/com/ecoroute/backend/infrastructure/input/rest/DashboardController.java","symbol":"getOrderStats/getDeliveryPerformance/getDeliveriesByDriver/getOrdersByDistrict, líneas 17-34","purpose":"Controller: recibir filtros y devolver proyecciones reactivas."},
+      {"file":"src/main/java/com/ecoroute/backend/application/services/DashboardService.java","symbol":"getOrderStats/getDeliveryPerformance/getDeliveriesByDriver/getOrdersByDistrict, líneas 21-30","purpose":"Caso de uso de consulta: delegar y adaptar agregados."},
+      {"file":"src/main/java/com/ecoroute/backend/domain/ports/out/AnalyticsQueryPort.java","symbol":"AnalyticsQueryPort, líneas 9-14","purpose":"Puerto de salida: contrato analítico independiente de R2DBC."},
+      {"file":"src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java","symbol":"FILTER/query/ordersByStatus/totals/byDriver/byDistrict, líneas 35-95","purpose":"Adaptador: parámetros enlazados, SQL y mapeo de resultados."},
+      {"file":"src/main/resources/db/migration/V12__analytics_views.sql","symbol":"analytics_order_facts, líneas 3-43","purpose":"SQL: fuentes, fecha Lima y reglas de evaluación."},
+      {"file":"src/main/java/com/ecoroute/backend/infrastructure/config/SecurityConfig.java","symbol":"pathMatchers /dashboard/**, línea 47","purpose":"Autorización ADMIN en el servidor."},
+      {"file":"docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P05_negocio.bpmn","symbol":"Process_P05, líneas 3,38-79","purpose":"Nombre real del proceso y tareas humanas de evaluación."},
+      {"file":"docs/control_actualizacion/evidencias/web/run_1792719021669/result_1792719031028.json","symbol":"scope/businessAcceptance/checks, líneas 2-32,96-97","purpose":"Resultado histórico fechado; no se reejecutó en la guía."}
+    ]
+  },
+  {
+    "id": "08",
+    "title": "Inteligencia de negocio web: cinco KPI y eficiencia GPS V16",
+    "student": "Santillan Velasquez Adrian Nicolas",
+    "platform": "Web: React, TypeScript y API Spring WebFlux",
+    "route": "/bi",
+    "actor": "Administrador como soporte de la jefatura logística de Grupo MICOTRANS. La pantalla global requiere ADMIN; no equivale a una aprobación empresarial de los indicadores.",
+    "processes": [
+      "P05 — Evaluar resultados. Nombre real: docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P05_negocio.bpmn:3. Preparar indicadores, comparar metas y analizar causas: líneas 59-83.",
+      "El encabezado actual dice P05 / P06, pero P06 se llama Habilitar recursos de reparto en los BPMN revisados. No renombrar P06 como inteligencia de negocio por ese rótulo: el vínculo principal de esta explicación es P05."
+    ],
+    "purpose": "Guía del 26/10/2026 para explicar fórmulas, alcance de filtros, ausencia de datos y calidad de distancia. La aplicación entrega BI propia mediante /reports/bi; no se presenta como Power BI conectado. El corte ilustrativo del 22/10/2026 conserva IID=4/4, CHR=2/4, TDE=2/4, SUCCESS=2/4 y ONTIME=2/2. Son datos de comprobación local, no resultados comerciales aceptados por MICOTRANS. Evidencia: result_1792719031028.json:33-82 del directorio de captura.",
+    "preconditions": [
+      "Usar sesión ADMIN existente o las capturas conservadas. No cambiar metas ni acciones para preparar esta exposición; los pasos siguientes son una guía, no acciones ejecutadas hoy.",
+      "Para comparar con Dashboard, volver a seleccionar conductor 1 y fechas 2026-10-22/2026-10-22: cada componente inicia con emptyFilters, no comparte automáticamente el estado de navegación. BusinessIntelligence.tsx:76-82.",
+      "Separar la fecha de redacción, 26 de octubre, de la evidencia local del 22. La imagen corresponde a la vista inicial de indicadores/Tendencias, no a todas las pestañas simultáneamente."
+    ],
+    "demo": [
+      "Mostrar /bi y leer la población que informa la propia respuesta: conductor, fechas inclusivas y America/Lima. Explicar el endpoint antes de interpretar porcentajes.",
+      "Leer cada tarjeta con su fracción: IID 4/4; CHR 2/4; TDE 2/4; SUCCESS 2/4; ONTIME 2/2 en el ejemplo histórico. No sumar porcentajes ni asumir denominadores idénticos por compartir filtros.",
+      "Señalar Sin meta configurada y Brecha no evaluable. Explicar qué cambiaría con denominador cero: porcentaje null y NO_DATA; no sería 0% ni 100%.",
+      "Describir Tendencias como resultados diarios frente a la meta vigente. Causas agrupa eventos registrados, sin demostrar causalidad estadística ni pedidos únicos.",
+      "Para explicar Eficiencia, usar la captura histórica adicional 03_eficiencia_gps.png y el resultado guardado: Ruta 20 quedó no evaluable por velocidad inverosímil. No afirmar haber abierto esa pestaña o verificado GPS hoy.",
+      "Mostrar los dos fragmentos seleccionados. Explicar exportación CSV y metas como capacidades existentes; cerrar sin ejecutar escrituras ni declarar impacto real sobre MICOTRANS."
+    ],
+    "flow": [
+      "BusinessIntelligence usa useState para filtros y pestaña; useQuery solicita /reports/bi con driverId/startDate/endDate cuando el rango es válido. BusinessIntelligence.tsx:76-90.",
+      "ReportController.getBi recibe AnalyticsFilter y llama DashboardService.getBi. El servicio combina totales, series diarias, conductores, distritos, causas, eficiencia y metas mediante Mono.zip. ReportController.java:36-38; DashboardService.java:48-60.",
+      "AnalyticsQueryPort define las lecturas; R2dbcAnalyticsAdapter aplica el mismo FILTER a pedidos y a la selección de rutas, consulta vistas y llama a analytics_route_gps_quality con límites configurados. AnalyticsQueryPort.java:9-18; R2dbcAnalyticsAdapter.java:35-39,66-150.",
+      "El servicio construye BiReport y Kpi; React presenta porcentajes y estados recibidos. Para GPS, routeGpsMetrics aplica además una guarda común a gráficos, tabla y CSV. DashboardService.java:55-73; BusinessIntelligence.tsx:36-72,88-90; analytics.ts:15-22.",
+      "El guardado opcional de una meta utiliza saveGoal y PUT /reports/goals/{code}; el servidor toma el actor de Principal y ejecuta un upsert. No forma parte de la demo de lectura. ReportController.java:46-52; R2dbcAnalyticsAdapter.java:153-161."
+    ],
+    "frontend": [
+      "Esta pantalla usa hooks React y recibe un BiReport. El GET principal pasa por useQuery, no por la función getBiReport del servicio que no se invoca aquí. Cambiar la pestaña representa otra parte del mismo informe ya obtenido; Actualizar indicadores llama report.reload. BusinessIntelligence.tsx:76-93.",
+      "Las tarjetas muestran percentage, numerator, denominator, target, gap y status. Percentage null se traduce a Sin datos evaluables; target null a Sin configurar. Los gráficos de tendencia mantienen null, sin convertirlo en éxito o fracaso. Fuente: BusinessIntelligence.tsx:17,41-44,88-92.",
+      "La proyección routeGpsMetrics solo permite distancia con gpsQuality.status=AVAILABLE, fuente GPS_HAVERSINE y valor finito no negativo. Si falta calidad o el estado es otro, distancia y km/entrega permanecen null; no se usa el plan ni observedDistanceKm como sustituto. Un cero válido sí se conserva. analytics.ts:11-22; BusinessIntelligence.tsx:67-72.",
+      "Los CSV se construyen localmente con los datos del informe: indicadores incluyen período/día, filtros, fracciones y fórmula; eficiencia mantiene una fila por ruta. Los nulos se serializan como celdas vacías. No hay una consulta adicional a Power BI al exportar. analytics.ts:51-65. Metas y Acciones P05 son capacidades complementarias; no es necesario modificarlas en esta demostración."
+    ],
+    "backend": [
+      "BiReport transporta filtros, timezone, kpis, trends, byDriver, byDistrict, causes, efficiency, goals y quality. El servicio usa el mismo AnalyticsFilter para sus seis lecturas operativas; goals no recibe ese filtro y representa configuración global vigente. Mono.zip no establece por sí solo una transacción común ni una instantánea única de todas las consultas. DashboardService.java:48-60; AnalyticsQueryPort.java:10-18.",
+      "IID = 100 × pedidos iid_valid / total de pedidos. iid_valid exige RUC de once dígitos, nombre de destinatario y dirección no vacíos y GPS válido según la vista de pedidos. No consulta SUNAT ni certifica ubicación física. CHR = 100 × pedidos con ruta y DELIVERED / pedidos con ruta. TDE = 100 × pedidos con ruta y foto O firma / pedidos con ruta; no exige POD completo. DashboardService.java:63-71; V12__analytics_views.sql:17-42.",
+      "SUCCESS = 100 × DELIVERED / todos los pedidos. ONTIME = 100 × entregas on_time / entregas ontime_evaluable; estas últimas requieren DELIVERED, verified_at y fin de ventana. on_time compara verified_at <= estimated_delivery_window_end; la expresión no valida el inicio de ventana. V12__analytics_views.sql:30-42; DashboardService.java:70-71.",
+      "Las cinco fórmulas usan redondeo HALF_UP a dos decimales. Denominador cero produce null y NO_DATA. Si existe porcentaje y no hay meta, NO_TARGET; con meta, gap es porcentaje menos meta, MET si es no negativo y BELOW_TARGET si es negativo. Las tendencias reutilizan la misma función y la meta vigente, no reconstruyen la meta histórica por fecha. AnalyticsModels.java:36-44; DashboardService.java:54-56,63-73.",
+      "Mismos filtros no significa que eficiencia sea la misma unidad estadística: se seleccionan rutas por su fecha y conductor; order_count y paradas cuentan los pedidos de cada ruta. La fecha de pedidos usa ruta o creación en Lima. Las causas enlazan eventos a pedidos/rutas seleccionados, no filtran directamente por la fecha del evento. R2dbcAnalyticsAdapter.java:98-137; V12__analytics_views.sql:5-8; V16__analytics_gps_quality.sql:76-88.",
+      "GPS V16 toma muestras del vehículo dentro de la operación, ordena por ping_time e id, calcula segmentos Haversine y revisa coordenadas, tiempo, velocidad e intervalo. Con un defecto no publica una suma parcial como distancia operativa: actual_gps_distance_km solo existe si la calidad es AVAILABLE. La precedencia distingue configuración inválida, muestras insuficientes, coordenadas inválidas, tiempo no positivo, velocidad inverosímil e intervalo excesivo. V16__analytics_gps_quality.sql:14-65.",
+      "Los valores predeterminados de política son 160 km/h y 900 segundos; el adaptador permite configuración y devuelve esos límites en gpsQuality. Son controles del reporte, no un estándar de transporte ni autenticación del sensor. km/entrega divide distancia aceptada entre DELIVERED; min/parada divide operación entre DELIVERED+FAILED+RETURNED. Sin divisor se usa null. R2dbcAnalyticsAdapter.java:23-28,118-146; V16__analytics_gps_quality.sql:77-79,91-109."
+    ],
+    "persistence": [
+      "Las cuatro vistas analíticas separan hechos de pedidos, hechos de rutas, metas y su historial. V12 define pedidos y metas; V15 incorporó RETURNED al divisor terminal y V16 conserva esa regla, añade función de calidad y extiende la vista de rutas. Fuentes: V12__analytics_views.sql:3-43,92-137; V16__analytics_gps_quality.sql:74-113.",
+      "La eficiencia consulta routes, orders y vehicle_gps_history. observed_distance_km conserva una suma sin validar para auditoría; actual_gps_distance_km permanece null cuando la traza se rechaza. V16__analytics_gps_quality.sql:14-65. No describir la suma observada como kilómetros recorridos válidos.",
+      "El PUT de meta ejecuta una sentencia INSERT ON CONFLICT RETURNING sobre analytics_goals. Los triggers sellan fecha y añaden analytics_goal_history en la misma operación de base de datos; si falla un trigger, la sentencia no queda parcialmente aplicada. El historial impide UPDATE/DELETE mediante trigger. Enviar target:null retira el umbral, no borra la fila ni su historia. R2dbcAnalyticsAdapter.java:153-166; V12__analytics_views.sql:92-137."
+    ],
+    "endpoints": [
+      {"method":"GET","path":"/api/reports/bi?driverId=1&startDate=2026-10-22&endDate=2026-10-22","purpose":"Sin body; devuelve BiReport con filtros y siete bloques agregados. El controller usa /reports/bi. ReportController.java:36-38; DashboardService.java:48-60."},
+      {"method":"GET","path":"/api/reports/goals/{code}","purpose":"Devuelve {code,target,updatedBy,updatedAt}; target puede ser null. Código permitido: IID, CHR, TDE, SUCCESS u ONTIME. ReportController.java:41-43; AnalyticsModels.java:13-22."},
+      {"method":"PUT","path":"/api/reports/goals/{code}","purpose":"Body {target:75} o {target:null}; respuesta Goal. El actor procede de Principal, no de un nombre enviado por el navegador. Requiere ADMIN y no se ejecuta en esta guía. ReportController.java:46-52; DashboardService.java:40-46."}
+    ],
+    "exceptions": [
+      "Denominador cero y meta ausente son estados válidos de negocio: NO_DATA y NO_TARGET; no errores HTTP. AnalyticsModels.java:38-43.",
+      "Rango invertido, conductor no positivo, código desconocido o meta fuera de 0-100 se rechazan en validaciones del dominio/servicio. No corregir el dato silenciosamente en el cliente. DashboardService.java:36-46; ReportController.java:36-52.",
+      "GPS no evaluable no significa cero kilómetros. Una coordenada inválida o un salto puede invalidar la traza; el plan continúa separado. V16__analytics_gps_quality.sql:35-65; analytics.ts:15-22.",
+      "Causas cuenta eventos de historial e incidencias y puede contar varias observaciones del mismo pedido. No sumar ese resultado como pedidos únicos ni afirmar causalidad. R2dbcAnalyticsAdapter.java:98-115; BusinessIntelligence.tsx:45-53.",
+      "Una respuesta histórica PASS acredita ese recorrido local, no un despliegue actual, mejora causal ni aceptación de MICOTRANS. Tampoco acredita Power BI nativo. result_1792719031028.json:2-4."
+    ],
+    "code": [
+      {"file":"src/main/java/com/ecoroute/backend/application/services/DashboardService.java","start":63,"end":74,"explanation":["Fragmento real de 12 líneas. Recorre los cinco indicadores y busca la meta por código.","Leer cada switch como numerador/denominador: IID valid/total; CHR deliveredScheduled/scheduled; TDE evidenceScheduled/scheduled; SUCCESS delivered/total; ONTIME onTime/evaluable.","Kpi.of centraliza porcentaje, nulos, brecha y estado; las tendencias reutilizan este método, por lo que no tienen otra fórmula."]},
+      {"file":"src/main/resources/db/migration/V16__analytics_gps_quality.sql","start":51,"end":65,"explanation":["Fragmento real de 15 líneas. El CASE aplica precedencia de calidad: configuración, muestras, coordenadas, tiempo, velocidad e intervalo.","La última expresión solo entrega distancia operativa si quality=AVAILABLE. La suma observed se conserva por separado para auditoría.","No se modifica telemetría ni se sustituye con plan o cero: el rechazo conserva null para impedir una lectura engañosa de eficiencia."]}
+    ],
+    "speech": [
+      "En la última pantalla pasamos de observar cantidades a evaluar resultados. Para Grupo MICOTRANS, un porcentaje solo es útil si explicamos qué población representa y con qué evidencia se construyó. La API devuelve el conductor, las fechas y America/Lima junto con los indicadores. Esta pantalla es inteligencia de negocio desarrollada dentro de EcoRoute; no estoy afirmando una conexión verificada con Power BI Desktop.",
+      "Las cinco tarjetas se calculan en el servidor. IID divide pedidos íntegros entre todos los pedidos. CHR divide entregados programados entre pedidos con ruta. TDE cuenta los programados con foto o firma; no equivale a una prueba de entrega completa. SUCCESS mide entregados sobre todos los pedidos. ONTIME observa únicamente entregas evaluables con POD verificado y fin de ventana, y comprueba que la verificación no supere ese fin. Compartir filtros permite compararlos, pero no convierte sus denominadores en el mismo conjunto.",
+      "En la evidencia local del 22 de octubre, para conductor 1 y ese día, IID fue cuatro sobre cuatro, CHR dos sobre cuatro, TDE dos sobre cuatro, SUCCESS dos sobre cuatro y ONTIME dos sobre dos. Las tarjetas muestran 100, 50, 50, 50 y 100 por ciento. Un 100 por ciento de puntualidad aquí significa dos de dos entregas evaluables: no significa que los cuatro pedidos fueron entregados a tiempo ni que se acreditó una mejora empresarial.",
+      "Si no hay denominador, la respuesta conserva null y utiliza NO_DATA. No inventamos un cero ni un éxito. Si hay resultado pero no existe meta, se informa NO_TARGET y no se calcula brecha. Con una meta configurada, la brecha es resultado menos meta en puntos porcentuales. Las tendencias aplican la misma fórmula diaria y comparan con la meta vigente; no debemos decir que reconstruyen automáticamente la política histórica de cada fecha.",
+      "La pestaña Eficiencia exige cuidado con GPS. V16 calcula distancias Haversine entre muestras consecutivas dentro de la operación y revisa coordenadas, avance del tiempo, velocidad e intervalo. Si la traza falla, la distancia operativa y los kilómetros por entrega quedan no evaluables. La suma observada puede mantenerse para investigar, pero no se publica como recorrido válido. El plan es una referencia separada. En la evidencia guardada, Ruta 20 fue rechazada por velocidad inverosímil.",
+      "Los límites predeterminados de 160 kilómetros por hora y 900 segundos son una política técnica configurable. Pasar esos controles no demuestra que el vehículo se movió realmente ni que el sensor sea auténtico. Los minutos por parada dividen la duración total de operación entre entregados, fallidos y devueltos; no representan minutos atendiendo al destinatario. Exportar conserva los nulos vacíos para no convertir una incertidumbre en una eficiencia favorable.",
+      "Concluyo relacionándolo con P05, Evaluar resultados. La herramienta ayuda a preparar indicadores, comparar metas e identificar qué revisar. Las causas son eventos registrados, no una demostración estadística de causa raíz. La jefatura debe interpretar los hallazgos y validar las acciones. Esta guía y sus capturas muestran implementación y evidencia técnica local fechada; la aceptación de MICOTRANS y el impacto real requerirían una evaluación empresarial aparte."
+    ],
+    "questions": [
+      {"q":"¿Por qué TDE puede aumentar sin tener POD completo?","a":"Porque digital_evidence usa foto O firma. complete_pod exige ambos y otros metadatos. V12__analytics_views.sql:33,37-42."},
+      {"q":"¿Qué diferencia existe entre NO_DATA y NO_TARGET?","a":"NO_DATA indica denominador cero y porcentaje null; NO_TARGET conserva porcentaje pero no hay umbral configurado. AnalyticsModels.java:38-43."},
+      {"q":"¿La meta histórica cambia las tendencias?","a":"El código consulta metas vigentes y las usa para cada día; no aplica un as-of sobre el historial. DashboardService.java:54-56."},
+      {"q":"¿Qué sucede si el GPS es malo pero existe distancia planificada?","a":"El plan no reemplaza la distancia GPS. La función devuelve null para la métrica rechazada y la guarda del frontend conserva esa decisión. V16__analytics_gps_quality.sql:63-65; analytics.ts:15-22."},
+      {"q":"¿Puede ser válida una distancia cero?","a":"Sí, con muestras suficientes y controles AVAILABLE puede haber traza estacionaria de cero. Es distinto de un dato ausente; la guarda admite números finitos mayores o iguales a cero. analytics.ts:11-22."},
+      {"q":"¿Todo el informe está dentro de una transacción única?","a":"No se establece así en getBi: Mono.zip combina consultas. Debemos afirmar coherencia de filtros, no una instantánea única garantizada. DashboardService.java:48-60."},
+      {"q":"¿Se cambiaron metas o se volvió a probar el sistema para esta guía?","a":"No. Se leyó código y evidencia existente y se revisaron capturas. Los resultados del 22 conservan su fecha y no se promueven a pruebas del 26."}
+    ],
+    "tests": [
+      {"file":"src/test/java/com/ecoroute/backend/application/services/DashboardAnalyticsServiceTest.java","name":"biUsesIdenticalFilterAndZeroDenominatorsStayNull","scope":"Prueba existente, líneas 34-44: filtros comunes, cinco KPI null y NO_DATA. Leída, no ejecutada ahora."},
+      {"file":"src/test/java/com/ecoroute/backend/application/services/DashboardAnalyticsServiceTest.java","name":"formulasUseDifferentUniversesAndTrendsUseTheSameFormula","scope":"Prueba existente, líneas 47-61: denominadores, redondeo, brecha y coherencia de tendencias. No ejecutada en esta tarea."},
+      {"file":"src/test/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsGpsQualityIntegrationTest.java","name":"jumpsInvalidateWholeTraceRatherThanPublishingASumOfAcceptedSegments","scope":"Prueba existente, líneas 120-126: salto invalida distancia y conserva suma observada. Requiere base desechable; no se inició Docker ni se ejecutó ahora."},
+      {"file":"web-admin/tests/gps-quality.test.mjs","name":"null actual distance never falls back to planned, raw observed or zero","scope":"Prueba existente, líneas 73-80: tabla y CSV mantienen la ausencia. No ejecutada ahora."},
+      {"file":"docs/control_actualizacion/evidencias/web/run_1792719021669/result_1792719031028.json","name":"Five indicators use actual filtered response","scope":"Resultado histórico PASS: líneas 11-12 y 33-82. Conserva cinco fracciones y NO_TARGET; no acredita una prueba nueva ni aceptación de negocio."}
+    ],
+    "screenshot": {"file":"docs/control_actualizacion/evidencias/web/run_1792719021669/02_indicadores.png","caption":"Captura histórica revisada visualmente: /bi en su estado inicial de indicadores/Tendencias, conductor 1, 22/10/2026 a 22/10/2026, America/Lima. Visibles cinco KPI y ausencia de meta; no es captura de la pestaña Eficiencia. Para esa pestaña existe 03_eficiencia_gps.png en la misma carpeta; aquí su resultado se cita desde el JSON histórico, sin afirmar revisión visual de esa tercera imagen ni ejecución nueva."},
+    "handoff": "Cierre del alumno 4: conectar los registros operativos presentados por sus compañeros con P05 y explicar qué decisión humana permiten sustentar. Guía redactada el 26/10/2026; evidencia del 22/10/2026. No afirmar Power BI conectado, aceptación de MICOTRANS, calidad del sensor ni impacto empresarial demostrado. Archivo entregado como dos objetos; tests mantiene exactamente {file,name,scope}.",
+    "source_map": [
+      {"file":"web-admin/src/pages/BusinessIntelligence.tsx","symbol":"BusinessIntelligence/BiCharts/GoalEditor, líneas 18-94","purpose":"Frontend: lectura con hook, pestañas, nulos y edición opcional de metas."},
+      {"file":"web-admin/src/hooks/useQuery.ts","symbol":"useQuery, líneas 6-24","purpose":"Servicio de lectura GET usado realmente; no atribuir la carga principal a getBiReport."},
+      {"file":"web-admin/src/services/api.ts","symbol":"api, líneas 5-19","purpose":"Transporte HTTP con base /api. Las credenciales no forman parte de la guía."},
+      {"file":"src/main/java/com/ecoroute/backend/infrastructure/input/rest/ReportController.java","symbol":"getBi/getGoal/saveGoal/GoalRequest, líneas 36-52","purpose":"Controller: filtros, response reactiva y request de meta con actor autenticado."},
+      {"file":"src/main/java/com/ecoroute/backend/application/services/DashboardService.java","symbol":"getBi/kpis/saveGoal, líneas 40-74","purpose":"Caso de uso: ensamblado, cinco fórmulas y validación de metas."},
+      {"file":"src/main/java/com/ecoroute/backend/domain/ports/out/AnalyticsQueryPort.java","symbol":"AnalyticsQueryPort, líneas 9-18","purpose":"Puerto: lecturas operativas filtradas, metas globales y persistencia de meta."},
+      {"file":"src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java","symbol":"FILTER/AGGREGATES/efficiency/saveGoal, líneas 35-56,98-161","purpose":"Adaptador: SQL parametrizado, causas, política GPS y upsert."},
+      {"file":"src/main/resources/db/migration/V12__analytics_views.sql","symbol":"analytics_order_facts y metas, líneas 3-43,92-137","purpose":"SQL: significado de hechos, fecha Lima, tablas y triggers de historial."},
+      {"file":"src/main/resources/db/migration/V16__analytics_gps_quality.sql","symbol":"analytics_route_gps_quality/analytics_route_facts, líneas 4-113","purpose":"SQL vigente de calidad y eficiencia; incorpora paradas RETURNED de V15."},
+      {"file":"src/main/java/com/ecoroute/backend/domain/model/analytics/AnalyticsModels.java","symbol":"Kpi.of, líneas 36-44","purpose":"Redondeo, null, NO_DATA/NO_TARGET y brecha."},
+      {"file":"web-admin/src/utils/analytics.ts","symbol":"formulas/routeGpsMetrics/efficiencyCsv/biCsv, líneas 3-22,51-65","purpose":"Presentación y exportación sin sustituir datos ausentes."},
+      {"file":"docs/control_actualizacion/evidencias/web/run_1792719021669/result_1792719031028.json","symbol":"kpis/route20Cells, líneas 33-97","purpose":"Ejemplo histórico del 22/10 en Lima; no prueba nueva del 26."}
+    ]
+  }
+]

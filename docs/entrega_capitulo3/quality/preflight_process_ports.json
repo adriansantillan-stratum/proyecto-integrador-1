@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "startedAtUtc": "2026-10-27T13:08:25.178651+00:00",
+  "finishedAtUtc": "2026-10-27T13:08:26.613374+00:00",
+  "durationSeconds": 1.438,
+  "command": "pwsh -NoProfile -Command \"$ErrorActionPreference='Stop'; $p=@(Get-CimInstance Win32_Process | Where-Object { $_.Name -match '^(java|javaw|node|dart|dartaotruntime|flutter|gradle|docker|com\\.docker.*)\\.exe$' } | Select-Object ProcessId,ParentProcessId,Name); $l=@(Get-NetTCPConnection -State Listen | Where-Object { $_.LocalPort -in @(3000,4317,5005,8080,8081,9006,5037,5433,4566) } | Select-Object LocalPort,OwningProcess); @{atUtc=[DateTimeOffset]::UtcNow.ToString('o');processes=$p;listeners=$l;commandLinesCollected=$false} | ConvertTo-Json -Depth 5\"",
+  "workingDirectory": "<WORKSPACE>",
+  "log": "preflight_process_ports.log"
+}

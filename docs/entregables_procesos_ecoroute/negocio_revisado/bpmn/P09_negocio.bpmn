@@ -1,0 +1,306 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_P09" targetNamespace="https://ecoroute.pe/procesos-negocio">
+  <bpmn:process id="Process_P09" name="Registrar compras operativas" isExecutable="false">
+    <bpmn:documentation>Modelo de negocio MICOTRANS. El negocio identifica la necesidad, comprueba presupuesto, selecciona proveedor y autoriza el gasto antes de adquirir. La aplicación aporta el registro de compra, proveedor, importe, categoría, observaciones y estado, con consulta y modificación. Los comprobantes físicos, aprobación presupuestaria y recepción conforme deben acompañar la decisión empresarial. Si no hay aprobación, se ajusta la solicitud o se cancela con motivo. Si la recepción no es conforme, se gestiona devolución o corrección con el proveedor. El CRUD existente solo apoya una parte de P09; no constituye un ERP, un almacén automatizado ni una aprobación bancaria. Esta frontera se mantiene explícita en el mapeo y las pruebas de aceptación.</bpmn:documentation>
+    <bpmn:laneSet id="LaneSet_P09">
+      <bpmn:lane id="Lane_P09_0" name="Dispatcher">
+        <bpmn:flowNodeRef>P09_S</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P09_A1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P09_A6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P09_G3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P09_E2</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_P09_1" name="Administrador">
+        <bpmn:flowNodeRef>P09_A2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P09_G1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P09_A3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P09_E1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P09_A4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P09_A7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P09_G4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P09_A8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P09_E3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P09_A9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P09_E4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P09_M_A4</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_P09_2" name="Jefatura logística">
+        <bpmn:flowNodeRef>P09_A5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P09_G2</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="P09_S" name="Necesidad de compra">
+      <bpmn:outgoing>Flow_P09_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="P09_A1" name="Describir necesidad y prioridad">
+      <bpmn:incoming>Flow_P09_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_P09_2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="P09_A2" name="Comprobar existencia y presupuesto">
+      <bpmn:incoming>Flow_P09_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_P09_3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="P09_G1" name="¿Hay existencia utilizable?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_P09_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_P09_4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_P09_5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="P09_A3" name="Entregar recurso existente">
+      <bpmn:incoming>Flow_P09_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_P09_6</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="P09_E1" name="Necesidad cubierta sin compra">
+      <bpmn:incoming>Flow_P09_6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="P09_A4" name="Evaluar costo y proveedor">
+      <bpmn:incoming>Flow_P09_19</bpmn:incoming>
+      <bpmn:outgoing>Flow_P09_7</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="P09_A5" name="Autorizar gasto">
+      <bpmn:incoming>Flow_P09_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_P09_8</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="P09_G2" name="¿Gasto aprobado?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_P09_8</bpmn:incoming>
+      <bpmn:outgoing>Flow_P09_9</bpmn:outgoing>
+      <bpmn:outgoing>Flow_P09_10</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="P09_A6" name="Ajustar o cancelar solicitud">
+      <bpmn:incoming>Flow_P09_10</bpmn:incoming>
+      <bpmn:outgoing>Flow_P09_11</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="P09_G3" name="¿Se justifica nuevo intento?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_P09_11</bpmn:incoming>
+      <bpmn:outgoing>Flow_P09_12</bpmn:outgoing>
+      <bpmn:outgoing>Flow_P09_13</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="P09_E2" name="Solicitud cancelada">
+      <bpmn:incoming>Flow_P09_13</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="P09_A7" name="Realizar compra y recibir bien">
+      <bpmn:incoming>Flow_P09_9</bpmn:incoming>
+      <bpmn:outgoing>Flow_P09_14</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="P09_G4" name="¿Recepción conforme?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_P09_14</bpmn:incoming>
+      <bpmn:outgoing>Flow_P09_15</bpmn:outgoing>
+      <bpmn:outgoing>Flow_P09_16</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="P09_A8" name="Reclamar o devolver">
+      <bpmn:incoming>Flow_P09_16</bpmn:incoming>
+      <bpmn:outgoing>Flow_P09_17</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="P09_E3" name="Compra observada">
+      <bpmn:incoming>Flow_P09_17</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="P09_A9" name="Registrar compra y comprobante">
+      <bpmn:incoming>Flow_P09_15</bpmn:incoming>
+      <bpmn:outgoing>Flow_P09_18</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="P09_E4" name="Compra registrada → P06">
+      <bpmn:incoming>Flow_P09_18</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="P09_M_A4" name="" gatewayDirection="Converging">
+      <bpmn:incoming>Flow_P09_5</bpmn:incoming>
+      <bpmn:incoming>Flow_P09_12</bpmn:incoming>
+      <bpmn:outgoing>Flow_P09_19</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_P09_1" sourceRef="P09_S" targetRef="P09_A1"/>
+    <bpmn:sequenceFlow id="Flow_P09_2" sourceRef="P09_A1" targetRef="P09_A2"/>
+    <bpmn:sequenceFlow id="Flow_P09_3" sourceRef="P09_A2" targetRef="P09_G1"/>
+    <bpmn:sequenceFlow id="Flow_P09_4" sourceRef="P09_G1" targetRef="P09_A3" name="Sí">
+      <bpmn:documentation>Rama de decisión: Sí</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_P09_5" sourceRef="P09_G1" targetRef="P09_M_A4" name="No">
+      <bpmn:documentation>Rama de decisión: No</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_P09_6" sourceRef="P09_A3" targetRef="P09_E1"/>
+    <bpmn:sequenceFlow id="Flow_P09_7" sourceRef="P09_A4" targetRef="P09_A5"/>
+    <bpmn:sequenceFlow id="Flow_P09_8" sourceRef="P09_A5" targetRef="P09_G2"/>
+    <bpmn:sequenceFlow id="Flow_P09_9" sourceRef="P09_G2" targetRef="P09_A7" name="Sí">
+      <bpmn:documentation>Rama de decisión: Sí</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_P09_10" sourceRef="P09_G2" targetRef="P09_A6" name="No">
+      <bpmn:documentation>Rama de decisión: No</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_P09_11" sourceRef="P09_A6" targetRef="P09_G3"/>
+    <bpmn:sequenceFlow id="Flow_P09_12" sourceRef="P09_G3" targetRef="P09_M_A4" name="Sí">
+      <bpmn:documentation>Rama de decisión: Sí</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_P09_13" sourceRef="P09_G3" targetRef="P09_E2" name="No">
+      <bpmn:documentation>Rama de decisión: No</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_P09_14" sourceRef="P09_A7" targetRef="P09_G4"/>
+    <bpmn:sequenceFlow id="Flow_P09_15" sourceRef="P09_G4" targetRef="P09_A9" name="Sí">
+      <bpmn:documentation>Rama de decisión: Sí</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_P09_16" sourceRef="P09_G4" targetRef="P09_A8" name="No">
+      <bpmn:documentation>Rama de decisión: No</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_P09_17" sourceRef="P09_A8" targetRef="P09_E3"/>
+    <bpmn:sequenceFlow id="Flow_P09_18" sourceRef="P09_A9" targetRef="P09_E4"/>
+    <bpmn:sequenceFlow id="Flow_P09_19" sourceRef="P09_M_A4" targetRef="P09_A4"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_P09">
+    <bpmndi:BPMNPlane id="Plane_P09" bpmnElement="Process_P09">
+      <bpmndi:BPMNShape id="Shape_Lane_P09_0" bpmnElement="Lane_P09_0" isHorizontal="true">
+        <dc:Bounds x="24" y="148" width="3954" height="300"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_P09_1" bpmnElement="Lane_P09_1" isHorizontal="true">
+        <dc:Bounds x="24" y="448" width="3954" height="300"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_P09_2" bpmnElement="Lane_P09_2" isHorizontal="true">
+        <dc:Bounds x="24" y="748" width="3954" height="300"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P09_S" bpmnElement="P09_S">
+        <dc:Bounds x="232" y="270" width="56" height="56"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P09_A1" bpmnElement="P09_A1">
+        <dc:Bounds x="491" y="246" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P09_A2" bpmnElement="P09_A2">
+        <dc:Bounds x="831" y="546" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P09_G1" bpmnElement="P09_G1">
+        <dc:Bounds x="1237" y="555" width="86" height="86"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P09_A3" bpmnElement="P09_A3">
+        <dc:Bounds x="1511" y="621" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P09_E1" bpmnElement="P09_E1">
+        <dc:Bounds x="1932" y="645" width="56" height="56"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P09_A4" bpmnElement="P09_A4">
+        <dc:Bounds x="1511" y="471" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P09_A5" bpmnElement="P09_A5">
+        <dc:Bounds x="1851" y="771" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P09_G2" bpmnElement="P09_G2">
+        <dc:Bounds x="2257" y="780" width="86" height="86"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P09_A6" bpmnElement="P09_A6">
+        <dc:Bounds x="2531" y="321" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P09_G3" bpmnElement="P09_G3">
+        <dc:Bounds x="2937" y="330" width="86" height="86"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P09_E2" bpmnElement="P09_E2">
+        <dc:Bounds x="3292" y="345" width="56" height="56"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P09_A7" bpmnElement="P09_A7">
+        <dc:Bounds x="2531" y="471" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P09_G4" bpmnElement="P09_G4">
+        <dc:Bounds x="2937" y="480" width="86" height="86"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P09_A8" bpmnElement="P09_A8">
+        <dc:Bounds x="3211" y="621" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P09_E3" bpmnElement="P09_E3">
+        <dc:Bounds x="3632" y="645" width="56" height="56"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P09_A9" bpmnElement="P09_A9">
+        <dc:Bounds x="3211" y="471" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P09_E4" bpmnElement="P09_E4">
+        <dc:Bounds x="3632" y="495" width="56" height="56"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P09_M_A4" bpmnElement="P09_M_A4">
+        <dc:Bounds x="1407.0" y="480" width="86.0" height="86"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_P09_1" bpmnElement="Flow_P09_1">
+        <di:waypoint x="288" y="298"/>
+        <di:waypoint x="491" y="298"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P09_2" bpmnElement="Flow_P09_2">
+        <di:waypoint x="709" y="298"/>
+        <di:waypoint x="770" y="298"/>
+        <di:waypoint x="770" y="598"/>
+        <di:waypoint x="831" y="598"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P09_3" bpmnElement="Flow_P09_3">
+        <di:waypoint x="1049" y="598"/>
+        <di:waypoint x="1237" y="598"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P09_4" bpmnElement="Flow_P09_4">
+        <di:waypoint x="1323" y="598"/>
+        <di:waypoint x="1417" y="598"/>
+        <di:waypoint x="1417" y="673"/>
+        <di:waypoint x="1511" y="673"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P09_5" bpmnElement="Flow_P09_5">
+        <di:waypoint x="1323" y="598"/>
+        <di:waypoint x="1365" y="598"/>
+        <di:waypoint x="1365" y="523"/>
+        <di:waypoint x="1407" y="523"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P09_6" bpmnElement="Flow_P09_6">
+        <di:waypoint x="1729" y="673"/>
+        <di:waypoint x="1932" y="673"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P09_7" bpmnElement="Flow_P09_7">
+        <di:waypoint x="1729" y="523"/>
+        <di:waypoint x="1790" y="523"/>
+        <di:waypoint x="1790" y="823"/>
+        <di:waypoint x="1851" y="823"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P09_8" bpmnElement="Flow_P09_8">
+        <di:waypoint x="2069" y="823"/>
+        <di:waypoint x="2257" y="823"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P09_9" bpmnElement="Flow_P09_9">
+        <di:waypoint x="2343" y="823"/>
+        <di:waypoint x="2437" y="823"/>
+        <di:waypoint x="2437" y="523"/>
+        <di:waypoint x="2531" y="523"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P09_10" bpmnElement="Flow_P09_10">
+        <di:waypoint x="2343" y="823"/>
+        <di:waypoint x="2437" y="823"/>
+        <di:waypoint x="2437" y="373"/>
+        <di:waypoint x="2531" y="373"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P09_11" bpmnElement="Flow_P09_11">
+        <di:waypoint x="2749" y="373"/>
+        <di:waypoint x="2937" y="373"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P09_12" bpmnElement="Flow_P09_12">
+        <di:waypoint x="2980" y="425"/>
+        <di:waypoint x="2980" y="1082"/>
+        <di:waypoint x="1450" y="1082"/>
+        <di:waypoint x="1450" y="575"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P09_13" bpmnElement="Flow_P09_13">
+        <di:waypoint x="3023" y="373"/>
+        <di:waypoint x="3292" y="373"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P09_14" bpmnElement="Flow_P09_14">
+        <di:waypoint x="2749" y="523"/>
+        <di:waypoint x="2937" y="523"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P09_15" bpmnElement="Flow_P09_15">
+        <di:waypoint x="3023" y="523"/>
+        <di:waypoint x="3211" y="523"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P09_16" bpmnElement="Flow_P09_16">
+        <di:waypoint x="3023" y="523"/>
+        <di:waypoint x="3117" y="523"/>
+        <di:waypoint x="3117" y="673"/>
+        <di:waypoint x="3211" y="673"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P09_17" bpmnElement="Flow_P09_17">
+        <di:waypoint x="3429" y="673"/>
+        <di:waypoint x="3632" y="673"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P09_18" bpmnElement="Flow_P09_18">
+        <di:waypoint x="3429" y="523"/>
+        <di:waypoint x="3632" y="523"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P09_19" bpmnElement="Flow_P09_19">
+        <di:waypoint x="1493" y="523"/>
+        <di:waypoint x="1511" y="523"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

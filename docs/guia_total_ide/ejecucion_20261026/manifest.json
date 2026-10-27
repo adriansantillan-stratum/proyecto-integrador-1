@@ -1,0 +1,901 @@
+{
+  "at": "2026-10-26T20:15:55.309385+00:00",
+  "runId": "ejecucion_20261026",
+  "fixture": {
+    "date": "2026-10-26",
+    "timezone": "America/Lima",
+    "synthetic": true,
+    "routeId": 22,
+    "driverId": 1,
+    "vehicleId": 1,
+    "orderIds": [
+      48,
+      49,
+      50
+    ],
+    "tracking": [
+      "IDE-20261026-POD",
+      "IDE-20261026-FAILED",
+      "IDE-20261026-PENDIENTE"
+    ],
+    "incidentId": [
+      14,
+      15
+    ],
+    "actionId": 8
+  },
+  "runtime": {
+    "backend": "Java17 Gradle bootRun, profiles local,ide, HTTP8081, JDWP5005",
+    "web": "Vite3000 desde web-admin con proxyAPI8081",
+    "mobile": "APK debug9006 desde copia fuente SHA256 verificada en EcoRoute_QA emulator-5556; adaptadorDart directo",
+    "ide": "Tres workspacesVSCode con Java,React/Chrome yDart. InfraestructuraDocker separada; contenedoresappdetenidos."
+  },
+  "screens": [
+    {
+      "screenId": "M01",
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m01_actual.png",
+      "caption": "Acceso móvil real sin credenciales visibles.",
+      "state": "sin sesión",
+      "at": "2026-10-26T17:56:27.461Z",
+      "sha256": "ebd119d3ccc5d08dc0122bc066d61de6c490b057d150469df534e7111f5116f1",
+      "sequence": 1
+    },
+    {
+      "screenId": "M05",
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m05_retorno.png",
+      "caption": "Perfil cargado del conductor efectivo, vínculo1, licencia y contacto local de ensayo.",
+      "state": "perfil cargado",
+      "at": "2026-10-26T18:11:48.659Z",
+      "sha256": "3bbdcf91aed637ce60a15f45d22a895ecafa3106269a71e7a05e351cb59c2fd1",
+      "sequence": 2
+    },
+    {
+      "screenId": "M02",
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m02_hoy.png",
+      "caption": "Ruta22 de hoy con tres paradas y propuesta por calles OSRM.",
+      "state": "planificada",
+      "at": "2026-10-26T18:13:37.270Z",
+      "sha256": "4a93c2151c9742d625d803faaeb98db60369fa6e92578f96e61bc30fe9d3cfa3",
+      "sequence": 3
+    },
+    {
+      "screenId": "M02",
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m02_revision_hoy.png",
+      "caption": "Hoja aprobada por administración, antes de la aceptación del conductor.",
+      "state": "revisión superior",
+      "at": "2026-10-26T18:15:28.681Z",
+      "sha256": "34cf4a6b9b5fe3f4a3cb4a81fa716e9df463656e7c29bdec6c194480707894a5",
+      "sequence": 4
+    },
+    {
+      "screenId": "M02",
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m02_aceptacion_control.png",
+      "caption": "Continuación de la revisión con observaciones y botón de aceptación.",
+      "state": "control de aceptación",
+      "at": "2026-10-26T18:16:13.805Z",
+      "sha256": "a877530e8ed85854041e2e6434259df97e7db049431ff9bc169a7a87cae75117",
+      "sequence": 5
+    },
+    {
+      "screenId": "M02",
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m02_aceptada.png",
+      "caption": "Aceptación registrada por el servidor desde la cuenta del conductor.",
+      "state": "aceptada",
+      "at": "2026-10-26T18:16:30.402Z",
+      "sha256": "4ba891c57aad63c02204af962a92d58d3a02595074fc1bc6d307ac46317ea4bd",
+      "sequence": 6
+    },
+    {
+      "screenId": "W04",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_despacho_aprobado.jpg",
+      "caption": "Ruta 22 de hoy: aprobación administrativa y aceptación del conductor verificadas antes del despacho.",
+      "state": "aprobada y aceptada",
+      "sequence": 7,
+      "at": "2026-10-26T18:17:18.895Z",
+      "sha256": "109bc2ea785ca8f6b038c37a915ef6eb840c3f74dc0089dcddfe894b651ec2e6"
+    },
+    {
+      "screenId": "W04",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_despacho_iniciado.jpg",
+      "caption": "Revisión aprobada y aceptada, geometría OSRM y paradas IN_TRANSIT tras iniciar el despacho de la ruta22.",
+      "state": "mapa durante la ejecución",
+      "sequence": 8,
+      "at": "2026-10-26T18:17:47.197Z",
+      "sha256": "10ad556f640700255eda3ef2e187ff7d0f5f2a170df6a0e2ae9d72c46f0bf2f5"
+    },
+    {
+      "screenId": "M02",
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m02_en_curso.png",
+      "caption": "Los mismos pedidos48,49,50 en tránsito después del despacho web.",
+      "state": "en ejecución",
+      "at": "2026-10-26T18:18:05.824Z",
+      "sha256": "a4b8f8e41ba1f6934b12aaa1fc0385961b9b33dbf565cb4f8211cdaebe6ef04c",
+      "sequence": 9
+    },
+    {
+      "screenId": "W04",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_despacho_mapa.jpg",
+      "caption": "Backlog de pedidos pendientes con revisión comercial y selectores de ruta; no se realiza una asignación adicional.",
+      "state": "backlog y asignación",
+      "sequence": 10,
+      "at": "2026-10-26T18:18:13.793Z",
+      "sha256": "25203360499421659218eea74f5ee46faa6409cb00f3a0af283c70a4caa872da"
+    },
+    {
+      "screenId": "M03",
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m03_detalle.png",
+      "caption": "Detalle móvil de pedido48 antes de confirmar el POD.",
+      "state": "detalle",
+      "at": "2026-10-26T18:18:29.914Z",
+      "sha256": "c339b59a8a45b7da4f66ee16c3ab0f4970b2bdde118cd703c7bb9d8bbe6ff8d4",
+      "sequence": 11
+    },
+    {
+      "screenId": "W04",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_planificar_formulario.jpg",
+      "caption": "Planificar ruta: fecha, hora y recursos disponibles; Juan y ABC-123 ya no están disponibles durante el reparto.",
+      "state": "formulario",
+      "sequence": 12,
+      "at": "2026-10-26T18:18:37.792Z",
+      "sha256": "c703dfe2743855b687b3f94e10448e99a05cb8ec78075ee006da71f6a2310c65"
+    },
+    {
+      "screenId": "M03",
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m03_estados.png",
+      "caption": "Estados disponibles para la parada en tránsito.",
+      "state": "alternativas",
+      "at": "2026-10-26T18:18:53.580Z",
+      "sha256": "cc48b9c29ff997032d78c1ce4add4567a2c452f21c8c77dddbf1b9547c542cd2",
+      "sequence": 13
+    },
+    {
+      "screenId": "W03",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_pedidos_recorrido.jpg",
+      "caption": "Los mismos tres pedidos del ensayo, asignados a ruta 22 y en tránsito.",
+      "state": "consulta",
+      "sequence": 14,
+      "at": "2026-10-26T18:19:03.826Z",
+      "sha256": "b822de6d437a53709c02f3784447f9ddf6334ee313f559e67c211f401d935bd3"
+    },
+    {
+      "screenId": "M03",
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m03_formulario_pod.png",
+      "caption": "Formulario POD superior: entrega seleccionada y foto obligatoria.",
+      "state": "POD superior",
+      "at": "2026-10-26T18:19:22.144Z",
+      "sha256": "d22ca27beecf3a56956108b172f2325177a79f830d47b19591d266a00566c9ae",
+      "sequence": 15
+    },
+    {
+      "screenId": "M03",
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m03_camara.png",
+      "caption": "Cámara virtual del emulador usada para evidencia sintética.",
+      "state": "cámara",
+      "at": "2026-10-26T18:19:41.153Z",
+      "sha256": "d9ba1fb33aca33d2d42d2a9e2e9645bd1f990aa595e72d75332eba8219927dff",
+      "sequence": 16
+    },
+    {
+      "screenId": "M03",
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m03_foto_adjunta.png",
+      "caption": "Foto de ensayo adjunta al pedido, todavía sin envío al servidor.",
+      "state": "foto adjunta",
+      "at": "2026-10-26T18:20:26.720Z",
+      "sha256": "c7adb081f66cae2b48f1bcafa385df90473ea8a909b245b3ae353c5c60a6929e",
+      "sequence": 17
+    },
+    {
+      "screenId": "M03",
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m03_firma_trazo.png",
+      "caption": "Receptor y firma sintéticos antes de confirmar su captura.",
+      "state": "receptor y firma",
+      "at": "2026-10-26T18:21:02.621Z",
+      "sha256": "3aba40e1c3f8ebf6ecf5cbb7ade6a7d63dcb34b79ef8702b6222acfe329eb071",
+      "sequence": 18
+    },
+    {
+      "screenId": "W03",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_pedido_importacion.jpg",
+      "caption": "Formulario inicial de importación CSV: plantilla y botón de validación, sin archivo seleccionado ni importación confirmada.",
+      "state": "inicio de importación",
+      "sequence": 19,
+      "at": "2026-10-26T18:21:22.191Z",
+      "sha256": "b0bacc09047b25093692edae341f8656481ef1ac884b1ae4c5e319109f467a58"
+    },
+    {
+      "screenId": "M03",
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m03_pod_listo.png",
+      "caption": "Firma guardada y datos preparados; todavía falta confirmar remotamente.",
+      "state": "POD preparado",
+      "at": "2026-10-26T19:40:33.665Z",
+      "sha256": "ad5b2bd6945f48669c86a8dcd46ecf5216ed966446cc51a6272d161d51f30127",
+      "sequence": 20
+    },
+    {
+      "screenId": "W08",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_conductores.jpg",
+      "caption": "Catálogo real de conductores y sus datos operativos.",
+      "state": "consulta",
+      "sequence": 21,
+      "at": "2026-10-26T19:41:15.912Z",
+      "sha256": "a2537a837591e25702080b3976f66c41be4a6d14b9a846e82933022b7064225a"
+    },
+    {
+      "screenId": "W08",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_conductor_formulario.jpg",
+      "caption": "Formulario de conductor con identidad, licencia, contacto y estado; consulta sin guardar.",
+      "state": "formulario",
+      "sequence": 22,
+      "at": "2026-10-26T19:41:16.547Z",
+      "sha256": "3ef0d45d87883e7b257428fa0a3af2caccb84c2d31128650b97739cb4aed1a34"
+    },
+    {
+      "screenId": "M03",
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m03_offline_guardado.png",
+      "caption": "Evidencia de pedido48 guardada sin conexión; el estado remoto aún no está confirmado.",
+      "state": "offline pendiente",
+      "at": "2026-10-26T19:41:31.563Z",
+      "sha256": "62ed70492a1db5c4b9a28e078efaa03a829669633c58d49ed001450c92ac0f14",
+      "sequence": 23
+    },
+    {
+      "screenId": "M06",
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m06_pendiente.png",
+      "caption": "Cola privada con el POD48 pendiente de confirmación del servidor.",
+      "state": "pendiente",
+      "at": "2026-10-26T19:41:51.621Z",
+      "sha256": "330d08caa62958d3e9535a22c849cfa0ddfb1d86b48c2514c6d300bb10fc51a2",
+      "sequence": 24
+    },
+    {
+      "screenId": "W09",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_vehiculos.jpg",
+      "caption": "Catálogo real de flota, capacidad y operatividad.",
+      "state": "consulta",
+      "sequence": 25,
+      "at": "2026-10-26T19:42:00.612Z",
+      "sha256": "2037cd9ff9bd964ffaf4f7e41d78b99723040895b15f074b79261b9278a9b814"
+    },
+    {
+      "screenId": "W09",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_vehiculo_formulario.jpg",
+      "caption": "Formulario de vehículo completo; consulta sin modificar la flota.",
+      "state": "formulario",
+      "sequence": 26,
+      "at": "2026-10-26T19:42:01.214Z",
+      "sha256": "fb5f43d93a0882911015b6334ce46058a9f82892f59c8348b8ae95f4962e1493"
+    },
+    {
+      "screenId": "W10",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_usuarios.jpg",
+      "caption": "Usuarios e identidades efectivas del Keycloak local.",
+      "state": "consulta",
+      "sequence": 27,
+      "at": "2026-10-26T19:42:47.125Z",
+      "sha256": "73439ac4d6d205911aa94e777cb073edfb19ddb1bfa9a2d98322a1b52adb8d50"
+    },
+    {
+      "screenId": "W10",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_usuario_vinculo.jpg",
+      "caption": "Roles efectivos y relación subject–conductor; consulta sin ampliar permisos.",
+      "state": "detalle",
+      "sequence": 28,
+      "at": "2026-10-26T19:42:47.725Z",
+      "sha256": "a099830b178b50c2908a72df7232e93ee2f5a35ce168e5e530e2e52c78425417"
+    },
+    {
+      "screenId": "W11",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_compras.jpg",
+      "caption": "Compras operativas con proveedor, categoría, monto y estado.",
+      "state": "consulta",
+      "sequence": 29,
+      "at": "2026-10-26T19:43:27.068Z",
+      "sha256": "be7cdc86c9b4e03e1baaeba38abfe621439d9ace16a817ada884bf1b256dc3b2"
+    },
+    {
+      "screenId": "W11",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_compra_formulario.jpg",
+      "caption": "Formulario real de compra; cancelado sin registrar movimientos adicionales.",
+      "state": "formulario",
+      "sequence": 30,
+      "at": "2026-10-26T19:43:27.641Z",
+      "sha256": "5df3ea9c9df6daca151e9a895704253261e0e8b118a1eb1ff0edb727a46fa080"
+    },
+    {
+      "screenId": "M02",
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m02_tras_sincronizar.png",
+      "caption": "Tras recuperar red y reautenticar al mismo conductor, pedido48 aparece entregado.",
+      "state": "sincronizado",
+      "at": "2026-10-26T19:43:43.343Z",
+      "sha256": "c6077d6329f98621d5fe7a200a2493fb32667d1a5553e246c0d1f6651c6ded22",
+      "sequence": 31
+    },
+    {
+      "screenId": "W03",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_pedido_pod_detalle.jpg",
+      "caption": "Pedido 48 DELIVERED tras recuperar su evidencia offline: ventana, receptor y datos POD verificados en web.",
+      "state": "detalle entregado",
+      "sequence": 32,
+      "at": "2026-10-26T19:45:03.570Z",
+      "sha256": "35c57aaa53ee001142891ae6e63f0fd5af26c457f5775fd694ee3693ba99ee14"
+    },
+    {
+      "screenId": "M03",
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m03_fallo_motivo.png",
+      "caption": "No entrega de pedido49 con motivo sintético de ausencia; debe enviarse con conexión.",
+      "state": "excepción ausencia",
+      "at": "2026-10-26T19:45:04.369Z",
+      "sha256": "eb86670cdb727c4ec4ef6c581bcae6a028df41f450c9f23bfd44eb38bf083a61",
+      "sequence": 33
+    },
+    {
+      "screenId": "W03",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_pedido_pod_imagenes.jpg",
+      "caption": "Foto de cámara virtual y firma de ensayo del POD48, con descarga PDF disponible en web.",
+      "state": "evidencias POD",
+      "sequence": 34,
+      "at": "2026-10-26T19:45:46.158Z",
+      "sha256": "8cb1c63cc770ae9f871fbfd83d34a74f60098b13b7d50d7bef7250c46c1d7717"
+    },
+    {
+      "screenId": "M03",
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m03_devolucion_motivo.png",
+      "caption": "Devolución de pedido50 por rechazo del destinatario, con motivo registrado.",
+      "state": "excepción devolución",
+      "at": "2026-10-26T19:47:27.746Z",
+      "sha256": "8176238477617fc0c220dd9ba1524a9a9276da822a1c78d95f8fa58aa20dbaea",
+      "sequence": 35
+    },
+    {
+      "screenId": "W05",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_incidencia_generada.jpg",
+      "caption": "Incidencia generada desde la no entrega móvil del pedido49, con actor registrado por el servidor.",
+      "state": "abierta",
+      "sequence": 36,
+      "at": "2026-10-26T19:47:31.649Z",
+      "sha256": "00ec053f9f11f0d1086e4c1f8870468746a1e876d801e9c05ec2f7afa3ed8508"
+    },
+    {
+      "screenId": "W05",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_incidencia_resolucion.jpg",
+      "caption": "Resolución administrativa de la incidencia14, justificando el cierre del intento fallido.",
+      "state": "formulario de resolución",
+      "sequence": 37,
+      "at": "2026-10-26T19:47:40.613Z",
+      "sha256": "5576260da3b86b5524c576aa8a7c8e349dbc5b484653f3e6849ff82d7ed9f72b"
+    },
+    {
+      "screenId": "M02",
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m02_final_recorrido.png",
+      "caption": "Ruta22 COMPLETED: un entregado, un fallido y un devuelto; no equivale a tres entregas exitosas.",
+      "state": "resultado final",
+      "at": "2026-10-26T19:48:05.922Z",
+      "sha256": "8fffda7da2376526c848007774243d5ec18000d5974e24e9850b7082b46d3d7b",
+      "sequence": 38
+    },
+    {
+      "screenId": "W05",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_incidencias_estado.jpg",
+      "caption": "Casos de la ruta22: ausencia resuelta y devolución registrada, conservando el pedido original.",
+      "state": "seguimiento",
+      "sequence": 39,
+      "at": "2026-10-26T19:48:35.674Z",
+      "sha256": "309f2bb9197e4c2c783f0468e4a8a57bc45686f68acb848b0eb11360918003e7"
+    },
+    {
+      "screenId": "W05",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_incidencia_formulario.jpg",
+      "caption": "Registro real de incidente de ruta o pedido, tipo, severidad y motivo; sin guardar.",
+      "state": "formulario",
+      "sequence": 40,
+      "at": "2026-10-26T19:49:28.572Z",
+      "sha256": "50a27f61a56811b4abae199956500f2495d3d6252fd4fd507f46d7cc4b775966"
+    },
+    {
+      "screenId": "W06",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_accion_formulario.jpg",
+      "caption": "Acción de ensayo vinculada a CHR y causas observadas en ruta22; base y meta declaradas.",
+      "state": "formulario",
+      "sequence": 41,
+      "at": "2026-10-26T19:50:15.337Z",
+      "sha256": "1326e1a33294a8871682ade589f77234393c434fc3527ae8a9353a57604b5f80"
+    },
+    {
+      "screenId": "W06",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_acciones_listado.jpg",
+      "caption": "Acción de ensayo creada a partir de la ausencia y devolución de ruta22, con responsable, plazo y CHR.",
+      "state": "consulta",
+      "sequence": 42,
+      "at": "2026-10-26T19:51:28.449Z",
+      "sha256": "6884d0adddd7211d4a547b4cebd02ee6573c1a427257bc2b4d5233ad79a7195a"
+    },
+    {
+      "screenId": "W06",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_accion_seguimiento.jpg",
+      "caption": "Seguimiento de acción8: asignación de trabajo y nota de ensayo; no acredita mejora empresarial.",
+      "state": "en progreso",
+      "sequence": 43,
+      "at": "2026-10-26T19:51:44.505Z",
+      "sha256": "3c12abd579a856f913d76871ce73545f54292238162358fcfbc0460442f0448c"
+    },
+    {
+      "screenId": "W06",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_accion_verificacion.jpg",
+      "caption": "Revisión ADMIN de la acción8 con resultado observado de ensayo y meta no alcanzada; no acredita mejora real.",
+      "state": "verificación",
+      "sequence": 44,
+      "at": "2026-10-26T19:52:59.504Z",
+      "sha256": "077fc515e99521a2dedd2d441cb32a8c24fe6b02abc8b5a87324a62199ddd61b"
+    },
+    {
+      "screenId": "W06",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_accion_cerrada.jpg",
+      "caption": "Acción8 VERIFIED: resultado de ensayo33.33 frente a meta90, con justificación y verificador; no hay mejora causal acreditada.",
+      "state": "cerrada",
+      "sequence": 45,
+      "at": "2026-10-26T19:53:35.304Z",
+      "sha256": "1f31692cf92c7579f11358f127eee1967d0f817bfbd494ece15acd5fe9b8d212"
+    },
+    {
+      "screenId": "W07",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_dashboard_final_superior.jpg",
+      "caption": "Dashboard final del 26/10/2026, conductor Juan Pérez: tres pedidos, uno entregado y ninguno en tránsito.",
+      "state": "resultado final superior",
+      "sequence": 46,
+      "at": "2026-10-26T19:54:49.269Z",
+      "sha256": "b47e438a652b8a4be2336522c855fdec6533213135fcbc226e9abe99eaeb0f03"
+    },
+    {
+      "screenId": "W07",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_dashboard_final_inferior.jpg",
+      "caption": "Gráficos finales de la jornada y disponibilidad de flota liberada tras completar la ruta22.",
+      "state": "resultado final inferior",
+      "sequence": 47,
+      "at": "2026-10-26T19:57:16.935Z",
+      "sha256": "4426f0d396845f764fd8c893a77f18e504555b4cd33a84aff162233861b233ab"
+    },
+    {
+      "screenId": "M04",
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m04_historial_jornada.png",
+      "caption": "Historial real con los tres resultados de la jornada del 26/10/2026.",
+      "state": "historial final",
+      "at": "2026-10-26T19:57:51.822Z",
+      "sha256": "2240f577f16322e7a17ddacef65530ccda036fb5f6d4ea28677ce08f84b87e5c",
+      "sequence": 48
+    },
+    {
+      "screenId": "W12",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_reportes_final_superior.jpg",
+      "caption": "Reportes finales filtrados: tres pedidos y una entrega a tiempo evaluable con POD y ventana.",
+      "state": "final superior",
+      "sequence": 49,
+      "at": "2026-10-26T19:58:36.135Z",
+      "sha256": "d4ddad130aec1efac06c068fc8ffa3a7198d1468f26eed1fa0fee4e7e845069a"
+    },
+    {
+      "screenId": "W12",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_reportes_final_tabla.jpg",
+      "caption": "Ruta22: plan registrado8.53km, tiempo de operación de ensayo y GPS no evaluable por intervalo excesivo entre muestras.",
+      "state": "eficiencia final",
+      "sequence": 50,
+      "at": "2026-10-26T19:59:16.867Z",
+      "sha256": "834e4d234d5ca7bf39a77ac8f745264b674f901a89e301f11f92c26d94de5065"
+    },
+    {
+      "screenId": "M06",
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m06_final_sin_pendientes.png",
+      "caption": "Comprobación final de cero evidencias pendientes tras sincronizar el POD.",
+      "state": "cola final vacía",
+      "at": "2026-10-26T20:00:06.163Z",
+      "sha256": "e7b544db8c59f04d2e694f32a11920684d56625912a094565e90d343aea57092",
+      "sequence": 51
+    },
+    {
+      "screenId": "W13",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_final_bi_kpis.jpg",
+      "caption": "BI final del 26/10/2026: IID66.67% (2/3), CHR/TDE/SUCCESS33.33% (1/3) y ONTIME100% (1/1). Las metas administrativas no están configuradas.",
+      "state": "indicadores finales",
+      "sequence": 52,
+      "at": "2026-10-26T20:01:45.033Z",
+      "sha256": "a04c9aae85de2fe0db217b661b52855723ec7a9c211d9c7f09d6430f8ac743bd"
+    },
+    {
+      "screenId": "W13",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_final_bi_tendencias.jpg",
+      "caption": "Evolución diaria real del ensayo, sin atribuir mejora causal a una única jornada.",
+      "state": "tendencias finales",
+      "sequence": 53,
+      "at": "2026-10-26T20:01:45.399Z",
+      "sha256": "6e98c2dd4fc20104228a8acb99459dcffe429853e5e1347408c8cb05af79b4cb"
+    },
+    {
+      "screenId": "W13",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_final_bi_causas.jpg",
+      "caption": "Continuación de Causas: motivos de incidencias y eventos por fuente; complementa los gráficos superiores de la misma vista.",
+      "state": "causas continuación",
+      "sequence": 54,
+      "at": "2026-10-26T20:02:20.999Z",
+      "sha256": "e585ddb0e762548cd5b6944f15e396f48f54a47f750067742826aade254a532a"
+    },
+    {
+      "screenId": "W13",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_final_bi_cumplimiento.jpg",
+      "caption": "Cumplimiento del ensayo: población y resultados por conductor; sin meta vigente no se calcula brecha.",
+      "state": "cumplimiento final",
+      "sequence": 55,
+      "at": "2026-10-26T20:02:21.666Z",
+      "sha256": "90443ae5fc9002a94a35e405fee145a2e8e0f3a9dcfaf71da6b7c157427514bc"
+    },
+    {
+      "screenId": "W13",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_final_bi_calidad.jpg",
+      "caption": "Calidad de la jornada: integridad comercial y de ubicación, un POD completo y telemetría no evaluable.",
+      "state": "calidad final",
+      "sequence": 56,
+      "at": "2026-10-26T20:02:57.764Z",
+      "sha256": "74128866be348b79bbe29511dcee76f4901495715cb6bbc6c058b0daee740b48"
+    },
+    {
+      "screenId": "W13",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_final_bi_eficiencia.jpg",
+      "caption": "Continuación de Eficiencia: minutos por parada terminal y tabla de calidad GPS; complementa los gráficos superiores.",
+      "state": "eficiencia continuación",
+      "sequence": 57,
+      "at": "2026-10-26T20:02:58.434Z",
+      "sha256": "065bf649245c3db052895310a1c17eb8c5acb8743e856017e62320a686d60582"
+    },
+    {
+      "screenId": "W13",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_final_bi_eficiencia_tabla.jpg",
+      "caption": "Calidad GPS detallada: intervalo excesivo entre muestras, plan8.53km y duración de la sesión de ensayo.",
+      "state": "eficiencia tabla final",
+      "sequence": 58,
+      "at": "2026-10-26T20:02:58.881Z",
+      "sha256": "b348913653c501af35bf176849713a77c6a65b6042bd2e52dcb7165b38fe8412"
+    },
+    {
+      "screenId": "W13",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_final_bi_metas.jpg",
+      "caption": "Editores reales de metas administrativas de los cinco indicadores; consulta sin cambiar valores.",
+      "state": "metas finales",
+      "sequence": 59,
+      "at": "2026-10-26T20:04:04.164Z",
+      "sha256": "ce80923cb1b73a8af6fc7698aab5afd37f871912859ebd9dc42d8fd53388d69e"
+    },
+    {
+      "screenId": "W03",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_final_pedido_alta.jpg",
+      "caption": "Formulario real de alta sin ruta: datos de pedido, ventana y confirmación comercial, cancelado sin guardar.",
+      "state": "formulario de alta",
+      "sequence": 60,
+      "at": "2026-10-26T20:04:47.767Z",
+      "sha256": "2642b8c179c56d798b996fc486d4f969accdcd11ecb6d61ed9d05522e6a3c394"
+    },
+    {
+      "screenId": "W03",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_final_pedido_alta_inferior.jpg",
+      "caption": "Continuación del alta: declaración comercial y botón para guardar el pedido sin ruta.",
+      "state": "formulario continuación",
+      "sequence": 61,
+      "at": "2026-10-26T20:04:48.096Z",
+      "sha256": "da3df2b52b165e5d61d483f978f748c0c16e8c1f92e6fb44da69bd482619bdd7"
+    },
+    {
+      "screenId": "W01",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_login_web.jpg",
+      "caption": "Acceso web real de EcoRoute para Grupo MICOTRANS, antes de redirigir al proveedor de identidad.",
+      "state": "sin sesión",
+      "sequence": 62,
+      "at": "2026-10-26T20:05:11.063Z",
+      "sha256": "baa1d67b158e5829876a8de9b564f22ca288e06895f3811fb56e905ed47be30d"
+    },
+    {
+      "screenId": "W01",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_login_keycloak.jpg",
+      "caption": "Formulario real de Keycloak sin credenciales visibles; OAuth2 Authorization Code con PKCE en web.",
+      "state": "proveedor de identidad",
+      "sequence": 63,
+      "at": "2026-10-26T20:05:20.331Z",
+      "sha256": "e30681f8fb9717a1f2498d2be546d958fa9da542ec0bdcd0f1364a027eaf817f"
+    },
+    {
+      "screenId": "W02",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_final_inicio_superior.jpg",
+      "caption": "Inicio corregido: accesos reales del usuario autenticado, con contenido desplazable.",
+      "state": "inicio superior",
+      "sequence": 64,
+      "at": "2026-10-26T20:07:41.895Z",
+      "sha256": "874c79471858d4cd3d6da770394dd149342d8658625072dbf45b754fbc55c350"
+    },
+    {
+      "screenId": "W02",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_final_inicio_inferior.jpg",
+      "caption": "Inicio con desplazamiento real: accesos inferiores a Vehículos y Compras completamente visibles.",
+      "state": "inicio inferior",
+      "sequence": 65,
+      "at": "2026-10-26T20:08:37.363Z",
+      "sha256": "d51b2cb2b2754ecf3ee843f943228426b732afbb9bd2706c7bac4f95f6f612e5"
+    },
+    {
+      "screenId": "W13",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_final_bi_causas_global.jpg",
+      "caption": "Causas, gráfico global completo de los motivos registrados y comienzo del historial de estados.",
+      "state": "causas gráfico global",
+      "sequence": 66,
+      "at": "2026-10-26T20:14:20.190Z",
+      "sha256": "eb5912218227b6953a397a61e1539ed325d452fe767fe8908e281393dada4841"
+    },
+    {
+      "screenId": "W13",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_final_bi_causas_historial.jpg",
+      "caption": "Causas, gráfico del historial de estados completo y continuidad de los motivos de incidencias.",
+      "state": "causas historial",
+      "sequence": 67,
+      "at": "2026-10-26T20:14:54.693Z",
+      "sha256": "74a20f92681aff810ca0c0bf6da660e6e5a1a6492d4dd7a5460dd25bc541a1d1"
+    },
+    {
+      "screenId": "W13",
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_final_bi_eficiencia_tres_graficos.jpg",
+      "caption": "Primeros tres gráficos de eficiencia completos: plan frente a GPS, tiempo de operación y km por entrega. La cuarta gráfica y la tabla están en la continuación.",
+      "state": "eficiencia tres gráficos",
+      "sequence": 68,
+      "at": "2026-10-26T20:15:36.657Z",
+      "sha256": "e0056a9d82f2cfb9e1c5159d3f30c7275a5bcb2e44aa35d9ff6b2641f7630064"
+    },
+    {
+      "screenId": "IDE",
+      "file": "docs/guia_total_ide/ejecucion_20261026/ide/backend_breakpoint.jpg",
+      "caption": "VS Code Java: pausa real en OrderController.java línea41 con id49 recibido; después se retiró el breakpoint y se reanudó.",
+      "state": "depuración real",
+      "sha256": "b4e206a8b3b33ff6031d3652f92205efd67eee158700a8fb19887af52a2b5cb6",
+      "sequence": 69
+    },
+    {
+      "screenId": "IDE",
+      "file": "docs/guia_total_ide/ejecucion_20261026/ide/react_debugger.jpg",
+      "caption": "VS Code React: Orders.tsx abierto, depurador del navegador conectado y consola Vite conectada.",
+      "state": "depuración real",
+      "sha256": "8de56e947b2990bf0d5ebbd999cd706083867c9f1171cecc22e9632e2ce5c728",
+      "sequence": 70
+    },
+    {
+      "screenId": "IDE",
+      "file": "docs/guia_total_ide/ejecucion_20261026/ide/flutter_debugger.jpg",
+      "caption": "VS Code Dart: fuente routes_page.dart y Call Stack pausada desde F6; posteriormente F5 reanudó la aplicación.",
+      "state": "depuración real",
+      "sha256": "3ab9b32a411a5d057a6130b84ad23ea5a591a5d9b5ec152b8b976fdb709e32b7",
+      "sequence": 71
+    }
+  ],
+  "checks": [
+    {
+      "name": "ORDER_48_DELIVERED",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "ORDER_49_FAILED",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "ORDER_50_RETURNED",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "ROUTE_EXACT_THREE_ORDERS",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "ROUTE_22_COMPLETED",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "ROUTE_START_END_RECORDED",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "ROUTE_PLANNED_DISTANCE_NONZERO",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "REVIEW_APPROVED_AND_ACCEPTED",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "POD_48_REMOTE_METADATA_COMPLETE",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "NO_POD_FOR_49",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "NO_POD_FOR_50",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "POD_48_PHOTO_AVAILABLE",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "POD_48_SIGNATURE_AVAILABLE",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "POD_48_PDF_AVAILABLE",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "UNIQUE_INCIDENT_FOR_49",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "UNIQUE_INCIDENT_FOR_50",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "INCIDENT_14_CLOSE_FAILED",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "RETURNED_50_INCIDENT_15_CLOSED_FAILED",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "ACTION_8_VERIFIED_RESULT_33_33_TARGET_90",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "ACTION_8_CAUSAL_LIMITATION_RECORDED",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "SQL_TRANSACTION_READ_ONLY",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "UNIQUE_PROOF_48",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "UNIQUE_DELIVERY_OUTBOX_48",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "UNIQUE_DELIVERY_NOTIFICATION_48",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "POD_48_PHOTO_SHA256_MATCH",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "POD_48_SIGNATURE_SHA256_MATCH",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "POD_48_CAPTURE_AND_RECEIVE_TIMESTAMPS",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "UNIQUE_EXPECTED_TRANSITIONS_ONLY",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "UNIQUE_DRIVER_ACCEPTANCE",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "UNIQUE_CLOSE_FAILED_14_EVENT",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "UNIQUE_CLOSE_FAILED_15_EVENT",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "BREAKPOINT_JAVA_LINE_41_ID49_STACK_MAIN_UI_OBSERVED",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "NATIVE_THREE_APPS_IDE_PROCESS_NO_APP_CONTAINERS",
+      "status": "PASS",
+      "details": "Comprobación GET/SQL de solo lectura registrada en business_final.json para ruta22 y pedidos48–50."
+    },
+    {
+      "name": "OFFLINE_BEFORE_SYNC",
+      "status": "PASS",
+      "details": "business_offline.json: pedido48 IN_TRANSIT, POD404 y ruta22 IN_PROGRESS mientras m06_pendiente muestra evidencia local pendiente."
+    },
+    {
+      "name": "FLUTTER_PENDING_QUEUE_FINAL",
+      "status": "PASS",
+      "details": "m06_final_sin_pendientes.json y captura: cero pendientes. La sesión larga requirió reautenticar al mismo conductor; su evidencia privada se conservó."
+    },
+    {
+      "name": "IDE_DART_PAUSE_AND_RESUME",
+      "status": "PASS",
+      "details": "Main comprobó F6, Call Stack Paused on pause y ContinueF5 en VS Code; después F5 devolvió PauseF6 y la app continuó. Fuente temporal SHA256 verificada; sin hot reload desde original."
+    },
+    {
+      "name": "IDE_REACT_VITE_CONNECTED",
+      "status": "PASS",
+      "details": "react_debugger.jpg muestra componente React y consola Vite connected con depurador de Chrome. No se acredita aquí una pausa en breakpoint JavaScript."
+    },
+    {
+      "name": "AUTH_REFRESH_REGRESSION",
+      "status": "PASS",
+      "details": "Revisión delegada de Aquinas:9/9 pruebas de auth-session.test.mjs, TypeScript y lint correctos. Identidad conservada solo durante revalidación del mismo subject; errores/cambio de usuario invalidan."
+    },
+    {
+      "name": "HOME_FULL_SCREEN_SCROLL",
+      "status": "PASS",
+      "details": "DOM real después de corregir overflow: contenido1363px, área1000px y scrollTop363; capturas superior e inferior muestran todos los accesos."
+    },
+    {
+      "name": "GPS_DISTANCE_LIMITATION",
+      "status": "WARN",
+      "details": "La ruta22 tiene un intervalo GPS superior a900s durante la sesión larga: distanciaGPS no evaluable. El tiempo de operación incluye pausas de exposición y no acredita productividad real."
+    },
+    {
+      "name": "PLAN_AND_PREVIEW_ORIGIN",
+      "status": "WARN",
+      "details": "El plan guardado al despacho es8.53km. La propuesta recalculada desde otro origen GPS se mostró3.19km; es GET/path de consulta, no modificación del plan histórico."
+    },
+    {
+      "name": "MOBILE_TRANSIENT_RETRY",
+      "status": "PASS",
+      "details": "Primer envío de FAILED mostró interrupción de conexión. Se reintentó y se verificó un único cambio de estado e incidente14; no se oculta esta recuperación ni se asume que todo envío inicial funcionó."
+    },
+    {
+      "name": "PHYSICAL_FIELD_TEST",
+      "status": "NOT_RUN",
+      "details": "Se utilizó EcoRoute_QA emulator-5556 con foto, firma y GPS sintéticos. No se acredita piloto de campo, sensores de teléfono físico ni aceptación empresarial."
+    },
+    {
+      "name": "BACKEND_REJECTS_UNAUTHENTICATED_ORDERS",
+      "status": "PASS",
+      "details": "GET /orders sin credenciales respondió HTTP401 en el backend desde fuentes."
+    }
+  ],
+  "proofFiles": [
+    "runtime_verification.json",
+    "business_offline.json",
+    "business_final.json",
+    "security_check.json",
+    "mobile/source_copy_verification.json"
+  ],
+  "scope": "Prueba académica local sintética. No constituye UAT empresarial, validación legal del POD ni prueba de campo."
+}

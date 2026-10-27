@@ -1,0 +1,25 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {execFileSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
+const root=path.resolve(import.meta.dirname,'../..');
+const copy='C:/Users/USUARIO/AppData/Local/Temp/ecoroute-mobile-build-20261022-4004';
+const adb='C:/Users/USUARIO/AppData/Local/Android/Sdk/platform-tools/adb.exe';
+const run=(...args)=>execFileSync(adb,['-s','emulator-5556',...args],{timeout:120000,maxBuffer:2e6,windowsHide:true}).toString();
+if(!run('emu','avd','name').includes('EcoRoute_QA'))throw Error('Not QA AVD');
+const sha=b=>createHash('sha256').update(b).digest('hex');
+const compared=[];
+function compare(dir){for(const item of fs.readdirSync(path.join(root,'mobile-app',dir),{withFileTypes:true})){const rel=path.join(dir,item.name);if(item.isDirectory())compare(rel);else{const hash=sha(fs.readFileSync(path.join(root,'mobile-app',rel)));if(hash!==sha(fs.readFileSync(path.join(copy,rel))))throw Error('Build copy differs: '+rel);compared.push({file:rel.replaceAll('\\','/'),sha256:hash});}}}
+compare('lib');compare('android/app/src');
+const apk=path.join(copy,'build/app/outputs/flutter-apk/app-x86_64-debug.apk');
+const metadata=JSON.parse(fs.readFileSync(path.join(copy,'build/app/outputs/apk/debug/output-metadata.json'),'utf8'));
+const expectedVersion=metadata.elements.find(e=>e.filters.some(f=>f.value==='x86_64'))?.versionCode;
+if(expectedVersion!==8004)throw Error('Unexpected x86_64 output metadata');
+const target=path.join(root,'mobile-app/build/qa4004/app-x86_64-debug.apk');fs.mkdirSync(path.dirname(target),{recursive:true});fs.copyFileSync(apk,target);
+const installed=run('install','-r','-t',target);if(!installed.includes('Success'))throw Error('Install failed');
+const details=run('shell','dumpsys','package','com.example.ecoroute_driver_app').split('\n').filter(l=>/versionCode=|versionName=|lastUpdateTime=/.test(l));
+if(!details.some(l=>l.includes('versionCode='+expectedVersion)))throw Error('Unexpected installed version');
+run('shell','monkey','-p','com.example.ecoroute_driver_app','-c','android.intent.category.LAUNCHER','1');
+const report={at:new Date().toISOString(),serial:'emulator-5556',avd:'EcoRoute_QA',buildNumber:4004,versionCode:expectedVersion,versionNote:'Flutter split-per-abi adds ABI offset; Android x86_64 output and installed package report 8004.',apk:path.relative(root,target).replaceAll('\\','/'),sha256:sha(fs.readFileSync(target)),bytes:fs.statSync(target).size,details,installSucceeded:true,installReplaceWithoutClearData:true,buildLibAndAndroidSrcMatch:compared,buildDirectory:copy,firstBuildFailure:'OneDrive AccessDeniedException processDebugManifest; rebuilt from identical sources in isolated temporary copy.',network:'QA kept offline during update; queued proof must be checked separately',businessAcceptance:'NOT_ATTESTED'};
+fs.writeFileSync(path.join(root,'docs/control_integral_20261022/e2e_cierre/apk_4004.json'),JSON.stringify(report,null,2));
+console.log(JSON.stringify({versionCode:report.versionCode,installSucceeded:true,sourceFilesCompared:compared.length,sha256:report.sha256}));

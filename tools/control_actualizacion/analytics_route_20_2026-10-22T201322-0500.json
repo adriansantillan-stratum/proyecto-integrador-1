@@ -1,0 +1,120 @@
+{
+  "startedAt": "2026-10-22T20:13:22-05:00",
+  "timezone": "America/Lima",
+  "scope": "LOCAL_READ_ONLY_SQL",
+  "businessAcceptance": "NOT_ATTESTED",
+  "routeId": 20,
+  "method": "Proposed V16 function body evaluated as SELECT only, with 160 km/h and 900 s. No migration installed.",
+  "connection": {
+    "container": "ecoroute-db",
+    "db": "ecoroute",
+    "dbUser": "user",
+    "documentedIn": [
+      "README.md",
+      "GUIA_COMPLETA.md"
+    ]
+  },
+  "migrationSourceSha256": "91fdcf95b3c7092c56047637be17d44bd374a7ac769067955f9af86f4fec8ef4",
+  "querySha256": "ca1c7b0e1e2cb5361ecf1543e9206c0db035e472abf04b897ddb2c8c036e29a6",
+  "status": "PASS",
+  "observation": {
+    "transactionReadOnly": "on",
+    "installedMigrations": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "12",
+      "13",
+      "14",
+      "15"
+    ],
+    "route": {
+      "id": 20,
+      "driverId": 1,
+      "vehicleId": 1,
+      "date": "2026-10-22",
+      "status": "COMPLETED",
+      "actualStartTime": "2026-10-22T13:29:26.111251-05:00",
+      "actualEndTime": "2026-10-22T13:46:03.236384-05:00"
+    },
+    "currentView": {
+      "actualGpsDistanceKm": 7433.283426462645,
+      "kmPerDelivery": 7433.283426462645,
+      "timePerStopMin": 8.309376108333334,
+      "plannedDistanceKm": 7.84,
+      "gpsSampleCount": 4,
+      "distanceSource": "GPS_HAVERSINE"
+    },
+    "proposedV16": {
+      "route_id": 20,
+      "gps_sample_count": 4,
+      "valid_gps_sample_count": 4,
+      "invalid_gps_sample_count": 0,
+      "gps_segment_count": 3,
+      "rejected_gps_segment_count": 1,
+      "implausible_speed_segment_count": 1,
+      "nonpositive_time_segment_count": 0,
+      "excessive_gap_segment_count": 0,
+      "first_gps_at": "2026-10-22T13:35:17.440018-05:00",
+      "last_gps_at": "2026-10-22T13:44:06.681726-05:00",
+      "observed_distance_km": 7433.283426462645,
+      "actual_gps_distance_km": null,
+      "gps_quality": "IMPLAUSIBLE_SPEED"
+    },
+    "driverDateCounts": {
+      "total": 4,
+      "valid": 4,
+      "scheduled": 4,
+      "deliveredScheduled": 2,
+      "evidenceScheduled": 2,
+      "delivered": 2,
+      "onTime": 2,
+      "evaluable": 2
+    },
+    "driverDateStatusCounts": {
+      "FAILED": 2,
+      "DELIVERED": 2
+    }
+  },
+  "sqlKpis": [
+    {
+      "code": "IID",
+      "numerator": 4,
+      "denominator": 4,
+      "percentage": 100
+    },
+    {
+      "code": "CHR",
+      "numerator": 2,
+      "denominator": 4,
+      "percentage": 50
+    },
+    {
+      "code": "TDE",
+      "numerator": 2,
+      "denominator": 4,
+      "percentage": 50
+    },
+    {
+      "code": "SUCCESS",
+      "numerator": 2,
+      "denominator": 4,
+      "percentage": 50
+    },
+    {
+      "code": "ONTIME",
+      "numerator": 2,
+      "denominator": 2,
+      "percentage": 100
+    }
+  ],
+  "interpretation": "Actual observation of existing rows, not proof of physical travel. Proposed V16 output is not a deployed API response. KPI SQL values are scoped to route owner/date; API contract validated separately in disposable integration tests.",
+  "finishedAt": "2026-10-22T20:13:22-05:00"
+}

@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+const root=path.resolve(import.meta.dirname,'../..'),out=path.join(root,'docs/control_integral_20261022/e2e_cierre');
+const file=path.join(out,'fixture.json'),raw=fs.readFileSync(file);
+const current=JSON.parse(raw),snapshot=JSON.parse(fs.readFileSync(path.join(out,'server_offline.json')));
+const original=snapshot.steps.find(s=>s.name==='fixture').evidence;
+assert.equal(current.incidentId,12);const {incidentId,...identity}=current;assert.deepEqual(identity,original);
+const restored=JSON.stringify(original,null,2);
+assert.equal(createHash('sha256').update(restored).digest('hex'),snapshot.fixtureSha256);
+fs.writeFileSync(path.join(out,'fixture_with_resolution_metadata.json'),raw,{flag:'wx'});
+fs.writeFileSync(file,restored);
+fs.writeFileSync(path.join(out,'fixture_protocol_note.json'),JSON.stringify({at:new Date().toISOString(),change:'Removed incidental incidentId result metadata from immutable input fixture; archived bytes unchanged. Incident result remains in web_resolve and server_final reports.',coreIdsChanged:false,originalInputSha256:snapshot.fixtureSha256,archivedResolutionInputSha256:createHash('sha256').update(raw).digest('hex')},null,2));
+console.log('Original immutable fixture restored; result metadata archived separately.');

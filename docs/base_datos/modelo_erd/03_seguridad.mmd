@@ -1,0 +1,45 @@
+erDiagram
+    auth_module {
+        BIGSERIAL module_id PK
+        VARCHAR_50 module_name UK
+        VARCHAR_255 description
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    auth_resource {
+        BIGSERIAL resource_id PK
+        VARCHAR_50 resource_name
+        VARCHAR_255 description
+        BIGINT module_id FK
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    auth_action {
+        BIGSERIAL action_id PK
+        VARCHAR_50 action_name UK
+        VARCHAR_255 description
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    auth_role {
+        BIGSERIAL role_id PK
+        VARCHAR_50 role_name
+        VARCHAR_255 description
+        VARCHAR_5 country_code
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    auth_permission {
+        BIGSERIAL permission_id PK
+        BIGINT role_id FK
+        BIGINT resource_id FK
+        BIGINT action_id FK
+        TIMESTAMP_WITH_TIME_ZONE granted_at
+    }
+    auth_user_role {
+        BIGSERIAL id PK
+        VARCHAR_50 user_external_id
+        BIGINT role_id FK
+        TIMESTAMP_WITH_TIME_ZONE assigned_at
+    }
+    auth_module ||--o{ auth_resource : "module_id → module_id"
+    auth_role ||--o{ auth_permission : "role_id → role_id"
+    auth_resource ||--o{ auth_permission : "resource_id → resource_id"
+    auth_action ||--o{ auth_permission : "action_id → action_id"
+    auth_role ||--o{ auth_user_role : "role_id → role_id"

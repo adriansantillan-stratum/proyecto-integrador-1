@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1850" height="770" viewBox="0 0 1850 770" font-family="Arial,sans-serif">
+<rect width="1850" height="770" fill="#F7F9FC"/>
+<text x="40" y="39" font-size="27" font-weight="700" fill="#1C3148">Contratos y turnos del conductor</text>
+<path d="M580,263.5 H765.0 V167.5 H990" fill="none" stroke="#0D7A74" stroke-width="2.5"/>
+<circle cx="580" cy="263.5" r="4" fill="#0D7A74"/>
+<circle cx="990" cy="167.5" r="4" fill="#0D7A74"/>
+<text x="980.0" y="159.5" text-anchor="end" font-size="16" font-weight="700" fill="#0D7A74">o|  ──  o|</text>
+<path d="M580,263.5 H805.0 V527.5 H990" fill="none" stroke="#0D7A74" stroke-width="2.5"/>
+<circle cx="580" cy="263.5" r="4" fill="#0D7A74"/>
+<circle cx="990" cy="527.5" r="4" fill="#0D7A74"/>
+<text x="980.0" y="519.5" text-anchor="end" font-size="16" font-weight="700" fill="#0D7A74">o|  ──  o{</text>
+<rect x="40" y="195" width="540" height="344" rx="8" fill="white" stroke="#ABBCCC" stroke-width="2"/>
+<path d="M48,195 H572 Q580,195 580,203 V243 H40 V203 Q40,195 48,195" fill="#164B73"/>
+<text x="58" y="227" font-size="25" font-weight="700" fill="white">drivers</text>
+<text x="562" y="226" font-size="15" text-anchor="end" fill="#CDE7F3">10 campos</text>
+<rect x="44" y="249" width="532" height="29" fill="#E3F1FF"/>
+<text x="53" y="270" font-size="14" font-weight="700" fill="#164B73">PK</text>
+<text x="91" y="270" font-size="18" fill="#1C3148">id *</text>
+<text x="568" y="270" font-size="16" text-anchor="end" fill="#52677B">BIGSERIAL</text>
+<rect x="44" y="278" width="532" height="29" fill="#F8FAFC"/>
+<text x="53" y="299" font-size="14" font-weight="700" fill="#164B73">UQ</text>
+<text x="91" y="299" font-size="18" fill="#1C3148">external_id</text>
+<text x="568" y="299" font-size="16" text-anchor="end" fill="#52677B">VARCHAR(50)</text>
+<text x="91" y="328" font-size="18" fill="#1C3148">first_name *</text>
+<text x="568" y="328" font-size="16" text-anchor="end" fill="#52677B">VARCHAR(100)</text>
+<rect x="44" y="336" width="532" height="29" fill="#F8FAFC"/>
+<text x="91" y="357" font-size="18" fill="#1C3148">last_name *</text>
+<text x="568" y="357" font-size="16" text-anchor="end" fill="#52677B">VARCHAR(100)</text>
+<text x="53" y="386" font-size="14" font-weight="700" fill="#164B73">UQ</text>
+<text x="91" y="386" font-size="18" fill="#1C3148">license_number *</text>
+<text x="568" y="386" font-size="16" text-anchor="end" fill="#52677B">VARCHAR(50)</text>
+<rect x="44" y="394" width="532" height="29" fill="#F8FAFC"/>
+<text x="91" y="415" font-size="18" fill="#1C3148">phone_number</text>
+<text x="568" y="415" font-size="16" text-anchor="end" fill="#52677B">VARCHAR(20)</text>
+<text x="53" y="444" font-size="14" font-weight="700" fill="#164B73">UQ</text>
+<text x="91" y="444" font-size="18" fill="#1C3148">email</text>
+<text x="568" y="444" font-size="16" text-anchor="end" fill="#52677B">VARCHAR(100)</text>
+<rect x="44" y="452" width="532" height="29" fill="#F8FAFC"/>
+<text x="91" y="473" font-size="18" fill="#1C3148">is_active</text>
+<text x="568" y="473" font-size="16" text-anchor="end" fill="#52677B">BOOLEAN</text>
+<text x="91" y="502" font-size="18" fill="#1C3148">created_at</text>
+<text x="568" y="502" font-size="16" text-anchor="end" fill="#52677B">TIMESTAMPTZ</text>
+<rect x="44" y="510" width="532" height="29" fill="#F8FAFC"/>
+<text x="91" y="531" font-size="18" fill="#1C3148">updated_at</text>
+<text x="568" y="531" font-size="16" text-anchor="end" fill="#52677B">TIMESTAMPTZ</text>
+<rect x="990" y="70" width="540" height="228" rx="8" fill="white" stroke="#ABBCCC" stroke-width="2"/>
+<path d="M998,70 H1522 Q1530,70 1530,78 V118 H990 V78 Q990,70 998,70" fill="#164B73"/>
+<text x="1008" y="102" font-size="25" font-weight="700" fill="white">driver_contracts</text>
+<text x="1512" y="101" font-size="15" text-anchor="end" fill="#CDE7F3">6 campos</text>
+<rect x="994" y="124" width="532" height="29" fill="#E3F1FF"/>
+<text x="1003" y="145" font-size="14" font-weight="700" fill="#164B73">PK</text>
+<text x="1041" y="145" font-size="18" fill="#1C3148">id *</text>
+<text x="1518" y="145" font-size="16" text-anchor="end" fill="#52677B">BIGSERIAL</text>
+<rect x="994" y="153" width="532" height="29" fill="#E8F7F3"/>
+<text x="1003" y="174" font-size="14" font-weight="700" fill="#164B73">FK·UQ</text>
+<text x="1067" y="174" font-size="18" fill="#1C3148">driver_id</text>
+<text x="1518" y="174" font-size="16" text-anchor="end" fill="#52677B">BIGINT</text>
+<text x="1041" y="203" font-size="18" fill="#1C3148">contract_type</text>
+<text x="1518" y="203" font-size="16" text-anchor="end" fill="#52677B">VARCHAR(50)</text>
+<rect x="994" y="211" width="532" height="29" fill="#F8FAFC"/>
+<text x="1041" y="232" font-size="18" fill="#1C3148">start_date</text>
+<text x="1518" y="232" font-size="16" text-anchor="end" fill="#52677B">DATE</text>
+<text x="1041" y="261" font-size="18" fill="#1C3148">end_date</text>
+<text x="1518" y="261" font-size="16" text-anchor="end" fill="#52677B">DATE</text>
+<rect x="994" y="269" width="532" height="29" fill="#F8FAFC"/>
+<text x="1041" y="290" font-size="18" fill="#1C3148">base_salary</text>
+<text x="1518" y="290" font-size="16" text-anchor="end" fill="#52677B">DECIMAL(12, 2)</text>
+<rect x="990" y="430" width="540" height="199" rx="8" fill="white" stroke="#ABBCCC" stroke-width="2"/>
+<path d="M998,430 H1522 Q1530,430 1530,438 V478 H990 V438 Q990,430 998,430" fill="#164B73"/>
+<text x="1008" y="462" font-size="25" font-weight="700" fill="white">driver_shifts</text>
+<text x="1512" y="461" font-size="15" text-anchor="end" fill="#CDE7F3">5 campos</text>
+<rect x="994" y="484" width="532" height="29" fill="#E3F1FF"/>
+<text x="1003" y="505" font-size="14" font-weight="700" fill="#164B73">PK</text>
+<text x="1041" y="505" font-size="18" fill="#1C3148">id *</text>
+<text x="1518" y="505" font-size="16" text-anchor="end" fill="#52677B">BIGSERIAL</text>
+<rect x="994" y="513" width="532" height="29" fill="#E8F7F3"/>
+<text x="1003" y="534" font-size="14" font-weight="700" fill="#0D7A74">FK</text>
+<text x="1041" y="534" font-size="18" fill="#1C3148">driver_id</text>
+<text x="1518" y="534" font-size="16" text-anchor="end" fill="#52677B">BIGINT</text>
+<text x="1041" y="563" font-size="18" fill="#1C3148">shift_start</text>
+<text x="1518" y="563" font-size="16" text-anchor="end" fill="#52677B">TIMESTAMPTZ</text>
+<rect x="994" y="571" width="532" height="29" fill="#F8FAFC"/>
+<text x="1041" y="592" font-size="18" fill="#1C3148">shift_end</text>
+<text x="1518" y="592" font-size="16" text-anchor="end" fill="#52677B">TIMESTAMPTZ</text>
+<text x="1041" y="621" font-size="18" fill="#1C3148">status</text>
+<text x="1518" y="621" font-size="16" text-anchor="end" fill="#52677B">VARCHAR(20)</text>
+<text x="40" y="748" font-size="16" fill="#52677B">PK = clave primaria · FK = clave foránea física · UQ = único · * = NOT NULL · || = uno · o| = cero o uno · o{ = cero a muchos</text>
+</svg>

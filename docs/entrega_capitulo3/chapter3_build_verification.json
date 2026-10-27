@@ -1,0 +1,180 @@
+{
+  "reference": "Integrador I_Grupo3_Correccion_Integral.docx",
+  "referenceSha256": "2e331a04927668594bb46659994467ecc0fe8a4cc1210c3ca7c8637c18a89cd8",
+  "output": "Integrador I_Grupo3_Capitulo3_Final.docx",
+  "outputSha256": "db8b5b5323c2340120cca0e3812073dfdc4a77d662ade5d839ea30ce55fecdc4",
+  "preservedOriginalParts": 119,
+  "allPreservedPartsByteIdenticalBeforeWordFieldRefresh": true,
+  "chapter3Sections": [
+    "Casos de uso",
+    "Arquitectura de software",
+    "Diagrama de componentes",
+    "Diagrama de clases",
+    "Modelamiento de base de datos",
+    "Entorno visual de los formularios",
+    "Código fuente",
+    "Manual de instalación"
+  ],
+  "counts": {
+    "paragraphs": 165,
+    "tables": 29,
+    "images": 18,
+    "codeFragments": 8
+  },
+  "images": [
+    {
+      "file": "docs/entrega_capitulo3/diagramas/01_casos_uso_planificacion.png",
+      "sha256": "2d40ec5944ca91d209e38f3a13ebe6dabae3c1c87cd1edc5d85a9f276b77d7e4",
+      "caption": "Casos de uso de acceso, recursos, pedido y planificación. Keycloak aparece fuera de EcoRoute como soporte externo."
+    },
+    {
+      "file": "docs/entrega_capitulo3/diagramas/02_casos_uso_ejecucion.png",
+      "sha256": "d12e2962b22e7508b8e632581dd53f7e8e0837338ba7de87072e4ea4e85d9168",
+      "caption": "Casos de uso de despacho, ejecución, incidencias y evaluación. Las asociaciones indican participación, no orden temporal."
+    },
+    {
+      "file": "docs/entrega_capitulo3/diagramas/03_arquitectura_local.png",
+      "sha256": "b4181771332c69d60606bd9be98d4ccd2a3413666b284a9c8de13b46870489c3",
+      "caption": "Ejecución local de referencia: React/Vite, Java y Flutter nativos; PostgreSQL, Redis, Keycloak, LocalStack y OSRM en Docker."
+    },
+    {
+      "file": "docs/entrega_capitulo3/diagramas/04_componentes_hexagonales.png",
+      "sha256": "8f890a436fc98f2ee9268e255a5995191808799d71abd57766eb991e2d168da0",
+      "caption": "Componentes reales de presentación, entradas, aplicación, dominio, adaptadores y servicios externos."
+    },
+    {
+      "file": "docs/entrega_capitulo3/diagramas/05_clases_dominio_persistencia.png",
+      "sha256": "60e5251314da29d4125c023f69b6f912fd4070e737d5d321aba75a9245ab67de",
+      "caption": "Records de dominio, asociaciones por identificadores y entidades R2DBC. La multiplicidad describe el vínculo persistente, no una colección ORM."
+    },
+    {
+      "file": "docs/entrega_capitulo3/diagramas/06_clases_servicios_repositorios.png",
+      "sha256": "515caa0ce2f0be474345bb502cec1d75bd88e1d664b0d954224cb15b0fb1eaf0",
+      "caption": "Dependencias de creación de pedido: controlador, puerto de entrada, servicio, puerto de salida, adaptador y repositorio reactivo."
+    },
+    {
+      "file": "docs/entrega_capitulo3/diagramas/07_erd_global_v16.png",
+      "sha256": "2eaa413153aa7efc132486871387d07d701ba64f6eb24eaba97a4c588d67446a",
+      "caption": "Inventario global V1–V16: 26 tablas y cuatro vistas. Los detalles siguientes y el registro de relaciones complementan los campos resumidos."
+    },
+    {
+      "file": "docs/entrega_capitulo3/diagramas/08_relaciones_erd_v16.png",
+      "sha256": "1dec66d74104dd283f7f6a417197807013c51747cbf5e25a1d1956bc6a0edf32",
+      "caption": "Las 27 FK físicas del modelo; se explicita la multiplicidad sin inventar relaciones por coincidencia de nombres."
+    },
+    {
+      "file": "docs/entrega_capitulo3/diagramas/07_01_recursos_planificacion.png",
+      "sha256": "2adf9f9f369d1996e0ecd995fdf1f7442fd588efa07b024ca8ffe9a11f6c0609",
+      "caption": "Detalle físico reutilizado de recursos y planificación; columnas y FK no cambiadas por V16."
+    },
+    {
+      "file": "docs/entrega_capitulo3/diagramas/07_02_pedidos_evidencias.png",
+      "sha256": "1bbd635465577ea08b225144229291467fc7fb5947b96833c06d164bd66cbe78",
+      "caption": "Detalle físico reutilizado de pedidos y evidencia: datos comerciales, POD, historial y eventos."
+    },
+    {
+      "file": "docs/entrega_capitulo3/diagramas/07_03_incidencias_mejora.png",
+      "sha256": "c413606adfd35d1f4d0a6430fa8623c9f3e4d90b086ce2436cee6cc7b3914396",
+      "caption": "Detalle físico reutilizado de incidencias V13, nuevos intentos, mejora y metas."
+    },
+    {
+      "file": "docs/entrega_capitulo3/diagramas/09_modelo_analitico_v16.png",
+      "sha256": "f68d0330f0157adf0aceb51b16e7a0c788ef8332f22209e108ff6dc3ab0c928e",
+      "caption": "Actualización V16 de la función de calidad y la vista de rutas; dependencias de lectura SQL sin FK ficticias."
+    },
+    {
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_final_pedido_alta.jpg",
+      "sha256": "2642b8c179c56d798b996fc486d4f969accdcd11ecb6d61ed9d05522e6a3c394",
+      "caption": "Registro de pedido sin ruta; distinguir formulario y persistencia. Formulario real de alta sin ruta: datos de pedido, ventana y confirmación comercial, cancelado sin guardar."
+    },
+    {
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_despacho_aprobado.jpg",
+      "sha256": "109bc2ea785ca8f6b038c37a915ef6eb840c3f74dc0089dcddfe894b651ec2e6",
+      "caption": "Planificación y despacho, con revisión y aceptación antes de salir. Ruta 22 de hoy: aprobación administrativa y aceptación del conductor verificadas antes del despacho."
+    },
+    {
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m02_aceptacion_control.png",
+      "sha256": "a877530e8ed85854041e2e6434259df97e7db049431ff9bc169a7a87cae75117",
+      "caption": "Aceptación de la hoja por el conductor. Continuación de la revisión con observaciones y botón de aceptación."
+    },
+    {
+      "file": "docs/guia_total_ide/ejecucion_20261026/mobile/m03_offline_guardado.png",
+      "sha256": "62ed70492a1db5c4b9a28e078efaa03a829669633c58d49ed001450c92ac0f14",
+      "caption": "POD conservado localmente antes de su confirmación remota. Evidencia de pedido48 guardada sin conexión; el estado remoto aún no está confirmado."
+    },
+    {
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_incidencia_resolucion.jpg",
+      "sha256": "5576260da3b86b5524c576aa8a7c8e349dbc5b484653f3e6849ff82d7ed9f72b",
+      "caption": "Resolución administrativa de la incidencia 14: justificación del cierre, preservando el resultado del pedido fallido."
+    },
+    {
+      "file": "docs/guia_total_ide/ejecucion_20261026/web/v2_final_bi_kpis.jpg",
+      "sha256": "a04c9aae85de2fe0db217b661b52855723ec7a9c211d9c7f09d6430f8ac743bd",
+      "caption": "Indicadores finales del fixture sintético; explicitar numeradores y denominadores. BI final del 26/10/2026: IID66.67% (2/3), CHR/TDE/SUCCESS33.33% (1/3) y ONTIME100% (1/1). Las metas administrativas no están configuradas."
+    }
+  ],
+  "codeReferences": [
+    {
+      "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+      "start": 51,
+      "end": 64,
+      "sha256": "6e13a8f8107b2135f9c287980be22c94b6d4d8cbb971a064e9b64596e41fc650"
+    },
+    {
+      "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+      "start": 74,
+      "end": 94,
+      "sha256": "6e13a8f8107b2135f9c287980be22c94b6d4d8cbb971a064e9b64596e41fc650"
+    },
+    {
+      "file": "src/main/java/com/ecoroute/backend/domain/model/OrderLifecycle.java",
+      "start": 12,
+      "end": 28,
+      "sha256": "f0e5044dea96e7bb00693a25207bed78d88aac3bf770f9c71c9df3384148afae"
+    },
+    {
+      "file": "src/main/java/com/ecoroute/backend/application/usecases/CreateDeliveryProofUseCaseImpl.java",
+      "start": 41,
+      "end": 59,
+      "sha256": "f487150d42df551316c61ef68f34720b94cbad1fa53feace927cc3b36b9caa05"
+    },
+    {
+      "file": "mobile-app/lib/core/sync/proof_sync.dart",
+      "start": 56,
+      "end": 71,
+      "sha256": "e9dac32b03d6cb5d4a531c6d91d33501ac5549cd5bedaf3675273388ed7eed90"
+    },
+    {
+      "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+      "start": 48,
+      "end": 63,
+      "sha256": "c5067602f2ae7177dcabeefc2ed5833a50b7d0fdd431c1da810c25db7c6e845c"
+    },
+    {
+      "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+      "start": 116,
+      "end": 134,
+      "sha256": "c5067602f2ae7177dcabeefc2ed5833a50b7d0fdd431c1da810c25db7c6e845c"
+    },
+    {
+      "file": "src/main/java/com/ecoroute/backend/domain/model/analytics/AnalyticsModels.java",
+      "start": 38,
+      "end": 47,
+      "sha256": "ba6f926c3137bdc945bbc3dde72658df4353ccac8b67bf9ca196f7845c3bf985"
+    }
+  ],
+  "otherChaptersRewritten": false,
+  "existingDesignHeadingNumberingRestored": [
+    "CAPÍTULO 2 DISEÑO",
+    "Diagramas BPMN",
+    "Prototipos Wireframes",
+    "Prototipos Mockups",
+    "Modelo de Datos",
+    "Diccionario de Datos"
+  ],
+  "nativeWordFieldsUpdated": true,
+  "finalSha256": "ac26e11d98c253cafbbcfc0590ba4eccce69a89b49933ebf2ae6016c39d55ed9",
+  "finalPages": 186,
+  "canonicalMirrorByteIdentical": true,
+  "codeExcerptCorrection": "OrderLifecycle.java ends at line28; literal excerpt end corrected to28."
+}

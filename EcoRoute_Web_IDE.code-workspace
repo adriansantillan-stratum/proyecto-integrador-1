@@ -1,0 +1,7 @@
+{
+  "folders":[{"name":"EcoRoute Web React","path":"web-admin"}],
+  "launch": {
+    "version":"0.2.0",
+    "configurations":[{"type":"pwa-chrome","request":"launch","name":"EcoRoute Web depurar React","url":"http://localhost:3000","webRoot":"${workspaceFolder}","runtimeExecutable":"C:/Program Files/Google/Chrome/Application/chrome.exe","userDataDir":"${workspaceFolder}/../docs/guia_total_ide/.runtime/chrome-debug"}]
+  }
+}

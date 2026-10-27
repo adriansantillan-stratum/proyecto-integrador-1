@@ -1,0 +1,386 @@
+[
+  {
+    "id": "05",
+    "title": "Incidencias y decisiones · P04",
+    "student": "Namuche Huarcaya Renzo Aldair · alumno 3",
+    "platform": "Web · React y TypeScript",
+    "route": "/incidents",
+    "actor": "Dispatcher para registrar y coordinar RETRY/REPLAN; ADMIN para CLOSE_FAILED/CLOSE_CASE. La Jefatura logística del BPMN es una responsabilidad empresarial; el servidor exige el rol técnico ADMIN para el cierre definitivo (BusinessOperationsController.java:27-31 y BusinessOperationsService.java:48-53).",
+    "processes": [
+      "P04 Resolver incidencias, nombre canónico de docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P04_negocio.bpmn:3-4. No usar la numeración de modelos antiguos que asignaban otro proceso a P04.",
+      "El BPMN enlaza Reintento autorizado con P03, Nueva fecha con P02 y Fallo cerrado con P05 (P04_negocio.bpmn:80-99). La pantalla registra la decisión dentro de ese proceso humano."
+    ],
+    "purpose": "Guía de exposición del 26/10/2026. En Grupo MICOTRANS, conservar el motivo de una excepción de reparto y documentar una solución autorizada sin borrar el resultado anterior. El registro identifica ruta, pedido, informante, resolución y, cuando corresponde, otro intento. La captura del 22/10 es evidencia histórica de un ensayo sintético, no una prueba ejecutada para esta guía ni aceptación empresarial.",
+    "preconditions": [
+      "Acceso web autenticado con ADMIN o DISPATCHER: App.tsx:60-65 protege ambas pantallas del alumno. Navegación concreta: menú Incidencias, ruta /incidents. No presentar esta pantalla administrativa como una vista disponible para DRIVER.",
+      "Para explicar RETRY se necesita un pedido FAILED o RETURNED con confirmación comercial y una jornada IN_PROGRESS. Para REPLAN se necesita una ruta destino PLANNED. La disponibilidad de opciones en React orienta al operador; la validación decisiva está en BusinessOperationsService.java:61-89.",
+      "Separar demostración propuesta y evidencia existente. La incidencia 13 de la captura corresponde a ruta 21, pedido 47 y CLOSE_FAILED. Ya aparece resuelta; no es un caso pendiente para volver a resolver. No se modifica información durante la preparación de esta guía."
+    ],
+    "demo": [
+      "1. Mostrar la captura existente 26_excepcion_resuelta.png y señalar el encabezado P04 y la entrada Incidencias del menú. Explicar que el router actual monta Incidents en /incidents (web-admin/src/App.tsx:60-65).",
+      "2. Leer la fila 13: ruta 21, pedido 47, DELIVERY_FAILED, severidad MEDIUM, RESOLVED y CLOSE_FAILED. Distinguir estado del caso y estado del pedido. La imagen muestra una resolución histórica, no una entrega recuperada.",
+      "3. Explicar Buscar y Resolución. El componente filtra el listado descargado por texto y por presencia de outcome; no envía esos filtros al servidor (Incidents.tsx:65-74).",
+      "4. Describir Registrar incidencia: ruta obligatoria, pedido opcional de esa ruta, tipo, severidad y descripción. Aclarar que este formulario registra texto observado y no incluye un control para adjuntar archivos (Incidents.tsx:12-30).",
+      "5. Con un caso pendiente preparado para una exposición futura, abrir Resolver y comparar RETRY, REPLAN y cierres. REPLAN pide Próxima ruta PLANNED. Explicar los requisitos antes de guardar; esta guía no ejecutó esa demostración (Incidents.tsx:33-55).",
+      "6. Terminar señalando que, después de resolver, la UI recarga incidencias, pedidos y rutas; si hubo nuevo intento muestra su ID. El original permanece como registro histórico (Incidents.tsx:73-76)."
+    ],
+    "flow": [
+      "Persona observa excepción y revisa sustento → pantalla consulta incidencias, rutas y pedidos → operador propone decisión y justifica → incidentService envía PATCH → controller toma identidad autenticada → servicio valida y bloquea registros → puerto persiste → respuesta actualiza listado.",
+      "RETRY: incidencia OPEN + pedido FAILED/RETURNED + ruta original IN_PROGRESS + confirmación comercial → nuevo pedido IN_TRANSIT → vínculo order_attempts → resolución y auditoría P04. No actualiza el estado del original (BusinessOperationsService.java:54-101).",
+      "REPLAN: destino PLANNED + pedido original fallido/devuelto → nuevo ASSIGNED, nueva identificación, ventanas del nuevo pedido vacías y aceptación comercial retirada → invalidación de revisión de salida del destino → resolución. El cliente y la operación deben renovar el acuerdo antes del despacho (BusinessOperationsService.java:74-97).",
+      "CLOSE_FAILED: ADMIN y pedido terminal fallido/devuelto → resuelve el caso sin nuevo pedido. CLOSE_CASE: ADMIN → cierra el caso sin modificar pedido/POD; el servicio toma esta rama antes de exigir un pedido asociado (BusinessOperationsService.java:52-70)."
+    ],
+    "frontend": [
+      "Incidents es un componente funcional. Tres useQuery independientes cargan /incidents, /routes y /orders. useState conserva búsqueda, filtro y modales. No es BLoC ni una única máquina global de estado. Los tres SourceState permiten exponer problemas de fuentes distintas; el botón de creación exige tener rutas y pedidos cargados (web-admin/src/pages/Incidents.tsx:59-76).",
+      "IncidentForm mantiene valores como cadenas de formulario. Al enviar convierte IDs a número, omite orderId si está vacío y recorta la descripción. busy bloquea el envío mientras espera; catch conserva el error en pantalla y finally libera el botón. done solo se invoca tras completar la promesa (Incidents.tsx:12-29).",
+      "ResolutionForm calcula failed y sameJourney para proponer RETRY, REPLAN o CLOSE_CASE. ADMIN ve los cierres definitivos; RETRY se deshabilita si la ruta no está activa. Para REPLAN la lista excluye la ruta de origen y conserva solo PLANNED. Es ayuda visual, no sustitución de los controles backend (Incidents.tsx:33-54).",
+      "El request combina motivo seleccionado y nota como 'motivo: justificación'. incidentService envía {outcome, reason, nextRouteId}; el tercero solo se proporciona para REPLAN. La respuesta es Incident, con outcome, resolutionReason, nextRouteId y retryOrderId opcionales. El frontend no crea por su cuenta un pedido de recuperación (web-admin/src/services/incidentService.ts:2-11)."
+    ],
+    "backend": [
+      "BusinessOperationsController expone GET/POST /incidents y PATCH /incidents/{id}/resolution. El POST recibe el record de dominio Incident como cuerpo; no existe aquí un IncidentCreateDTO separado. La resolución sí utiliza el record Resolution(String outcome, String reason, Long nextRouteId). Devuelve Mono<Incident>; el GET devuelve Flux<Incident>. Sin @ResponseStatus de creación, no describir el POST como un 201 expresamente declarado (BusinessOperationsController.java:17-33).",
+      "En el registro, el controller verifica acceso a la ruta y obtiene el actor de la autenticación. El servicio exige ruta existente, descripción suficiente, severidad y tipo válidos; si hay pedido comprueba su pertenencia. Construye un Incident OPEN con actor del servidor y audita REPORTED. No confía en reportedBy enviado por el navegador (BusinessOperationsController.java:22-25; BusinessOperationsService.java:31-45).",
+      "resolve tiene @Transactional y obtiene la incidencia con bloqueo. Si ya está resuelta, repetir el mismo outcome devuelve la resolución existente; pedir otro outcome genera conflicto. Este comportamiento evita otro intento en el reenvío de la misma decisión, pero no significa que se compare igualdad de todos los campos del request (BusinessOperationsService.java:47-59).",
+      "El caso de uso es BusinessOperationsService, no una clase adicional denominada ResolveIncidentUseCase. Orquesta los puertos: primero ruta destino y luego pedido para estos bloqueos, confirma reglas, guarda el nuevo intento, copia confirmación, invalida revisión cuando corresponde y registra auditorías. La transacción agrupa estas escrituras reactivas de base de datos; no ejecuta llamadas al cliente ni una operación física de reparto (BusinessOperationsService.java:60-101)."
+    ],
+    "persistence": [
+      "BusinessOperationsPort separa el caso de uso de SQL: incident(id,lock), createIncident, resolve y linkAttempt. R2dbcBusinessOperationsAdapter utiliza DatabaseClient y parámetros enlazados, SELECT FOR UPDATE para el caso y RETURNING * para reconstruir el Incident de respuesta (puerto:7-12; adaptador:18-23,34-60).",
+      "incidents conserva order_id, status, outcome, resolution_reason, reported_by y resolved_by. La migración V10 crea un índice único parcial para una incidencia OPEN por pedido. El adaptador usa ON CONFLICT sobre ese índice; no promete deduplicación equivalente para incidencias generales sin pedido (src/main/resources/db/migration/V10__business_workflow.sql:18-24; R2dbcBusinessOperationsAdapter.java:40-48).",
+      "order_attempts enlaza original_order_id, retry_order_id e incident_id con FK. retry_order_id e incident_id son únicos. La relación explícita conserva la trazabilidad del nuevo pedido; business_audit_events registra proceso, entidad, acción, actor, detalle y fecha (V10__business_workflow.sql:25-30,40-47)."
+    ],
+    "endpoints": [
+      {
+        "method": "GET",
+        "path": "/incidents",
+        "purpose": "Listado de Incident autorizado por acceso a ruta. Controller:17-20; Incidents.tsx:60. Los paths se expresan como mappings backend, no como rutas de React."
+      },
+      {
+        "method": "GET",
+        "path": "/routes",
+        "purpose": "Fuente de rutas para selección y estado. Incidents.tsx:61,23,36,53."
+      },
+      {
+        "method": "GET",
+        "path": "/orders",
+        "purpose": "Fuente de pedidos para pertenencia y evaluación FAILED/RETURNED. Incidents.tsx:62,24,35,76."
+      },
+      {
+        "method": "POST",
+        "path": "/incidents",
+        "purpose": "Cuerpo {routeId,orderId?,incidentType,severity,description}. Retorna Incident; el servidor fija actor y estado OPEN. incidentService.ts:3-8; controller:22-25; servicio:31-45."
+      },
+      {
+        "method": "PATCH",
+        "path": "/incidents/{id}/resolution",
+        "purpose": "Cuerpo {outcome,reason,nextRouteId?}. Retorna Incident resuelto y los vínculos del intento cuando existen. incidentService.ts:9-11; controller:27-33."
+      }
+    ],
+    "exceptions": [
+      "Resolución inválida, motivo insuficiente o destino ausente: IllegalArgumentException. Caso inexistente: ResourceNotFoundException. Son errores del servicio, no resultados exitosos con un texto de advertencia (BusinessOperationsService.java:49-65).",
+      "Falta de ADMIN para CLOSE_FAILED/CLOSE_CASE: AccessDeniedException. DRIVER no puede resolver por @PreAuthorize. El frontend oculta opciones, pero el permiso se vuelve a comprobar en el servidor (controller:27-31; servicio:52-53).",
+      "BusinessRuleException si se intenta cambiar una resolución cerrada, recuperar un pedido no fallido/devuelto, reintentar con jornada terminada o replanificar a ruta no PLANNED. Un DELIVERED no admite CLOSE_FAILED; corresponde revisar el caso sin reescribir la entrega (servicio:56-76)."
+    ],
+    "code": [
+      {
+        "file": "web-admin/src/pages/Incidents.tsx",
+        "start": 33,
+        "end": 54,
+        "explanation": [
+          "Fragmento real de 22 líneas: relaciona estado del pedido, estado de jornada, rol, request y controles del formulario. Leer primero las líneas 35-37 y después 45,50-54 para explicar por qué el navegador propone decisiones sin convertirse en autoridad de negocio.",
+          "Código literal actual, líneas 33-54:\nfunction ResolutionForm({ incident, routes, order, done }: { incident: Incident; routes: Route[]; order?: Order; done: () => void }) {\n  const { hasRole } = useAuth();\n  const failed = !!order && ['FAILED', 'RETURNED'].includes(order.status);\n  const sameJourney = routes.some(r => r.id === incident.routeId && r.status === 'IN_PROGRESS');\n  const [outcome, setOutcome] = useState<IncidentOutcome>(failed ? sameJourney ? 'RETRY' : 'REPLAN' : 'CLOSE_CASE');\n  const [reason, setReason] = useState('');\n  const [note, setNote] = useState('');\n  const [nextRouteId, setNextRouteId] = useState('');\n  const [busy, setBusy] = useState(false);\n  const [message, setMessage] = useState('');\n  async function submit(event: FormEvent) {\n    event.preventDefault(); setBusy(true); setMessage('');\n    try { await resolveIncident(incident.id, outcome, `${reason}: ${note.trim()}`, outcome === 'REPLAN' ? Number(nextRouteId) : undefined); done(); }\n    catch (cause) { setMessage(errorMessage(cause)); }\n    finally { setBusy(false); }\n  }\n  return <form onSubmit={submit} className=\"operation-form\"><p className=\"full\">#{incident.id} · {incident.description}. Registre la decisión autorizada y su justificación. El servidor valida el intento y la ruta destino.</p>\n    <p className=\"full\">El pedido original nunca se reabre. RETRY crea un nuevo pedido IN_TRANSIT en la misma jornada activa. REPLAN crea un nuevo ASSIGNED en otra ruta PLANNED y exige renovar la aceptación comercial antes de aprobar. Las incidencias generales o disputas sobre entregados se cierran con CLOSE_CASE por ADMIN.</p>\n    <label>Decisión<select aria-label=\"Decisión\" value={outcome} onChange={e => setOutcome(e.target.value as IncidentOutcome)}>{failed && <><option value=\"RETRY\" disabled={!sameJourney}>Reintentar · nueva orden, jornada activa</option><option value=\"REPLAN\">Replanificar · nuevo pedido, renovar aceptación</option></>}{hasRole(['ADMIN']) && <>{failed && <option value=\"CLOSE_FAILED\">Cerrar fallido (ADMIN)</option>}<option value=\"CLOSE_CASE\">Cerrar caso sin alterar pedido (ADMIN)</option></>}</select></label>\n    <label>Motivo<select aria-label=\"Motivo\" required value={reason} onChange={e => setReason(e.target.value)}><option value=\"\">Seleccionar motivo</option>{failureReasons.map(r => <option key={r}>{r}</option>)}</select></label>\n    {outcome === 'REPLAN' && <label>Próxima ruta PLANNED<select aria-label=\"Próxima ruta PLANNED\" required value={nextRouteId} onChange={e => setNextRouteId(e.target.value)}><option value=\"\">Seleccionar</option>{routes.filter(r => r.status === 'PLANNED' && r.id !== incident.routeId).map(r => <option key={r.id} value={r.id}>#{r.id} · {r.routeDate}</option>)}</select></label>}\n    <label className=\"full\">Justificación de la decisión<textarea required minLength={5} maxLength={1500} value={note} onChange={e => setNote(e.target.value)} /></label><button disabled={busy}>Guardar resolución</button>"
+        ]
+      },
+      {
+        "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+        "start": 72,
+        "end": 89,
+        "explanation": [
+          "Fragmento real de 18 líneas: valida el original y la ruta, exige confirmación y crea un Order con ID nulo y tracking nuevo. Después enlaza el intento y cierra la incidencia. El objeto guardado es el intento; el original no se guarda con otro estado.",
+          "Código literal actual, líneas 72-89:\n                            if(order.status()!=OrderStatus.FAILED && order.status()!=OrderStatus.RETURNED)\n                                return Mono.error(new BusinessRuleException(\"Solo se reintentan pedidos fallidos o devueltos\"));\n                            RouteStatus expected=outcome.equals(\"RETRY\")?RouteStatus.IN_PROGRESS:RouteStatus.PLANNED;\n                            if(route.status()!=expected) return Mono.error(new BusinessRuleException(outcome.equals(\"RETRY\")\n                                ? \"La jornada terminó; reprograme en una ruta planificada\" : \"La ruta destino debe estar planificada\"));\n                            return workflow.requireConfirmed(order.id()).then(Mono.defer(() -> {\n                                OffsetDateTime now=OffsetDateTime.now();\n                                Order attempt=new Order(null,\"RE-\"+UUID.randomUUID(),order.trackingNumber(),route.id(),\n                                    outcome.equals(\"RETRY\")?OrderStatus.IN_TRANSIT:OrderStatus.ASSIGNED,\n                                    order.recipientName(),order.recipientPhone(),order.recipientEmail(),order.deliveryAddress(),\n                                    order.deliveryCity(),order.deliveryDistrict(),order.latitude(),order.longitude(),order.priority(),\n                                    null,null,now,now);\n                                // A new promise window must be agreed on replan; never silently reuse an expired window.\n                                return orders.save(attempt).flatMap(saved -> operations.linkAttempt(order.id(),saved.id(),id)\n                                    .then(copyConfirmation(order.id(),saved.id(),actor,outcome.equals(\"RETRY\")))\n                                    .then(outcome.equals(\"REPLAN\")?workflow.invalidate(route.id()):Mono.empty())\n                                    .then(orderAudit.record(saved,\"Nuevo intento de \"+order.trackingNumber()+\": \"+reason))\n                                    .then(finish(incident,outcome,reason,actor,route.id(),saved.id())));"
+        ]
+      }
+    ],
+    "speech": [
+      "Profesor, mi primera pantalla corresponde a Resolver incidencias, el proceso P04 de Grupo MICOTRANS. Partimos de una excepción registrada durante el reparto. La responsabilidad del Dispatcher es revisar lo observado y coordinar una alternativa; la Jefatura autoriza el cierre definitivo. EcoRoute conserva esa decisión y su autor. Registrar una descripción no equivale a que el sistema haya comprobado por sí solo la causa ni contactado al destinatario.",
+      "Aquí distinguimos dos historias: el resultado del pedido y la resolución de la incidencia. En la evidencia histórica del 22 de octubre, el pedido 47 conserva su resultado fallido y el caso 13 muestra CLOSE_FAILED. Cerrar administrativamente ese caso no lo convierte en entrega exitosa. La captura corresponde a un ensayo sintético y no acredita que MICOTRANS haya aprobado una UAT ni que hoy se haya repetido la prueba.",
+      "Si todavía podemos recuperar la entrega dentro de una jornada activa, RETRY crea otro pedido IN_TRANSIT. Si necesitamos planificarla para otra jornada, REPLAN crea otro ASSIGNED en una ruta PLANNED. Ambos conservan el vínculo con el original. En replanificación se retira la aceptación comercial y se invalida la revisión de salida, porque una nueva promesa requiere volver a acordarse. No se reutiliza silenciosamente la ventana del pedido fallido.",
+      "En React, el formulario mantiene selección y mensajes con hooks y envía una decisión al servicio HTTP. El controller obtiene la identidad autenticada y el caso de uso valida las reglas dentro de una transacción. Los bloqueos y el vínculo único del intento complementan esa validación. Si se repite una resolución con el mismo resultado, se devuelve la ya guardada. Así podemos explicar la recuperación sin borrar el antecedente ni generar un pedido adicional por cada reenvío."
+    ],
+    "questions": [
+      {
+        "q": "¿RETRY cambia FAILED por IN_TRANSIT?",
+        "a": "Crea un pedido distinto IN_TRANSIT. El original conserva su resultado. El servicio guarda attempt y registra linkAttempt (BusinessOperationsService.java:79-89)."
+      },
+      {
+        "q": "¿Qué diferencia hay entre CLOSE_FAILED y CLOSE_CASE?",
+        "a": "Ambos requieren ADMIN. CLOSE_FAILED exige pedido terminal que no sea DELIVERED. CLOSE_CASE cierra la incidencia sin modificar pedido y permite casos generales sin pedido (servicio:52-70)."
+      },
+      {
+        "q": "¿Dónde está la garantía ante un doble clic?",
+        "a": "busy ayuda en la UI; el servicio bloquea la incidencia y devuelve la resolución previa para el mismo outcome. order_attempts tiene incident_id único. No atribuir toda la protección al botón (Incidents.tsx:41-47; servicio:54-57; V10:25-30)."
+      },
+      {
+        "q": "¿El formulario adjunta evidencia binaria?",
+        "a": "No: pide descripción y justificación. Los campos leídos no incluyen un input de archivo. El sustento humano del BPMN es más amplio que este formulario (Incidents.tsx:22-29,49-55)."
+      }
+    ],
+    "tests": [
+      {
+        "file": "src/test/java/com/ecoroute/backend/application/services/BusinessOperationsServiceTest.java",
+        "name": "retryNeverReopensOriginalOrder; closedJourneyRequiresReplan; resolvedIncidentIsIdempotentForSameOutcome",
+        "scope": "Código existente leído, líneas 36-69. Unitarias con Mockito y StepVerifier: intento nuevo, jornada cerrada y reenvío. No ejecutadas para esta guía; no equivalen a UI ni UAT."
+      },
+      {
+        "file": "src/test/java/com/ecoroute/backend/application/usecases/WorkflowDecisionExceptionsTest.java",
+        "name": "replanCreatesLinkedAssignedAttemptAndRevokesCommercialAcceptanceAndPlan; managerCloseCasePreservesOrderAndDoesNotCreateAttempt",
+        "scope": "Código existente leído, líneas 43-78 y 101-108. Contrasta ventana vacía, nueva aceptación y preservación del original; CLOSE_CASE no crea intento. Se describe alcance, no un PASS nuevo."
+      }
+    ],
+    "screenshot": {
+      "file": "docs/videos/ecoroute_e2e_20261022/26_excepcion_resuelta.png",
+      "caption": "Captura existente del 22/10/2026, revisada visualmente para esta guía del 26/10. Pantalla standalone Incidencias y decisiones · P04, menú Incidencias activo. Fila 13: ruta 21, pedido 47, RESOLVED/CLOSE_FAILED, motivo sintético y actores registrados. No muestra una ejecución nueva ni acredita RETRY/REPLAN."
+    },
+    "handoff": "Renzo continúa en pantalla 06: una resolución P04 deja información para evaluar resultados P05. No afirmar que cerrar una incidencia crea automáticamente una acción de mejora; las llamadas a createAction pertenecen a otro flujo. Mantener las capturas y pruebas como antecedentes históricos.",
+    "source_map": [
+      {
+        "file": "web-admin/src/pages/Incidents.tsx",
+        "symbol": "Incidents; IncidentForm; ResolutionForm, líneas 12-78",
+        "purpose": "Pantalla, hooks, opciones por estado y rol, formularios y recargas."
+      },
+      {
+        "file": "web-admin/src/services/incidentService.ts",
+        "symbol": "createIncident; resolveIncident, líneas 2-11",
+        "purpose": "Tipos y transporte del request/response de incidencias."
+      },
+      {
+        "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessOperationsController.java",
+        "symbol": "incidents; report; resolve; Resolution, líneas 17-33",
+        "purpose": "Entrada HTTP e identidad autenticada."
+      },
+      {
+        "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+        "symbol": "report; resolve; copyConfirmation; finish, líneas 31-101",
+        "purpose": "Caso de uso, transacción, reglas, intento nuevo y auditoría."
+      },
+      {
+        "file": "src/main/java/com/ecoroute/backend/domain/ports/out/BusinessOperationsPort.java",
+        "symbol": "incidents; incident; createIncident; resolve; linkAttempt, líneas 7-12",
+        "purpose": "Puerto entre aplicación y persistencia."
+      },
+      {
+        "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessOperationsAdapter.java",
+        "symbol": "readIncident; incident; createIncident; resolve; linkAttempt, líneas 18-23,34-60",
+        "purpose": "Adaptación R2DBC, bloqueo y SQL parametrizado."
+      },
+      {
+        "file": "src/main/resources/db/migration/V10__business_workflow.sql",
+        "symbol": "incidents; order_attempts; business_audit_events, líneas 18-30,40-47",
+        "purpose": "SQL de estructura, índice único y trazabilidad."
+      },
+      {
+        "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P04_negocio.bpmn",
+        "symbol": "Process_P04; P04_A1-A8; P04_E1-E3, líneas 3-4,36-99",
+        "purpose": "Nombre canónico, responsabilidades humanas y salidas hacia P03/P02/P05."
+      },
+      {
+        "file": "web-admin/src/App.tsx",
+        "symbol": "AuthenticatedLayout, líneas 60-65",
+        "purpose": "Ruta /incidents independiente y protección ADMIN/DISPATCHER."
+      }
+    ]
+  },
+  {
+    "id": "06",
+    "title": "Acciones de mejora · P05",
+    "student": "Namuche Huarcaya Renzo Aldair · alumno 3",
+    "platform": "Web · React y TypeScript",
+    "route": "/improvement-actions",
+    "actor": "ADMIN o DISPATCHER registran y dan seguimiento. Solo ADMIN verifica o descarta. ownerName identifica al responsable humano declarado; no constituye una asignación automática a una cuenta ni una regla de acceso por propietario (BusinessOperationsController.java:34-48; BusinessOperationsService.java:105-130).",
+    "processes": [
+      "P05 Evaluar resultados, nombre canónico en docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P05_negocio.bpmn:3-4. Acciones de mejora es una pantalla de apoyo dentro de ese proceso.",
+      "La relación funcional comprende Analizar causa raíz, Proponer acción y responsable, Asignar plazo y recursos, Ejecutar y medir la acción, Revisar hipótesis y acción y Cerrar acción y estandarizar (P05_negocio.bpmn:79-117). La aplicación conserva declaraciones y estados; la ejecución y la evaluación requieren personas."
+    ],
+    "purpose": "Guía del 26/10/2026 para Grupo MICOTRANS. Explicar cómo convertir una desviación revisada por las personas en una acción con causa, responsable, fecha, indicador, medición y verificación autorizada. Los valores son declarados para esa acción; el estado VERIFIED no demuestra causalidad ni reducción real de costos o demoras. Las evidencias técnicas anteriores, incluidas las del 22/10, no son pruebas nuevas de esta guía.",
+    "preconditions": [
+      "Ruta independiente confirmada: App.tsx:60-65 monta ImprovementActions dentro del encabezado Mejora continua. Navegación principal: menú Acciones de mejora → /improvement-actions, accesible a ADMIN y DISPATCHER.",
+      "Existe además una segunda entrada real: ADMIN puede ir a /bi y pulsar Acciones P05. BusinessIntelligence.tsx:15,76-93 reutiliza el mismo componente. No inventar una ruta /bi/actions ni decir que la única entrada es una pestaña.",
+      "Para verificar, la acción debe estar IN_PROGRESS y disponer de resultado observado y nota. Un OPEN no puede pasar directamente a VERIFIED. Se explican estados y requests; durante la elaboración no se creó ni verificó una acción (BusinessOperationsService.java:115-130)."
+    ],
+    "demo": [
+      "1. Mostrar la captura histórica standalone screen_improvement-actions.png. Señalar Mejora continua, Acciones de mejora · P05 y el menú activo. Advertir que parte del contenido está cubierta y que la imagen no permite leer ni acreditar resultados particulares.",
+      "2. Explicar Nueva acción: título, responsable, causa, fecha compromiso, indicador y línea base/meta opcionales. Como ejemplo didáctico propuesto, usar mejorar coordinación previa al reparto de MICOTRANS; no presentarlo como una acción empresarial realmente ejecutada (ImprovementActions.tsx:12-31).",
+      "3. Describir el POST y la respuesta OPEN. Resaltar que createdBy lo fija la sesión; ownerName es el responsable declarado y no reemplaza la identidad del creador (controller:37-40; servicio:105-113).",
+      "4. Explicar Registrar seguimiento: elegir En progreso, escribir nota y guardar. Solo después de persistir IN_PROGRESS, ADMIN dispone de Verificada por ADMIN. El resultado es obligatorio para verificar; la UI también ofrece Descartada por ADMIN (ImprovementActions.tsx:35-54).",
+      "5. Señalar que VERIFIED y DISCARDED quedan Cerrada · solo lectura en la tabla. Los modales se cierran y se recarga el listado al éxito; un error permanece visible (ImprovementActions.tsx:58-68).",
+      "6. Si el profesor pregunta por BI, explicar la pestaña compartida y aclarar que sus filtros no se pasan a ImprovementActions. El listado de acciones consulta /improvement-actions sin parámetros de conductor/periodo (BusinessIntelligence.tsx:77-93; ImprovementActions.tsx:58-59)."
+    ],
+    "flow": [
+      "Datos de reparto revisados por personas → hipótesis de causa y propuesta → Nueva acción → POST /improvement-actions → creación OPEN y auditoría P05 → seguimiento IN_PROGRESS → medición documentada → ADMIN verifica o descarta.",
+      "La ruta independiente y la pestaña de BI reutilizan frontend, servicio HTTP y endpoints. No son dos repositorios de acciones ni dos procesos de negocio distintos (App.tsx:64; BusinessIntelligence.tsx:93).",
+      "La verificación exige estado previo IN_PROGRESS, valor y nota. El servicio bloquea la fila antes de evaluar el estado actual. Una acción cerrada rechaza nuevos cambios; no existe en esta pantalla un flujo de reapertura (BusinessOperationsService.java:123-130)."
+    ],
+    "frontend": [
+      "ImprovementActions consulta el listado con useQuery y usa useState para createOpen y selected. La tabla muestra causa, responsable, fecha, código de indicador, base, meta, estado, resultado, nota y verificador. El componente no recibe props de periodo o conductor; por ello el contexto visual de BI no convierte las acciones en una colección filtrada por esos campos (web-admin/src/components/ImprovementActions.tsx:58-69).",
+      "ActionForm conserva cadenas mientras el usuario escribe. Para base y meta envía undefined cuando el campo está vacío; si hay dato aplica Number. Eso preserva la diferencia entre ausencia y cero. La fecha inicial viene de operationDate; el rótulo especifica Lima. HTML pide título mínimo de cinco caracteres, responsable de tres y causa de cinco, y limita los valores numéricos a 0-100 (ImprovementActions.tsx:12-30).",
+      "ActionUpdate inicializa la selección en IN_PROGRESS y reutiliza el resultado existente cuando existe. Antes de enviar VERIFIED comprueba ADMIN y resultado no vacío. La opción de verificación solo aparece si el registro ya está IN_PROGRESS; no basta con cambiar el selector y simular ejecución en un único envío (ImprovementActions.tsx:35-53).",
+      "improvementService define ImprovementRequest, ImprovementAction y ActionStatus. El POST transporta título, causa, ownerName, dueDate, metricCode y valores opcionales. El PATCH transporta {status,note,resultValue}; el frontend recibe la acción persistida. No envía createdBy ni verifiedBy como autoridad de identidad (web-admin/src/services/improvementService.ts:2-9)."
+    ],
+    "backend": [
+      "El controller permite GET/POST /improvement-actions y PATCH /improvement-actions/{id} con ADMIN o DISPATCHER. POST recibe directamente Improvement; PATCH usa ActionUpdate(String status, Double resultValue, String note). No hay un DTO adicional inventado para crear la acción. El actor autenticado y la presencia de ROLE_ADMIN se calculan en el servidor (BusinessOperationsController.java:34-48).",
+      "BusinessOperationsService realiza el caso de uso. createAction valida título, causa, responsable, fecha e indicador dentro de IID/CHR/TDE/SUCCESS/ONTIME. Comprueba que base y meta, cuando existen, sean finitas y estén entre 0 y 100. Crea el registro con resultado nulo, estado OPEN y creador autenticado, y audita CREATED dentro del método transaccional (BusinessOperationsService.java:104-113,133-138).",
+      "updateAction exige nota suficiente y resultado numérico válido. Solo admite IN_PROGRESS, VERIFIED o DISCARDED; verificar o descartar requiere manager, que el controller deriva de ADMIN. VERIFIED exige resultado. Después carga la fila con bloqueo y rechaza estados cerrados o un salto de OPEN a VERIFIED (BusinessOperationsService.java:115-130).",
+      "La actualización y la auditoría P05 forman parte del método @Transactional. VERIFIED guarda al actor como verifiedBy; otros estados pasan null a ese campo. La fecha de actualización se fija con NOW() en SQL. La respuesta expone la acción actual, no una prueba automática de ejecución en campo (BusinessOperationsService.java:129-130; R2dbcBusinessOperationsAdapter.java:77-83).",
+      "La causa y el resultado se declaran. Este flujo no vuelve a calcular un indicador operativo ni exige alcanzar targetValue para aceptar VERIFIED. Tampoco ejecuta un ensayo causal. La revisión humana debe explicar periodo, población, fuente y condiciones de la medición. El propio BPMN limita expresamente el significado del registro (servicio:116-130; P05_negocio.bpmn:4)."
+    ],
+    "persistence": [
+      "BusinessOperationsPort ofrece improvements, improvement(id,lock), createImprovement y updateImprovement. R2dbcBusinessOperationsAdapter consulta por id descendente, bloquea con FOR UPDATE cuando se solicita y usa SQL con parámetros para insertar/actualizar y reconstruir la respuesta (puerto:13-16; adaptador:25-29,62-83).",
+      "improvement_actions contiene title, cause, owner_name, due_date DATE, metric_code, baseline_value, target_value, result_value NUMERIC(14,4), status, note, created_by, verified_by y timestamps. business_audit_events conserva el historial de acciones y actores por separado (src/main/resources/db/migration/V10__business_workflow.sql:32-45).",
+      "V13 restringe status a OPEN/IN_PROGRESS/VERIFIED/DISCARDED y exige resultado, verificador y nota si es VERIFIED. Estos CHECK complementan las reglas del servicio; no demuestran que la medición sea verdadera ni que exista mejora causal (src/main/resources/db/migration/V13__incident_resolution.sql:12-15).",
+      "La nota de la fila se reemplaza en cada actualización; no afirmar que ese campo concatena un historial. El servicio además audita cada transición. Tampoco hay aquí una escritura de metas globales: este adaptador trabaja con improvement_actions (R2dbcBusinessOperationsAdapter.java:77-83; BusinessOperationsService.java:129-130)."
+    ],
+    "endpoints": [
+      {
+        "method": "GET",
+        "path": "/improvement-actions",
+        "purpose": "Retorna colección de acciones, sin filtros de periodo/conductor en esta pantalla. Controller:34-36; componente:58-59; adaptador:62-63."
+      },
+      {
+        "method": "POST",
+        "path": "/improvement-actions",
+        "purpose": "Recibe {title,cause,ownerName,dueDate,metricCode,baselineValue?,targetValue?}; retorna acción OPEN. Actor desde sesión. improvementService.ts:4-6; servicio:105-113."
+      },
+      {
+        "method": "PATCH",
+        "path": "/improvement-actions/{id}",
+        "purpose": "Recibe {status,note,resultValue?}; retorna acción persistida, incluido verifiedBy al verificar. No es un endpoint para editar el título o las metas globales. improvementService.ts:7-9; controller:42-48; servicio:115-130."
+      }
+    ],
+    "exceptions": [
+      "Nota/título/causa/responsable insuficientes, fecha/indicador ausentes o valor fuera de rango producen IllegalArgumentException; NaN o infinito también se rechazan. No afirmar validaciones adicionales como fecha obligatoriamente futura: no aparece esa comparación en createAction (BusinessOperationsService.java:105-110,133-138).",
+      "VERIFIED o DISCARDED sin ADMIN producen AccessDeniedException; VERIFIED sin resultado es inválido. Verificar directamente desde OPEN o actualizar un registro cerrado produce BusinessRuleException. Acción inexistente produce ResourceNotFoundException (BusinessOperationsService.java:116-128).",
+      "Un error en el request permanece en el formulario con role alert. No se ejecuta done ni se presenta éxito por la sola edición local del selector. Los botones y datos recargados deben interpretarse según la respuesta real (ImprovementActions.tsx:42-55,67-68)."
+    ],
+    "code": [
+      {
+        "file": "web-admin/src/components/ImprovementActions.tsx",
+        "start": 35,
+        "end": 54,
+        "explanation": [
+          "Fragmento real de 20 líneas: hooks del seguimiento, conversión del resultado, control de ADMIN y habilitación de VERIFIED solo para IN_PROGRESS. Permite explicar la diferencia entre editar estado local y persistir una transición aceptada.",
+          "Código literal actual, líneas 35-54:\nfunction ActionUpdate({ action, done }: { action: ImprovementAction; done: () => void }) {\n  const { hasRole } = useAuth();\n  const [status, setStatus] = useState<ActionStatus>('IN_PROGRESS');\n  const [result, setResult] = useState(action.resultValue?.toString() ?? '');\n  const [note, setNote] = useState('');\n  const [busy, setBusy] = useState(false);\n  const [message, setMessage] = useState('');\n  async function submit(event: FormEvent) {\n    event.preventDefault();\n    if (status === 'VERIFIED' && (!hasRole(['ADMIN']) || result === '')) return;\n    setBusy(true); setMessage('');\n    try { await updateImprovement(action.id, status, note.trim(), result === '' ? undefined : Number(result)); done(); }\n    catch (cause) { setMessage(errorMessage(cause)); }\n    finally { setBusy(false); }\n  }\n  return <form className=\"operation-form\" onSubmit={submit}><p className=\"full\">{action.title} · Responsable: {action.ownerName}. La verificación requiere un administrador, valor observado y justificación.</p>\n    <label>Estado<select aria-label=\"Estado\" value={status} onChange={e => setStatus(e.target.value as ActionStatus)}><option value=\"IN_PROGRESS\">En progreso</option>{hasRole(['ADMIN']) && <>{action.status === 'IN_PROGRESS' && <option value=\"VERIFIED\">Verificada por ADMIN</option>}<option value=\"DISCARDED\">Descartada por ADMIN</option></>}</select></label>\n    <label>Resultado observado<input type=\"number\" step=\"any\" min={0} max={100} required={status === 'VERIFIED'} value={result} onChange={e => setResult(e.target.value)} /></label>\n    <label className=\"full\">Nota de seguimiento / evidencia<textarea required minLength={5} value={note} onChange={e => setNote(e.target.value)} /></label><button disabled={busy}>Guardar seguimiento</button>\n    {message && <p role=\"alert\" className=\"source-error\">{message}</p>}"
+        ]
+      },
+      {
+        "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+        "start": 115,
+        "end": 132,
+        "explanation": [
+          "Fragmento real de 18 líneas: transacción, validaciones, permiso, fila bloqueada, regla de ejecución previa, actualización y auditoría. No contiene una comparación resultado >= meta ni una inferencia de causalidad.",
+          "Código literal actual, líneas 115-132:\n    @Transactional\n    public Mono<Improvement> updateAction(Long id,String status,Double result,String note,String actor,boolean manager) {\n        requireText(note,5,\"Documente la evidencia o motivo\");validateNumber(result);\n        if(status==null || !Set.of(\"IN_PROGRESS\",\"VERIFIED\",\"DISCARDED\").contains(status))\n            return Mono.error(new IllegalArgumentException(\"Estado inválido\"));\n        if((status.equals(\"VERIFIED\") || status.equals(\"DISCARDED\")) && !manager)\n            return Mono.error(new org.springframework.security.access.AccessDeniedException(\"Jefatura verifica o descarta la acción\"));\n        if(status.equals(\"VERIFIED\") && result==null) return Mono.error(new IllegalArgumentException(\"Registre el resultado medido\"));\n        return operations.improvement(id,true).switchIfEmpty(Mono.error(new ResourceNotFoundException(\"Acción no encontrada\")))\n            .flatMap(current -> {\n                if(Set.of(\"VERIFIED\",\"DISCARDED\").contains(current.status()))\n                    return Mono.error(new BusinessRuleException(\"La acción está cerrada\"));\n                if(status.equals(\"VERIFIED\") && !current.status().equals(\"IN_PROGRESS\"))\n                    return Mono.error(new BusinessRuleException(\"Ejecute la acción antes de verificar su resultado\"));\n                return operations.updateImprovement(id,status,result,note,status.equals(\"VERIFIED\")?actor:null)\n                    .flatMap(saved -> workflow.audit(\"P05\",\"IMPROVEMENT\",id,status,actor,note).thenReturn(saved));\n            });\n    }"
+        ]
+      }
+    ],
+    "speech": [
+      "Profesor, continúo con Evaluar resultados, el proceso P05 de Grupo MICOTRANS. La resolución de una incidencia explica qué decisión tomamos frente a un caso; una acción de mejora documenta qué queremos cambiar después de revisar los resultados. No todas las incidencias generan automáticamente una acción. La causa, la propuesta y los recursos deben analizarlos las personas responsables de la operación.",
+      "Esta es una pantalla independiente, /improvement-actions, con entrada propia en el menú y el encabezado Mejora continua. El administrador también puede encontrar el mismo componente dentro de la pestaña Acciones P05 de BI. Es reutilización del componente, no una pantalla imaginaria ni una segunda base de acciones. Además, sus registros no se filtran automáticamente por las fechas o el conductor seleccionados en BI.",
+      "Al crear una acción declaramos causa, responsable, fecha e indicador. La base y la meta son opcionales y pertenecen a esa acción. Dejarlas vacías no es lo mismo que declarar cero, y escribir una meta aquí no cambia la meta global del indicador. El servidor registra OPEN y obtiene la identidad del creador de la sesión. El responsable escrito puede ser otra persona; ese texto no concede permisos técnicos.",
+      "Después registramos seguimiento y llevamos la acción a IN_PROGRESS. Solo un ADMIN puede verificarla con resultado y nota, y el servidor impide saltar directamente desde OPEN. También bloquea nuevas modificaciones cuando quedó verificada o descartada. Esta secuencia nos obliga a separar propuesta, ejecución y revisión, aunque la evidencia de trabajo real sigue siendo responsabilidad de MICOTRANS.",
+      "Finalmente, VERIFIED significa que un usuario autorizado dejó una medición y una justificación después de la etapa de ejecución. No significa que el algoritmo haya demostrado una causa, que se alcanzara necesariamente la meta ni que una prueba sintética represente ahorro empresarial. Para defender una mejora real necesitamos comparar poblaciones y periodos pertinentes, revisar fuentes y considerar otros factores. La captura histórica y las pruebas existentes respaldan el flujo técnico dentro de su alcance; esta guía no ejecutó nuevas pruebas."
+    ],
+    "questions": [
+      {
+        "q": "¿Es una ruta propia o solo una pestaña?",
+        "a": "Ambas entradas existen. App.tsx:64 define /improvement-actions. BusinessIntelligence.tsx:15,86,93 monta el mismo componente al pulsar Acciones P05 dentro de /bi, ruta de ADMIN en App.tsx:68-75."
+      },
+      {
+        "q": "¿VERIFIED significa que superó la meta?",
+        "a": "No. El servicio exige ejecución previa, resultado, nota y ADMIN, pero no compara resultado contra targetValue (BusinessOperationsService.java:115-130)."
+      },
+      {
+        "q": "¿La base se obtiene automáticamente del dashboard?",
+        "a": "No. ActionForm envía baselineValue y targetValue declarados; el POST no calcula esas cifras desde el reporte (ImprovementActions.tsx:13-30; servicio:105-113)."
+      },
+      {
+        "q": "¿La fecha y el conductor de BI delimitan las acciones?",
+        "a": "No en este componente: useQuery consulta /improvement-actions sin parámetros y no recibe los filtros del padre (ImprovementActions.tsx:58-59; BusinessIntelligence.tsx:93)."
+      },
+      {
+        "q": "¿ownerName es el usuario que puede verificar?",
+        "a": "No. Es un nombre declarado. El permiso depende de ADMIN autenticado, y verifiedBy registra ese actor en el servidor (controller:44-46; servicio:120-130)."
+      }
+    ],
+    "tests": [
+      {
+        "file": "src/test/java/com/ecoroute/backend/application/services/BusinessOperationsServiceTest.java",
+        "name": "actionCannotSkipExecutionBeforeVerification",
+        "scope": "Líneas 76-80: unitaria existente con Mockito/StepVerifier que rechaza OPEN → VERIFIED y comprueba ausencia de updateImprovement. Leída, no ejecutada para esta guía."
+      },
+      {
+        "file": "src/test/java/com/ecoroute/backend/application/services/BusinessOperationsServiceTest.java",
+        "name": "verificationRequiresMeasuredResult",
+        "scope": "Líneas 82-84: rechaza resultado nulo antes de persistir. Alcance de lógica del servicio; no acredita formulario completo, UI real, medición empresarial ni causalidad."
+      }
+    ],
+    "screenshot": {
+      "file": "docs/correccion_integral/capturas/web/WEB-1792482508091/screen_improvement-actions.png",
+      "caption": "Captura histórica existente, revisada visualmente el 26/10 para seleccionar la guía. Sí muestra la pantalla standalone: Mejora continua, Acciones de mejora · P05, entrada propia de menú activa, Nueva acción y Registrar seguimiento. Parte de los datos está cubierta en el archivo original; no permite acreditar valores o estados concretos. No pertenece al run del 22/10 ni es captura nueva. El flujo actual se verificó por lectura de código."
+    },
+    "handoff": "Renzo entrega al alumno 4, Santillan Velasquez Adrian Nicolas: después de documentar incidencias y acciones, Dashboard/BI permiten revisar observaciones y sus poblaciones. Separar datos calculados de mediciones declaradas y de causalidad. No afirmar conexión Power BI verificada ni aceptación empresarial. Guía fechada 26/10, antecedentes del 22/10 y captura anterior expresamente identificada.",
+    "source_map": [
+      {
+        "file": "web-admin/src/components/ImprovementActions.tsx",
+        "symbol": "ActionForm; ActionUpdate; ImprovementActions, líneas 12-70",
+        "purpose": "Pantalla reutilizable, hooks, formularios, estados y recarga."
+      },
+      {
+        "file": "web-admin/src/services/improvementService.ts",
+        "symbol": "ImprovementRequest; createImprovement; updateImprovement, líneas 2-9",
+        "purpose": "Contrato TypeScript y transporte request/response."
+      },
+      {
+        "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessOperationsController.java",
+        "symbol": "improvements; create; update; ActionUpdate, líneas 34-48",
+        "purpose": "Entrada HTTP y actor/rol desde autenticación."
+      },
+      {
+        "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+        "symbol": "createAction; updateAction; validateNumber, líneas 104-138",
+        "purpose": "Caso de uso, transacción, reglas y auditoría P05."
+      },
+      {
+        "file": "src/main/java/com/ecoroute/backend/domain/ports/out/BusinessOperationsPort.java",
+        "symbol": "improvements; improvement; createImprovement; updateImprovement, líneas 13-16",
+        "purpose": "Puerto de persistencia de acciones."
+      },
+      {
+        "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessOperationsAdapter.java",
+        "symbol": "readAction; improvements; improvement; createImprovement; updateImprovement, líneas 25-29,62-83",
+        "purpose": "Adaptador R2DBC, SELECT FOR UPDATE, INSERT/UPDATE y mapeo de respuesta."
+      },
+      {
+        "file": "src/main/resources/db/migration/V10__business_workflow.sql",
+        "symbol": "improvement_actions; business_audit_events, líneas 32-45",
+        "purpose": "SQL de campos y tabla de auditoría."
+      },
+      {
+        "file": "src/main/resources/db/migration/V13__incident_resolution.sql",
+        "symbol": "ck_improvement_status; ck_improvement_verification, líneas 12-15",
+        "purpose": "Restricciones SQL sobre estado y verificación."
+      },
+      {
+        "file": "web-admin/src/App.tsx",
+        "symbol": "AuthenticatedLayout, líneas 60-75",
+        "purpose": "Ruta independiente para ADMIN/DISPATCHER y /bi para ADMIN."
+      },
+      {
+        "file": "web-admin/src/pages/BusinessIntelligence.tsx",
+        "symbol": "views; BusinessIntelligence, líneas 15,76-93",
+        "purpose": "Navegación por pestaña real Acciones P05 y ausencia de props de filtros al componente."
+      },
+      {
+        "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P05_negocio.bpmn",
+        "symbol": "Process_P05; P05_A6-A12, líneas 3-4,79-117",
+        "purpose": "Nombre del proceso, responsabilidad humana y límite de causalidad."
+      }
+    ]
+  }
+]

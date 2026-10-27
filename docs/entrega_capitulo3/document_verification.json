@@ -1,0 +1,48 @@
+{
+  "document": "docs/Integrador I_Grupo3_Capitulo3_Final.docx",
+  "pages": 186,
+  "chapter3Range": [
+    131,
+    185
+  ],
+  "sections": 8,
+  "useCases": 18,
+  "functions": 20,
+  "screens": 19,
+  "figures": 18,
+  "codeExcerpts": 8,
+  "tablesAdded": 29,
+  "preservedSourcePartsBeforeNativeFieldsUpdate": 119,
+  "visualReview": {
+    "pages1to130": "Delegated per-page reviews; inherited viewport crops and watermark placement retained. No new Word layout defect.",
+    "pages131to158": "Delegated final review of v3. No blocking layout errors; source diagrams available at original resolution.",
+    "pages159to186": "Main visual review of v3 figures159–172 and final173–186. All final pixels unchanged for159–172; final6and174–185 reviewed after pagination correction.",
+    "technicalNote": "All final pages are additionally compared as rendered pixels with inspected revisions.",
+    "finalPages": 186,
+    "pixelComparison": {
+      "identicalPages": 173,
+      "changedPagesReviewedIndividually": [
+        6,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185
+      ],
+      "finalLayoutBlockingFindings": 0
+    }
+  },
+  "limits": [
+    "Screenshots represent synthetic local demonstrations.",
+    "Review does not certify business UAT, production or a fresh installation.",
+    "Small print in full window screenshots and ERD must be zoomed from linked originals."
+  ],
+  "finalSha256": "ac26e11d98c253cafbbcfc0590ba4eccce69a89b49933ebf2ae6016c39d55ed9"
+}

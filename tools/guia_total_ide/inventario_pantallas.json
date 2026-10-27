@@ -1,0 +1,3654 @@
+{
+  "web": [
+    {
+      "id": "W01",
+      "title": "Acceso web y retorno OIDC",
+      "route": "/login",
+      "roles": [
+        "Público; identidad efectiva después de autenticar"
+      ],
+      "processes": [
+        "P08"
+      ],
+      "source": "Login inicia Authorization Code con PKCE y procesa el retorno de Keycloak. AuthProvider consulta identidad efectiva al backend; decodificar un token no concede permisos. El formulario externo del proveedor forma parte del acceso, sin crear otra ruta React. Esta pantalla habilita sesión para tareas posteriores. P08 exige comprobar permisos permitidos y denegados; autorizar solicitud y elegir rol son tareas humanas previas.",
+      "actions": [
+        "Presentar botón, seguir al proveedor y completar acceso de ensayo fuera de captura; volver al callback.",
+        "Mostrar usuario/rol en Inicio, una ruta permitida y cierre de sesión desde Sidebar."
+      ],
+      "states": [
+        "Inicial, redirección, intercambio de código, carga de identidad y error recuperable.",
+        "Sin sesión: ruta protegida devuelve a login. Con rol insuficiente se aplica ProtectedRoute. No mostrar credenciales/tokens."
+      ],
+      "flow": [
+        "Login → redirectToKeycloakLogin/exchangeCodeForTokens → OIDC auth/token → Keycloak mantiene identidad/sesión.",
+        "AuthProvider → useQuery → GET /api/session/me → SessionController.me → OperationalAccess → DriverRepository/drivers para vínculo; iniciar sesión no escribe pedidos."
+      ],
+      "sources": [
+        {
+          "file": "web-admin/src/pages/Login.tsx",
+          "symbol": "const Login",
+          "line": 7
+        },
+        {
+          "file": "web-admin/src/services/keycloak.ts",
+          "symbol": "export async function redirectToKeycloakLogin",
+          "line": 38
+        },
+        {
+          "file": "web-admin/src/services/keycloak.ts",
+          "symbol": "export async function exchangeCodeForTokens",
+          "line": 54
+        },
+        {
+          "file": "web-admin/src/context/AuthContext.tsx",
+          "symbol": "export function AuthProvider",
+          "line": 15
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/SessionController.java",
+          "symbol": "class SessionController",
+          "line": 10
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/security/OperationalAccess.java",
+          "symbol": "class OperationalAccess",
+          "line": 20
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P08_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/SessionController.java",
+          "symbol": "@GetMapping(\"/me\")",
+          "line": 12
+        },
+        {
+          "file": "web-admin/src/App.tsx",
+          "symbol": "path=\"/login\"",
+          "line": 88
+        }
+      ],
+      "expectedEvidence": [
+        "Capturas nuevas esperadas: login completo, proveedor sin secretos, Inicio con identidad, negativa por rol y regreso tras logout. Abrir los símbolos relacionados en IDE permite explicar dónde se comprueba sesión y autorización.",
+        "Conservar título, sesión e identificadores ficticios; añadir tomas inferiores cuando el contenido exceda la ventana. Si una negativa no puede prepararse, documentarla como esperada y no observada. La lectura del código no acredita ejecución actual ni éxito de una operación remota."
+      ],
+      "wordCount": 219
+    },
+    {
+      "id": "W02",
+      "title": "Inicio y navegación",
+      "route": "/",
+      "roles": [
+        "Cualquier sesión autenticada; tarjetas según rol"
+      ],
+      "processes": [
+        "P08",
+        "P01",
+        "P02",
+        "P04",
+        "P05",
+        "P06",
+        "P09"
+      ],
+      "source": "Inicio presenta accesos según roles efectivos. Es una pantalla real del router aunque no figure entre las ocho principales. Home navega localmente: no calcula indicadores ni crea registros. Ubica recursos, accesos, compras y reportes. Sidebar ofrece Acciones de mejora independientemente y BI reutiliza su componente. Ocultar tarjetas no sustituye permisos. El reparto académico conserva dos pantallas por alumno; Inicio sirve como presentación común.",
+      "actions": [
+        "Presentar tarjetas y menú expandido; entrar en Pedidos para comenzar P01.",
+        "Mostrar menú colapsado y, en ventana estrecha, abrir/cerrar con botón, fondo o Escape.",
+        "Comparar ADMIN/DISPATCHER, ubicar campana y terminar sesión."
+      ],
+      "states": [
+        "Inicio autenticado; menú expandido/colapsado; overlay móvil abierto/cerrado y foco recuperado.",
+        "Ruta desconocida redirige a Inicio; no existe 404 independiente ni carga propia de resultados de negocio."
+      ],
+      "flow": [
+        "Home → useAuth → identidad AuthProvider /session/me; useNavigate cambia ruta sin persistir.",
+        "AppRoutes → AuthenticatedLayout → ProtectedRoute: consultas/escrituras pertenecen al destino. Inicio no posee endpoint, caso de uso o tabla propios."
+      ],
+      "sources": [
+        {
+          "file": "web-admin/src/pages/Home.tsx",
+          "symbol": "const Home",
+          "line": 14
+        },
+        {
+          "file": "web-admin/src/App.tsx",
+          "symbol": "const AppRoutes",
+          "line": 85
+        },
+        {
+          "file": "web-admin/src/App.tsx",
+          "symbol": "const AuthenticatedLayout",
+          "line": 22
+        },
+        {
+          "file": "web-admin/src/components/Sidebar.tsx",
+          "symbol": "const Sidebar",
+          "line": 29
+        },
+        {
+          "file": "web-admin/src/components/ProtectedRoute.tsx",
+          "symbol": "const ProtectedRoute",
+          "line": 10
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P08_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P01_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 5
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P02_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P04_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P05_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P06_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P09_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "web-admin/src/App.tsx",
+          "symbol": "path=\"/\"",
+          "line": 59
+        }
+      ],
+      "expectedEvidence": [
+        "Capturas nuevas esperadas: Inicio completo con ambos roles, menú estrecho abierto y navegación al destino. Conservar encabezado, usuario y accesos visibles para justificar permisos y ubicar el siguiente paso del negocio.",
+        "Conservar título, sesión e identificadores ficticios; añadir tomas inferiores cuando el contenido exceda la ventana. Si una negativa no puede prepararse, documentarla como esperada y no observada. La lectura del código no acredita ejecución actual ni éxito de una operación remota."
+      ],
+      "wordCount": 223
+    },
+    {
+      "id": "W03",
+      "title": "Pedidos",
+      "route": "/orders",
+      "roles": [
+        "Dispatcher u operador logístico autorizado; perfil técnico ADMIN o DISPATCHER"
+      ],
+      "processes": [
+        "P01",
+        "P02",
+        "P03"
+      ],
+      "source": "Convertir una solicitud del cliente en un pedido identificable y revisar el acuerdo comercial antes de comprometer su reparto. El pedido nace sin ruta y conserva su ID durante la posterior asignación. Las validaciones de interfaz ayudan al operador; las reglas del servidor deciden si se acepta cada solicitud.",
+      "actions": [
+        "Mostrar listado y Nuevo pedido: tracking único, destinatario, teléfono, dirección, coordenadas y ventana cuando corresponda.",
+        "Registrar aceptación, dirección/cobertura verificadas y nota; guardar PENDING sin ruta y conservar ID.",
+        "Abrir detalle/comercial/ventana/asignación; validar y confirmar CSV; tras entrega consultar foto/firma/PDF del mismo tracking."
+      ],
+      "states": [
+        "Listado y búsqueda; modales Nuevo pedido, Detalle y CSV: validación, vista previa y confirmación. Detalle: comercial, ventana, asignación y POD.",
+        "Revisión parcial bloquea asignación; cambiar ventana invalida aceptación; alta y confirmación son dos HTTP: conservar ID ante fallo parcial."
+      ],
+      "flow": [
+        "CreateOrder → orderService → POST /orders → OrderController → OrderUseCasesImpl → R2dbcOrderRepository → orders e historial.",
+        "BusinessEditor → PATCH /orders/{id}/business-data → BusinessWorkflowController → BusinessWorkflowService.confirm → R2dbcBusinessWorkflowAdapter → order_business_data/auditoría.",
+        "CSV preview/import → OrderCsvParser/OrderImportService; POD metadata/foto/firma/PDF → DeliveryProofController."
+      ],
+      "sources": [
+        {
+          "file": "web-admin/src/pages/Orders.tsx",
+          "symbol": "export default function Orders",
+          "line": 203
+        },
+        {
+          "file": "web-admin/src/services/orderService.ts",
+          "symbol": "export const OrderStatus = {",
+          "line": 4
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "class OrderController",
+          "line": 20
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+          "symbol": "class OrderUseCasesImpl",
+          "line": 28
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcOrderRepository.java",
+          "symbol": "class R2dbcOrderRepository",
+          "line": 10
+        },
+        {
+          "file": "web-admin/src/pages/Orders.tsx",
+          "symbol": "function CreateOrder",
+          "line": 148
+        },
+        {
+          "file": "web-admin/src/pages/Orders.tsx",
+          "symbol": "function OrderDetail",
+          "line": 100
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessWorkflowController.java",
+          "symbol": "class BusinessWorkflowController",
+          "line": 15
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessWorkflowService.java",
+          "symbol": "class BusinessWorkflowService",
+          "line": 14
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "class R2dbcBusinessWorkflowAdapter",
+          "line": 13
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/OrderImportService.java",
+          "symbol": "class OrderImportService",
+          "line": 11
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DeliveryProofController.java",
+          "symbol": "class DeliveryProofController",
+          "line": 25
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P01_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 5
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P02_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P03_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@PostMapping",
+          "line": 33
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@GetMapping(\"/{id}\")",
+          "line": 39
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@GetMapping",
+          "line": 44
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@DeleteMapping(\"/{id}\")",
+          "line": 53
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@PatchMapping(\"/{id}/status\")",
+          "line": 58
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@PatchMapping(\"/{id}/route\")",
+          "line": 63
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@PatchMapping(\"/{id}/delivery-window\")",
+          "line": 68
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@PostMapping(\"/bulk-csv\")",
+          "line": 77
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@PostMapping(\"/bulk-csv/preview\")",
+          "line": 81
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+          "symbol": "public Mono<Order> createOrder(Order order) {",
+          "line": 51
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+          "symbol": "public Mono<Order> assignOrder(Long orderId, Long routeId) {",
+          "line": 74
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+          "symbol": "public Mono<Order> getOrderById(Long id) {",
+          "line": 99
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+          "symbol": "public Mono<Order> changeDeliveryWindow(Long id,OffsetDateTime start,OffsetDateTime end,String reason,String actor) {",
+          "line": 105
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+          "symbol": "public Flux<Order> getAllOrders() {",
+          "line": 128
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+          "symbol": "public Mono<Order> updateStatusManual(Long id, OrderStatus status, String reason) {",
+          "line": 134
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcOrderRepository.java",
+          "symbol": "public Mono<Order> save(Order order) {",
+          "line": 19
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcOrderRepository.java",
+          "symbol": "public Flux<Order> findAll() {",
+          "line": 26
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcOrderRepository.java",
+          "symbol": "public Mono<Order> findById(Long id) {",
+          "line": 32
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcOrderRepository.java",
+          "symbol": "public Mono<Order> lockById(Long id) {",
+          "line": 38
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcOrderRepository.java",
+          "symbol": "public Mono<Order> findByTrackingNumber(String trackingNumber) {",
+          "line": 43
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcOrderRepository.java",
+          "symbol": "public Flux<Order> findByRouteId(Long routeId) {",
+          "line": 49
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcOrderRepository.java",
+          "symbol": "public Mono<Void> deleteById(Long id) {",
+          "line": 55
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcOrderRepository.java",
+          "symbol": "public Mono<Integer> updateStopSequence(Long id, Integer sequence) {",
+          "line": 60
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessWorkflowController.java",
+          "symbol": "@GetMapping(\"/orders/{id}/business-data\")",
+          "line": 19
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessWorkflowController.java",
+          "symbol": "@PatchMapping(\"/orders/{id}/business-data\")",
+          "line": 23
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessWorkflowController.java",
+          "symbol": "@GetMapping(\"/routes/{id}/review\")",
+          "line": 29
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessWorkflowController.java",
+          "symbol": "@PostMapping(\"/routes/{id}/review\")",
+          "line": 33
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessWorkflowController.java",
+          "symbol": "@PostMapping(\"/routes/{id}/acceptance\")",
+          "line": 38
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessWorkflowService.java",
+          "symbol": "public Mono<Confirmation> confirm(Confirmation input) {",
+          "line": 23
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessWorkflowService.java",
+          "symbol": "public Mono<Review> approve(Long id,Double weight,String note,String actor) {",
+          "line": 43
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessWorkflowService.java",
+          "symbol": "public Mono<Review> accept(Long id,Long driverId,String actor) {",
+          "line": 63
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Confirmation> confirmation(Long id) {",
+          "line": 15
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Confirmation> saveConfirmation(Confirmation c) {",
+          "line": 22
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Review> review(Long id) {",
+          "line": 34
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Void> approve(Long id,Double weight,String actor,String note) {",
+          "line": 40
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Void> accept(Long id,String actor) {",
+          "line": 47
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Void> invalidate(Long id) {",
+          "line": 51
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Void> requireConfirmed(Long id) {",
+          "line": 55
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Void> requireDispatchReview(Long id) {",
+          "line": 58
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Void> audit(String process,String entity,Long id,String action,String actor,String details) {",
+          "line": 62
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/OrderImportService.java",
+          "symbol": "public Flux<Order> importOrders(List<Order> validated) {",
+          "line": 15
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DeliveryProofController.java",
+          "symbol": "@PostMapping",
+          "line": 34
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DeliveryProofController.java",
+          "symbol": "@GetMapping(\"/{orderId}\")",
+          "line": 50
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DeliveryProofController.java",
+          "symbol": "@GetMapping(\"/{orderId}/photo\")",
+          "line": 56
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DeliveryProofController.java",
+          "symbol": "@GetMapping(\"/{orderId}/signature\")",
+          "line": 60
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DeliveryProofController.java",
+          "symbol": "@GetMapping(\"/{orderId}/pdf\")",
+          "line": 69
+        },
+        {
+          "file": "web-admin/src/App.tsx",
+          "symbol": "path=\"/orders\"",
+          "line": 61
+        }
+      ],
+      "expectedEvidence": [
+        "Capturas NUEVAS pendientes: pantalla completa, formulario o detalle abierto, resultado persistido y alternativa relevante. Correlacionar ID, tracking, fecha, rol y vínculo con la siguiente pantalla.",
+        "Comprobar respuesta del servidor y el mismo identificador al recargar antes de anunciar éxito; conservar contexto del siguiente paso de negocio."
+      ],
+      "wordCount": 211
+    },
+    {
+      "id": "W04",
+      "title": "Gestión de despacho",
+      "route": "/routes",
+      "roles": [
+        "Dispatcher planifica y despacha; Jefatura revisa usando un perfil ADMIN autorizado; Conductor acepta en móvil"
+      ],
+      "processes": [
+        "P02",
+        "P03",
+        "P07"
+      ],
+      "source": "Preparar una jornada viable con conductor, vehículo y pedidos confirmados, obtener aprobación administrativa y aceptación del conductor antes de iniciar el reparto.",
+      "actions": [
+        "Crear ruta PLANNED con fecha y recursos disponibles; mostrar filtro Hoy/histórico y backlog.",
+        "Asignar pedido confirmado; ADMIN revisa carga, capacidad, ventanas y vehículo con nota.",
+        "Luis acepta en móvil; actualizar web y despachar. Verificar IN_PROGRESS/IN_TRANSIT, mapa, paradas y fuente del trazado."
+      ],
+      "states": [
+        "Hoy/fecha/histórico; modal Planificar; backlog; revisión ADMIN; aceptación móvil pendiente/recibida; mapa y fuente GPS.",
+        "Recursos ocupados/inactivos, carga excesiva, pedidos sin confirmar o autorización invalidada bloquean despacho; rutas terminales no se reabren."
+      ],
+      "flow": [
+        "RoutesPage → routeService → POST /routes → RouteController → RouteUseCasesImpl → R2dbcRouteRepository → routes.",
+        "ReviewPanel → POST /routes/{id}/review y móvil /acceptance → BusinessWorkflowService → route_dispatch_reviews.",
+        "PATCH /routes/{id}/status?status=IN_PROGRESS → requireDispatchReview → planificador → IN_TRANSIT/IN_PROGRESS/historial; GET /path y GPS alimentan mapa."
+      ],
+      "sources": [
+        {
+          "file": "web-admin/src/pages/Routes.tsx",
+          "symbol": "export default function RoutesPage",
+          "line": 152
+        },
+        {
+          "file": "web-admin/src/services/routeService.ts",
+          "symbol": "export const RouteStatus = {",
+          "line": 3
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/RouteController.java",
+          "symbol": "class RouteController",
+          "line": 25
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/RouteUseCasesImpl.java",
+          "symbol": "class RouteUseCasesImpl",
+          "line": 31
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcRouteRepository.java",
+          "symbol": "class R2dbcRouteRepository",
+          "line": 12
+        },
+        {
+          "file": "web-admin/src/pages/Routes.tsx",
+          "symbol": "function ReviewPanel",
+          "line": 87
+        },
+        {
+          "file": "web-admin/src/pages/Routes.tsx",
+          "symbol": "function RouteTracking",
+          "line": 19
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessWorkflowService.java",
+          "symbol": "class BusinessWorkflowService",
+          "line": 14
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "class R2dbcBusinessWorkflowAdapter",
+          "line": 13
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P02_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P03_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P07_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/RouteController.java",
+          "symbol": "@PostMapping",
+          "line": 35
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/RouteController.java",
+          "symbol": "@PatchMapping(\"/{id}/status\")",
+          "line": 52
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/RouteController.java",
+          "symbol": "@GetMapping",
+          "line": 57
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/RouteController.java",
+          "symbol": "@DeleteMapping(\"/{id}\")",
+          "line": 67
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/RouteController.java",
+          "symbol": "@GetMapping(\"/{id}/path\")",
+          "line": 77
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/RouteUseCasesImpl.java",
+          "symbol": "public Mono<Route> createRoute(Route route) {",
+          "line": 43
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/RouteUseCasesImpl.java",
+          "symbol": "public Mono<Route> updateRouteStatus(Long id, RouteStatus status) {",
+          "line": 61
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/RouteUseCasesImpl.java",
+          "symbol": "public Mono<Void> updateRouteStatusOnly(Long id, RouteStatus status) {",
+          "line": 153
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/RouteUseCasesImpl.java",
+          "symbol": "public Flux<Route> getAllRoutes() {",
+          "line": 189
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/RouteUseCasesImpl.java",
+          "symbol": "public Flux<Route> getRoutesByFilters(java.time.LocalDate date, RouteStatus status) {",
+          "line": 194
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcRouteRepository.java",
+          "symbol": "public Mono<Route> save(Route route) {",
+          "line": 21
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcRouteRepository.java",
+          "symbol": "public Mono<Route> findById(Long id) {",
+          "line": 28
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcRouteRepository.java",
+          "symbol": "public Mono<Route> lockById(Long id) {",
+          "line": 34
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcRouteRepository.java",
+          "symbol": "public Flux<Route> findByDriverIdAndDate(Long driverId, LocalDate date) {",
+          "line": 39
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcRouteRepository.java",
+          "symbol": "public Flux<Route> findAll() {",
+          "line": 45
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcRouteRepository.java",
+          "symbol": "public Flux<Route> findByFilters(LocalDate date, com.ecoroute.backend.domain.model.RouteStatus status) {",
+          "line": 51
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcRouteRepository.java",
+          "symbol": "public Mono<Void> deleteById(Long id) {",
+          "line": 57
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcRouteRepository.java",
+          "symbol": "public Mono<Integer> updatePathInfo(Long id, String geometry, Double durationMin) {",
+          "line": 62
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessWorkflowService.java",
+          "symbol": "public Mono<Confirmation> confirm(Confirmation input) {",
+          "line": 23
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessWorkflowService.java",
+          "symbol": "public Mono<Review> approve(Long id,Double weight,String note,String actor) {",
+          "line": 43
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessWorkflowService.java",
+          "symbol": "public Mono<Review> accept(Long id,Long driverId,String actor) {",
+          "line": 63
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Confirmation> confirmation(Long id) {",
+          "line": 15
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Confirmation> saveConfirmation(Confirmation c) {",
+          "line": 22
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Review> review(Long id) {",
+          "line": 34
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Void> approve(Long id,Double weight,String actor,String note) {",
+          "line": 40
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Void> accept(Long id,String actor) {",
+          "line": 47
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Void> invalidate(Long id) {",
+          "line": 51
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Void> requireConfirmed(Long id) {",
+          "line": 55
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Void> requireDispatchReview(Long id) {",
+          "line": 58
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Void> audit(String process,String entity,Long id,String action,String actor,String details) {",
+          "line": 62
+        },
+        {
+          "file": "web-admin/src/App.tsx",
+          "symbol": "path=\"/routes\"",
+          "line": 62
+        }
+      ],
+      "expectedEvidence": [
+        "Capturas NUEVAS pendientes: pantalla completa, formulario o detalle abierto, resultado persistido y alternativa relevante. Correlacionar ID, tracking, fecha, rol y vínculo con la siguiente pantalla.",
+        "Conservar título, sesión e identificadores ficticios; añadir tomas inferiores cuando el contenido exceda la ventana. Si una negativa no puede prepararse, documentarla como esperada y no observada. La lectura del código no acredita ejecución actual ni éxito de una operación remota.",
+        "Comprobar respuesta del servidor y el mismo identificador al recargar antes de anunciar éxito; conservar contexto del siguiente paso de negocio."
+      ],
+      "wordCount": 219
+    },
+    {
+      "id": "W05",
+      "title": "Incidencias y decisiones · P04",
+      "route": "/incidents",
+      "roles": [
+        "Dispatcher para registrar y coordinar RETRY/REPLAN; ADMIN para CLOSE_FAILED/CLOSE_CASE. La Jefatura logística del BPMN es una responsabilidad empresarial; el servidor exige el rol técnico ADMIN para el cierre definitivo (BusinessOperationsController.java:27-31 y BusinessOperationsService.java:48-53)."
+      ],
+      "processes": [
+        "P04",
+        "P02",
+        "P03"
+      ],
+      "source": "Guía de exposición del 26/10/2026. En Grupo MICOTRANS, conservar el motivo de una excepción de reparto y documentar una solución autorizada sin borrar el resultado anterior. El registro identifica ruta, pedido, informante, resolución y, cuando corresponde, otro intento. La captura del 22/10 es evidencia histórica de un ensayo sintético, no. Las validaciones de interfaz ayudan al operador; las reglas del servidor deciden si se acepta cada solicitud.",
+      "actions": [
+        "Registrar incidencia general o de pedido con ruta, tipo, severidad y descripción sustentada.",
+        "Resolver con motivo/justificación y decisión permitida; elegir destino PLANNED si REPLAN.",
+        "Identificar original, nuevo intento y actores; volver a P03 o P02 sin reabrir el pedido terminal."
+      ],
+      "states": [
+        "Registrar: ruta/pedido opcional/tipo/severidad/descripción. Resolver: motivo/justificación; OPEN/RESOLVED.",
+        "RETRY exige jornada activa; REPLAN destino PLANNED distinto; CLOSE_FAILED/CLOSE_CASE solo ADMIN. CLOSE_CASE no altera entregado."
+      ],
+      "flow": [
+        "Incidents → useQuery/incidentService → GET/POST /incidents, PATCH /{id}/resolution → BusinessOperationsController → BusinessOperationsService.report/resolve.",
+        "R2dbcBusinessOperationsAdapter → incidents/order_attempts; RETRY crea nuevo IN_TRANSIT misma jornada activa; REPLAN nuevo ASSIGNED otra PLANNED y renueva comercial; original terminal permanece."
+      ],
+      "sources": [
+        {
+          "file": "web-admin/src/pages/Incidents.tsx",
+          "symbol": "export default function Incidents",
+          "line": 59
+        },
+        {
+          "file": "web-admin/src/services/incidentService.ts",
+          "symbol": "export async function createIncident(request: IncidentRequest) { return (await api.post<Incident>('/incidents', request)).data; }",
+          "line": 8
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessOperationsController.java",
+          "symbol": "class BusinessOperationsController",
+          "line": 14
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+          "symbol": "class BusinessOperationsService",
+          "line": 21
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessOperationsAdapter.java",
+          "symbol": "class R2dbcBusinessOperationsAdapter",
+          "line": 16
+        },
+        {
+          "file": "web-admin/src/pages/Incidents.tsx",
+          "symbol": "function IncidentForm",
+          "line": 12
+        },
+        {
+          "file": "web-admin/src/pages/Incidents.tsx",
+          "symbol": "function ResolutionForm",
+          "line": 33
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P04_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P02_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P03_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessOperationsController.java",
+          "symbol": "@GetMapping(\"/incidents\")",
+          "line": 17
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessOperationsController.java",
+          "symbol": "@PostMapping(\"/incidents\")",
+          "line": 22
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessOperationsController.java",
+          "symbol": "@PatchMapping(\"/incidents/{id}/resolution\")",
+          "line": 27
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessOperationsController.java",
+          "symbol": "@GetMapping(\"/improvement-actions\")",
+          "line": 34
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessOperationsController.java",
+          "symbol": "@PostMapping(\"/improvement-actions\")",
+          "line": 37
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessOperationsController.java",
+          "symbol": "@PatchMapping(\"/improvement-actions/{id}\")",
+          "line": 42
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+          "symbol": "public Flux<Incident> incidents() { return operations.incidents(); }",
+          "line": 27
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+          "symbol": "public Mono<Incident> incident(Long id) {",
+          "line": 28
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+          "symbol": "public Mono<Incident> report(Incident i,String actor) {",
+          "line": 32
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+          "symbol": "public Mono<Incident> resolve(Long id,String outcome,String reason,Long nextRoute,String actor,boolean manager) {",
+          "line": 48
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+          "symbol": "public Flux<Improvement> improvements() { return operations.improvements(); }",
+          "line": 103
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+          "symbol": "public Mono<Improvement> createAction(Improvement i,String actor) {",
+          "line": 105
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+          "symbol": "public Mono<Improvement> updateAction(Long id,String status,Double result,String note,String actor,boolean manager) {",
+          "line": 116
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessOperationsAdapter.java",
+          "symbol": "public Flux<Incident> incidents() {",
+          "line": 34
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessOperationsAdapter.java",
+          "symbol": "public Mono<Incident> incident(Long id,boolean lock) {",
+          "line": 37
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessOperationsAdapter.java",
+          "symbol": "public Mono<Incident> createIncident(Incident i) {",
+          "line": 40
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessOperationsAdapter.java",
+          "symbol": "public Mono<Incident> resolve(Long id,String outcome,String reason,String actor,Long nextRouteId,Long retryOrderId) {",
+          "line": 50
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessOperationsAdapter.java",
+          "symbol": "public Mono<Void> linkAttempt(Long originalId,Long retryId,Long incidentId) {",
+          "line": 58
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessOperationsAdapter.java",
+          "symbol": "public Flux<Improvement> improvements() {",
+          "line": 62
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessOperationsAdapter.java",
+          "symbol": "public Mono<Improvement> improvement(Long id,boolean lock) {",
+          "line": 65
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessOperationsAdapter.java",
+          "symbol": "public Mono<Improvement> createImprovement(Improvement i) {",
+          "line": 68
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessOperationsAdapter.java",
+          "symbol": "public Mono<Improvement> updateImprovement(Long id,String status,Double result,String note,String verifier) {",
+          "line": 77
+        },
+        {
+          "file": "web-admin/src/App.tsx",
+          "symbol": "path=\"/incidents\"",
+          "line": 63
+        }
+      ],
+      "expectedEvidence": [
+        "Capturas NUEVAS pendientes: pantalla completa, formulario o detalle abierto, resultado persistido y alternativa relevante. Correlacionar ID, tracking, fecha, rol y vínculo con la siguiente pantalla.",
+        "Comprobar respuesta del servidor y el mismo identificador al recargar antes de anunciar éxito; conservar contexto del siguiente paso de negocio."
+      ],
+      "wordCount": 207
+    },
+    {
+      "id": "W06",
+      "title": "Acciones de mejora · P05",
+      "route": "/improvement-actions",
+      "roles": [
+        "ADMIN o DISPATCHER registran y dan seguimiento. Solo ADMIN verifica o descarta. ownerName identifica al responsable humano declarado; no constituye una asignación automática a una cuenta ni una regla de acceso por propietario (BusinessOperationsController.java:34-48; BusinessOperationsService.java:105-130)."
+      ],
+      "processes": [
+        "P05",
+        "P09"
+      ],
+      "source": "Guía del 26/10/2026 para Grupo MICOTRANS. Explicar cómo convertir una desviación revisada por las personas en una acción con causa, responsable, fecha, indicador, medición y verificación autorizada. Los valores son declarados para esa acción; el estado VERIFIED no demuestra causalidad ni reducción real de costos o demoras. Las evidencias técnicas.",
+      "actions": [
+        "Crear acción con título, causa, responsable humano, compromiso e indicador; base/meta opcionales sustentadas.",
+        "Registrar nota de seguimiento y pasar a IN_PROGRESS; ADMIN verifica con resultado observado o descarta.",
+        "Abrir el mismo ID desde Acciones P05 de BI; explicar diferencia entre valores declarados y resultados operativos."
+      ],
+      "states": [
+        "Modal Nueva acción: causa/título/responsable/plazo/indicador/base/meta. Seguimiento: nota/resultado.",
+        "IN_PROGRESS → VERIFIED requiere ADMIN y valor observado; VERIFIED/DISCARDED quedan consulta. No atribuir causalidad automática."
+      ],
+      "flow": [
+        "ImprovementActions → useQuery/improvementService → GET/POST /improvement-actions, PATCH /{id} → BusinessOperationsController → BusinessOperationsService.createAction/updateAction.",
+        "R2dbcBusinessOperationsAdapter → improvement_actions/auditoría; base/meta declaradas son de la acción, diferentes de KPI operativos."
+      ],
+      "sources": [
+        {
+          "file": "web-admin/src/components/ImprovementActions.tsx",
+          "symbol": "export function ImprovementActions",
+          "line": 58
+        },
+        {
+          "file": "web-admin/src/services/improvementService.ts",
+          "symbol": "export async function createImprovement(request: ImprovementRequest) { return (await api.post<ImprovementAction>('/improvement-actions', request)).data; }",
+          "line": 6
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessOperationsController.java",
+          "symbol": "class BusinessOperationsController",
+          "line": 14
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+          "symbol": "class BusinessOperationsService",
+          "line": 21
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessOperationsAdapter.java",
+          "symbol": "class R2dbcBusinessOperationsAdapter",
+          "line": 16
+        },
+        {
+          "file": "web-admin/src/components/ImprovementActions.tsx",
+          "symbol": "function ActionForm",
+          "line": 12
+        },
+        {
+          "file": "web-admin/src/components/ImprovementActions.tsx",
+          "symbol": "function ActionUpdate",
+          "line": 35
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P05_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P09_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessOperationsController.java",
+          "symbol": "@GetMapping(\"/incidents\")",
+          "line": 17
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessOperationsController.java",
+          "symbol": "@PostMapping(\"/incidents\")",
+          "line": 22
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessOperationsController.java",
+          "symbol": "@PatchMapping(\"/incidents/{id}/resolution\")",
+          "line": 27
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessOperationsController.java",
+          "symbol": "@GetMapping(\"/improvement-actions\")",
+          "line": 34
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessOperationsController.java",
+          "symbol": "@PostMapping(\"/improvement-actions\")",
+          "line": 37
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessOperationsController.java",
+          "symbol": "@PatchMapping(\"/improvement-actions/{id}\")",
+          "line": 42
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+          "symbol": "public Flux<Incident> incidents() { return operations.incidents(); }",
+          "line": 27
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+          "symbol": "public Mono<Incident> incident(Long id) {",
+          "line": 28
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+          "symbol": "public Mono<Incident> report(Incident i,String actor) {",
+          "line": 32
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+          "symbol": "public Mono<Incident> resolve(Long id,String outcome,String reason,Long nextRoute,String actor,boolean manager) {",
+          "line": 48
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+          "symbol": "public Flux<Improvement> improvements() { return operations.improvements(); }",
+          "line": 103
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+          "symbol": "public Mono<Improvement> createAction(Improvement i,String actor) {",
+          "line": 105
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessOperationsService.java",
+          "symbol": "public Mono<Improvement> updateAction(Long id,String status,Double result,String note,String actor,boolean manager) {",
+          "line": 116
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessOperationsAdapter.java",
+          "symbol": "public Flux<Incident> incidents() {",
+          "line": 34
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessOperationsAdapter.java",
+          "symbol": "public Mono<Incident> incident(Long id,boolean lock) {",
+          "line": 37
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessOperationsAdapter.java",
+          "symbol": "public Mono<Incident> createIncident(Incident i) {",
+          "line": 40
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessOperationsAdapter.java",
+          "symbol": "public Mono<Incident> resolve(Long id,String outcome,String reason,String actor,Long nextRouteId,Long retryOrderId) {",
+          "line": 50
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessOperationsAdapter.java",
+          "symbol": "public Mono<Void> linkAttempt(Long originalId,Long retryId,Long incidentId) {",
+          "line": 58
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessOperationsAdapter.java",
+          "symbol": "public Flux<Improvement> improvements() {",
+          "line": 62
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessOperationsAdapter.java",
+          "symbol": "public Mono<Improvement> improvement(Long id,boolean lock) {",
+          "line": 65
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessOperationsAdapter.java",
+          "symbol": "public Mono<Improvement> createImprovement(Improvement i) {",
+          "line": 68
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessOperationsAdapter.java",
+          "symbol": "public Mono<Improvement> updateImprovement(Long id,String status,Double result,String note,String verifier) {",
+          "line": 77
+        },
+        {
+          "file": "web-admin/src/App.tsx",
+          "symbol": "path=\"/improvement-actions\"",
+          "line": 64
+        }
+      ],
+      "expectedEvidence": [
+        "Capturas NUEVAS pendientes: pantalla completa, formulario o detalle abierto, resultado persistido y alternativa relevante. Correlacionar ID, tracking, fecha, rol y vínculo con la siguiente pantalla.",
+        "Conservar título, sesión e identificadores ficticios; añadir tomas inferiores cuando el contenido exceda la ventana. Si una negativa no puede prepararse, documentarla como esperada y no observada. La lectura del código no acredita ejecución actual ni éxito de una operación remota."
+      ],
+      "wordCount": 207
+    },
+    {
+      "id": "W07",
+      "title": "Dashboard web: panel de control logístico",
+      "route": "/dashboard",
+      "roles": [
+        "Administrador del sistema, como soporte a la jefatura logística de Grupo MICOTRANS. El rol técnico exigido por esta ruta es ADMIN; no basta con representar verbalmente al dispatcher."
+      ],
+      "processes": [
+        "P05",
+        "P07"
+      ],
+      "source": "Guía de exposición revisada el 26/10/2026. Explicar cómo EcoRoute transforma los registros de reparto de Grupo MICOTRANS en cuatro perspectivas comparables: estados, puntualidad evaluable, entregas por conductor y pedidos por distrito. La captura y el resultado local conservados corresponden al 22/10/2026 en Lima; esta preparación documental no ejecutó pruebas nuevas.",
+      "actions": [
+        "Aplicar conductor y fechas inclusivas válidas; presentar población, estados y puntualidad evaluable.",
+        "Mostrar gráficas por conductor/distrito y tarjetas operativas; contrastar pedido del flujo.",
+        "Reintentar fuente fallida y trasladar desvíos a BI con el mismo rango, sin confundir paradas terminales con entregas exitosas."
+      ],
+      "states": [
+        "Un rango invertido impide las cuatro solicitudes analíticas; el backend también valida filtros mediante AnalyticsFilter. No demostrarlo ejecutando una petición inválida como si…",
+        "Un error de una fuente se muestra con SourceState y reintento propio; no borra por diseño las otras fuentes. No interpretar un gráfico…"
+      ],
+      "flow": [
+        "El cambio de filtros actualiza useState y genera una query común; si el rango es inválido, las cuatro URL analíticas se vuelven null. Dashboard.tsx:13-19.",
+        "useQuery ejecuta GET con Axios, conserva datos/error por clave y cancela la petición anterior mediante AbortController al cambiar dependencias. useQuery.ts:6-24.",
+        "Axios utiliza baseURL /api y agrega el token de la sesión; el controlador recibe AnalyticsFilter y delega en DashboardService. api.ts:5-19; DashboardController.java:17-34."
+      ],
+      "sources": [
+        {
+          "file": "web-admin/src/pages/Dashboard.tsx",
+          "symbol": "export default function Dashboard",
+          "line": 12
+        },
+        {
+          "file": "web-admin/src/hooks/useQuery.ts",
+          "symbol": "export function useQuery",
+          "line": 6
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DashboardController.java",
+          "symbol": "class DashboardController",
+          "line": 14
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "class DashboardService",
+          "line": 17
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "class R2dbcAnalyticsAdapter",
+          "line": 19
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P05_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P07_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DashboardController.java",
+          "symbol": "@GetMapping(\"/orders-by-status\")",
+          "line": 17
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DashboardController.java",
+          "symbol": "@GetMapping(\"/delivery-performance\")",
+          "line": 22
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DashboardController.java",
+          "symbol": "@GetMapping(\"/deliveries-by-driver\")",
+          "line": 27
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DashboardController.java",
+          "symbol": "@GetMapping(\"/orders-by-district\")",
+          "line": 32
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Flux<StatusCount> getOrderStats(Long driverId, LocalDate start, LocalDate end) {",
+          "line": 21
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Mono<DeliveryPerformance> getDeliveryPerformance(AnalyticsFilter filter) {",
+          "line": 24
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Flux<NameCount> getDeliveriesByDriver(AnalyticsFilter filter) {",
+          "line": 27
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Flux<NameCount> getOrdersByDistrict(AnalyticsFilter filter) { return analytics.byDistrict(filter); }",
+          "line": 30
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Flux<RouteEfficiency> getRouteEfficiency(AnalyticsFilter filter) { return analytics.efficiency(filter); }",
+          "line": 31
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Mono<OrderSummary> getSummary(AnalyticsFilter filter) {",
+          "line": 32
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Mono<Goal> getGoal(String code) {",
+          "line": 36
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Mono<Goal> saveGoal(String code, BigDecimal target, String actor) {",
+          "line": 40
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Mono<BiReport> getBi(AnalyticsFilter filter) {",
+          "line": 48
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Flux<StatusCount> ordersByStatus(AnalyticsFilter f) {",
+          "line": 66
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Mono<Totals> totals(AnalyticsFilter f) {",
+          "line": 71
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Flux<DailyTotals> daily(AnalyticsFilter f) {",
+          "line": 76
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Flux<DriverCount> byDriver(AnalyticsFilter f) {",
+          "line": 82
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Flux<NameCount> byDistrict(AnalyticsFilter f) {",
+          "line": 92
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Flux<Cause> causes(AnalyticsFilter f) {",
+          "line": 98
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Flux<RouteEfficiency> efficiency(AnalyticsFilter f) {",
+          "line": 118
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Flux<Goal> goals() {",
+          "line": 149
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Mono<Goal> saveGoal(Indicator code, BigDecimal target, String actor) {",
+          "line": 153
+        },
+        {
+          "file": "web-admin/src/App.tsx",
+          "symbol": "path=\"/dashboard\"",
+          "line": 69
+        }
+      ],
+      "expectedEvidence": [
+        "Capturas NUEVAS pendientes: pantalla completa, formulario o detalle abierto, resultado persistido y alternativa relevante. Correlacionar ID, tracking, fecha, rol y vínculo con la siguiente pantalla."
+      ],
+      "wordCount": 228
+    },
+    {
+      "id": "W08",
+      "title": "Conductores",
+      "route": "/drivers",
+      "roles": [
+        "ADMIN"
+      ],
+      "processes": [
+        "P06",
+        "P02",
+        "P08"
+      ],
+      "source": "Catálogo que habilita recursos P06. Registra nombres, apellido, licencia, correo, teléfono y actividad. El BPMN exige documentación, aptitud y disponibilidad; el formulario conserva información declarada, sin inspección física automática. Un recurso activo puede estar ocupado en otra ruta y despacho vuelve a validar fecha. Editar conductor no concede acceso: Usuarios vincula subject y rol DRIVER.",
+      "actions": [
+        "Buscar por nombre o licencia y recorrer páginas de diez; abrir alta ficticia.",
+        "Editar el mismo ID/actividad, recargar y comprobar resultado.",
+        "Mostrar recurso en Nueva ruta; explicar activo frente a disponible."
+      ],
+      "states": [
+        "Carga/error con reintento, búsqueda vacía, páginas y modal alta/edición.",
+        "Confirmación nativa al eliminar; duplicidad, relación con rutas o integridad pueden impedir operación. No asegurar borrado antes de respuesta."
+      ],
+      "flow": [
+        "Drivers.fetchDrivers/handleSubmit → driverService → GET/POST /api/drivers y PUT/DELETE /{id}.",
+        "DriverController → DriverUseCasesImpl → R2dbcDriverRepository/Spring Data → drivers. Respuesta recarga listado; planificación aplica otra validación de recursos."
+      ],
+      "sources": [
+        {
+          "file": "web-admin/src/pages/Drivers.tsx",
+          "symbol": "const Drivers",
+          "line": 9
+        },
+        {
+          "file": "web-admin/src/services/driverService.ts",
+          "symbol": "export const getAllDrivers = async (): Promise<Driver[]> => {",
+          "line": 15
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DriverController.java",
+          "symbol": "class DriverController",
+          "line": 17
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/DriverUseCasesImpl.java",
+          "symbol": "class DriverUseCasesImpl",
+          "line": 14
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcDriverRepository.java",
+          "symbol": "class R2dbcDriverRepository",
+          "line": 10
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P06_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P02_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P08_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DriverController.java",
+          "symbol": "@PostMapping",
+          "line": 26
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DriverController.java",
+          "symbol": "@GetMapping(\"/{id}\")",
+          "line": 43
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DriverController.java",
+          "symbol": "@GetMapping",
+          "line": 50
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DriverController.java",
+          "symbol": "@PutMapping(\"/{id}\")",
+          "line": 56
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DriverController.java",
+          "symbol": "@DeleteMapping(\"/{id}\")",
+          "line": 73
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/DriverUseCasesImpl.java",
+          "symbol": "public Mono<Driver> createDriver(Driver driver) {",
+          "line": 21
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/DriverUseCasesImpl.java",
+          "symbol": "public Mono<Driver> getDriverById(Long id) {",
+          "line": 26
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/DriverUseCasesImpl.java",
+          "symbol": "public Flux<Driver> getAllDrivers() {",
+          "line": 32
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/DriverUseCasesImpl.java",
+          "symbol": "public Mono<Driver> updateDriver(Long id, Driver driver) {",
+          "line": 37
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/DriverUseCasesImpl.java",
+          "symbol": "public Mono<Void> deleteDriver(Long id) {",
+          "line": 58
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcDriverRepository.java",
+          "symbol": "public Mono<Driver> save(Driver driver) {",
+          "line": 19
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcDriverRepository.java",
+          "symbol": "public Flux<Driver> findAll() {",
+          "line": 26
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcDriverRepository.java",
+          "symbol": "public Mono<Driver> findById(Long id) {",
+          "line": 32
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcDriverRepository.java",
+          "symbol": "public Mono<Void> deleteById(Long id) {",
+          "line": 38
+        },
+        {
+          "file": "web-admin/src/App.tsx",
+          "symbol": "path=\"/drivers\"",
+          "line": 70
+        }
+      ],
+      "expectedEvidence": [
+        "Capturas nuevas esperadas: catálogo, formulario completo, edición/actividad y selección en despacho. Solo ensayar borrado sobre un registro prescindible; conservar IDs y explicar aptitud documental como revisión humana.",
+        "Conservar título, sesión e identificadores ficticios; añadir tomas inferiores cuando el contenido exceda la ventana. Si una negativa no puede prepararse, documentarla como esperada y no observada. La lectura del código no acredita ejecución actual ni éxito de una operación remota."
+      ],
+      "wordCount": 208
+    },
+    {
+      "id": "W09",
+      "title": "Vehículos",
+      "route": "/vehicles",
+      "roles": [
+        "ADMIN"
+      ],
+      "processes": [
+        "P06",
+        "P02",
+        "P09"
+      ],
+      "source": "Catálogo que habilita recursos P06. Registra placa, marca, modelo, capacidad kg/m³ y actividad. El BPMN exige documentación, aptitud y disponibilidad; el formulario conserva información declarada, sin inspección física automática. Un recurso activo puede estar ocupado en otra ruta y despacho vuelve a validar fecha. La capacidad se contrasta con carga al aprobar; una compra no crea automáticamente el vehículo.",
+      "actions": [
+        "Buscar por placa o modelo y recorrer páginas de diez; abrir alta ficticia.",
+        "Editar el mismo ID/actividad, recargar y comprobar resultado.",
+        "Mostrar recurso en Nueva ruta; explicar activo frente a disponible."
+      ],
+      "states": [
+        "Carga/error con reintento, búsqueda vacía, páginas y modal alta/edición.",
+        "Confirmación nativa al eliminar; duplicidad, relación con rutas o integridad pueden impedir operación. No asegurar borrado antes de respuesta."
+      ],
+      "flow": [
+        "Vehicles.fetchVehicles/handleSubmit → vehicleService → GET/POST /api/vehicles y PUT/DELETE /{id}.",
+        "VehicleController → VehicleUseCasesImpl → R2dbcVehicleRepository/Spring Data → vehicles. Respuesta recarga listado; planificación aplica otra validación de recursos."
+      ],
+      "sources": [
+        {
+          "file": "web-admin/src/pages/Vehicles.tsx",
+          "symbol": "const Vehicles",
+          "line": 9
+        },
+        {
+          "file": "web-admin/src/services/vehicleService.ts",
+          "symbol": "export const getAllVehicles = async (): Promise<Vehicle[]> => {",
+          "line": 14
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/VehicleController.java",
+          "symbol": "class VehicleController",
+          "line": 16
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/VehicleUseCasesImpl.java",
+          "symbol": "class VehicleUseCasesImpl",
+          "line": 14
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcVehicleRepository.java",
+          "symbol": "class R2dbcVehicleRepository",
+          "line": 10
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P06_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P02_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P09_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/VehicleController.java",
+          "symbol": "@PostMapping",
+          "line": 25
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/VehicleController.java",
+          "symbol": "@GetMapping(\"/{id}\")",
+          "line": 40
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/VehicleController.java",
+          "symbol": "@GetMapping",
+          "line": 45
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/VehicleController.java",
+          "symbol": "@PutMapping(\"/{id}\")",
+          "line": 51
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/VehicleController.java",
+          "symbol": "@DeleteMapping(\"/{id}\")",
+          "line": 66
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/VehicleUseCasesImpl.java",
+          "symbol": "public Mono<Vehicle> createVehicle(Vehicle vehicle) {",
+          "line": 21
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/VehicleUseCasesImpl.java",
+          "symbol": "public Mono<Vehicle> getVehicleById(Long id) {",
+          "line": 26
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/VehicleUseCasesImpl.java",
+          "symbol": "public Flux<Vehicle> getAllVehicles() {",
+          "line": 32
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/VehicleUseCasesImpl.java",
+          "symbol": "public Mono<Vehicle> updateVehicle(Long id, Vehicle vehicle) {",
+          "line": 37
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/VehicleUseCasesImpl.java",
+          "symbol": "public Mono<Void> deleteVehicle(Long id) {",
+          "line": 56
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcVehicleRepository.java",
+          "symbol": "public Mono<Vehicle> save(Vehicle vehicle) {",
+          "line": 19
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcVehicleRepository.java",
+          "symbol": "public Flux<Vehicle> findAll() {",
+          "line": 26
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcVehicleRepository.java",
+          "symbol": "public Mono<Vehicle> findById(Long id) {",
+          "line": 32
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcVehicleRepository.java",
+          "symbol": "public Mono<Void> deleteById(Long id) {",
+          "line": 38
+        },
+        {
+          "file": "web-admin/src/App.tsx",
+          "symbol": "path=\"/vehicles\"",
+          "line": 71
+        }
+      ],
+      "expectedEvidence": [
+        "Capturas nuevas esperadas: catálogo, formulario completo, edición/actividad y selección en despacho. Solo ensayar borrado sobre un registro prescindible; conservar IDs y explicar aptitud documental como revisión humana.",
+        "Conservar título, sesión e identificadores ficticios; añadir tomas inferiores cuando el contenido exceda la ventana. Si una negativa no puede prepararse, documentarla como esperada y no observada. La lectura del código no acredita ejecución actual ni éxito de una operación remota."
+      ],
+      "wordCount": 212
+    },
+    {
+      "id": "W10",
+      "title": "Usuarios e identidades",
+      "route": "/users",
+      "roles": [
+        "ADMIN"
+      ],
+      "processes": [
+        "P08",
+        "P06"
+      ],
+      "source": "Gestiona roles efectivos y vínculo de conductor. Keycloak consulta identidades existentes, edita ADMIN/DISPATCHER/DRIVER, vincula conductor activo y habilita/deshabilita. No ofrece alta de cuentas nuevas. El backend valida asociación y revoca sesiones afectadas. Registro local anterior queda para migración, sin permisos efectivos; sus escrituras antiguas responden 410. Autorizar solicitud y elegir rol mínimo son decisiones humanas P08 previas al formulario.",
+      "actions": [
+        "Buscar usuario/subject y abrir editor; mostrar conductor requerido para DRIVER.",
+        "Guardar sobre cuenta de ensayo y presentar nueva sesión; comprobar permiso efectivo.",
+        "Mostrar confirmación de baja y pestaña anterior; señalar protección del ADMIN propio."
+      ],
+      "states": [
+        "KEYCLOAK/LEGACY; IdentityEditor; confirmación enabled; busy/error.",
+        "Vínculo duplicado, conductor inactivo o privilegios propios inválidos: corregir según servidor. Legacy no equivale a acceso."
+      ],
+      "flow": [
+        "Users → useQuery/userService → GET /api/users/identities, PUT /{id}/roles o /enabled.",
+        "IdentityController → KeycloakAdministration.roles/enabled → API administrativa Keycloak; vínculo drivers, revocación Redis y business_audit_events.",
+        "GET /users → UserController → SpringDataUserRoleRepository → auth_user_role histórico."
+      ],
+      "sources": [
+        {
+          "file": "web-admin/src/pages/Users.tsx",
+          "symbol": "export default function Users",
+          "line": 31
+        },
+        {
+          "file": "web-admin/src/pages/Users.tsx",
+          "symbol": "function IdentityEditor",
+          "line": 11
+        },
+        {
+          "file": "web-admin/src/services/userService.ts",
+          "symbol": "export const getAllUsers = async (): Promise<UserRole[]> => {",
+          "line": 9
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/IdentityController.java",
+          "symbol": "class IdentityController",
+          "line": 11
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/security/KeycloakAdministration.java",
+          "symbol": "class KeycloakAdministration",
+          "line": 27
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/UserController.java",
+          "symbol": "class UserController",
+          "line": 13
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/SpringDataUserRoleRepository.java",
+          "symbol": "interface SpringDataUserRoleRepository",
+          "line": 8
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P08_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P06_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/IdentityController.java",
+          "symbol": "@GetMapping public Flux<Map<String,Object>> list() { return identity.identities(); }",
+          "line": 14
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/IdentityController.java",
+          "symbol": "@PutMapping(\"/{id}/roles\") public Mono<Void> roles(@PathVariable String id,@RequestBody RolesRequest request) {",
+          "line": 15
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/IdentityController.java",
+          "symbol": "@PutMapping(\"/{id}/enabled\") public Mono<Void> enabled(@PathVariable String id,@RequestBody EnabledRequest request) {",
+          "line": 18
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/UserController.java",
+          "symbol": "@GetMapping",
+          "line": 17
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/UserController.java",
+          "symbol": "@PostMapping",
+          "line": 22
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/UserController.java",
+          "symbol": "@DeleteMapping(\"/{id}\")",
+          "line": 27
+        },
+        {
+          "file": "web-admin/src/App.tsx",
+          "symbol": "path=\"/users\"",
+          "line": 72
+        }
+      ],
+      "expectedEvidence": [
+        "Capturas nuevas esperadas: identidades, editor/vínculo, mensaje de nueva sesión y legacy rotulado. Conservar rol/subject ficticios, sin deshabilitar al expositor ni mostrar credenciales; comprobar autorización con la cuenta afectada.",
+        "Conservar título, sesión e identificadores ficticios; añadir tomas inferiores cuando el contenido exceda la ventana. Si una negativa no puede prepararse, documentarla como esperada y no observada. La lectura del código no acredita ejecución actual ni éxito de una operación remota."
+      ],
+      "wordCount": 215
+    },
+    {
+      "id": "W11",
+      "title": "Compras operativas",
+      "route": "/purchases",
+      "roles": [
+        "ADMIN"
+      ],
+      "processes": [
+        "P09",
+        "P06",
+        "P05"
+      ],
+      "source": "Registra compras para recursos y mejoras: descripción, proveedor, importe, estado, categoría y notas. P09 evalúa existencia, presupuesto, proveedor, autorización y recepción conforme: decisiones humanas, sin motor automático de aprobación en este CRUD. Cambiar estado no prueba pago ni recepción física. Recurso existente puede cubrir necesidad sin compra; recepción observada exige reclamo/devolución. No hay adjuntador de comprobante evidenciado en este formulario.",
+      "actions": [
+        "Mostrar búsqueda/paginación y Nueva compra con importe válido.",
+        "Editar mismo ID, estado/notas sustentados y recargar listado.",
+        "Relacionar necesidad con recurso/mejora sin inventar vínculo automático; confirmar borrado solo de compra prescindible."
+      ],
+      "states": [
+        "Carga/error con reintento; lista vacía/filtrada; modales separados alta/edición.",
+        "Confirmación nativa de borrado, importe inválido y mensaje servidor; no existe pantalla de autorización de gasto."
+      ],
+      "flow": [
+        "Purchases.fetchData/handleCreateSubmit/handleEditSubmit → purchaseService → GET/POST /api/purchases, PUT/DELETE /{id}.",
+        "PurchaseController → PurchaseUseCasesImpl → R2dbcPurchaseRepository/SpringDataPurchaseRepository → purchases. Respuesta recarga catálogo; compra→recurso/acción es narrativa si falta relación persistida."
+      ],
+      "sources": [
+        {
+          "file": "web-admin/src/pages/Purchases.tsx",
+          "symbol": "const Purchases",
+          "line": 9
+        },
+        {
+          "file": "web-admin/src/services/purchaseService.ts",
+          "symbol": "export const getAllPurchases = async (): Promise<Purchase[]> => {",
+          "line": 15
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/PurchaseController.java",
+          "symbol": "class PurchaseController",
+          "line": 18
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/PurchaseUseCasesImpl.java",
+          "symbol": "class PurchaseUseCasesImpl",
+          "line": 18
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcPurchaseRepository.java",
+          "symbol": "class R2dbcPurchaseRepository",
+          "line": 10
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P09_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P06_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P05_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/PurchaseController.java",
+          "symbol": "@PostMapping",
+          "line": 25
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/PurchaseController.java",
+          "symbol": "@GetMapping",
+          "line": 41
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/PurchaseController.java",
+          "symbol": "@PutMapping(\"/{id}\")",
+          "line": 46
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/PurchaseController.java",
+          "symbol": "@DeleteMapping(\"/{id}\")",
+          "line": 62
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/PurchaseUseCasesImpl.java",
+          "symbol": "public Mono<Purchase> createPurchase(Purchase purchase) {",
+          "line": 23
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/PurchaseUseCasesImpl.java",
+          "symbol": "public Flux<Purchase> getAllPurchases() {",
+          "line": 28
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/PurchaseUseCasesImpl.java",
+          "symbol": "public Mono<Purchase> updatePurchase(Long id, Purchase purchase) {",
+          "line": 33
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/PurchaseUseCasesImpl.java",
+          "symbol": "public Mono<Void> deletePurchase(Long id) {",
+          "line": 52
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcPurchaseRepository.java",
+          "symbol": "public Mono<Purchase> save(Purchase purchase) {",
+          "line": 19
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcPurchaseRepository.java",
+          "symbol": "public Flux<Purchase> findAll() {",
+          "line": 26
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcPurchaseRepository.java",
+          "symbol": "public Mono<Purchase> findById(Long id) {",
+          "line": 32
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcPurchaseRepository.java",
+          "symbol": "public Mono<Void> deleteById(Long id) {",
+          "line": 38
+        },
+        {
+          "file": "web-admin/src/App.tsx",
+          "symbol": "path=\"/purchases\"",
+          "line": 73
+        }
+      ],
+      "expectedEvidence": [
+        "Capturas nuevas esperadas: lista, alta/edición completas con importe/estado/notas. Explicar revisión humana presupuestaria y recepción; estado no equivale a comprobante de pago. Mantener un registro ficticio trazable y comprobar respuesta antes de anunciar éxito.",
+        "Conservar título, sesión e identificadores ficticios; añadir tomas inferiores cuando el contenido exceda la ventana. Si una negativa no puede prepararse, documentarla como esperada y no observada. La lectura del código no acredita ejecución actual ni éxito de una operación remota."
+      ],
+      "wordCount": 213
+    },
+    {
+      "id": "W12",
+      "title": "Reportes operativos",
+      "route": "/reports",
+      "roles": [
+        "ADMIN"
+      ],
+      "processes": [
+        "P05",
+        "P07"
+      ],
+      "source": "Consolida resumen, entregas por conductor y eficiencia. Usa fechas inclusivas America/Lima y conductor. Las tres fuentes cargan/fallan independientemente: sección visible no acredita todas. Puntualidad exige POD y fin de ventana. Eficiencia distingue plan de GPS evaluable y duración operacional de servicio en domicilio. Contrasta Dashboard/BI conservando población e IDs. No incorpora edición ni aprobación de informes.",
+      "actions": [
+        "Aplicar mismo conductor/rango de Dashboard/BI; leer población de puntualidad.",
+        "Mostrar gráficas y tabla inferior con todas las columnas.",
+        "Reintentar fuente fallida y trasladar desvíos al análisis P05."
+      ],
+      "states": [
+        "Summary/performance/efficiency independientes; rango inválido sin consulta; vacío y error parcial.",
+        "GPS no evaluable es nulo; ausencia no equivale a cero ni plan a observación. Cierre terminal no implica éxito total."
+      ],
+      "flow": [
+        "Reports → useQuery → GET /api/reports/orders-summary, /driver-performance y /route-efficiency con filterQuery.",
+        "ReportController → DashboardService → AnalyticsQueryPort → R2dbcAnalyticsAdapter → orders/routes/delivery_proofs/telemetría, sin alterar estados.",
+        "EfficiencyTable presenta calidad GPS y métricas; no convierte fallos/devoluciones en entregas."
+      ],
+      "sources": [
+        {
+          "file": "web-admin/src/pages/Reports.tsx",
+          "symbol": "export default function Reports",
+          "line": 11
+        },
+        {
+          "file": "web-admin/src/hooks/useQuery.ts",
+          "symbol": "export function useQuery",
+          "line": 6
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/ReportController.java",
+          "symbol": "class ReportController",
+          "line": 18
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "class DashboardService",
+          "line": 17
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "class R2dbcAnalyticsAdapter",
+          "line": 19
+        },
+        {
+          "file": "web-admin/src/components/EfficiencyTable.tsx",
+          "symbol": "export function EfficiencyTable",
+          "line": 4
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P05_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P07_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/ReportController.java",
+          "symbol": "@GetMapping(\"/orders-summary\")",
+          "line": 21
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/ReportController.java",
+          "symbol": "@GetMapping(\"/driver-performance\")",
+          "line": 26
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/ReportController.java",
+          "symbol": "@GetMapping(\"/route-efficiency\")",
+          "line": 31
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/ReportController.java",
+          "symbol": "@GetMapping(\"/bi\")",
+          "line": 36
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/ReportController.java",
+          "symbol": "@GetMapping(\"/goals/{code}\")",
+          "line": 41
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/ReportController.java",
+          "symbol": "@PutMapping(\"/goals/{code}\")",
+          "line": 46
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Flux<StatusCount> getOrderStats(Long driverId, LocalDate start, LocalDate end) {",
+          "line": 21
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Mono<DeliveryPerformance> getDeliveryPerformance(AnalyticsFilter filter) {",
+          "line": 24
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Flux<NameCount> getDeliveriesByDriver(AnalyticsFilter filter) {",
+          "line": 27
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Flux<NameCount> getOrdersByDistrict(AnalyticsFilter filter) { return analytics.byDistrict(filter); }",
+          "line": 30
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Flux<RouteEfficiency> getRouteEfficiency(AnalyticsFilter filter) { return analytics.efficiency(filter); }",
+          "line": 31
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Mono<OrderSummary> getSummary(AnalyticsFilter filter) {",
+          "line": 32
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Mono<Goal> getGoal(String code) {",
+          "line": 36
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Mono<Goal> saveGoal(String code, BigDecimal target, String actor) {",
+          "line": 40
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Mono<BiReport> getBi(AnalyticsFilter filter) {",
+          "line": 48
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Flux<StatusCount> ordersByStatus(AnalyticsFilter f) {",
+          "line": 66
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Mono<Totals> totals(AnalyticsFilter f) {",
+          "line": 71
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Flux<DailyTotals> daily(AnalyticsFilter f) {",
+          "line": 76
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Flux<DriverCount> byDriver(AnalyticsFilter f) {",
+          "line": 82
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Flux<NameCount> byDistrict(AnalyticsFilter f) {",
+          "line": 92
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Flux<Cause> causes(AnalyticsFilter f) {",
+          "line": 98
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Flux<RouteEfficiency> efficiency(AnalyticsFilter f) {",
+          "line": 118
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Flux<Goal> goals() {",
+          "line": 149
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Mono<Goal> saveGoal(Indicator code, BigDecimal target, String actor) {",
+          "line": 153
+        },
+        {
+          "file": "web-admin/src/App.tsx",
+          "symbol": "path=\"/reports\"",
+          "line": 74
+        }
+      ],
+      "expectedEvidence": [
+        "Capturas nuevas esperadas: filtros, resumen, gráficas y tabla inferior sin recortes; contrastar cifras del flujo actual, conservar población y cabecera. Si una fuente falla, capturar mensaje y resultado de reintento antes de presentar el reporte como completo.",
+        "Conservar título, sesión e identificadores ficticios; añadir tomas inferiores cuando el contenido exceda la ventana. Si una negativa no puede prepararse, documentarla como esperada y no observada. La lectura del código no acredita ejecución actual ni éxito de una operación remota."
+      ],
+      "wordCount": 225
+    },
+    {
+      "id": "W13",
+      "title": "Inteligencia de negocio",
+      "route": "/bi",
+      "roles": [
+        "Administrador como soporte de la jefatura logística de Grupo MICOTRANS. La pantalla global requiere ADMIN; no equivale a una aprobación empresarial de los indicadores."
+      ],
+      "processes": [
+        "P05",
+        "P06",
+        "P07"
+      ],
+      "source": "Guía del 26/10/2026 para explicar fórmulas, alcance de filtros, ausencia de datos y calidad de distancia. La aplicación entrega BI propia mediante /reports/bi; no se presenta como Power BI conectado. El corte ilustrativo del 22/10/2026 conserva IID=4/4, CHR=2/4, TDE=2/4, SUCCESS=2/4 y ONTIME=2/2. Son datos de comprobación local, no resultados comerciales.",
+      "actions": [
+        "Aplicar conductor/rango y recorrer las siete vistas con gráficas/tablas completas.",
+        "Metas: guardar valor 0–100 o vacío, comprobar actor/fecha y recarga de indicadores.",
+        "Exportar CSV de indicadores/tendencias y abrir Acciones P05 para vincular causa, responsable y medición."
+      ],
+      "states": [
+        "Siete vistas: Tendencias, Causas, Cumplimiento, Calidad de datos, Eficiencia, Metas y Acciones P05.",
+        "NO_DATA/NO_TARGET/MET/BELOW_TARGET; GPS nulo no es cero ni plan; causas son eventos; RUC opcional ausente afecta IID; POD metadata no prueba imágenes remotas."
+      ],
+      "flow": [
+        "BusinessIntelligence → useQuery → GET /reports/bi → ReportController → DashboardService.getBi → R2dbcAnalyticsAdapter → agregados operativos.",
+        "GoalEditor → reportService.saveGoal → PUT /reports/goals/{code} → DashboardService.saveGoal → R2dbcAnalyticsAdapter.saveGoal → analytics_goals e historial con actor.",
+        "Acciones P05 reutiliza ImprovementActions; biCsv exporta reporte recibido, tendencias comparan meta vigente."
+      ],
+      "sources": [
+        {
+          "file": "web-admin/src/pages/BusinessIntelligence.tsx",
+          "symbol": "export default function BusinessIntelligence",
+          "line": 76
+        },
+        {
+          "file": "web-admin/src/services/reportService.ts",
+          "symbol": "export const emptyFilters: ReportFilters = { driverId: '', startDate: '', endDate: '' };",
+          "line": 7
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/ReportController.java",
+          "symbol": "class ReportController",
+          "line": 18
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "class DashboardService",
+          "line": 17
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "class R2dbcAnalyticsAdapter",
+          "line": 19
+        },
+        {
+          "file": "web-admin/src/pages/BusinessIntelligence.tsx",
+          "symbol": "function GoalEditor",
+          "line": 18
+        },
+        {
+          "file": "web-admin/src/pages/BusinessIntelligence.tsx",
+          "symbol": "function BiCharts",
+          "line": 36
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P05_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P06_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P07_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/ReportController.java",
+          "symbol": "@GetMapping(\"/orders-summary\")",
+          "line": 21
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/ReportController.java",
+          "symbol": "@GetMapping(\"/driver-performance\")",
+          "line": 26
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/ReportController.java",
+          "symbol": "@GetMapping(\"/route-efficiency\")",
+          "line": 31
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/ReportController.java",
+          "symbol": "@GetMapping(\"/bi\")",
+          "line": 36
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/ReportController.java",
+          "symbol": "@GetMapping(\"/goals/{code}\")",
+          "line": 41
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/ReportController.java",
+          "symbol": "@PutMapping(\"/goals/{code}\")",
+          "line": 46
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Flux<StatusCount> getOrderStats(Long driverId, LocalDate start, LocalDate end) {",
+          "line": 21
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Mono<DeliveryPerformance> getDeliveryPerformance(AnalyticsFilter filter) {",
+          "line": 24
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Flux<NameCount> getDeliveriesByDriver(AnalyticsFilter filter) {",
+          "line": 27
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Flux<NameCount> getOrdersByDistrict(AnalyticsFilter filter) { return analytics.byDistrict(filter); }",
+          "line": 30
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Flux<RouteEfficiency> getRouteEfficiency(AnalyticsFilter filter) { return analytics.efficiency(filter); }",
+          "line": 31
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Mono<OrderSummary> getSummary(AnalyticsFilter filter) {",
+          "line": 32
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Mono<Goal> getGoal(String code) {",
+          "line": 36
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Mono<Goal> saveGoal(String code, BigDecimal target, String actor) {",
+          "line": 40
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/DashboardService.java",
+          "symbol": "public Mono<BiReport> getBi(AnalyticsFilter filter) {",
+          "line": 48
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Flux<StatusCount> ordersByStatus(AnalyticsFilter f) {",
+          "line": 66
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Mono<Totals> totals(AnalyticsFilter f) {",
+          "line": 71
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Flux<DailyTotals> daily(AnalyticsFilter f) {",
+          "line": 76
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Flux<DriverCount> byDriver(AnalyticsFilter f) {",
+          "line": 82
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Flux<NameCount> byDistrict(AnalyticsFilter f) {",
+          "line": 92
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Flux<Cause> causes(AnalyticsFilter f) {",
+          "line": 98
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Flux<RouteEfficiency> efficiency(AnalyticsFilter f) {",
+          "line": 118
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Flux<Goal> goals() {",
+          "line": 149
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+          "symbol": "public Mono<Goal> saveGoal(Indicator code, BigDecimal target, String actor) {",
+          "line": 153
+        },
+        {
+          "file": "web-admin/src/App.tsx",
+          "symbol": "path=\"/bi\"",
+          "line": 75
+        }
+      ],
+      "expectedEvidence": [
+        "Capturas NUEVAS pendientes: pantalla completa, formulario o detalle abierto, resultado persistido y alternativa relevante. Correlacionar ID, tracking, fecha, rol y vínculo con la siguiente pantalla.",
+        "Comprobar respuesta del servidor y el mismo identificador al recargar antes de anunciar éxito; conservar contexto del siguiente paso de negocio."
+      ],
+      "wordCount": 210
+    }
+  ],
+  "mobile": [
+    {
+      "id": "M01",
+      "title": "Acceso del conductor",
+      "route": "/login",
+      "roles": [
+        "DRIVER autenticado; login público antes de sesión"
+      ],
+      "processes": [
+        "P08"
+      ],
+      "source": "Entrada Flutter y retorno cuando falta sesión. Despacha LoginRequested, obtiene tokens y consulta /session/me para identidad/vínculo efectivos. Requiere cuenta habilitada y conductor asociado desde Usuarios. El router escucha AuthBloc: autenticado va a Mis rutas; sin sesión vuelve a login. Inicia comprobación P08 antes de aceptar/entregar. Recuperación local no equivale a verificar nuevamente permisos remotos; completar credenciales fuera de captura.",
+      "actions": [
+        "Presentar formulario vacío, autenticar y mostrar Mis rutas con usuario correcto.",
+        "Comprobar ID/vínculo en Perfil; preparar error y reintento.",
+        "Cerrar sesión al final y comprobar retorno a login."
+      ],
+      "states": [
+        "Inicial, carga, Authenticated/error y redirección del router.",
+        "Cuenta sin vínculo/permiso o conectividad fallida no acredita acceso válido.",
+        "Sesión expirada pasa por refresh/interceptor o retorna a login según resultado."
+      ],
+      "flow": [
+        "LoginPage → AuthBloc → LoginUseCase → AuthRepositoryImpl → AuthRemoteDataSourceImpl.login → POST OIDC /token y GET /session/me.",
+        "SessionController → OperationalAccess.driverId → DriverRepository → drivers; proveedor mantiene identidad/sesión, AuthLocalDataSource/LocalCache conservan contexto por cuenta."
+      ],
+      "sources": [
+        {
+          "file": "mobile-app/lib/features/auth/presentation/pages/login_page.dart",
+          "symbol": "class LoginPage",
+          "line": 8
+        },
+        {
+          "file": "mobile-app/lib/features/auth/presentation/bloc/auth_bloc.dart",
+          "symbol": "class AuthBloc",
+          "line": 7
+        },
+        {
+          "file": "mobile-app/lib/features/auth/domain/usecases/login_usecase.dart",
+          "symbol": "class LoginUseCase",
+          "line": 6
+        },
+        {
+          "file": "mobile-app/lib/features/auth/data/repositories/auth_repository_impl.dart",
+          "symbol": "class AuthRepositoryImpl",
+          "line": 12
+        },
+        {
+          "file": "mobile-app/lib/features/auth/data/datasources/auth_remote_data_source.dart",
+          "symbol": "class AuthRemoteDataSourceImpl",
+          "line": 11
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/SessionController.java",
+          "symbol": "class SessionController",
+          "line": 10
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/security/OperationalAccess.java",
+          "symbol": "class OperationalAccess",
+          "line": 20
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P08_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/SessionController.java",
+          "symbol": "@GetMapping(\"/me\")",
+          "line": 12
+        },
+        {
+          "file": "mobile-app/lib/core/router/app_router.dart",
+          "symbol": "path: '/login'",
+          "line": 36
+        }
+      ],
+      "expectedEvidence": [
+        "Capturas nuevas esperadas: formulario sin secretos, error controlado, transición y conductor correcto. No mostrar tokens ni payloads; conservar prueba del destino autorizado y explicar que la consulta de sesión determina vínculo efectivo antes de operar.",
+        "Conservar título, sesión e identificadores ficticios; añadir tomas inferiores cuando el contenido exceda la ventana. Si una negativa no puede prepararse, documentarla como esperada y no observada. La lectura del código no acredita ejecución actual ni éxito de una operación remota."
+      ],
+      "wordCount": 222
+    },
+    {
+      "id": "M02",
+      "title": "Mis rutas y hoja de reparto",
+      "route": "/routes",
+      "roles": [
+        "Conductor de Grupo MICOTRANS SAC con rol DRIVER y cuenta vinculada a un conductor activo. El Dispatcher prepara y despacha; la Jefatura aprueba. El alumno explica esas responsabilidades sin atribuirlas al botón móvil."
+      ],
+      "processes": [
+        "P02",
+        "P03",
+        "P07"
+      ],
+      "source": "Guía de exposición preparada el 26 de octubre de 2026 para el bloque del alumno 2, pantallas 03 y 04 de ocho pantallas distribuidas entre cuatro alumnos. Esta pantalla enlaza la planificación de MICOTRANS con el trabajo del Conductor: identifica su ruta y vehículo, consulta aprobación y aceptación, presenta paradas. Las validaciones de interfaz ayudan al operador; las reglas del servidor deciden si se acepta cada solicitud.",
+      "actions": [
+        "Seleccionar ruta propia PLANNED aprobada; revisar hoja/carga/vehículo y aceptar con confirmación servidor.",
+        "Ceder a web para despacho; actualizar y comprobar ruta IN_PROGRESS y pedidos IN_TRANSIT.",
+        "Mostrar mapa/listado, abrir siguiente parada y regresar desde detalle/perfil/historial/sync conservando selección."
+      ],
+      "states": [
+        "Sin rutas; selección; revisión/aceptación; PLANNED frente IN_PROGRESS; caché explícita; error/reintento; GPS/teselas sin disponibilidad.",
+        "Aceptar no despacha: volver a web. Detalle operativo exige ruta/estado permitidos; regreso desde detalle/perfil/history/sync conserva contexto."
+      ],
+      "flow": [
+        "RoutesPage → RouteBloc/GetDriverRoutes → RouteRepositoryImpl/RouteRemoteDataSourceImpl → GET /routes, GET /{id}/review, POST /{id}/acceptance.",
+        "RouteController/BusinessWorkflowController → BusinessWorkflowService.accept → R2dbcBusinessWorkflowAdapter → route_dispatch_reviews.",
+        "GpsBloc → GPS /ping → GpsController → GpsUseCasesImpl → R2dbcVehicleGpsHistoryRepository → vehicle_gps_history; GET /path devuelve propuesta."
+      ],
+      "sources": [
+        {
+          "file": "mobile-app/lib/features/routes/presentation/pages/routes_page.dart",
+          "symbol": "class RoutesPage",
+          "line": 29
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/RouteController.java",
+          "symbol": "class RouteController",
+          "line": 25
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessWorkflowService.java",
+          "symbol": "class BusinessWorkflowService",
+          "line": 14
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "class R2dbcBusinessWorkflowAdapter",
+          "line": 13
+        },
+        {
+          "file": "mobile-app/lib/features/routes/presentation/bloc/route_bloc.dart",
+          "symbol": "class RouteBloc",
+          "line": 6
+        },
+        {
+          "file": "mobile-app/lib/features/routes/domain/usecases/get_driver_routes.dart",
+          "symbol": "class GetDriverRoutes",
+          "line": 6
+        },
+        {
+          "file": "mobile-app/lib/features/routes/data/repositories/route_repository_impl.dart",
+          "symbol": "class RouteRepositoryImpl",
+          "line": 8
+        },
+        {
+          "file": "mobile-app/lib/features/routes/data/datasources/route_remote_data_source.dart",
+          "symbol": "class RouteRemoteDataSourceImpl",
+          "line": 14
+        },
+        {
+          "file": "mobile-app/lib/features/gps/presentation/bloc/gps_bloc.dart",
+          "symbol": "class GpsBloc",
+          "line": 10
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessWorkflowController.java",
+          "symbol": "class BusinessWorkflowController",
+          "line": 15
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/GpsController.java",
+          "symbol": "class GpsController",
+          "line": 21
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/GpsUseCasesImpl.java",
+          "symbol": "class GpsUseCasesImpl",
+          "line": 14
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcVehicleGpsHistoryRepository.java",
+          "symbol": "class R2dbcVehicleGpsHistoryRepository",
+          "line": 10
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P02_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P03_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P07_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/RouteController.java",
+          "symbol": "@PostMapping",
+          "line": 35
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/RouteController.java",
+          "symbol": "@PatchMapping(\"/{id}/status\")",
+          "line": 52
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/RouteController.java",
+          "symbol": "@GetMapping",
+          "line": 57
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/RouteController.java",
+          "symbol": "@DeleteMapping(\"/{id}\")",
+          "line": 67
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/RouteController.java",
+          "symbol": "@GetMapping(\"/{id}/path\")",
+          "line": 77
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessWorkflowService.java",
+          "symbol": "public Mono<Confirmation> confirm(Confirmation input) {",
+          "line": 23
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessWorkflowService.java",
+          "symbol": "public Mono<Review> approve(Long id,Double weight,String note,String actor) {",
+          "line": 43
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/services/BusinessWorkflowService.java",
+          "symbol": "public Mono<Review> accept(Long id,Long driverId,String actor) {",
+          "line": 63
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Confirmation> confirmation(Long id) {",
+          "line": 15
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Confirmation> saveConfirmation(Confirmation c) {",
+          "line": 22
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Review> review(Long id) {",
+          "line": 34
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Void> approve(Long id,Double weight,String actor,String note) {",
+          "line": 40
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Void> accept(Long id,String actor) {",
+          "line": 47
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Void> invalidate(Long id) {",
+          "line": 51
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Void> requireConfirmed(Long id) {",
+          "line": 55
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Void> requireDispatchReview(Long id) {",
+          "line": 58
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcBusinessWorkflowAdapter.java",
+          "symbol": "public Mono<Void> audit(String process,String entity,Long id,String action,String actor,String details) {",
+          "line": 62
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessWorkflowController.java",
+          "symbol": "@GetMapping(\"/orders/{id}/business-data\")",
+          "line": 19
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessWorkflowController.java",
+          "symbol": "@PatchMapping(\"/orders/{id}/business-data\")",
+          "line": 23
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessWorkflowController.java",
+          "symbol": "@GetMapping(\"/routes/{id}/review\")",
+          "line": 29
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessWorkflowController.java",
+          "symbol": "@PostMapping(\"/routes/{id}/review\")",
+          "line": 33
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/BusinessWorkflowController.java",
+          "symbol": "@PostMapping(\"/routes/{id}/acceptance\")",
+          "line": 38
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/GpsController.java",
+          "symbol": "@PostMapping(\"/ping\")",
+          "line": 29
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/GpsController.java",
+          "symbol": "@GetMapping(\"/history/{vehicleId}\")",
+          "line": 54
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/GpsUseCasesImpl.java",
+          "symbol": "public Mono<VehicleGpsHistory> addGpsLocation(VehicleGpsHistory history) {",
+          "line": 19
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/GpsUseCasesImpl.java",
+          "symbol": "public Flux<VehicleGpsHistory> getGpsHistory(Long vehicleId) {",
+          "line": 24
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcVehicleGpsHistoryRepository.java",
+          "symbol": "public Mono<VehicleGpsHistory> save(VehicleGpsHistory history) {",
+          "line": 19
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcVehicleGpsHistoryRepository.java",
+          "symbol": "public Flux<VehicleGpsHistory> findByVehicleIdOrderByPingTimeDesc(Long vehicleId) {",
+          "line": 26
+        },
+        {
+          "file": "mobile-app/lib/core/router/app_router.dart",
+          "symbol": "path: '/routes'",
+          "line": 41
+        }
+      ],
+      "expectedEvidence": [
+        "Capturas NUEVAS pendientes: pantalla completa, formulario o detalle abierto, resultado persistido y alternativa relevante. Correlacionar ID, tracking, fecha, rol y vínculo con la siguiente pantalla.",
+        "Comprobar respuesta del servidor y el mismo identificador al recargar antes de anunciar éxito; conservar contexto del siguiente paso de negocio."
+      ],
+      "wordCount": 213
+    },
+    {
+      "id": "M03",
+      "title": "Detalle de pedido y prueba de entrega POD",
+      "route": "/orders/:id",
+      "roles": [
+        "Conductor de Grupo MICOTRANS SAC. Captura el resultado de su parada y la evidencia declarada por el receptor; el backend controla propiedad del pedido y reglas de estado. El Dispatcher y la Jefatura atienden las decisiones posteriores de incidencias."
+      ],
+      "processes": [
+        "P03",
+        "P04"
+      ],
+      "source": "Segunda pantalla del alumno Luis, número 04 de la guía de ocho pantallas. Redacción del 26 de octubre de 2026, con evidencia histórica del 22 de octubre en America/Lima. Explica cómo MICOTRANS conserva foto, firma, receptor y GPS antes del envío; cómo el servidor convierte una operación válida en DELIVERED;.",
+      "actions": [
+        "Abrir desde Mis rutas y avanzar estado permitido; histórico/terminal permanece en consulta.",
+        "Capturar foto, receptor/DNI, firma y GPS actual; enviar POD y distinguir confirmado, pendiente o rechazado.",
+        "Para no entrega registrar motivo suficiente y pasar incidencia a web; después consultar mismo POD desde Pedidos."
+      ],
+      "states": [
+        "Detalle operativo/consulta; cámara, firma, receptor/DNI, GPS actual y envío confirmado/pendiente/rechazado.",
+        "Enlace sin extra OrderEntity/canOperate o ID discordante: recuperación a Mis rutas. No entrega exige motivo; pendiente local bloquea duplicación."
+      ],
+      "flow": [
+        "OrderDetailPage → OrderBloc/UpdateOrderStatus → OrderRepositoryImpl/OrderRemoteDataSourceImpl → PATCH /orders/{id}/status → OrderController/OrderUseCasesImpl → orders/historial.",
+        "POD → ProofSync.submit → LocalCache.enqueue → POST /delivery-proofs → DeliveryProofController → CreateDeliveryProofUseCaseImpl → R2dbcDeliveryProofRepository/S3/integridad/backup → delivery_proofs, estado e historial."
+      ],
+      "sources": [
+        {
+          "file": "mobile-app/lib/features/orders/presentation/pages/order_detail_page.dart",
+          "symbol": "class OrderDetailPage",
+          "line": 16
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DeliveryProofController.java",
+          "symbol": "class DeliveryProofController",
+          "line": 25
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/CreateDeliveryProofUseCaseImpl.java",
+          "symbol": "class CreateDeliveryProofUseCaseImpl",
+          "line": 29
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcDeliveryProofRepository.java",
+          "symbol": "class R2dbcDeliveryProofRepository",
+          "line": 9
+        },
+        {
+          "file": "mobile-app/lib/features/orders/presentation/bloc/order_bloc.dart",
+          "symbol": "class OrderBloc",
+          "line": 7
+        },
+        {
+          "file": "mobile-app/lib/features/orders/domain/usecases/update_order_status.dart",
+          "symbol": "class UpdateOrderStatus",
+          "line": 6
+        },
+        {
+          "file": "mobile-app/lib/features/orders/data/repositories/order_repository_impl.dart",
+          "symbol": "class OrderRepositoryImpl",
+          "line": 15
+        },
+        {
+          "file": "mobile-app/lib/features/orders/data/datasources/order_remote_data_source.dart",
+          "symbol": "class OrderRemoteDataSourceImpl",
+          "line": 10
+        },
+        {
+          "file": "mobile-app/lib/features/orders/presentation/widgets/signature_pad.dart",
+          "symbol": "class SignaturePad",
+          "line": 7
+        },
+        {
+          "file": "mobile-app/lib/core/sync/proof_sync.dart",
+          "symbol": "class ProofSync",
+          "line": 10
+        },
+        {
+          "file": "mobile-app/lib/core/cache/local_cache.dart",
+          "symbol": "class LocalCache",
+          "line": 6
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "class OrderController",
+          "line": 20
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+          "symbol": "class OrderUseCasesImpl",
+          "line": 28
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcProofIntegrityAdapter.java",
+          "symbol": "class R2dbcProofIntegrityAdapter",
+          "line": 10
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcEvidenceBackupAdapter.java",
+          "symbol": "class R2dbcEvidenceBackupAdapter",
+          "line": 9
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P03_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P04_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DeliveryProofController.java",
+          "symbol": "@PostMapping",
+          "line": 34
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DeliveryProofController.java",
+          "symbol": "@GetMapping(\"/{orderId}\")",
+          "line": 50
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DeliveryProofController.java",
+          "symbol": "@GetMapping(\"/{orderId}/photo\")",
+          "line": 56
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DeliveryProofController.java",
+          "symbol": "@GetMapping(\"/{orderId}/signature\")",
+          "line": 60
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DeliveryProofController.java",
+          "symbol": "@GetMapping(\"/{orderId}/pdf\")",
+          "line": 69
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/CreateDeliveryProofUseCaseImpl.java",
+          "symbol": "public Mono<DeliveryProof> createDeliveryProof(DeliveryProof deliveryProof) {",
+          "line": 41
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcDeliveryProofRepository.java",
+          "symbol": "public Mono<DeliveryProof> save(DeliveryProof deliveryProof) {",
+          "line": 18
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcDeliveryProofRepository.java",
+          "symbol": "public Mono<DeliveryProof> findByOrderId(Long orderId) {",
+          "line": 25
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@PostMapping",
+          "line": 33
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@GetMapping(\"/{id}\")",
+          "line": 39
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@GetMapping",
+          "line": 44
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@DeleteMapping(\"/{id}\")",
+          "line": 53
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@PatchMapping(\"/{id}/status\")",
+          "line": 58
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@PatchMapping(\"/{id}/route\")",
+          "line": 63
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@PatchMapping(\"/{id}/delivery-window\")",
+          "line": 68
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@PostMapping(\"/bulk-csv\")",
+          "line": 77
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@PostMapping(\"/bulk-csv/preview\")",
+          "line": 81
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+          "symbol": "public Mono<Order> createOrder(Order order) {",
+          "line": 51
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+          "symbol": "public Mono<Order> assignOrder(Long orderId, Long routeId) {",
+          "line": 74
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+          "symbol": "public Mono<Order> getOrderById(Long id) {",
+          "line": 99
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+          "symbol": "public Mono<Order> changeDeliveryWindow(Long id,OffsetDateTime start,OffsetDateTime end,String reason,String actor) {",
+          "line": 105
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+          "symbol": "public Flux<Order> getAllOrders() {",
+          "line": 128
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/OrderUseCasesImpl.java",
+          "symbol": "public Mono<Order> updateStatusManual(Long id, OrderStatus status, String reason) {",
+          "line": 134
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcProofIntegrityAdapter.java",
+          "symbol": "public Mono<Void> record(Long id,String photo,String signature,OffsetDateTime capturedAt) {",
+          "line": 12
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcEvidenceBackupAdapter.java",
+          "symbol": "public Mono<Void> store(String key,byte[] content,String mediaType) {",
+          "line": 11
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcEvidenceBackupAdapter.java",
+          "symbol": "public Mono<byte[]> read(String key) {",
+          "line": 15
+        },
+        {
+          "file": "mobile-app/lib/core/router/app_router.dart",
+          "symbol": "path: '/orders/:id'",
+          "line": 46
+        }
+      ],
+      "expectedEvidence": [
+        "Capturas NUEVAS pendientes: pantalla completa, formulario o detalle abierto, resultado persistido y alternativa relevante. Correlacionar ID, tracking, fecha, rol y vínculo con la siguiente pantalla.",
+        "Comprobar respuesta del servidor y el mismo identificador al recargar antes de anunciar éxito; conservar contexto del siguiente paso de negocio."
+      ],
+      "wordCount": 200
+    },
+    {
+      "id": "M04",
+      "title": "Historial de entregas",
+      "route": "/history",
+      "roles": [
+        "DRIVER autenticado; login público antes de sesión"
+      ],
+      "processes": [
+        "P03",
+        "P05"
+      ],
+      "source": "Consulta terminales propios con selector de período y actualización; no reabre fallos. La fuente obtiene rutas/pedidos autorizados, comprueba cuenta y filtra conductor y DELIVERED/FAILED/RETURNED. El intervalo usa fecha local del dispositivo; no afirmar equivalencia exacta con filtros Lima del backend sin revisar zona horaria. Comprueba continuidad del tracking y apoya P05, sin fórmulas BI ni POD completo. Respaldo local no convierte información histórica en entrega recién confirmada.",
+      "actions": [
+        "Abrir desde Mis rutas y cambiar período de últimos días.",
+        "Identificar tracking, destinatario, dirección, fecha y estado del pedido demostrado.",
+        "Actualizar/reintentar y regresar conservando contexto."
+      ],
+      "states": [
+        "Carga, error con Reintentar, vacío y terminales por período.",
+        "Respaldo local cuando la fuente lo usa; identificar procedencia/cuenta.",
+        "Sin alta, resolución de incidencia o transición propia de estado."
+      ],
+      "flow": [
+        "HistoryPage → HistoryBloc → HistoryRepositoryImpl → HistoryRemoteDataSourceImpl.getDeliveryHistory → GET /routes y /orders.",
+        "RouteController/OrderController → lectura y OperationalAccess → R2dbcRouteRepository/R2dbcOrderRepository → routes/orders.",
+        "LocalCache conserva historial por propietario; fecha/estado se filtran en fuente móvil, sin nueva tabla history."
+      ],
+      "sources": [
+        {
+          "file": "mobile-app/lib/features/history/presentation/pages/history_page.dart",
+          "symbol": "class HistoryPage",
+          "line": 8
+        },
+        {
+          "file": "mobile-app/lib/features/history/presentation/bloc/history_bloc.dart",
+          "symbol": "class HistoryBloc",
+          "line": 6
+        },
+        {
+          "file": "mobile-app/lib/features/history/data/repositories/history_repository_impl.dart",
+          "symbol": "class HistoryRepositoryImpl",
+          "line": 8
+        },
+        {
+          "file": "mobile-app/lib/features/history/data/datasources/history_remote_data_source.dart",
+          "symbol": "class HistoryRemoteDataSourceImpl",
+          "line": 11
+        },
+        {
+          "file": "mobile-app/lib/core/cache/local_cache.dart",
+          "symbol": "class LocalCache",
+          "line": 6
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "class OrderController",
+          "line": 20
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/RouteController.java",
+          "symbol": "class RouteController",
+          "line": 25
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcOrderRepository.java",
+          "symbol": "class R2dbcOrderRepository",
+          "line": 10
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcRouteRepository.java",
+          "symbol": "class R2dbcRouteRepository",
+          "line": 12
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P03_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P05_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@PostMapping",
+          "line": 33
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@GetMapping(\"/{id}\")",
+          "line": 39
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@GetMapping",
+          "line": 44
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@DeleteMapping(\"/{id}\")",
+          "line": 53
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@PatchMapping(\"/{id}/status\")",
+          "line": 58
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@PatchMapping(\"/{id}/route\")",
+          "line": 63
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@PatchMapping(\"/{id}/delivery-window\")",
+          "line": 68
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@PostMapping(\"/bulk-csv\")",
+          "line": 77
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/OrderController.java",
+          "symbol": "@PostMapping(\"/bulk-csv/preview\")",
+          "line": 81
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/RouteController.java",
+          "symbol": "@PostMapping",
+          "line": 35
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/RouteController.java",
+          "symbol": "@PatchMapping(\"/{id}/status\")",
+          "line": 52
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/RouteController.java",
+          "symbol": "@GetMapping",
+          "line": 57
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/RouteController.java",
+          "symbol": "@DeleteMapping(\"/{id}\")",
+          "line": 67
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/RouteController.java",
+          "symbol": "@GetMapping(\"/{id}/path\")",
+          "line": 77
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcOrderRepository.java",
+          "symbol": "public Mono<Order> save(Order order) {",
+          "line": 19
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcOrderRepository.java",
+          "symbol": "public Flux<Order> findAll() {",
+          "line": 26
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcOrderRepository.java",
+          "symbol": "public Mono<Order> findById(Long id) {",
+          "line": 32
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcOrderRepository.java",
+          "symbol": "public Mono<Order> lockById(Long id) {",
+          "line": 38
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcOrderRepository.java",
+          "symbol": "public Mono<Order> findByTrackingNumber(String trackingNumber) {",
+          "line": 43
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcOrderRepository.java",
+          "symbol": "public Flux<Order> findByRouteId(Long routeId) {",
+          "line": 49
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcOrderRepository.java",
+          "symbol": "public Mono<Void> deleteById(Long id) {",
+          "line": 55
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcOrderRepository.java",
+          "symbol": "public Mono<Integer> updateStopSequence(Long id, Integer sequence) {",
+          "line": 60
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcRouteRepository.java",
+          "symbol": "public Mono<Route> save(Route route) {",
+          "line": 21
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcRouteRepository.java",
+          "symbol": "public Mono<Route> findById(Long id) {",
+          "line": 28
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcRouteRepository.java",
+          "symbol": "public Mono<Route> lockById(Long id) {",
+          "line": 34
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcRouteRepository.java",
+          "symbol": "public Flux<Route> findByDriverIdAndDate(Long driverId, LocalDate date) {",
+          "line": 39
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcRouteRepository.java",
+          "symbol": "public Flux<Route> findAll() {",
+          "line": 45
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcRouteRepository.java",
+          "symbol": "public Flux<Route> findByFilters(LocalDate date, com.ecoroute.backend.domain.model.RouteStatus status) {",
+          "line": 51
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcRouteRepository.java",
+          "symbol": "public Mono<Void> deleteById(Long id) {",
+          "line": 57
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcRouteRepository.java",
+          "symbol": "public Mono<Integer> updatePathInfo(Long id, String geometry, Double durationMin) {",
+          "line": 62
+        },
+        {
+          "file": "mobile-app/lib/core/router/app_router.dart",
+          "symbol": "path: '/history'",
+          "line": 74
+        }
+      ],
+      "expectedEvidence": [
+        "Capturas nuevas esperadas: selector, historial con tracking del flujo, vacío y error recuperable preparado. Mantener contexto temporal y no presentar datos antiguos como confirmación de una entrega nueva; comprobar la misma cuenta utilizada durante la jornada.",
+        "Conservar título, sesión e identificadores ficticios; añadir tomas inferiores cuando el contenido exceda la ventana. Si una negativa no puede prepararse, documentarla como esperada y no observada. La lectura del código no acredita ejecución actual ni éxito de una operación remota."
+      ],
+      "wordCount": 233
+    },
+    {
+      "id": "M05",
+      "title": "Perfil del conductor",
+      "route": "/profile",
+      "roles": [
+        "DRIVER autenticado; login público antes de sesión"
+      ],
+      "processes": [
+        "P08",
+        "P06",
+        "P03"
+      ],
+      "source": "Reúne identidad y conductor: nombre, correo, roles, licencia y teléfono. Consulta con ID de sesión; muestra progreso y, ante fallo, conserva valores de identidad/campos no disponibles con mensaje. No edita licencia ni catálogo: corresponde a web P06. El tema pertenece a presentación local. Abre Sincronización y permite cerrar sesión; explica conservación de pendientes por cuenta y final de acceso P08. Ver ficha no habilita automáticamente una ruta.",
+      "actions": [
+        "Abrir y comparar ID/nombre con conductor de jornada web.",
+        "Mostrar información ficticia/rol y alternar tema oscuro/claro.",
+        "Abrir sync, volver y cerrar sesión; usar misma cuenta al recuperar pendientes."
+      ],
+      "states": [
+        "No autenticado, carga, detalle recuperado y error/campos no disponibles.",
+        "Tema claro/oscuro, /sync y LogoutRequested hacia login.",
+        "Sin alta ni modal de edición de licencia desde esta pantalla."
+      ],
+      "flow": [
+        "ProfilePage._fetchDriverDetails → Dio inyectado → GET /drivers/{authState.user.id} → DriverController.getDriverById → DriverUseCasesImpl → R2dbcDriverRepository → drivers.",
+        "AuthBloc aporta identidad; ThemeBloc gestiona tema. LogoutRequested → AuthRepositoryImpl/AuthRemoteDataSourceImpl → OIDC /logout y contexto local; tema no escribe maestros."
+      ],
+      "sources": [
+        {
+          "file": "mobile-app/lib/features/profile/presentation/pages/profile_page.dart",
+          "symbol": "class ProfilePage",
+          "line": 12
+        },
+        {
+          "file": "mobile-app/lib/features/profile/presentation/pages/profile_page.dart",
+          "symbol": "Future<void> _fetchDriverDetails(",
+          "line": 30
+        },
+        {
+          "file": "mobile-app/lib/core/theme/theme_bloc.dart",
+          "symbol": "class ThemeBloc",
+          "line": 35
+        },
+        {
+          "file": "mobile-app/lib/features/auth/presentation/bloc/auth_bloc.dart",
+          "symbol": "class AuthBloc",
+          "line": 7
+        },
+        {
+          "file": "mobile-app/lib/features/auth/data/datasources/auth_remote_data_source.dart",
+          "symbol": "class AuthRemoteDataSourceImpl",
+          "line": 11
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DriverController.java",
+          "symbol": "class DriverController",
+          "line": 17
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/DriverUseCasesImpl.java",
+          "symbol": "class DriverUseCasesImpl",
+          "line": 14
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcDriverRepository.java",
+          "symbol": "class R2dbcDriverRepository",
+          "line": 10
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P08_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P06_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P03_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DriverController.java",
+          "symbol": "@PostMapping",
+          "line": 26
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DriverController.java",
+          "symbol": "@GetMapping(\"/{id}\")",
+          "line": 43
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DriverController.java",
+          "symbol": "@GetMapping",
+          "line": 50
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DriverController.java",
+          "symbol": "@PutMapping(\"/{id}\")",
+          "line": 56
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DriverController.java",
+          "symbol": "@DeleteMapping(\"/{id}\")",
+          "line": 73
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/DriverUseCasesImpl.java",
+          "symbol": "public Mono<Driver> createDriver(Driver driver) {",
+          "line": 21
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/DriverUseCasesImpl.java",
+          "symbol": "public Mono<Driver> getDriverById(Long id) {",
+          "line": 26
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/DriverUseCasesImpl.java",
+          "symbol": "public Flux<Driver> getAllDrivers() {",
+          "line": 32
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/DriverUseCasesImpl.java",
+          "symbol": "public Mono<Driver> updateDriver(Long id, Driver driver) {",
+          "line": 37
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/DriverUseCasesImpl.java",
+          "symbol": "public Mono<Void> deleteDriver(Long id) {",
+          "line": 58
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcDriverRepository.java",
+          "symbol": "public Mono<Driver> save(Driver driver) {",
+          "line": 19
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcDriverRepository.java",
+          "symbol": "public Flux<Driver> findAll() {",
+          "line": 26
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcDriverRepository.java",
+          "symbol": "public Mono<Driver> findById(Long id) {",
+          "line": 32
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcDriverRepository.java",
+          "symbol": "public Mono<Void> deleteById(Long id) {",
+          "line": 38
+        },
+        {
+          "file": "mobile-app/lib/core/router/app_router.dart",
+          "symbol": "path: '/profile'",
+          "line": 79
+        }
+      ],
+      "expectedEvidence": [
+        "Capturas nuevas esperadas: ficha completa ficticia, tema alternativo, entrada sync y regreso a login. Conservar rol visible sin documentación personal ni secretos; comparar nombre con ruta asignada para justificar que se ejecuta el flujo del conductor correcto.",
+        "Conservar título, sesión e identificadores ficticios; añadir tomas inferiores cuando el contenido exceda la ventana. Si una negativa no puede prepararse, documentarla como esperada y no observada. La lectura del código no acredita ejecución actual ni éxito de una operación remota."
+      ],
+      "wordCount": 234
+    },
+    {
+      "id": "M06",
+      "title": "Sincronización de evidencias",
+      "route": "/sync",
+      "roles": [
+        "DRIVER autenticado; login público antes de sesión"
+      ],
+      "processes": [
+        "P03",
+        "P04"
+      ],
+      "source": "Distingue captura local de entrega remota. Presenta pendientes/rechazadas, error y reintento; las confirmadas salen de la cola. ProofSync escribe durable antes de HTTP y evita vuelos simultáneos por propietario. Envía Idempotency-Key con orderId y retira cola tras éxito. Errores 4xx de negocio quedan bloqueados salvo sesión/timeout/límite; reintento explícito incluye rechazados. Cambiar cuenta no debe enviar ni mostrar cola ajena. La clave no reemplaza integridad del servidor; observaciones pueden escalar a P04.",
+      "actions": [
+        "Abrir desde Perfil/Mis rutas y presentar cola vacía tras confirmación.",
+        "Caso preparado sin conexión: guardar POD pendiente, recuperar red y reintentar.",
+        "Mostrar último error/rechazo y correlacionar orderId con POD web confirmado."
+      ],
+      "states": [
+        "Vacía, pendientes, sincronizando, rechazadas bloqueadas y fallo de procesamiento.",
+        "Cambio de cuenta detiene drenado ajeno; reanudación/reintento manual.",
+        "No crea otro pedido ni sustituye resolver incidencias de negocio."
+      ],
+      "flow": [
+        "SyncPage → ProofSync.reload/sync/_drain → LocalCache.pending/enqueue/remove/mutate → almacenamiento local por cuenta.",
+        "Dio POST /delivery-proofs → DeliveryProofController → CreateDeliveryProofUseCaseImpl → R2dbcDeliveryProofRepository/integridad/S3/backup → delivery_proofs y estado/historial.",
+        "Éxito retira cola; rechazo conserva evidencia/error. Confirmación depende del servidor, no del botón."
+      ],
+      "sources": [
+        {
+          "file": "mobile-app/lib/core/sync/sync_page.dart",
+          "symbol": "class SyncPage",
+          "line": 5
+        },
+        {
+          "file": "mobile-app/lib/core/sync/proof_sync.dart",
+          "symbol": "Future<SubmissionResult> submit(",
+          "line": 56
+        },
+        {
+          "file": "mobile-app/lib/core/sync/proof_sync.dart",
+          "symbol": "Future<void> sync(",
+          "line": 70
+        },
+        {
+          "file": "mobile-app/lib/core/sync/proof_sync.dart",
+          "symbol": "Future<void> _drain(",
+          "line": 88
+        },
+        {
+          "file": "mobile-app/lib/core/cache/local_cache.dart",
+          "symbol": "class LocalCache",
+          "line": 6
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DeliveryProofController.java",
+          "symbol": "class DeliveryProofController",
+          "line": 25
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/CreateDeliveryProofUseCaseImpl.java",
+          "symbol": "class CreateDeliveryProofUseCaseImpl",
+          "line": 29
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcDeliveryProofRepository.java",
+          "symbol": "class R2dbcDeliveryProofRepository",
+          "line": 9
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P03_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P04_negocio.bpmn",
+          "symbol": "<bpmn:process",
+          "line": 3
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DeliveryProofController.java",
+          "symbol": "@PostMapping",
+          "line": 34
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DeliveryProofController.java",
+          "symbol": "@GetMapping(\"/{orderId}\")",
+          "line": 50
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DeliveryProofController.java",
+          "symbol": "@GetMapping(\"/{orderId}/photo\")",
+          "line": 56
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DeliveryProofController.java",
+          "symbol": "@GetMapping(\"/{orderId}/signature\")",
+          "line": 60
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/DeliveryProofController.java",
+          "symbol": "@GetMapping(\"/{orderId}/pdf\")",
+          "line": 69
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/application/usecases/CreateDeliveryProofUseCaseImpl.java",
+          "symbol": "public Mono<DeliveryProof> createDeliveryProof(DeliveryProof deliveryProof) {",
+          "line": 41
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcDeliveryProofRepository.java",
+          "symbol": "public Mono<DeliveryProof> save(DeliveryProof deliveryProof) {",
+          "line": 18
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcDeliveryProofRepository.java",
+          "symbol": "public Mono<DeliveryProof> findByOrderId(Long orderId) {",
+          "line": 25
+        },
+        {
+          "file": "mobile-app/lib/core/router/app_router.dart",
+          "symbol": "path: '/sync'",
+          "line": 34
+        }
+      ],
+      "expectedEvidence": [
+        "Capturas nuevas esperadas: vacía, pendiente, rechazo y confirmación tras reintento con mismo orderId. Son casos pendientes de la tarea principal; no afirmar prueba offline ejecutada en esta subtarea.",
+        "Conservar título, sesión e identificadores ficticios; añadir tomas inferiores cuando el contenido exceda la ventana. Si una negativa no puede prepararse, documentarla como esperada y no observada. La lectura del código no acredita ejecución actual ni éxito de una operación remota."
+      ],
+      "wordCount": 234
+    }
+  ],
+  "sharedFlow": [
+    {
+      "id": "S00",
+      "title": "Alcance y evidencia",
+      "steps": [
+        "Inventario estático del cwd compartido: no se ejecutaron app, pruebas, Docker, ADB, IDE ni capturas. expectedEvidence está pendiente.",
+        "Main ejecuta visiblemente en IDE, toma capturas NUEVAS completas y hace documento. Evidencia antigua no es prueba actual. Ocho principales conservadas; once auxiliares completan guía.",
+        "Líneas uno basadas comprobadas en lectura actual; revalidar ante modificaciones concurrentes."
+      ]
+    },
+    {
+      "id": "S01",
+      "title": "BPMN vigente",
+      "processes": {
+        "P01": {
+          "name": "Confirmar pedidos",
+          "source": {
+            "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P01_negocio.bpmn",
+            "symbol": "<bpmn:process",
+            "line": 5
+          }
+        },
+        "P02": {
+          "name": "Preparar la jornada de reparto",
+          "source": {
+            "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P02_negocio.bpmn",
+            "symbol": "<bpmn:process",
+            "line": 3
+          }
+        },
+        "P03": {
+          "name": "Ejecutar entregas",
+          "source": {
+            "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P03_negocio.bpmn",
+            "symbol": "<bpmn:process",
+            "line": 3
+          }
+        },
+        "P04": {
+          "name": "Resolver incidencias",
+          "source": {
+            "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P04_negocio.bpmn",
+            "symbol": "<bpmn:process",
+            "line": 3
+          }
+        },
+        "P05": {
+          "name": "Evaluar resultados",
+          "source": {
+            "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P05_negocio.bpmn",
+            "symbol": "<bpmn:process",
+            "line": 3
+          }
+        },
+        "P06": {
+          "name": "Habilitar recursos de reparto",
+          "source": {
+            "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P06_negocio.bpmn",
+            "symbol": "<bpmn:process",
+            "line": 3
+          }
+        },
+        "P07": {
+          "name": "Supervisar la jornada",
+          "source": {
+            "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P07_negocio.bpmn",
+            "symbol": "<bpmn:process",
+            "line": 3
+          }
+        },
+        "P08": {
+          "name": "Administrar accesos",
+          "source": {
+            "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P08_negocio.bpmn",
+            "symbol": "<bpmn:process",
+            "line": 3
+          }
+        },
+        "P09": {
+          "name": "Registrar compras operativas",
+          "source": {
+            "file": "docs/entregables_procesos_ecoroute/negocio_revisado/bpmn/P09_negocio.bpmn",
+            "symbol": "<bpmn:process",
+            "line": 3
+          }
+        }
+      },
+      "steps": [
+        "P01–P09 son negocio isExecutable=false. Tareas humanas no implican automatización o endpoint. Mapeos incluyen soporte y enlaces de entrada/salida."
+      ]
+    },
+    {
+      "id": "S02",
+      "title": "Flujo feliz y traspasos",
+      "steps": [
+        "P08 W10/W01/M01 habilitan sesión/vínculo; P06 W08/W09 recursos. P09 W11 solo ante necesidad, previa autorización humana.",
+        "Enzo P01 W03: PENDING sin ruta y comercial confirmada. Preservar orderId/tracking. P02 W04: PLANNED, asignación ASSIGNED y revisión ADMIN.",
+        "Luis M02 acepta hoja aprobada; Enzo W04 despacha IN_PROGRESS/pedidos IN_TRANSIT. Aceptar no despacha.",
+        "Luis P03 M02/M03 foto/firma/receptor/GPS; M06 si pendiente. Servidor confirma POD. W03 consulta metadata/foto/firma/PDF; M04 historial.",
+        "P07 W04/M02 seguimiento/actualidad GPS; paradas terminales permiten cierre sin implicar éxito total.",
+        "Adrian P05 W07/W12/W13 mismo conductor/rango, calidad/metas; Renzo W06 causa/acción/responsable/plazo/medición y ADMIN verifica. Gasto enlaza P09/P06."
+      ]
+    },
+    {
+      "id": "S03",
+      "title": "Alternativas end to end",
+      "steps": [
+        "P01 datos/dirección/cobertura incompletos: corregir/desistir. No inventar CONFIRMED; CSV inválido no se importa parcialmente.",
+        "P02 recursos/carga/revisión/aceptación insuficientes: no despachar; composición nueva invalida autorizaciones.",
+        "P03 ausencia/rechazo/impedimento: motivo y terminal permitido → P04 W05. Cola local no confirma remoto; recuperar M06.",
+        "P04 RETRY nuevo intento misma ruta activa → P03; REPLAN nuevo intento otra PLANNED y comercial renovada → P02. CLOSE_FAILED/CLOSE_CASE solo ADMIN; original permanece.",
+        "P05 datos dudosos: corregir/cierre provisional; sin denominador/meta no inventar cumplimiento. Acción inefectiva: revisar hipótesis.",
+        "P06 recurso no apto/disponible: bloquear/esperar; P07 pérdida señal: contacto/escalamiento P04 humanos.",
+        "P08 rechazo/revocación: denegar/revocar sesiones. P09 existencia utilizable: sin compra; gasto rechazado/recepción observada: ajustar/cancelar/reclamar humanamente."
+      ]
+    },
+    {
+      "id": "S04",
+      "title": "Notificaciones y navegación compartidas",
+      "route": "Sidebar; panel sin ruta propia",
+      "steps": [
+        "Campana ADMIN/DISPATCHER: conteo/lista no leída, abrir/marcar leída. Estados cerrado/abierto, carga, vacío, error/reintento.",
+        "NotificationPanel → useQuery/notificationService → GET /notifications/unread/count y /unread, PATCH /{id}/read → NotificationController → NotificationRepository/R2dbcNotificationRepository → notifications.",
+        "Sidebar expandido/colapsado, overlay móvil, foco/Escape/logout. Web wildcard → Inicio; móvil sin sesión → login; detalle extra inválido → recuperación Mis rutas."
+      ],
+      "sources": [
+        {
+          "file": "web-admin/src/components/NotificationPanel.tsx",
+          "symbol": "const NotificationPanel",
+          "line": 15
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/input/rest/NotificationController.java",
+          "symbol": "class NotificationController",
+          "line": 16
+        },
+        {
+          "file": "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcNotificationRepository.java",
+          "symbol": "class R2dbcNotificationRepository",
+          "line": 10
+        },
+        {
+          "file": "web-admin/src/components/Sidebar.tsx",
+          "symbol": "const Sidebar",
+          "line": 29
+        },
+        {
+          "file": "mobile-app/lib/core/router/app_router.dart",
+          "symbol": "GoRouter createAppRouter",
+          "line": 14
+        }
+      ],
+      "expectedEvidence": [
+        "Nuevas tomas del panel, conteo antes/después, menú estrecho y recuperación de enlaces; pendientes."
+      ]
+    },
+    {
+      "id": "S05",
+      "title": "Convenciones IDE y evidencia",
+      "steps": [
+        "Web usa /api; backend declara sin prefijo. Flutter API_BASE_URL y proveedor OIDC aparte; no copiar credenciales.",
+        "sources indica archivo relativo, ancla literal y línea uno basada: abrir IDE y seguir UI → hook/servicio → endpoint → controller/caso → persistencia.",
+        "Capturas completas: título, controles y columnas; añadir tomas inferiores al desplazarse. Modales abiertos y resultado posterior.",
+        "Correlacionar fecha/hora, rol, driverId/routeId/orderId/tracking ficticios. Caso no ejecutado = esperado/no observado; no reutilizar capturas antiguas como nuevas.",
+        "Antecedentes resumidos tools/exposicion_8_pantallas/alumno1.json a alumno4.json y docs/exposicion_8_pantallas; no son prueba actual."
+      ]
+    }
+  ],
+  "assignment": [
+    {
+      "student": "Enzo",
+      "mainScreens": [
+        "W03",
+        "W04"
+      ],
+      "screenCount": 2
+    },
+    {
+      "student": "Luis",
+      "mainScreens": [
+        "M02",
+        "M03"
+      ],
+      "screenCount": 2
+    },
+    {
+      "student": "Renzo",
+      "mainScreens": [
+        "W05",
+        "W06"
+      ],
+      "screenCount": 2
+    },
+    {
+      "student": "Adrian",
+      "mainScreens": [
+        "W07",
+        "W13"
+      ],
+      "screenCount": 2
+    }
+  ]
+}

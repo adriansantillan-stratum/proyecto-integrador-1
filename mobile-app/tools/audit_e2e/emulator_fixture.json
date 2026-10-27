@@ -1,0 +1,20 @@
+{
+  "label": "SINTETICO MOBILE E2E 20261019",
+  "routeDate": "2099-10-19",
+  "driverId": 1,
+  "orders": [
+    {
+      "scenario": "OFFLINE",
+      "id": 27,
+      "trackingNumber": "MOB-E2E-20261019212853-OFFLINE"
+    },
+    {
+      "trackingNumber": "MOB-E2E-20261019212926-FALLO",
+      "scenario": "FALLO",
+      "id": 28
+    }
+  ],
+  "plateNumber": "MOB-419",
+  "vehicleId": 6,
+  "routeId": 11
+}

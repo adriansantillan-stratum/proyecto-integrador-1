@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "startedAtUtc": "2026-10-27T13:09:32.789896+00:00",
+  "finishedAtUtc": "2026-10-27T13:10:06.716444+00:00",
+  "durationSeconds": 33.922,
+  "command": "C:\\Windows\\system32\\cmd.exe /d /s /c \"<USER>\\flutter\\bin\\flutter.bat analyze --no-pub\"",
+  "workingDirectory": "<TEMP_QA>\\mobile-app",
+  "log": "flutter_analyze.log",
+  "sourceSha256": "c54345610b994329d652fd21f400c7a7a84855dbc8549a0397e5248ee85fa94c"
+}

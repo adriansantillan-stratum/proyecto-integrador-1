@@ -1,0 +1,243 @@
+{
+  "startedAt": "2026-10-22T20:09:30-05:00",
+  "timezone": "America/Lima",
+  "scope": "BACKEND_ANALYTICS_ONLY",
+  "businessAcceptance": "NOT_ATTESTED",
+  "syntheticTestData": true,
+  "productionEffectiveness": "NOT_MEASURED",
+  "realRoute20Remeasured": false,
+  "command": "& .\\gradlew.bat test --tests '*Analytics*Test' --rerun-tasks --no-daemon --console=plain -I tools/control_actualizacion/analytics_verification.init.gradle; exit $LASTEXITCODE",
+  "javaHome": "C:/Program Files/Eclipse Adoptium/jdk-17.0.17.10-hotspot",
+  "buildDirectory": "C:\\Users\\USUARIO\\OneDrive\\Escritorio\\Proyecto Integrador Desarrollo de Software 3\\build\\analytics_actualizacion_20261022",
+  "protectedMigrationsBefore": {
+    "V10__business_workflow.sql": "94d4c8f953c40ebcba370fcbe345324b2fb0dbe05c4597405e102bdb2f861664",
+    "V12__analytics_views.sql": "8e75eb94871c940c9266db9447d1ddfafa690c7e0f78d14dd11073b249962578",
+    "V13__incident_resolution.sql": "96d474a1204d9eef30ae97d44afbd1ac571f6d8038dc3807d92f1a5cdb84a138",
+    "V14__local_evidence_durability.sql": "eb71a06c5bd5f848fa6a513e6cbec44389bf2151474b9243b7fcc6d22b3025ca",
+    "V15__analytics_returned_terminal.sql": "05e209ac4625cad1f69d75f80261697fb0e4427757ebca89b4413459dedc0761",
+    "V1__create_orders_table.sql": "c4069768857916c35efe908f3f58fb859118dcefc12eda49ffa9be0257ee7922",
+    "V2__create_additional_tables.sql": "b4be84e8209da940f0a1c757f39f60b9ece0b0c5b777d51364040f9aae10b6e4",
+    "V3__create_rbac_tables.sql": "5e95719157f254a2d8f30914ea4118acdaeb5b14da461e4aafc970c39672302a",
+    "V4__corporate_erp_schema.sql": "1dd5941138ddf9674a275073bb0c59260b28c779af5e6d6c7135fe20d0e85baa",
+    "V5__fix_schema_and_add_routes.sql": "77e085aae5f70fc77f4bc2797b48cbe1d2f679d36630bf31b1d9254ed856026e",
+    "V6__enterprise_logistics_expansion.sql": "0ce0dfdc2c075495955e6fb4a47a36dcc2dd0fda309e5d1fe843b5a30c246ea2",
+    "V7__feature_expansion.sql": "0955eaec6b12a77e7666873f360acb8bbaf74b7b23ab9240614efdc7da725464",
+    "V8__route_geometry_and_stop_sequence.sql": "a9d4aa316ff9057845f06bfd5c534d8b16eef9ee4b21d4cc77f87de1b15cc7a1",
+    "V9__operational_integrity.sql": "34f85c35b9a7e033f5ec43a6b86e7e4f20bebffcf477d1b04f40044c8a36d611"
+  },
+  "status": "FAIL",
+  "isolation": "Testcontainers disposable PostgreSQL only. No compose/rebuild/deploy/migration commands against project services.",
+  "exitCode": 1,
+  "stdout": "\r\nC:\\Users\\USUARIO\\OneDrive\\Escritorio\\Proyecto Integrador Desarrollo de Software 3>\"java.exe\" -jar \"C:\\Users\\USUARIO\\OneDrive\\Escritorio\\Proyecto Integrador Desarrollo de Software 3\\\\gradle\\wrapper\\gradle-wrapper.jar\" test --tests *Analytics*Test --rerun-tasks --no-daemon --console=plain -I tools/control_actualizacion/analytics_verification.init.gradle \r\nTo honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.5/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.\r\nDaemon will be stopped at the end of the build \r\n\r\n> Task :compileJava\r\n\r\n> Task :processResources\r\n> Task :classes\r\n\r\n> Task :compileTestJava\r\n\r\n> Task :processTestResources NO-SOURCE\r\n> Task :testClasses\r\n\r\n> Task :test\r\n\r\nR2dbcAnalyticsIntegrationTest > biReaderCanSelectViewsButCannotReadOrMutateBaseTables() FAILED\r\n    org.postgresql.util.PSQLException at R2dbcAnalyticsIntegrationTest.java:278\r\n\r\n> Task :test FAILED\r\n4 actionable tasks: 4 executed\r\n",
+  "stderr": "Note: C:\\Users\\USUARIO\\OneDrive\\Escritorio\\Proyecto Integrador Desarrollo de Software 3\\src\\main\\java\\com\\ecoroute\\backend\\infrastructure\\config\\SecurityConfig.java uses unchecked or unsafe operations.\r\nNote: Recompile with -Xlint:unchecked for details.\r\nC:\\Users\\USUARIO\\OneDrive\\Escritorio\\Proyecto Integrador Desarrollo de Software 3\\src\\test\\java\\com\\ecoroute\\backend\\infrastructure\\input\\rest\\OrderControllerIntegrationTest.java:63: warning: [removal] MockBean in org.springframework.boot.test.mock.mockito has been deprecated and marked for removal\r\n    @MockBean\r\n     ^\r\nNote: C:\\Users\\USUARIO\\OneDrive\\Escritorio\\Proyecto Integrador Desarrollo de Software 3\\src\\test\\java\\com\\ecoroute\\backend\\application\\services\\LocalEvidenceDurabilityTest.java uses unchecked or unsafe operations.\r\nNote: Recompile with -Xlint:unchecked for details.\r\n1 warning\r\nOpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended\n\r\n30 tests completed, 1 failed\r\n\r\nFAILURE: Build failed with an exception.\r\n\r\n* What went wrong:\r\nExecution failed for task ':test'.\r\n> There were failing tests. See the report at: file:///C:/Users/USUARIO/OneDrive/Escritorio/Proyecto%20Integrador%20Desarrollo%20de%20Software%203/build/analytics_actualizacion_20261022/reports/tests/test/index.html\r\n\r\n* Try:\r\n> Run with --scan to get full insights.\r\n\r\nBUILD FAILED in 39s\r\n",
+  "suites": [
+    {
+      "name": "com.ecoroute.backend.application.services.DashboardAnalyticsServiceTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.751,
+      "xmlSha256": "5802b33a5742d5e079eda3df308dd1109b9417f2c0334e7969b3151ece20ffea",
+      "cases": [
+        {
+          "name": "invalidFiltersAndGoalsAreRejectedBeforePersistence()",
+          "result": "PASS"
+        },
+        {
+          "name": "formulasUseDifferentUniversesAndTrendsUseTheSameFormula()",
+          "result": "PASS"
+        },
+        {
+          "name": "goalBoundaryValuesAndClearingArePersistedWithActor()",
+          "result": "PASS"
+        },
+        {
+          "name": "biUsesIdenticalFilterAndZeroDenominatorsStayNull()",
+          "result": "PASS"
+        },
+        {
+          "name": "summaryAndLegacyMethodsPassAllFilters()",
+          "result": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsControllerTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 1.666,
+      "xmlSha256": "5c549c99f05d80bdc2ac55d6d1ca1b95800682e39e097036ab1aae649e87f617",
+      "cases": [
+        {
+          "name": "allExistingRoutesBindIsoDatesAndPreserveWireFields()",
+          "result": "PASS"
+        },
+        {
+          "name": "optionalFiltersBindNull()",
+          "result": "PASS"
+        },
+        {
+          "name": "invalidRangeIsBadRequest()",
+          "result": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsSecurityTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.248,
+      "xmlSha256": "6a728677f35360ca3d2484e3ebdad71ae5d08622c17397b8b5a1f2961cde56a2",
+      "cases": [
+        {
+          "name": "adminGoalWriteUsesAuthenticatedSubject()",
+          "result": "PASS"
+        },
+        {
+          "name": "anonymousCannotReadBiOrGoals()",
+          "result": "PASS"
+        },
+        {
+          "name": "adminCanReadAnUnconfiguredGoalAsNull()",
+          "result": "PASS"
+        },
+        {
+          "name": "driverCannotReadOrChangeGlobalAnalytics()",
+          "result": "PASS"
+        },
+        {
+          "name": "dispatcherCannotReadGlobalAnalytics()",
+          "result": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsGpsQualityIntegrationTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 1.156,
+      "xmlSha256": "5cd3aeae359821db4561c019883a072611336741ef289a6817d0cb69bf8a4b83",
+      "cases": [
+        {
+          "name": "zeroOrOneSampleIsUnavailableAndOutsideWindowPointsAreNotCounted()",
+          "result": "PASS"
+        },
+        {
+          "name": "invalidReportingConfigurationCannotCreateAnApparentlyValidDistance()",
+          "result": "PASS"
+        },
+        {
+          "name": "plausibleTraceAndStationaryTraceRemainAvailableWithoutPlanFallback()",
+          "result": "PASS"
+        },
+        {
+          "name": "gapsTimestampsAndInvalidCoordinatesHaveDistinctQualityReasons()",
+          "result": "PASS"
+        },
+        {
+          "name": "configuredBoundsAreAppliedAndReportedSeparatelyFromViewDefaults()",
+          "result": "PASS"
+        },
+        {
+          "name": "jumpsInvalidateWholeTraceRatherThanPublishingASumOfAcceptedSegments()",
+          "result": "PASS"
+        },
+        {
+          "name": "v15JumpIsReproducedAndV16LeavesAllOperationalRowsIntact()",
+          "result": "PASS"
+        }
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+      "tests": 10,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 4.223,
+      "xmlSha256": "f8161bd26346255a2c26a34b2ad6f9ae5ca519fdd44004756b579007c357d950",
+      "cases": [
+        {
+          "name": "goalsPersistAndAuditEveryChangeWithActorAndTime()",
+          "result": "PASS"
+        },
+        {
+          "name": "goalHttpPutPersistsAndRejectsOutOfRangeValues()",
+          "result": "PASS"
+        },
+        {
+          "name": "fullBiReportUsesRealCountersAndQuality()",
+          "result": "PASS"
+        },
+        {
+          "name": "emptyPeriodProducesFiveNullPercentagesAndNoSyntheticTarget()",
+          "result": "PASS"
+        },
+        {
+          "name": "districtsAndSameNameDriversRemainDistinctAndCausesDoNotMultiply()",
+          "result": "PASS"
+        },
+        {
+          "name": "biReaderCanSelectViewsButCannotReadOrMutateBaseTables()",
+          "result": "FAIL",
+          "failure": "\r\n    <failure message=\"org.postgresql.util.PSQLException: ERROR: permission denied for table routes\" type=\"org.postgresql.util.PSQLException\">org.postgresql.util.PSQLException: ERROR: permission denied for table routes\r\n\tat app//org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2736)\r\n\tat app//org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2421)\r\n\tat app//org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:372)\r\n\tat app//org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:525)\r\n\tat app//org.postgresql.jdbc.PgStatement.execute(PgStatement.java:435)\r\n\tat app//org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:357)\r\n\tat app//org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:342)\r\n\tat app//org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:318)\r\n\tat app//org.postgresql.jdbc.PgStatement.executeQuery(PgStatement.java:268)\r\n\tat app//com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest.biReaderCanSelectViewsButCannotReadOrMutateBaseTables(R2dbcAnalyticsIntegrationTest.java:278)\r\n\tat java.base@17.0.17/java.lang.reflect.Method.invoke(Method.java:569)\r\n\tat java.base@17.0.17/java.util.ArrayList.forEach(ArrayList.java:1511)\r\n\tat java.base@17.0.17/java.util.ArrayList.forEach(ArrayList.java:1511)\r\n</failure>\r\n  "
+        },
+        {
+          "name": "returnedOrdersCountAsTerminalStopsWithoutChangingSharedSeed()",
+          "result": "PASS"
+        },
+        {
+          "name": "httpBiAndSummaryReadActualSqlWithTheSameInclusiveFilters()",
+          "result": "PASS"
+        },
+        {
+          "name": "gpsQualityDoesNotBridgeInvalidSamplesOrUsePlannedDistance()",
+          "result": "PASS"
+        },
+        {
+          "name": "filtersUseRouteDateAndLimaMidnightAndRouteOwner()",
+          "result": "PASS"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "tests": 30,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0
+  },
+  "protectedMigrationsAfter": {
+    "V10__business_workflow.sql": "94d4c8f953c40ebcba370fcbe345324b2fb0dbe05c4597405e102bdb2f861664",
+    "V12__analytics_views.sql": "8e75eb94871c940c9266db9447d1ddfafa690c7e0f78d14dd11073b249962578",
+    "V13__incident_resolution.sql": "96d474a1204d9eef30ae97d44afbd1ac571f6d8038dc3807d92f1a5cdb84a138",
+    "V14__local_evidence_durability.sql": "eb71a06c5bd5f848fa6a513e6cbec44389bf2151474b9243b7fcc6d22b3025ca",
+    "V15__analytics_returned_terminal.sql": "05e209ac4625cad1f69d75f80261697fb0e4427757ebca89b4413459dedc0761",
+    "V1__create_orders_table.sql": "c4069768857916c35efe908f3f58fb859118dcefc12eda49ffa9be0257ee7922",
+    "V2__create_additional_tables.sql": "b4be84e8209da940f0a1c757f39f60b9ece0b0c5b777d51364040f9aae10b6e4",
+    "V3__create_rbac_tables.sql": "5e95719157f254a2d8f30914ea4118acdaeb5b14da461e4aafc970c39672302a",
+    "V4__corporate_erp_schema.sql": "1dd5941138ddf9674a275073bb0c59260b28c779af5e6d6c7135fe20d0e85baa",
+    "V5__fix_schema_and_add_routes.sql": "77e085aae5f70fc77f4bc2797b48cbe1d2f679d36630bf31b1d9254ed856026e",
+    "V6__enterprise_logistics_expansion.sql": "0ce0dfdc2c075495955e6fb4a47a36dcc2dd0fda309e5d1fe843b5a30c246ea2",
+    "V7__feature_expansion.sql": "0955eaec6b12a77e7666873f360acb8bbaf74b7b23ab9240614efdc7da725464",
+    "V8__route_geometry_and_stop_sequence.sql": "a9d4aa316ff9057845f06bfd5c534d8b16eef9ee4b21d4cc77f87de1b15cc7a1",
+    "V9__operational_integrity.sql": "34f85c35b9a7e033f5ec43a6b86e7e4f20bebffcf477d1b04f40044c8a36d611"
+  },
+  "appliedMigrationSourcesUnchanged": true,
+  "sourceSha256": {
+    "src/main/resources/db/migration/V16__analytics_gps_quality.sql": "85731b25857d0f8bcf284c5ddf68877bc5d40851985a8a3230092a0170d0d860",
+    "src/main/java/com/ecoroute/backend/domain/model/analytics/AnalyticsModels.java": "ba6f926c3137bdc945bbc3dde72658df4353ccac8b67bf9ca196f7845c3bf985",
+    "src/main/java/com/ecoroute/backend/domain/model/analytics/GpsQualityPolicy.java": "26f0c5667b21b232515f89d675e779f125766c9c477d7ce7e662908e748e355a",
+    "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java": "b943fe66983145ad1d93fcf7aa3ff270b02b4a8e2898f17e18b755b2ce56863f",
+    "src/test/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsIntegrationTest.java": "3df84f299aa8aa958b26e64082f4363530f4e74a2ebd08ef61ece8d117765ef9",
+    "src/test/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsGpsQualityIntegrationTest.java": "02ba1979ab3052b0adee76bebc9a47b08b87c175638d24b731df4d1629054842"
+  },
+  "finishedAt": "2026-10-22T20:10:10-05:00"
+}

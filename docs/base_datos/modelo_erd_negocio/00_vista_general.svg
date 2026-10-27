@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1850" height="770" viewBox="0 0 1850 770" font-family="Arial,sans-serif">
+<rect width="1850" height="770" fill="#F7F9FC"/>
+<text x="40" y="54" font-size="32" font-weight="700" fill="#1C3148">EcoRoute · ERD del negocio</text>
+<text x="40" y="88" font-size="19" fill="#52677B">16 tablas · 141 campos · 17 FK físicas · migraciones PostgreSQL V1–V8</text>
+<rect x="40" y="115" width="390" height="180" rx="10" fill="white" stroke="#ABBCCC" stroke-width="2"/>
+<rect x="40" y="115" width="390" height="43" rx="9" fill="#0D7A74"/>
+<text x="53" y="144" font-size="23" font-weight="700" fill="white">drivers</text>
+<text x="54" y="186" font-size="19" fill="#1C3148">PK  id</text>
+<text x="418" y="283" text-anchor="end" font-size="14" fill="#52677B">10 columnas</text>
+<rect x="475" y="115" width="390" height="180" rx="10" fill="white" stroke="#ABBCCC" stroke-width="2"/>
+<rect x="475" y="115" width="390" height="43" rx="9" fill="#0D7A74"/>
+<text x="488" y="144" font-size="23" font-weight="700" fill="white">vehicles</text>
+<text x="489" y="186" font-size="19" fill="#1C3148">PK  id</text>
+<text x="853" y="283" text-anchor="end" font-size="14" fill="#52677B">8 columnas</text>
+<rect x="910" y="115" width="390" height="180" rx="10" fill="white" stroke="#ABBCCC" stroke-width="2"/>
+<rect x="910" y="115" width="390" height="43" rx="9" fill="#164B73"/>
+<text x="923" y="144" font-size="23" font-weight="700" fill="white">routes</text>
+<text x="924" y="186" font-size="19" fill="#1C3148">PK  id</text>
+<text x="924" y="212" font-size="19" fill="#1C3148">FK  driver_id</text>
+<text x="924" y="238" font-size="19" fill="#1C3148">FK  vehicle_id</text>
+<text x="1288" y="283" text-anchor="end" font-size="14" fill="#52677B">12 columnas</text>
+<rect x="1345" y="115" width="390" height="180" rx="10" fill="white" stroke="#ABBCCC" stroke-width="2"/>
+<rect x="1345" y="115" width="390" height="43" rx="9" fill="#164B73"/>
+<text x="1358" y="144" font-size="23" font-weight="700" fill="white">orders</text>
+<text x="1359" y="186" font-size="19" fill="#1C3148">PK  id</text>
+<text x="1359" y="212" font-size="19" fill="#1C3148">FK  route_id</text>
+<text x="1723" y="283" text-anchor="end" font-size="14" fill="#52677B">20 columnas</text>
+<rect x="40" y="390" width="205" height="130" rx="10" fill="white" stroke="#ABBCCC" stroke-width="2"/>
+<rect x="40" y="390" width="205" height="37" rx="9" fill="#315F83"/>
+<text x="53" y="415" font-size="18" font-weight="700" fill="white">driver_contracts</text>
+<text x="54" y="461" font-size="16" fill="#1C3148">PK  id</text>
+<text x="54" y="487" font-size="16" fill="#1C3148">FK  driver_id</text>
+<text x="233" y="508" text-anchor="end" font-size="14" fill="#52677B">6 columnas</text>
+<rect x="260" y="390" width="205" height="130" rx="10" fill="white" stroke="#ABBCCC" stroke-width="2"/>
+<rect x="260" y="390" width="205" height="37" rx="9" fill="#315F83"/>
+<text x="273" y="415" font-size="18" font-weight="700" fill="white">driver_shifts</text>
+<text x="274" y="461" font-size="16" fill="#1C3148">PK  id</text>
+<text x="274" y="487" font-size="16" fill="#1C3148">FK  driver_id</text>
+<text x="453" y="508" text-anchor="end" font-size="14" fill="#52677B">5 columnas</text>
+<rect x="475" y="390" width="205" height="130" rx="10" fill="white" stroke="#ABBCCC" stroke-width="2"/>
+<rect x="475" y="390" width="205" height="37" rx="9" fill="#315F83"/>
+<text x="488" y="415" font-size="18" font-weight="700" fill="white">fuel_logs</text>
+<text x="489" y="461" font-size="16" fill="#1C3148">PK  id</text>
+<text x="489" y="487" font-size="16" fill="#1C3148">FK  vehicle_id</text>
+<text x="489" y="513" font-size="16" fill="#1C3148">FK  driver_id</text>
+<text x="668" y="508" text-anchor="end" font-size="14" fill="#52677B">8 columnas</text>
+<rect x="695" y="390" width="205" height="130" rx="10" fill="white" stroke="#ABBCCC" stroke-width="2"/>
+<rect x="695" y="390" width="205" height="37" rx="9" fill="#315F83"/>
+<text x="708" y="415" font-size="14" font-weight="700" fill="white">vehicle_maintenance_logs</text>
+<text x="709" y="461" font-size="16" fill="#1C3148">PK  id</text>
+<text x="709" y="487" font-size="16" fill="#1C3148">FK  vehicle_id</text>
+<text x="888" y="508" text-anchor="end" font-size="14" fill="#52677B">9 columnas</text>
+<rect x="910" y="390" width="205" height="130" rx="10" fill="white" stroke="#ABBCCC" stroke-width="2"/>
+<rect x="910" y="390" width="205" height="37" rx="9" fill="#315F83"/>
+<text x="923" y="415" font-size="18" font-weight="700" fill="white">vehicle_gps_history</text>
+<text x="924" y="461" font-size="16" fill="#1C3148">PK  id</text>
+<text x="924" y="487" font-size="16" fill="#1C3148">FK  vehicle_id</text>
+<text x="924" y="513" font-size="16" fill="#1C3148">FK  driver_id</text>
+<text x="1103" y="508" text-anchor="end" font-size="14" fill="#52677B">8 columnas</text>
+<rect x="1130" y="390" width="205" height="130" rx="10" fill="white" stroke="#ABBCCC" stroke-width="2"/>
+<rect x="1130" y="390" width="205" height="37" rx="9" fill="#315F83"/>
+<text x="1143" y="415" font-size="18" font-weight="700" fill="white">incidents</text>
+<text x="1144" y="461" font-size="16" fill="#1C3148">PK  id</text>
+<text x="1144" y="487" font-size="16" fill="#1C3148">FK  route_id</text>
+<text x="1323" y="508" text-anchor="end" font-size="14" fill="#52677B">9 columnas</text>
+<rect x="1350" y="390" width="205" height="130" rx="10" fill="white" stroke="#ABBCCC" stroke-width="2"/>
+<rect x="1350" y="390" width="205" height="37" rx="9" fill="#315F83"/>
+<text x="1363" y="415" font-size="18" font-weight="700" fill="white">route_expenses</text>
+<text x="1364" y="461" font-size="16" fill="#1C3148">PK  id</text>
+<text x="1364" y="487" font-size="16" fill="#1C3148">FK  route_id</text>
+<text x="1543" y="508" text-anchor="end" font-size="14" fill="#52677B">7 columnas</text>
+<rect x="1570" y="390" width="205" height="130" rx="10" fill="white" stroke="#ABBCCC" stroke-width="2"/>
+<rect x="1570" y="390" width="205" height="37" rx="9" fill="#315F83"/>
+<text x="1583" y="415" font-size="18" font-weight="700" fill="white">delivery_proofs</text>
+<text x="1584" y="461" font-size="16" fill="#1C3148">PK  id</text>
+<text x="1584" y="487" font-size="16" fill="#1C3148">FK  order_id</text>
+<text x="1763" y="508" text-anchor="end" font-size="14" fill="#52677B">9 columnas</text>
+<rect x="40" y="580" width="205" height="130" rx="10" fill="white" stroke="#ABBCCC" stroke-width="2"/>
+<rect x="40" y="580" width="205" height="37" rx="9" fill="#315F83"/>
+<text x="53" y="605" font-size="18" font-weight="700" fill="white">products</text>
+<text x="54" y="651" font-size="16" fill="#1C3148">PK  id</text>
+<text x="233" y="698" text-anchor="end" font-size="14" fill="#52677B">9 columnas</text>
+<rect x="260" y="580" width="205" height="130" rx="10" fill="white" stroke="#ABBCCC" stroke-width="2"/>
+<rect x="260" y="580" width="205" height="37" rx="9" fill="#315F83"/>
+<text x="273" y="605" font-size="18" font-weight="700" fill="white">order_items</text>
+<text x="274" y="651" font-size="16" fill="#1C3148">PK  id</text>
+<text x="274" y="677" font-size="16" fill="#1C3148">FK  order_id</text>
+<text x="274" y="703" font-size="16" fill="#1C3148">FK  product_id</text>
+<text x="453" y="698" text-anchor="end" font-size="14" fill="#52677B">6 columnas</text>
+<rect x="475" y="580" width="205" height="130" rx="10" fill="white" stroke="#ABBCCC" stroke-width="2"/>
+<rect x="475" y="580" width="205" height="37" rx="9" fill="#315F83"/>
+<text x="488" y="605" font-size="14" font-weight="700" fill="white">order_status_history</text>
+<text x="489" y="651" font-size="16" fill="#1C3148">PK  id</text>
+<text x="489" y="677" font-size="16" fill="#1C3148">FK  order_id</text>
+<text x="668" y="698" text-anchor="end" font-size="14" fill="#52677B">8 columnas</text>
+<rect x="695" y="580" width="205" height="130" rx="10" fill="white" stroke="#ABBCCC" stroke-width="2"/>
+<rect x="695" y="580" width="205" height="37" rx="9" fill="#315F83"/>
+<text x="708" y="605" font-size="18" font-weight="700" fill="white">notifications</text>
+<text x="709" y="651" font-size="16" fill="#1C3148">PK  id</text>
+<text x="709" y="677" font-size="16" fill="#1C3148">FK  order_id</text>
+<text x="888" y="698" text-anchor="end" font-size="14" fill="#52677B">7 columnas</text>
+<path d="M235,295 V328 H1105 V295" stroke="#0D7A74" stroke-width="2.5" fill="none"/>
+<text x="670.0" y="322" text-anchor="middle" font-size="15" fill="#0D7A74">drivers → routes</text>
+<path d="M670,295 V350 H1105 V295" stroke="#0D7A74" stroke-width="2.5" fill="none"/>
+<text x="887.5" y="344" text-anchor="middle" font-size="15" fill="#0D7A74">vehicles → routes</text>
+<path d="M1105,295 V372 H1540 V295" stroke="#0D7A74" stroke-width="2.5" fill="none"/>
+<text x="1322.5" y="366" text-anchor="middle" font-size="15" fill="#0D7A74">routes → orders</text>
+<text x="40" y="748" font-size="17" fill="#52677B">Las 17 FK se detallan en las ocho vistas siguientes. orders.driver_id no es FK física.</text>
+</svg>

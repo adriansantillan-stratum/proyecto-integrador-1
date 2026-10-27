@@ -1,0 +1,124 @@
+erDiagram
+    drivers {
+        BIGSERIAL id PK
+        VARCHAR_50 external_id UK
+        VARCHAR_100 first_name
+        VARCHAR_100 last_name
+        VARCHAR_50 license_number UK
+        VARCHAR_20 phone_number
+        VARCHAR_100 email UK
+        BOOLEAN is_active
+        TIMESTAMP_WITH_TIME_ZONE created_at
+        TIMESTAMP_WITH_TIME_ZONE updated_at
+    }
+    vehicles {
+        BIGSERIAL id PK
+        VARCHAR_20 plate_number UK
+        VARCHAR_100 model
+        VARCHAR_100 brand
+        DECIMAL_10_2 capacity_kg
+        DECIMAL_10_2 capacity_m3
+        BOOLEAN is_active
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    routes {
+        BIGSERIAL id PK
+        BIGINT driver_id FK
+        BIGINT vehicle_id FK
+        DATE route_date
+        VARCHAR_50 status
+        TIMESTAMP_WITH_TIME_ZONE estimated_start_time
+        TIMESTAMP_WITH_TIME_ZONE actual_start_time
+        TIMESTAMP_WITH_TIME_ZONE actual_end_time
+        DECIMAL_10_2 total_distance_km
+        TIMESTAMP_WITH_TIME_ZONE created_at
+        TEXT geometry
+        DOUBLE_PRECISION total_duration_min
+    }
+    hubs {
+        BIGSERIAL id PK
+        VARCHAR_100 name
+        VARCHAR_20 code UK
+        TEXT address
+        VARCHAR_50 city
+        DECIMAL_10_8 latitude
+        DECIMAL_11_8 longitude
+        BOOLEAN is_active
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    vehicle_maintenance_logs {
+        BIGSERIAL id PK
+        BIGINT vehicle_id FK
+        DATE service_date
+        VARCHAR_50 service_type
+        TEXT description
+        INTEGER odometer_reading
+        DECIMAL_12_2 cost
+        VARCHAR_100 workshop_name
+        DATE next_service_date
+    }
+    fuel_logs {
+        BIGSERIAL id PK
+        BIGINT vehicle_id FK
+        BIGINT driver_id FK
+        TIMESTAMP_WITH_TIME_ZONE fuel_date
+        DECIMAL_10_2 liters
+        DECIMAL_12_2 total_cost
+        INTEGER odometer_reading
+        VARCHAR_100 gas_station
+    }
+    route_expenses {
+        BIGSERIAL id PK
+        BIGINT route_id FK
+        VARCHAR_50 expense_type
+        DECIMAL_10_2 amount
+        TEXT description
+        TEXT receipt_url
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    incidents {
+        BIGSERIAL id PK
+        BIGINT route_id FK
+        VARCHAR_50 incident_type
+        VARCHAR_20 severity
+        TEXT description
+        DECIMAL_10_8 location_lat
+        DECIMAL_11_8 location_lon
+        TIMESTAMP_WITH_TIME_ZONE reported_at
+        TIMESTAMP_WITH_TIME_ZONE resolved_at
+    }
+    driver_contracts {
+        BIGSERIAL id PK
+        BIGINT driver_id FK,UK
+        VARCHAR_50 contract_type
+        DATE start_date
+        DATE end_date
+        DECIMAL_12_2 base_salary
+    }
+    driver_shifts {
+        BIGSERIAL id PK
+        BIGINT driver_id FK
+        TIMESTAMP_WITH_TIME_ZONE shift_start
+        TIMESTAMP_WITH_TIME_ZONE shift_end
+        VARCHAR_20 status
+    }
+    purchases {
+        BIGSERIAL id PK
+        VARCHAR_500 description
+        VARCHAR_255 supplier
+        DECIMAL_12_2 amount
+        VARCHAR_50 status
+        VARCHAR_100 category
+        TEXT notes
+        TIMESTAMP_WITH_TIME_ZONE created_at
+        TIMESTAMP_WITH_TIME_ZONE updated_at
+    }
+    drivers o|--o{ routes : "driver_id → id"
+    vehicles o|--o{ routes : "vehicle_id → id"
+    vehicles o|--o{ vehicle_maintenance_logs : "vehicle_id → id"
+    vehicles o|--o{ fuel_logs : "vehicle_id → id"
+    drivers o|--o{ fuel_logs : "driver_id → id"
+    routes o|--o{ route_expenses : "route_id → id"
+    routes o|--o{ incidents : "route_id → id"
+    drivers o|--o| driver_contracts : "driver_id → id"
+    drivers o|--o{ driver_shifts : "driver_id → id"

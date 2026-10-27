@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1365" viewBox="0 0 1800 1365"><defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto"><path d="M0 0 L9 4 L0 8" fill="none" stroke="#315675" stroke-width="1.6"/></marker></defs><rect width="100%" height="100%" fill="white"/>
+<text x="35" y="48" font-family="Arial" font-size="30" font-weight="700" fill="#1c3448" text-anchor="start">Confirmación comercial y preparación de la jornada</text>
+<text x="130.0" y="100" font-family="Arial" font-size="20" font-weight="700" fill="#1c3448" text-anchor="middle">Dispatcher web</text>
+<line x1="130.0" y1="150" x2="130.0" y2="1340" stroke="#b1bdc8" stroke-dasharray="6 5"/>
+<text x="515.0" y="100" font-family="Arial" font-size="20" font-weight="700" fill="#1c3448" text-anchor="middle">REST y acceso</text>
+<line x1="515.0" y1="150" x2="515.0" y2="1340" stroke="#b1bdc8" stroke-dasharray="6 5"/>
+<text x="900.0" y="100" font-family="Arial" font-size="20" font-weight="700" fill="#1c3448" text-anchor="middle">Aplicación</text>
+<line x1="900.0" y1="150" x2="900.0" y2="1340" stroke="#b1bdc8" stroke-dasharray="6 5"/>
+<text x="1285.0" y="100" font-family="Arial" font-size="20" font-weight="700" fill="#1c3448" text-anchor="middle">PostgreSQL</text>
+<line x1="1285.0" y1="150" x2="1285.0" y2="1340" stroke="#b1bdc8" stroke-dasharray="6 5"/>
+<text x="1670.0" y="100" font-family="Arial" font-size="20" font-weight="700" fill="#1c3448" text-anchor="middle">Conductor móvil</text>
+<line x1="1670.0" y1="150" x2="1670.0" y2="1340" stroke="#b1bdc8" stroke-dasharray="6 5"/>
+<polyline points="130.0,210 515.0,210" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="142.0" y="192" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">1. POST /orders sin routeId con datos válidos</text>
+<polyline points="515.0,315 900.0,315" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="527.0" y="297" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">2. createOrder fuerza PENDING, sin asignación</text>
+<polyline points="900.0,420 1285.0,420" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="912.0" y="402" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">3. INSERT pedido e historial dentro de una transacción</text>
+<polyline points="130.0,525 515.0,525" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="142.0" y="507" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">4. PATCH business-data registra aceptación, dirección y cobertura</text>
+<polyline points="900.0,630 1285.0,630" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="912.0" y="612" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">5. Guarda declaración del operador, actor y fecha</text>
+<polyline points="130.0,735 515.0,735" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="142.0" y="717" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">6. PATCH route asigna el mismo ID a una ruta PLANNED</text>
+<polyline points="900.0,840 1285.0,840" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="912.0" y="822" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">7. Bloquea recurso, exige confirmación e invalida revisión anterior</text>
+<polyline points="130.0,945 515.0,945" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="142.0" y="927" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">8. Jefatura autoriza la revisión con capacidad y carga</text>
+<polyline points="1670.0,1050 515.0,1050" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="527.0" y="1032" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">9. DRIVER acepta su propia hoja de ruta</text>
+<polyline points="130.0,1155 515.0,1155" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="142.0" y="1137" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">10. PATCH status IN_PROGRESS solicita despacho</text>
+<polyline points="900.0,1260 1285.0,1260" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="912.0" y="1242" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">11. Exige controles previos y pedidos; guarda recorrido y EN TRÁNSITO</text></svg>

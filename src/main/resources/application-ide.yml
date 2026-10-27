@@ -1,0 +1,24 @@
+spring:
+  config:
+    activate:
+      on-profile: ide
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 16379
+  r2dbc:
+    url: r2dbc:postgresql://${IDE_DB_HOST:127.0.0.1}:${IDE_DB_PORT:5433}/${DB_NAME:ecoroute}
+  flyway:
+    url: jdbc:postgresql://${IDE_DB_HOST:127.0.0.1}:${IDE_DB_PORT:5433}/${DB_NAME:ecoroute}
+
+aws:
+  s3:
+    local-durable-backup: true
+
+keycloak:
+  admin-base-url: http://localhost:8080
+  admin-client-secret: ${KEYCLOAK_ADMIN_CLIENT_SECRET:}
+
+logging:
+  level:
+    org.springframework.data.r2dbc: INFO

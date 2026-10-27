@@ -1,0 +1,26 @@
+{
+  "atUtc": "2026-10-27T13:14:24.731299+00:00",
+  "components": {
+    "backend": {
+      "originalCopyVerified": true,
+      "postRunComparedFiles": 206,
+      "differences": [],
+      "applicationTestOrDependencyInputDifferences": [],
+      "criticalInputsUnchanged": true
+    },
+    "web-admin": {
+      "originalCopyVerified": true,
+      "postRunComparedFiles": 114,
+      "differences": [],
+      "applicationTestOrDependencyInputDifferences": [],
+      "criticalInputsUnchanged": true
+    },
+    "mobile-app": {
+      "originalCopyVerified": true,
+      "postRunComparedFiles": 195,
+      "differences": [],
+      "applicationTestOrDependencyInputDifferences": [],
+      "criticalInputsUnchanged": true
+    }
+  }
+}

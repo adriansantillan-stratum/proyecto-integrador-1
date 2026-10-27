@@ -1,0 +1,11 @@
+{
+  "file": "ecoroute-realm.json",
+  "removedKeyProviderComponents": 4,
+  "liveRealmChanged": false,
+  "privateOriginalExcluded": true,
+  "publicSha256": "e89470975cacd52245f37296b76673b0c95da1213eb340378ff528fdca43b45a",
+  "liveUsersPasswordsChanged": false,
+  "businessRolesChanged": false,
+  "exportDemoCredentialsReplaced": 1,
+  "noPasswordHashesDistributed": true
+}

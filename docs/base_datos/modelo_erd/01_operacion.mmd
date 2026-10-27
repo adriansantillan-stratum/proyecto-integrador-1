@@ -1,0 +1,128 @@
+erDiagram
+    drivers {
+        BIGSERIAL id PK
+        VARCHAR_50 external_id UK
+        VARCHAR_100 first_name
+        VARCHAR_100 last_name
+        VARCHAR_50 license_number UK
+        VARCHAR_20 phone_number
+        VARCHAR_100 email UK
+        BOOLEAN is_active
+        TIMESTAMP_WITH_TIME_ZONE created_at
+        TIMESTAMP_WITH_TIME_ZONE updated_at
+    }
+    vehicles {
+        BIGSERIAL id PK
+        VARCHAR_20 plate_number UK
+        VARCHAR_100 model
+        VARCHAR_100 brand
+        DECIMAL_10_2 capacity_kg
+        DECIMAL_10_2 capacity_m3
+        BOOLEAN is_active
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    routes {
+        BIGSERIAL id PK
+        BIGINT driver_id FK
+        BIGINT vehicle_id FK
+        DATE route_date
+        VARCHAR_50 status
+        TIMESTAMP_WITH_TIME_ZONE estimated_start_time
+        TIMESTAMP_WITH_TIME_ZONE actual_start_time
+        TIMESTAMP_WITH_TIME_ZONE actual_end_time
+        DECIMAL_10_2 total_distance_km
+        TIMESTAMP_WITH_TIME_ZONE created_at
+        TEXT geometry
+        DOUBLE_PRECISION total_duration_min
+    }
+    orders {
+        BIGSERIAL id PK
+        VARCHAR_255 tracking_number
+        VARCHAR_50 status
+        BIGINT driver_id
+        VARCHAR_100 external_reference
+        BIGINT route_id FK
+        VARCHAR_255 recipient_name
+        VARCHAR_20 recipient_phone
+        VARCHAR_100 recipient_email
+        TEXT delivery_address
+        VARCHAR_100 delivery_city
+        VARCHAR_100 delivery_district
+        DECIMAL_10_8 latitude
+        DECIMAL_11_8 longitude
+        INTEGER priority
+        TIMESTAMP_WITH_TIME_ZONE estimated_delivery_window_start
+        TIMESTAMP_WITH_TIME_ZONE estimated_delivery_window_end
+        TIMESTAMP_WITH_TIME_ZONE created_at
+        TIMESTAMP_WITH_TIME_ZONE updated_at
+        INT stop_sequence
+    }
+    delivery_proofs {
+        BIGSERIAL id PK
+        BIGINT order_id FK,UK
+        TEXT image_url
+        TEXT signature_data_url
+        VARCHAR_255 receiver_name
+        VARCHAR_20 receiver_dni
+        TIMESTAMP_WITH_TIME_ZONE verified_at
+        DECIMAL_10_8 latitude
+        DECIMAL_11_8 longitude
+    }
+    order_status_history {
+        BIGSERIAL id PK
+        BIGINT order_id FK
+        VARCHAR_50 status
+        TEXT reason
+        DECIMAL_10_8 location_lat
+        DECIMAL_11_8 location_lon
+        VARCHAR_100 changed_by
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    vehicle_gps_history {
+        BIGSERIAL id PK
+        BIGINT vehicle_id FK
+        BIGINT driver_id FK
+        DECIMAL_10_8 latitude
+        DECIMAL_11_8 longitude
+        DECIMAL_10_2 speed_kmh
+        INTEGER heading_degrees
+        TIMESTAMP_WITH_TIME_ZONE ping_time
+    }
+    products {
+        BIGSERIAL id PK
+        VARCHAR_50 sku UK
+        VARCHAR_255 name
+        TEXT description
+        VARCHAR_50 category
+        DECIMAL_10_2 unit_weight_kg
+        DECIMAL_10_4 unit_volume_m3
+        DECIMAL_12_2 price
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    order_items {
+        BIGSERIAL id PK
+        BIGINT order_id FK
+        BIGINT product_id FK
+        INTEGER quantity
+        DECIMAL_12_2 unit_price
+        DECIMAL_12_2 total_price
+    }
+    notifications {
+        BIGSERIAL id PK
+        VARCHAR_50 type
+        VARCHAR_255 title
+        TEXT message
+        BIGINT order_id FK
+        BOOLEAN is_read
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    orders ||--o| delivery_proofs : "order_id → id"
+    drivers o|--o{ routes : "driver_id → id"
+    vehicles o|--o{ routes : "vehicle_id → id"
+    vehicles o|--o{ vehicle_gps_history : "vehicle_id → id"
+    drivers o|--o{ vehicle_gps_history : "driver_id → id"
+    orders o|--o{ order_status_history : "order_id → id"
+    routes o|--o{ orders : "route_id → id"
+    orders o|--o{ order_items : "order_id → id"
+    products o|--o{ order_items : "product_id → id"
+    orders o|--o{ notifications : "order_id → id"

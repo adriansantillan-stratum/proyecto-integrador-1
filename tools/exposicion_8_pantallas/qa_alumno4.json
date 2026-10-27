@@ -1,0 +1,165 @@
+{
+  "pages": [
+    {
+      "page": 78,
+      "status": "PASS",
+      "notes": "Fragmento 2 y reproducción literal legibles; líneas largas envueltas dentro del margen. Sin recorte, superposición ni invasión del pie."
+    },
+    {
+      "page": 79,
+      "status": "PASS",
+      "notes": "Validaciones, guion y primeras preguntas legibles. Jerarquía y separación de párrafos correctas; respuesta inferior completa."
+    },
+    {
+      "page": 80,
+      "status": "PASS",
+      "notes": "Continuación de preguntas, pruebas y entrega al siguiente expositor legibles. Espacio final corresponde a cierre de sección; sin encabezado huérfano."
+    },
+    {
+      "page": 81,
+      "status": "MINOR_ISSUE",
+      "notes": "Título, tabla y captura Dashboard legibles, sin recorte adicional de maquetación. En fila Proceso y conexión se ve lista literal ['P05 …'] en vez de prosa; defecto menor de formato. El recorte inferior de la captura es histórico y está declarado en su pie."
+    },
+    {
+      "page": 82,
+      "status": "PASS_WITH_OBSERVATION",
+      "notes": "Condiciones y seis pasos completos y legibles. Espacio inferior amplio antes del diagrama de página 83; no hay texto cortado ni contenido huérfano."
+    },
+    {
+      "page": 83,
+      "status": "ISSUE",
+      "notes": "Diagrama y lista del flujo legibles. Defecto de paginación: el encabezado Peticiones que deben reconocer y solo la fila de cabecera de la tabla quedan al pie; las filas de datos empiezan en 84 con cabecera repetida."
+    },
+    {
+      "page": 84,
+      "status": "PASS",
+      "notes": "Tabla de endpoints continúa con cabecera repetida; celdas y parámetros envueltos sin truncarse. Texto frontend y comienzo backend legibles."
+    },
+    {
+      "page": 85,
+      "status": "PASS",
+      "notes": "Continuación backend, persistencia y mapa de fuentes legibles. Rutas extensas dentro de márgenes; sin superposición ni cortes de glifos."
+    },
+    {
+      "page": 86,
+      "status": "PASS",
+      "notes": "Mapa de fuentes y fragmento React completos y legibles a resolución original; wrapping del código y numeración sin recortes. La explicación sigue en 87."
+    },
+    {
+      "page": 87,
+      "status": "PASS",
+      "notes": "Fragmento SQL/Java, viñetas, validaciones y comienzo del guion legibles. Continuación de párrafo al final sin línea aislada ni solapamiento."
+    },
+    {
+      "page": 88,
+      "status": "PASS",
+      "notes": "Guion y cinco preguntas con sus respuestas legibles, sin cortes de texto ni encabezados huérfanos."
+    },
+    {
+      "page": 89,
+      "status": "PASS",
+      "notes": "Pruebas, fuentes y transición a pantalla 08 legibles. Espacio final es cierre de pantalla; no se observa pérdida de contenido."
+    },
+    {
+      "page": 90,
+      "status": "MINOR_ISSUE",
+      "notes": "Título en dos líneas, tabla y captura BI legibles sin recortes de maquetación. La fila Proceso y conexión muestra dos entradas como lista literal ['…', '…']; mismo defecto menor que en 81. Captura histórica parcial y estado de pestaña declarados."
+    },
+    {
+      "page": 91,
+      "status": "PASS_WITH_OBSERVATION",
+      "notes": "Condiciones y demostración legibles y completas. Espacio inferior amplio antes del diagrama de 92; no se observa un elemento huérfano."
+    },
+    {
+      "page": 92,
+      "status": "PASS",
+      "notes": "Diagrama de siete pasos y flujo textual completos dentro de márgenes; caption separado y legible, sin superposición."
+    },
+    {
+      "page": 93,
+      "status": "PASS",
+      "notes": "Tabla de tres endpoints completa, cabecera visible y contenido envuelto. Texto frontend/backend legible sin cortes."
+    },
+    {
+      "page": 94,
+      "status": "PASS",
+      "notes": "Fórmulas y persistencia legibles; referencias largas se envuelven dentro del margen. Inicio de mapa de fuentes correcto."
+    },
+    {
+      "page": 95,
+      "status": "PASS",
+      "notes": "Mapa de fuentes completo y legible. Espacio inferior precede nueva sección de fragmentos en 96; no aparece contenido truncado."
+    },
+    {
+      "page": 96,
+      "status": "PASS",
+      "notes": "Fragmento React BusinessIntelligence 76-93 y tres explicaciones revisados a resolución original. Código denso pero legible, con wrapping y sin desbordamiento ni superposición."
+    },
+    {
+      "page": 97,
+      "status": "PASS",
+      "notes": "Fragmentos DashboardService y SQL V16 completos, numeración y operadores legibles. Viñetas y comienzo de validaciones no se superponen."
+    },
+    {
+      "page": 98,
+      "status": "PASS",
+      "notes": "Validaciones y guion BI completo legibles; fórmulas, nulos y límites GPS dentro de márgenes, sin recorte ni superposición."
+    },
+    {
+      "page": 99,
+      "status": "MINOR_ISSUE",
+      "notes": "Preguntas y pruebas legibles. El último test queda con nombre y descripción al pie, pero su ruta fuente se separa y pasa sola al comienzo de 100."
+    },
+    {
+      "page": 100,
+      "status": "MINOR_ISSUE",
+      "notes": "Ruta web-admin/tests/gps-quality.test.mjs huérfana al principio, separada del test de 99. Resto de evidencia y cierre legible; espacio amplio de cierre de pantalla, sin recortes."
+    },
+    {
+      "page": 101,
+      "status": "PASS",
+      "notes": "Tabla de ensayo integrado, lista de comprobación y alcance de evidencia completos y legibles. Celdas y párrafos sin recortes ni superposición."
+    },
+    {
+      "page": 102,
+      "status": "PASS",
+      "notes": "Fuentes y tabla de términos completas y legibles. Encabezados, filas y pie correctos. Espacio final corresponde a fin de documento."
+    }
+  ],
+  "summary": "Revisión visual nativa completada el 26/10/2026: 25 de 25 PNG finales, páginas 78 a 102 inclusive, abiertos individualmente con view_image detail=original. Se revisó exclusivamente docs/exposicion_8_pantallas/_qa/render_final; no el raster anterior render/. Sin recortes de maquetación, superposiciones ni glifos ausentes observados. Tres incidencias agrupadas de formato/paginación pendientes; no se modificó el documento ni se usó COM, UI o LibreOffice. Los espacios amplios de 82/91 anteceden diagramas completos y se registran como observación, no como pérdida de contenido. Esta revisión no valida páginas fuera del rango ni constituye una prueba nueva de la aplicación.",
+  "issues": [
+    {
+      "id": "QA4-01",
+      "pages": [
+        81,
+        90
+      ],
+      "severity": "minor",
+      "location": "Tabla inicial, fila Proceso y conexión",
+      "description": "Contenido de processes mostrado como lista literal con corchetes y comillas: ['…'] en 81 y ['…', '…'] en 90. El texto es legible, pero expone una representación de datos en vez de prosa del documento.",
+      "recommendation": "Renderizar las entradas de procesos como párrafos o texto unido, manteniendo su contenido congelado."
+    },
+    {
+      "id": "QA4-02",
+      "pages": [
+        83,
+        84
+      ],
+      "severity": "moderate",
+      "location": "Página 83, parte inferior, Peticiones que deben reconocer",
+      "description": "La tabla deja solo la cabecera Método / Ruta del backend / Finalidad al pie de 83; todas las filas de datos comienzan en 84, con cabecera repetida. Cabecera de tabla huérfana.",
+      "recommendation": "Mantener el inicio de tabla junto con al menos su primera fila o mover el encabezado y la tabla al comienzo de 84."
+    },
+    {
+      "id": "QA4-03",
+      "pages": [
+        99,
+        100
+      ],
+      "severity": "minor",
+      "location": "Último test de 99 y primera línea de 100",
+      "description": "La ruta fuente web-admin/tests/gps-quality.test.mjs queda sola al comienzo de 100; el nombre y la descripción del test están al final de 99.",
+      "recommendation": "Mantener cada bloque de nombre, descripción y fuente del test unido, o mover el bloque completo al inicio de 100."
+    }
+  ]
+}

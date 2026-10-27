@@ -1,0 +1,14 @@
+{
+  "folders": [{"name":"EcoRoute Backend Spring Boot","path":"."}],
+  "settings": {
+    "java.configuration.updateBuildConfiguration":"automatic",
+    "java.import.gradle.java.home":"C:/Program Files/Eclipse Adoptium/jdk-17.0.17.10-hotspot",
+    "java.configuration.runtimes":[{"name":"JavaSE-17","path":"C:/Program Files/Eclipse Adoptium/jdk-17.0.17.10-hotspot","default":true}],
+    "java.import.exclusions":["**/.claude/**","**/mobile-app/**","**/web-admin/**","**/docs/**"],
+    "files.watcherExclude":{"**/.claude/**":true,"**/docs/**/_qa/**":true}
+  },
+  "launch": {
+    "version":"0.2.0",
+    "configurations":[{"type":"java","request":"attach","name":"EcoRoute Backend conectar JVM 5005","hostName":"127.0.0.1","port":5005,"projectName":"ecoroute-backend","timeout":30000}]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "reviewer": "principal",
+  "pages": [
+    {
+      "page": 61,
+      "status": "PASS"
+    },
+    {
+      "page": 62,
+      "status": "PASS"
+    },
+    {
+      "page": 71,
+      "status": "PASS"
+    },
+    {
+      "page": 72,
+      "status": "PASS"
+    }
+  ],
+  "issues": [],
+  "summary": "Revisión directa del render_verified. Correcciones adicionales se validan en qa_last_delta."
+}

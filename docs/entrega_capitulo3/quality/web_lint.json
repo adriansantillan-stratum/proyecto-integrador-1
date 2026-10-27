@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "startedAtUtc": "2026-10-27T13:08:55.609749+00:00",
+  "finishedAtUtc": "2026-10-27T13:09:12.939788+00:00",
+  "durationSeconds": 17.328,
+  "command": "<USER>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe node_modules/eslint/bin/eslint.js .",
+  "workingDirectory": "<TEMP_QA>\\web-admin",
+  "log": "web_lint.log",
+  "sourceSha256": "15f39947e31bbc0bda2449621c7ea731cd820e18b08619fa87ab4411ccf61ed7",
+  "lintCounts": null
+}

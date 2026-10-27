@@ -1,0 +1,493 @@
+{
+  "mode": "ISOLATED_FIXTURES_NO_OPERATIONAL_WRITES",
+  "tests": [
+    {
+      "name": "P01 draft has three unchecked review boxes and no route field",
+      "pass": true
+    },
+    {
+      "name": "P01 unconfirmed existing order cannot be assigned",
+      "pass": true
+    },
+    {
+      "name": "terminal order is readonly and POD images load as authenticated blobs",
+      "pass": true
+    },
+    {
+      "name": "P02 dispatch requires driver acceptance and keeps backend order",
+      "pass": true
+    },
+    {
+      "name": "dashboard partial failure retains other sources and forwards all filters",
+      "pass": true
+    },
+    {
+      "name": "route CSV preserves missing GPS and labels by route",
+      "pass": true
+    },
+    {
+      "name": "all five BI views display at least four charts",
+      "pass": true
+    },
+    {
+      "name": "goals are read from API and improvement actions expose human follow-up",
+      "pass": true
+    },
+    {
+      "name": "zero denominators remain no-data and are not seeded from baseline",
+      "pass": true
+    },
+    {
+      "name": "identities handles 503 and legacy is marked migration, effective roles come from API",
+      "pass": true
+    },
+    {
+      "name": "incidents expose reasons, status and decision form without forged actor",
+      "pass": true
+    },
+    {
+      "name": "standalone improvement screen and CSV instructions are reachable",
+      "pass": true
+    },
+    {
+      "name": "mobile create form fits viewport",
+      "pass": true
+    }
+  ],
+  "screenshots": [
+    "01_p01_draft_fixture.png",
+    "02_p01_blocked_assignment_fixture.png",
+    "03_pod_readonly_fixture.png",
+    "04_p02_pending_acceptance_fixture.png",
+    "04b_p02_accepted_fixture.png",
+    "04c_p02_create_route_fixture.png",
+    "05_dashboard_partial_failure_fixture.png",
+    "05b_reports_fixture.png",
+    "bi_Tendencias_fixture.png",
+    "bi_Causas_fixture.png",
+    "bi_Cumplimiento_fixture.png",
+    "bi_Calidad_de_datos_fixture.png",
+    "bi_Eficiencia_fixture.png",
+    "bi_goals_fixture.png",
+    "bi_create_improvement_fixture.png",
+    "bi_no_data_fixture.png",
+    "06_identity_503_fixture.png",
+    "06b_identity_effective_fixture.png",
+    "06c_identity_roles_fixture.png",
+    "06d_identity_legacy_fixture.png",
+    "07a_incident_list_fixture.png",
+    "07b_incident_create_fixture.png",
+    "07_incident_resolution_fixture.png",
+    "07c_improvements_empty_fixture.png",
+    "07d_csv_import_contract_fixture.png",
+    "08_mobile_draft_fixture.png"
+  ],
+  "mutations": [],
+  "apiGets": [
+    {
+      "endpoint": "/session/me",
+      "query": ""
+    },
+    {
+      "endpoint": "/notifications/unread/count",
+      "query": ""
+    },
+    {
+      "endpoint": "/orders",
+      "query": ""
+    },
+    {
+      "endpoint": "/routes",
+      "query": ""
+    },
+    {
+      "endpoint": "/orders/1/business-data",
+      "query": ""
+    },
+    {
+      "endpoint": "/orders/1/business-data",
+      "query": ""
+    },
+    {
+      "endpoint": "/delivery-proofs/1",
+      "query": ""
+    },
+    {
+      "endpoint": "/orders/2/business-data",
+      "query": ""
+    },
+    {
+      "endpoint": "/orders/2/business-data",
+      "query": ""
+    },
+    {
+      "endpoint": "/delivery-proofs/2",
+      "query": ""
+    },
+    {
+      "endpoint": "/delivery-proofs/2/photo",
+      "query": ""
+    },
+    {
+      "endpoint": "/delivery-proofs/2/signature",
+      "query": ""
+    },
+    {
+      "endpoint": "/delivery-proofs/2/photo",
+      "query": ""
+    },
+    {
+      "endpoint": "/delivery-proofs/2/signature",
+      "query": ""
+    },
+    {
+      "endpoint": "/session/me",
+      "query": ""
+    },
+    {
+      "endpoint": "/notifications/unread/count",
+      "query": ""
+    },
+    {
+      "endpoint": "/routes",
+      "query": ""
+    },
+    {
+      "endpoint": "/drivers",
+      "query": ""
+    },
+    {
+      "endpoint": "/vehicles",
+      "query": ""
+    },
+    {
+      "endpoint": "/orders",
+      "query": ""
+    },
+    {
+      "endpoint": "/gps/history/12",
+      "query": ""
+    },
+    {
+      "endpoint": "/routes/10/review",
+      "query": ""
+    },
+    {
+      "endpoint": "/gps/history/12",
+      "query": ""
+    },
+    {
+      "endpoint": "/orders/1/business-data",
+      "query": ""
+    },
+    {
+      "endpoint": "/routes/10/path",
+      "query": ""
+    },
+    {
+      "endpoint": "/session/me",
+      "query": ""
+    },
+    {
+      "endpoint": "/notifications/unread/count",
+      "query": ""
+    },
+    {
+      "endpoint": "/routes",
+      "query": ""
+    },
+    {
+      "endpoint": "/drivers",
+      "query": ""
+    },
+    {
+      "endpoint": "/vehicles",
+      "query": ""
+    },
+    {
+      "endpoint": "/orders",
+      "query": ""
+    },
+    {
+      "endpoint": "/gps/history/12",
+      "query": ""
+    },
+    {
+      "endpoint": "/routes/10/review",
+      "query": ""
+    },
+    {
+      "endpoint": "/gps/history/12",
+      "query": ""
+    },
+    {
+      "endpoint": "/orders/1/business-data",
+      "query": ""
+    },
+    {
+      "endpoint": "/routes/10/path",
+      "query": ""
+    },
+    {
+      "endpoint": "/session/me",
+      "query": ""
+    },
+    {
+      "endpoint": "/notifications/unread/count",
+      "query": ""
+    },
+    {
+      "endpoint": "/dashboard/orders-by-status",
+      "query": ""
+    },
+    {
+      "endpoint": "/dashboard/delivery-performance",
+      "query": ""
+    },
+    {
+      "endpoint": "/dashboard/deliveries-by-driver",
+      "query": ""
+    },
+    {
+      "endpoint": "/dashboard/orders-by-district",
+      "query": ""
+    },
+    {
+      "endpoint": "/drivers",
+      "query": ""
+    },
+    {
+      "endpoint": "/vehicles",
+      "query": ""
+    },
+    {
+      "endpoint": "/routes",
+      "query": ""
+    },
+    {
+      "endpoint": "/dashboard/orders-by-status",
+      "query": "?driverId=7"
+    },
+    {
+      "endpoint": "/dashboard/delivery-performance",
+      "query": "?driverId=7"
+    },
+    {
+      "endpoint": "/dashboard/deliveries-by-driver",
+      "query": "?driverId=7"
+    },
+    {
+      "endpoint": "/dashboard/orders-by-district",
+      "query": "?driverId=7"
+    },
+    {
+      "endpoint": "/dashboard/orders-by-status",
+      "query": "?driverId=7&startDate=2026-10-19"
+    },
+    {
+      "endpoint": "/dashboard/delivery-performance",
+      "query": "?driverId=7&startDate=2026-10-19"
+    },
+    {
+      "endpoint": "/dashboard/deliveries-by-driver",
+      "query": "?driverId=7&startDate=2026-10-19"
+    },
+    {
+      "endpoint": "/dashboard/orders-by-district",
+      "query": "?driverId=7&startDate=2026-10-19"
+    },
+    {
+      "endpoint": "/dashboard/orders-by-status",
+      "query": "?driverId=7&startDate=2026-10-19&endDate=2026-10-19"
+    },
+    {
+      "endpoint": "/dashboard/delivery-performance",
+      "query": "?driverId=7&startDate=2026-10-19&endDate=2026-10-19"
+    },
+    {
+      "endpoint": "/dashboard/deliveries-by-driver",
+      "query": "?driverId=7&startDate=2026-10-19&endDate=2026-10-19"
+    },
+    {
+      "endpoint": "/dashboard/orders-by-district",
+      "query": "?driverId=7&startDate=2026-10-19&endDate=2026-10-19"
+    },
+    {
+      "endpoint": "/session/me",
+      "query": ""
+    },
+    {
+      "endpoint": "/notifications/unread/count",
+      "query": ""
+    },
+    {
+      "endpoint": "/reports/orders-summary",
+      "query": ""
+    },
+    {
+      "endpoint": "/reports/driver-performance",
+      "query": ""
+    },
+    {
+      "endpoint": "/reports/route-efficiency",
+      "query": ""
+    },
+    {
+      "endpoint": "/drivers",
+      "query": ""
+    },
+    {
+      "endpoint": "/session/me",
+      "query": ""
+    },
+    {
+      "endpoint": "/notifications/unread/count",
+      "query": ""
+    },
+    {
+      "endpoint": "/reports/bi",
+      "query": ""
+    },
+    {
+      "endpoint": "/drivers",
+      "query": ""
+    },
+    {
+      "endpoint": "/reports/goals/IID",
+      "query": ""
+    },
+    {
+      "endpoint": "/reports/goals/CHR",
+      "query": ""
+    },
+    {
+      "endpoint": "/reports/goals/TDE",
+      "query": ""
+    },
+    {
+      "endpoint": "/reports/goals/SUCCESS",
+      "query": ""
+    },
+    {
+      "endpoint": "/reports/goals/ONTIME",
+      "query": ""
+    },
+    {
+      "endpoint": "/improvement-actions",
+      "query": ""
+    },
+    {
+      "endpoint": "/session/me",
+      "query": ""
+    },
+    {
+      "endpoint": "/notifications/unread/count",
+      "query": ""
+    },
+    {
+      "endpoint": "/reports/bi",
+      "query": ""
+    },
+    {
+      "endpoint": "/drivers",
+      "query": ""
+    },
+    {
+      "endpoint": "/session/me",
+      "query": ""
+    },
+    {
+      "endpoint": "/notifications/unread/count",
+      "query": ""
+    },
+    {
+      "endpoint": "/users/identities",
+      "query": ""
+    },
+    {
+      "endpoint": "/drivers",
+      "query": ""
+    },
+    {
+      "endpoint": "/session/me",
+      "query": ""
+    },
+    {
+      "endpoint": "/notifications/unread/count",
+      "query": ""
+    },
+    {
+      "endpoint": "/users/identities",
+      "query": ""
+    },
+    {
+      "endpoint": "/drivers",
+      "query": ""
+    },
+    {
+      "endpoint": "/users",
+      "query": ""
+    },
+    {
+      "endpoint": "/session/me",
+      "query": ""
+    },
+    {
+      "endpoint": "/notifications/unread/count",
+      "query": ""
+    },
+    {
+      "endpoint": "/incidents",
+      "query": ""
+    },
+    {
+      "endpoint": "/routes",
+      "query": ""
+    },
+    {
+      "endpoint": "/orders",
+      "query": ""
+    },
+    {
+      "endpoint": "/session/me",
+      "query": ""
+    },
+    {
+      "endpoint": "/notifications/unread/count",
+      "query": ""
+    },
+    {
+      "endpoint": "/improvement-actions",
+      "query": ""
+    },
+    {
+      "endpoint": "/session/me",
+      "query": ""
+    },
+    {
+      "endpoint": "/notifications/unread/count",
+      "query": ""
+    },
+    {
+      "endpoint": "/orders",
+      "query": ""
+    },
+    {
+      "endpoint": "/routes",
+      "query": ""
+    },
+    {
+      "endpoint": "/session/me",
+      "query": ""
+    },
+    {
+      "endpoint": "/orders",
+      "query": ""
+    },
+    {
+      "endpoint": "/routes",
+      "query": ""
+    }
+  ],
+  "pageErrors": []
+}

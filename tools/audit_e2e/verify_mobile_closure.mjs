@@ -1,0 +1,17 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {execFileSync} from 'node:child_process';
+const root=path.resolve(import.meta.dirname,'../..');
+const sql="SELECT json_build_object('route',(SELECT to_jsonb(r) FROM routes r WHERE id=11),'order',(SELECT to_jsonb(o) FROM orders o WHERE id=28),'history',(SELECT json_agg(to_jsonb(h)) FROM order_status_history h WHERE order_id=28),'incidents',(SELECT json_agg(to_jsonb(i)) FROM incidents i WHERE order_id=28))";
+const records=JSON.parse(execFileSync('docker',['exec','ecoroute-db','psql','-U','user','-d','ecoroute','-At','-c',sql],{encoding:'utf8'}).trim());
+if(records.order.tracking_number!=='MOB-E2E-20261019212926-FALLO')throw new Error('Unexpected fixture');
+const tests=[];
+const check=(name,condition)=>tests.push({name,result:condition?'PASS':'FAIL'});
+check('No entrega móvil conserva FAILED en el servidor',records.order.status==='FAILED');
+check('El motivo y actor permanecen en historial',records.history.some(h=>h.status==='FAILED'&&h.reason?.includes('PRUEBA_SINTETICA_cliente_ausente')&&h.changed_by));
+check('Se abre una incidencia vinculada al pedido',records.incidents?.some(i=>i.order_id===28&&i.route_id===11));
+check('La ruta cierra cuando las dos paradas terminan',records.route.status==='COMPLETED'&&records.route.actual_end_time);
+const result={at:new Date().toISOString(),device:'EcoRoute_QA emulator-5556',scope:'No entrega sintética desde UI; consulta PostgreSQL de solo lectura',humanAcceptance:'PENDING',tests,records,summary:{passed:tests.filter(t=>t.result==='PASS').length,failed:tests.filter(t=>t.result==='FAIL').length}};
+fs.writeFileSync(path.join(root,'docs/correccion_integral/evidencias/prueba_emulador_no_entrega.json'),JSON.stringify(result,null,2));
+console.log(JSON.stringify({tests,summary:result.summary}));
+if(result.summary.failed)process.exitCode=1;

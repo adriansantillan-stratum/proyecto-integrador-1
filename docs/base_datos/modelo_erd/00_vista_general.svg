@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1930" height="1450" viewBox="0 0 1930 1450" role="img" aria-label="EcoRoute ERD completo: 33 tablas">
+<rect width="1930" height="1450" fill="#F8FAFC"/>
+<text x="50" y="62" font-family="Arial,sans-serif" font-size="36" font-weight="700" fill="#102A43">EcoRoute · modelo físico completo</text>
+<text x="50" y="94" font-family="Arial,sans-serif" font-size="18" fill="#496275">33 tablas · 239 columnas · 27 claves foráneas físicas · migraciones V1–V8</text>
+<rect x="50" y="128" width="910" height="494" rx="14" fill="#FFFFFF" stroke="#CBD7E0"/>
+<text x="74" y="167" font-family="Arial,sans-serif" font-size="23" font-weight="700" fill="#166B8A">Operación / entrega · 10</text>
+<rect x="74" y="191" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="86" y="220" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">drivers</text>
+<text x="86" y="245" font-family="Arial,sans-serif" font-size="13" fill="#496275">10 campos</text>
+<rect x="366" y="191" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="378" y="220" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">vehicles</text>
+<text x="378" y="245" font-family="Arial,sans-serif" font-size="13" fill="#496275">8 campos</text>
+<rect x="658" y="191" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="670" y="220" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">routes</text>
+<text x="670" y="245" font-family="Arial,sans-serif" font-size="13" fill="#496275">12 campos</text>
+<rect x="74" y="295" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="86" y="324" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">orders</text>
+<text x="86" y="349" font-family="Arial,sans-serif" font-size="13" fill="#496275">20 campos</text>
+<rect x="366" y="295" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="378" y="324" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">delivery_proofs</text>
+<text x="378" y="349" font-family="Arial,sans-serif" font-size="13" fill="#496275">9 campos</text>
+<rect x="658" y="295" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="670" y="324" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">order_status_history</text>
+<text x="670" y="349" font-family="Arial,sans-serif" font-size="13" fill="#496275">8 campos</text>
+<rect x="74" y="399" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="86" y="428" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">vehicle_gps_history</text>
+<text x="86" y="453" font-family="Arial,sans-serif" font-size="13" fill="#496275">8 campos</text>
+<rect x="366" y="399" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="378" y="428" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">products</text>
+<text x="378" y="453" font-family="Arial,sans-serif" font-size="13" fill="#496275">9 campos</text>
+<rect x="658" y="399" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="670" y="428" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">order_items</text>
+<text x="670" y="453" font-family="Arial,sans-serif" font-size="13" fill="#496275">6 campos</text>
+<rect x="74" y="503" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="86" y="532" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">notifications</text>
+<text x="86" y="557" font-family="Arial,sans-serif" font-size="13" fill="#496275">7 campos</text>
+<rect x="990" y="128" width="910" height="390" rx="14" fill="#FFFFFF" stroke="#CBD7E0"/>
+<text x="1014" y="167" font-family="Arial,sans-serif" font-size="23" font-weight="700" fill="#0B817B">Flota / soporte · 8</text>
+<rect x="1014" y="191" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="1026" y="220" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">hubs</text>
+<text x="1026" y="245" font-family="Arial,sans-serif" font-size="13" fill="#496275">9 campos</text>
+<rect x="1306" y="191" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="1318" y="220" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">vehicle_maintenance_logs</text>
+<text x="1318" y="245" font-family="Arial,sans-serif" font-size="13" fill="#496275">9 campos</text>
+<rect x="1598" y="191" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="1610" y="220" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">fuel_logs</text>
+<text x="1610" y="245" font-family="Arial,sans-serif" font-size="13" fill="#496275">8 campos</text>
+<rect x="1014" y="295" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="1026" y="324" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">route_expenses</text>
+<text x="1026" y="349" font-family="Arial,sans-serif" font-size="13" fill="#496275">7 campos</text>
+<rect x="1306" y="295" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="1318" y="324" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">incidents</text>
+<text x="1318" y="349" font-family="Arial,sans-serif" font-size="13" fill="#496275">9 campos</text>
+<rect x="1598" y="295" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="1610" y="324" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">driver_contracts</text>
+<text x="1610" y="349" font-family="Arial,sans-serif" font-size="13" fill="#496275">6 campos</text>
+<rect x="1014" y="399" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="1026" y="428" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">driver_shifts</text>
+<text x="1026" y="453" font-family="Arial,sans-serif" font-size="13" fill="#496275">5 campos</text>
+<rect x="1306" y="399" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="1318" y="428" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">purchases</text>
+<text x="1318" y="453" font-family="Arial,sans-serif" font-size="13" fill="#496275">9 campos</text>
+<rect x="50" y="800" width="910" height="286" rx="14" fill="#FFFFFF" stroke="#CBD7E0"/>
+<text x="74" y="839" font-family="Arial,sans-serif" font-size="23" font-weight="700" fill="#6B50A1">Seguridad local · 6</text>
+<rect x="74" y="863" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="86" y="892" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">auth_module</text>
+<text x="86" y="917" font-family="Arial,sans-serif" font-size="13" fill="#496275">4 campos</text>
+<rect x="366" y="863" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="378" y="892" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">auth_resource</text>
+<text x="378" y="917" font-family="Arial,sans-serif" font-size="13" fill="#496275">5 campos</text>
+<rect x="658" y="863" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="670" y="892" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">auth_action</text>
+<text x="670" y="917" font-family="Arial,sans-serif" font-size="13" fill="#496275">4 campos</text>
+<rect x="74" y="967" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="86" y="996" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">auth_role</text>
+<text x="86" y="1021" font-family="Arial,sans-serif" font-size="13" fill="#496275">5 campos</text>
+<rect x="366" y="967" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="378" y="996" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">auth_permission</text>
+<text x="378" y="1021" font-family="Arial,sans-serif" font-size="13" fill="#496275">5 campos</text>
+<rect x="658" y="967" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="670" y="996" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">auth_user_role</text>
+<text x="670" y="1021" font-family="Arial,sans-serif" font-size="13" fill="#496275">4 campos</text>
+<rect x="990" y="800" width="910" height="390" rx="14" fill="#FFFFFF" stroke="#CBD7E0"/>
+<text x="1014" y="839" font-family="Arial,sans-serif" font-size="23" font-weight="700" fill="#A4611B">Corporativo de referencia · 9</text>
+<rect x="1014" y="863" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="1026" y="892" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">corp_branches</text>
+<text x="1026" y="917" font-family="Arial,sans-serif" font-size="13" fill="#496275">6 campos</text>
+<rect x="1306" y="863" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="1318" y="892" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">corp_departments</text>
+<text x="1318" y="917" font-family="Arial,sans-serif" font-size="13" fill="#496275">3 campos</text>
+<rect x="1598" y="863" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="1610" y="892" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">corp_employees</text>
+<text x="1610" y="917" font-family="Arial,sans-serif" font-size="13" fill="#496275">9 campos</text>
+<rect x="1014" y="967" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="1026" y="996" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">corp_warehouses</text>
+<text x="1026" y="1021" font-family="Arial,sans-serif" font-size="13" fill="#496275">4 campos</text>
+<rect x="1306" y="967" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="1318" y="996" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">corp_customers</text>
+<text x="1318" y="1021" font-family="Arial,sans-serif" font-size="13" fill="#496275">8 campos</text>
+<rect x="1598" y="967" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="1610" y="996" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">corp_contracts</text>
+<text x="1610" y="1021" font-family="Arial,sans-serif" font-size="13" fill="#496275">6 campos</text>
+<rect x="1014" y="1071" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="1026" y="1100" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">corp_invoices</text>
+<text x="1026" y="1125" font-family="Arial,sans-serif" font-size="13" fill="#496275">8 campos</text>
+<rect x="1306" y="1071" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="1318" y="1100" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">corp_fleet_types</text>
+<text x="1318" y="1125" font-family="Arial,sans-serif" font-size="13" fill="#496275">3 campos</text>
+<rect x="1598" y="1071" width="275" height="76" rx="8" fill="#F8FAFC" stroke="#CBD7E0"/>
+<text x="1610" y="1100" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#102A43">corp_maintenance_logs</text>
+<text x="1610" y="1125" font-family="Arial,sans-serif" font-size="13" fill="#496275">6 campos</text>
+<text x="50" y="1180" font-family="Arial,sans-serif" font-size="20" font-weight="700" fill="#102A43">Relaciones declaradas en la BD</text>
+<text x="50" y="1214" font-family="Arial,sans-serif" font-size="14" fill="#496275">orders → delivery_proofs, order_status_history, order_items, notifications</text>
+<text x="670" y="1214" font-family="Arial,sans-serif" font-size="14" fill="#496275">auth_module → auth_resource</text>
+<text x="1290" y="1214" font-family="Arial,sans-serif" font-size="14" fill="#496275">auth_role → auth_permission, auth_user_role</text>
+<text x="50" y="1241" font-family="Arial,sans-serif" font-size="14" fill="#496275">auth_resource → auth_permission</text>
+<text x="670" y="1241" font-family="Arial,sans-serif" font-size="14" fill="#496275">auth_action → auth_permission</text>
+<text x="1290" y="1241" font-family="Arial,sans-serif" font-size="14" fill="#496275">corp_branches → corp_departments, corp_warehouses</text>
+<text x="50" y="1268" font-family="Arial,sans-serif" font-size="14" fill="#496275">corp_departments → corp_employees</text>
+<text x="670" y="1268" font-family="Arial,sans-serif" font-size="14" fill="#496275">corp_customers → corp_contracts, corp_invoices</text>
+<text x="1290" y="1268" font-family="Arial,sans-serif" font-size="14" fill="#496275">drivers → routes, vehicle_gps_history, fuel_logs, driver_contracts, driver_shifts</text>
+<text x="50" y="1295" font-family="Arial,sans-serif" font-size="14" fill="#496275">vehicles → routes, vehicle_gps_history, vehicle_maintenance_logs, fuel_logs</text>
+<text x="670" y="1295" font-family="Arial,sans-serif" font-size="14" fill="#496275">routes → orders, route_expenses, incidents</text>
+<text x="1290" y="1295" font-family="Arial,sans-serif" font-size="14" fill="#496275">products → order_items</text>
+<text x="50" y="1405" font-family="Arial,sans-serif" font-size="15" fill="#A4611B">Sin FK física: orders.driver_id, corp_maintenance_logs.vehicle_id, auth_user_role.user_external_id; hubs, purchases y corp_fleet_types aisladas.</text>
+</svg>

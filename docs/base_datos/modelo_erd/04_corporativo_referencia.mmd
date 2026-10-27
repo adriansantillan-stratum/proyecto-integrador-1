@@ -1,0 +1,77 @@
+erDiagram
+    corp_branches {
+        BIGSERIAL branch_id PK
+        VARCHAR_100 name
+        TEXT address
+        VARCHAR_50 city
+        BOOLEAN is_active
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    corp_departments {
+        BIGSERIAL dept_id PK
+        VARCHAR_100 name
+        BIGINT branch_id FK
+    }
+    corp_employees {
+        BIGSERIAL emp_id PK
+        VARCHAR_100 first_name
+        VARCHAR_100 last_name
+        VARCHAR_20 dni UK
+        VARCHAR_100 email UK
+        DATE hire_date
+        BIGINT dept_id FK
+        DECIMAL_12_2 salary
+        VARCHAR_20 status
+    }
+    corp_warehouses {
+        BIGSERIAL warehouse_id PK
+        BIGINT branch_id FK
+        DECIMAL_12_2 total_capacity_m3
+        INTEGER security_level
+    }
+    corp_customers {
+        BIGSERIAL customer_id PK
+        VARCHAR_200 company_name
+        VARCHAR_20 ruc UK
+        VARCHAR_100 contact_person
+        VARCHAR_100 contact_email
+        TEXT billing_address
+        VARCHAR_50 segment
+        TIMESTAMP_WITH_TIME_ZONE created_at
+    }
+    corp_contracts {
+        BIGSERIAL contract_id PK
+        BIGINT customer_id FK
+        DATE start_date
+        DATE end_date
+        VARCHAR_50 pricing_model
+        BOOLEAN is_active
+    }
+    corp_invoices {
+        BIGSERIAL invoice_id PK
+        BIGINT customer_id FK
+        VARCHAR_50 invoice_number UK
+        DECIMAL_15_2 amount
+        DECIMAL_15_2 tax
+        DATE issue_date
+        DATE due_date
+        VARCHAR_20 payment_status
+    }
+    corp_fleet_types {
+        BIGSERIAL type_id PK
+        VARCHAR_50 category
+        TEXT description
+    }
+    corp_maintenance_logs {
+        BIGSERIAL log_id PK
+        BIGINT vehicle_id
+        DATE maintenance_date
+        TEXT description
+        DECIMAL_10_2 cost
+        VARCHAR_100 provider_name
+    }
+    corp_branches o|--o{ corp_departments : "branch_id → branch_id"
+    corp_departments o|--o{ corp_employees : "dept_id → dept_id"
+    corp_customers o|--o{ corp_contracts : "customer_id → customer_id"
+    corp_branches o|--o{ corp_warehouses : "branch_id → branch_id"
+    corp_customers o|--o{ corp_invoices : "customer_id → customer_id"

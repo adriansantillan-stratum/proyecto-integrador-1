@@ -1,0 +1,4 @@
+// Keep this worker's compilation/test output separate from other concurrent builds.
+gradle.projectsLoaded {
+    gradle.rootProject.layout.buildDirectory.set(gradle.rootProject.file('build/analytics_actualizacion_20261022'))
+}

@@ -1,0 +1,1610 @@
+{
+  "startedAtUtc": "2026-10-27T13:08:25.178651+00:00",
+  "finishedAtUtc": "2026-10-27T13:10:29.568066+00:00",
+  "deliveryDate": "2026-10-27",
+  "timezone": "America/Lima",
+  "runtimeBundle": "26.1025.11240",
+  "status": "TECHNICAL_CHECKS_PASS_WITH_EXCLUSIONS",
+  "results": {
+    "preflight_process_ports": {
+      "status": "PASS",
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-27T13:08:25.178651+00:00",
+      "finishedAtUtc": "2026-10-27T13:08:26.613374+00:00",
+      "durationSeconds": 1.438,
+      "command": "pwsh -NoProfile -Command \"$ErrorActionPreference='Stop'; $p=@(Get-CimInstance Win32_Process | Where-Object { $_.Name -match '^(java|javaw|node|dart|dartaotruntime|flutter|gradle|docker|com\\.docker.*)\\.exe$' } | Select-Object ProcessId,ParentProcessId,Name); $l=@(Get-NetTCPConnection -State Listen | Where-Object { $_.LocalPort -in @(3000,4317,5005,8080,8081,9006,5037,5433,4566) } | Select-Object LocalPort,OwningProcess); @{atUtc=[DateTimeOffset]::UtcNow.ToString('o');processes=$p;listeners=$l;commandLinesCollected=$false} | ConvertTo-Json -Depth 5\"",
+      "workingDirectory": "<WORKSPACE>",
+      "log": "preflight_process_ports.log"
+    },
+    "preflight_docker": {
+      "status": "FAIL",
+      "exitCode": 1,
+      "startedAtUtc": "2026-10-27T13:08:26.613374+00:00",
+      "finishedAtUtc": "2026-10-27T13:08:26.819724+00:00",
+      "durationSeconds": 0.203,
+      "command": "docker version --format {{.Server.Version}}",
+      "workingDirectory": "<WORKSPACE>",
+      "log": "preflight_docker.log"
+    },
+    "java_version": {
+      "status": "PASS",
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-27T13:08:26.819724+00:00",
+      "finishedAtUtc": "2026-10-27T13:08:26.884725+00:00",
+      "durationSeconds": 0.063,
+      "command": "\"C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.17.10-hotspot\\bin\\java.exe\" -version",
+      "workingDirectory": "<WORKSPACE>",
+      "log": "java_version.log"
+    },
+    "node_version": {
+      "status": "PASS",
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-27T13:08:26.885726+00:00",
+      "finishedAtUtc": "2026-10-27T13:08:26.915725+00:00",
+      "durationSeconds": 0.031,
+      "command": "<USER>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe --version",
+      "workingDirectory": "<WORKSPACE>",
+      "log": "node_version.log"
+    },
+    "python_version": {
+      "status": "PASS",
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-27T13:08:26.915725+00:00",
+      "finishedAtUtc": "2026-10-27T13:08:26.935727+00:00",
+      "durationSeconds": 0.015,
+      "command": "<USER>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe --version",
+      "workingDirectory": "<WORKSPACE>",
+      "log": "python_version.log"
+    },
+    "flutter_version": {
+      "status": "PASS",
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-27T13:08:26.936729+00:00",
+      "finishedAtUtc": "2026-10-27T13:08:27.996138+00:00",
+      "durationSeconds": 1.063,
+      "command": "C:\\Windows\\system32\\cmd.exe /d /s /c \"<USER>\\flutter\\bin\\flutter.bat --version --machine\"",
+      "workingDirectory": "<WORKSPACE>",
+      "log": "flutter_version.log"
+    },
+    "backend_test": {
+      "status": "PASS",
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-27T13:08:54.914749+00:00",
+      "finishedAtUtc": "2026-10-27T13:09:18.975036+00:00",
+      "durationSeconds": 24.062,
+      "command": "C:\\Windows\\system32\\cmd.exe /d /s /c \"<TEMP_QA>\\backend\\gradlew.bat test --offline --no-daemon --console=plain --max-workers=2 --rerun-tasks\"",
+      "workingDirectory": "<TEMP_QA>\\backend",
+      "log": "backend_test.log",
+      "counts": {
+        "tests": 106,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 18,
+        "passed": 88
+      },
+      "xmlSuiteCount": 20,
+      "sourceSha256": "e276adbc402450796ac3881377859accaff5c5f64ed891c00a3686999954955d",
+      "suites": [
+        {
+          "name": "com.ecoroute.backend.application.services.BusinessOperationsServiceTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "resolvedIncidentIsIdempotentForSameOutcome()",
+              "className": "com.ecoroute.backend.application.services.BusinessOperationsServiceTest",
+              "status": "PASS",
+              "seconds": "1.406"
+            },
+            {
+              "name": "actionCannotSkipExecutionBeforeVerification()",
+              "className": "com.ecoroute.backend.application.services.BusinessOperationsServiceTest",
+              "status": "PASS",
+              "seconds": "0.015"
+            },
+            {
+              "name": "finalClosureRequiresManagement()",
+              "className": "com.ecoroute.backend.application.services.BusinessOperationsServiceTest",
+              "status": "PASS",
+              "seconds": "0.004"
+            },
+            {
+              "name": "verificationRequiresMeasuredResult()",
+              "className": "com.ecoroute.backend.application.services.BusinessOperationsServiceTest",
+              "status": "PASS",
+              "seconds": "0.002"
+            },
+            {
+              "name": "retryNeverReopensOriginalOrder()",
+              "className": "com.ecoroute.backend.application.services.BusinessOperationsServiceTest",
+              "status": "PASS",
+              "seconds": "0.02"
+            },
+            {
+              "name": "closedJourneyRequiresReplan()",
+              "className": "com.ecoroute.backend.application.services.BusinessOperationsServiceTest",
+              "status": "PASS",
+              "seconds": "0.003"
+            }
+          ]
+        },
+        {
+          "name": "com.ecoroute.backend.application.services.DashboardAnalyticsServiceTest",
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "invalidFiltersAndGoalsAreRejectedBeforePersistence()",
+              "className": "com.ecoroute.backend.application.services.DashboardAnalyticsServiceTest",
+              "status": "PASS",
+              "seconds": "0.054"
+            },
+            {
+              "name": "formulasUseDifferentUniversesAndTrendsUseTheSameFormula()",
+              "className": "com.ecoroute.backend.application.services.DashboardAnalyticsServiceTest",
+              "status": "PASS",
+              "seconds": "0.024"
+            },
+            {
+              "name": "goalBoundaryValuesAndClearingArePersistedWithActor()",
+              "className": "com.ecoroute.backend.application.services.DashboardAnalyticsServiceTest",
+              "status": "PASS",
+              "seconds": "0.002"
+            },
+            {
+              "name": "biUsesIdenticalFilterAndZeroDenominatorsStayNull()",
+              "className": "com.ecoroute.backend.application.services.DashboardAnalyticsServiceTest",
+              "status": "PASS",
+              "seconds": "0.004"
+            },
+            {
+              "name": "summaryAndLegacyMethodsPassAllFilters()",
+              "className": "com.ecoroute.backend.application.services.DashboardAnalyticsServiceTest",
+              "status": "PASS",
+              "seconds": "0.003"
+            }
+          ]
+        },
+        {
+          "name": "com.ecoroute.backend.application.services.LocalEvidenceDurabilityTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "developmentReadRecoversOriginalBytesAfterS3EmulatorLoss()",
+              "className": "com.ecoroute.backend.application.services.LocalEvidenceDurabilityTest",
+              "status": "PASS",
+              "seconds": "0.358"
+            },
+            {
+              "name": "nonProofKeysAreRejected()",
+              "className": "com.ecoroute.backend.application.services.LocalEvidenceDurabilityTest",
+              "status": "PASS",
+              "seconds": "0.0"
+            },
+            {
+              "name": "productionReadDoesNotSilentlyFallBackToLocalStore()",
+              "className": "com.ecoroute.backend.application.services.LocalEvidenceDurabilityTest",
+              "status": "PASS",
+              "seconds": "0.001"
+            }
+          ]
+        },
+        {
+          "name": "com.ecoroute.backend.application.usecases.DeliveryProofRulesTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "deliveredRetryReturnsExistingProofWithoutUploads()",
+              "className": "com.ecoroute.backend.application.usecases.DeliveryProofRulesTest",
+              "status": "PASS",
+              "seconds": "0.123"
+            },
+            {
+              "name": "pendingOrderCannotAcquireDeliveredProof()",
+              "className": "com.ecoroute.backend.application.usecases.DeliveryProofRulesTest",
+              "status": "PASS",
+              "seconds": "0.004"
+            },
+            {
+              "name": "zeroCoordinatesRejectedBeforeStorage()",
+              "className": "com.ecoroute.backend.application.usecases.DeliveryProofRulesTest",
+              "status": "PASS",
+              "seconds": "0.002"
+            }
+          ]
+        },
+        {
+          "name": "com.ecoroute.backend.application.usecases.DistanceCalculationTest",
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "testDistanceBetweenLimaPoints()",
+              "className": "com.ecoroute.backend.application.usecases.DistanceCalculationTest",
+              "status": "PASS",
+              "seconds": "0.001"
+            }
+          ]
+        },
+        {
+          "name": "com.ecoroute.backend.application.usecases.OrderLifecycleTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "noPendingCanBeMarkedInTransitDirectly()",
+              "className": "com.ecoroute.backend.application.usecases.OrderLifecycleTest",
+              "status": "PASS",
+              "seconds": "0.017"
+            },
+            {
+              "name": "allClosedOutcomesAreTerminal()",
+              "className": "com.ecoroute.backend.application.usecases.OrderLifecycleTest",
+              "status": "PASS",
+              "seconds": "0.003"
+            },
+            {
+              "name": "failureRequiresReason()",
+              "className": "com.ecoroute.backend.application.usecases.OrderLifecycleTest",
+              "status": "PASS",
+              "seconds": "0.002"
+            }
+          ]
+        },
+        {
+          "name": "com.ecoroute.backend.application.usecases.OrderUseCasesImplTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "rejectReopeningClosedOrder()",
+              "className": "com.ecoroute.backend.application.usecases.OrderUseCasesImplTest",
+              "status": "PASS",
+              "seconds": "0.007"
+            },
+            {
+              "name": "createOrder()",
+              "className": "com.ecoroute.backend.application.usecases.OrderUseCasesImplTest",
+              "status": "PASS",
+              "seconds": "0.018"
+            },
+            {
+              "name": "getOrderById()",
+              "className": "com.ecoroute.backend.application.usecases.OrderUseCasesImplTest",
+              "status": "PASS",
+              "seconds": "0.003"
+            },
+            {
+              "name": "newDeliveryWindowRequiresFreshCustomerAcceptance()",
+              "className": "com.ecoroute.backend.application.usecases.OrderUseCasesImplTest",
+              "status": "PASS",
+              "seconds": "0.01"
+            },
+            {
+              "name": "noWindowChangeAfterDispatch()",
+              "className": "com.ecoroute.backend.application.usecases.OrderUseCasesImplTest",
+              "status": "PASS",
+              "seconds": "0.002"
+            },
+            {
+              "name": "assignExistingPendingWithoutDuplicating()",
+              "className": "com.ecoroute.backend.application.usecases.OrderUseCasesImplTest",
+              "status": "PASS",
+              "seconds": "0.007"
+            },
+            {
+              "name": "rejectDeliveredThroughManualEndpoint()",
+              "className": "com.ecoroute.backend.application.usecases.OrderUseCasesImplTest",
+              "status": "PASS",
+              "seconds": "0.001"
+            }
+          ]
+        },
+        {
+          "name": "com.ecoroute.backend.application.usecases.ProofIdempotencyExceptionsTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "repeatedDeliveredRequestsReturnStoredProofWithoutSecondBusinessEffect()",
+              "className": "com.ecoroute.backend.application.usecases.ProofIdempotencyExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.003"
+            },
+            {
+              "name": "deliveredWithoutStoredProofRequiresReconciliationAndDoesNotReupload()",
+              "className": "com.ecoroute.backend.application.usecases.ProofIdempotencyExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.003"
+            }
+          ]
+        },
+        {
+          "name": "com.ecoroute.backend.application.usecases.RouteUseCasesImplTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "createRoute_Success()",
+              "className": "com.ecoroute.backend.application.usecases.RouteUseCasesImplTest",
+              "status": "PASS",
+              "seconds": "0.101"
+            },
+            {
+              "name": "updateRouteStatus_ToInProgress_SetsStartTime()",
+              "className": "com.ecoroute.backend.application.usecases.RouteUseCasesImplTest",
+              "status": "PASS",
+              "seconds": "0.037"
+            },
+            {
+              "name": "rejectEmptyDispatch()",
+              "className": "com.ecoroute.backend.application.usecases.RouteUseCasesImplTest",
+              "status": "PASS",
+              "seconds": "0.004"
+            }
+          ]
+        },
+        {
+          "name": "com.ecoroute.backend.application.usecases.WorkflowActorExceptionsTest",
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "anonymousCannotApproveOrResolve()",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowActorExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.185"
+            },
+            {
+              "name": "administratorCannotImpersonateDriverAcceptance()",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowActorExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.009"
+            },
+            {
+              "name": "dispatcherCannotApproveManagementPlan()",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowActorExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.158"
+            },
+            {
+              "name": "administratorApprovalUsesAuthenticatedSubject()",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowActorExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.061"
+            },
+            {
+              "name": "driverCannotResolveOperationalIncident()",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowActorExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.01"
+            }
+          ]
+        },
+        {
+          "name": "com.ecoroute.backend.application.usecases.WorkflowDecisionExceptionsTest",
+          "tests": 9,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "ownerCannotAcceptUnapprovedPlan()",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowDecisionExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.002"
+            },
+            {
+              "name": "resolvedIncidentCannotChangeDecisionOrCreateAnotherAttempt()",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowDecisionExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.001"
+            },
+            {
+              "name": "driverCannotAcceptAnotherDriversSheet()",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowDecisionExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.0"
+            },
+            {
+              "name": "replanRejectsAnAlreadyDispatchedDestinationWithoutCreatingAttempt()",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowDecisionExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.002"
+            },
+            {
+              "name": "managerCloseCasePreservesOrderAndDoesNotCreateAttempt()",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowDecisionExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.002"
+            },
+            {
+              "name": "dispatcherCannotCloseDefinitively[1] outcome=CLOSE_FAILED",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowDecisionExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.013"
+            },
+            {
+              "name": "dispatcherCannotCloseDefinitively[2] outcome=CLOSE_CASE",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowDecisionExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.001"
+            },
+            {
+              "name": "commercialChangeInvalidatesPlanAndPersistsAuthenticatedActor()",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowDecisionExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.005"
+            },
+            {
+              "name": "replanCreatesLinkedAssignedAttemptAndRevokesCommercialAcceptanceAndPlan()",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowDecisionExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.007"
+            }
+          ]
+        },
+        {
+          "name": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+          "tests": 17,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "dispatchedSourceRouteCannotBeReassigned()",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+              "status": "PASS",
+              "seconds": "0.005"
+            },
+            {
+              "name": "closedRouteCannotRestart[1] status=COMPLETED",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+              "status": "PASS",
+              "seconds": "0.001"
+            },
+            {
+              "name": "closedRouteCannotRestart[2] status=CANCELLED",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+              "status": "PASS",
+              "seconds": "0.002"
+            },
+            {
+              "name": "cancellationWithTerminalStopsPreservesTheirOutcomes()",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+              "status": "PASS",
+              "seconds": "0.003"
+            },
+            {
+              "name": "reassignmentInvalidatesBothPlansBeforeSavingSameOrder()",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+              "status": "PASS",
+              "seconds": "0.005"
+            },
+            {
+              "name": "emptyRouteCancellationDoesNotCreateOrCancelOrders()",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+              "status": "PASS",
+              "seconds": "0.002"
+            },
+            {
+              "name": "cancellationWithOpenStopsIsRejected[1] status=PENDING",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+              "status": "PASS",
+              "seconds": "0.001"
+            },
+            {
+              "name": "cancellationWithOpenStopsIsRejected[2] status=ASSIGNED",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+              "status": "PASS",
+              "seconds": "0.001"
+            },
+            {
+              "name": "cancellationWithOpenStopsIsRejected[3] status=PICKED_UP",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+              "status": "PASS",
+              "seconds": "0.001"
+            },
+            {
+              "name": "cancellationWithOpenStopsIsRejected[4] status=IN_TRANSIT",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+              "status": "PASS",
+              "seconds": "0.001"
+            },
+            {
+              "name": "unconfirmedReassignmentDoesNotSubscribeInvalidationsOrSave()",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+              "status": "PASS",
+              "seconds": "0.001"
+            },
+            {
+              "name": "dispatchedOrTerminalOrderCannotBeReassigned[1] status=PICKED_UP",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+              "status": "PASS",
+              "seconds": "0.001"
+            },
+            {
+              "name": "dispatchedOrTerminalOrderCannotBeReassigned[2] status=IN_TRANSIT",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+              "status": "PASS",
+              "seconds": "0.001"
+            },
+            {
+              "name": "dispatchedOrTerminalOrderCannotBeReassigned[3] status=DELIVERED",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+              "status": "PASS",
+              "seconds": "0.001"
+            },
+            {
+              "name": "dispatchedOrTerminalOrderCannotBeReassigned[4] status=FAILED",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+              "status": "PASS",
+              "seconds": "0.001"
+            },
+            {
+              "name": "dispatchedOrTerminalOrderCannotBeReassigned[5] status=RETURNED",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+              "status": "PASS",
+              "seconds": "0.001"
+            },
+            {
+              "name": "dispatchWithoutReviewDoesNotSubscribePlanningOrSave()",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowExceptionUseCasesTest",
+              "status": "PASS",
+              "seconds": "0.002"
+            }
+          ]
+        },
+        {
+          "name": "com.ecoroute.backend.application.usecases.WorkflowReviewGateExceptionsTest",
+          "tests": 8,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "dispatchRequiresBothDecisions[1] approved=false,accepted=false",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowReviewGateExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.062"
+            },
+            {
+              "name": "dispatchRequiresBothDecisions[2] approved=false,accepted=true",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowReviewGateExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.0"
+            },
+            {
+              "name": "dispatchRequiresBothDecisions[3] approved=true,accepted=false",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowReviewGateExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.0"
+            },
+            {
+              "name": "dispatchRequiresBothDecisions[4] approved=true,accepted=true",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowReviewGateExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.0"
+            },
+            {
+              "name": "assignmentRequiresEveryCommercialCheck[1] accepted=false,address=true,coverage=true",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowReviewGateExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.001"
+            },
+            {
+              "name": "assignmentRequiresEveryCommercialCheck[2] accepted=true,address=false,coverage=true",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowReviewGateExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.001"
+            },
+            {
+              "name": "assignmentRequiresEveryCommercialCheck[3] accepted=true,address=true,coverage=false",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowReviewGateExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.001"
+            },
+            {
+              "name": "assignmentRequiresEveryCommercialCheck[4] accepted=true,address=true,coverage=true",
+              "className": "com.ecoroute.backend.application.usecases.WorkflowReviewGateExceptionsTest",
+              "status": "PASS",
+              "seconds": "0.0"
+            }
+          ]
+        },
+        {
+          "name": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsControllerTest",
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "allExistingRoutesBindIsoDatesAndPreserveWireFields()",
+              "className": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsControllerTest",
+              "status": "PASS",
+              "seconds": "0.108"
+            },
+            {
+              "name": "optionalFiltersBindNull()",
+              "className": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsControllerTest",
+              "status": "PASS",
+              "seconds": "0.045"
+            },
+            {
+              "name": "invalidRangeIsBadRequest()",
+              "className": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsControllerTest",
+              "status": "PASS",
+              "seconds": "0.032"
+            }
+          ]
+        },
+        {
+          "name": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsSecurityTest",
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "adminGoalWriteUsesAuthenticatedSubject()",
+              "className": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsSecurityTest",
+              "status": "PASS",
+              "seconds": "0.028"
+            },
+            {
+              "name": "anonymousCannotReadBiOrGoals()",
+              "className": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsSecurityTest",
+              "status": "PASS",
+              "seconds": "0.006"
+            },
+            {
+              "name": "adminCanReadAnUnconfiguredGoalAsNull()",
+              "className": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsSecurityTest",
+              "status": "PASS",
+              "seconds": "0.014"
+            },
+            {
+              "name": "driverCannotReadOrChangeGlobalAnalytics()",
+              "className": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsSecurityTest",
+              "status": "PASS",
+              "seconds": "0.007"
+            },
+            {
+              "name": "dispatcherCannotReadGlobalAnalytics()",
+              "className": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsSecurityTest",
+              "status": "PASS",
+              "seconds": "0.003"
+            }
+          ]
+        },
+        {
+          "name": "com.ecoroute.backend.infrastructure.input.rest.OrderControllerIntegrationTest",
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 1,
+          "cases": [
+            {
+              "name": "createOrder()",
+              "className": "com.ecoroute.backend.infrastructure.input.rest.OrderControllerIntegrationTest",
+              "status": "SKIP",
+              "seconds": "0.001"
+            }
+          ]
+        },
+        {
+          "name": "com.ecoroute.backend.infrastructure.input.rest.OrderCsvParserTest",
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "unterminatedQuotesAreRejected()",
+              "className": "com.ecoroute.backend.infrastructure.input.rest.OrderCsvParserTest",
+              "status": "PASS",
+              "seconds": "0.0"
+            },
+            {
+              "name": "quotedCommasAndEscapedQuotesArePreserved()",
+              "className": "com.ecoroute.backend.infrastructure.input.rest.OrderCsvParserTest",
+              "status": "PASS",
+              "seconds": "0.013"
+            },
+            {
+              "name": "duplicateTrackingIsRejected()",
+              "className": "com.ecoroute.backend.infrastructure.input.rest.OrderCsvParserTest",
+              "status": "PASS",
+              "seconds": "0.009"
+            },
+            {
+              "name": "preassignedImportIsRejected()",
+              "className": "com.ecoroute.backend.infrastructure.input.rest.OrderCsvParserTest",
+              "status": "PASS",
+              "seconds": "0.001"
+            },
+            {
+              "name": "invalidPhoneCannotBypassHttpValidation()",
+              "className": "com.ecoroute.backend.infrastructure.input.rest.OrderCsvParserTest",
+              "status": "PASS",
+              "seconds": "0.01"
+            },
+            {
+              "name": "malformedRowRejectsEntireBatchWithRowNumber()",
+              "className": "com.ecoroute.backend.infrastructure.input.rest.OrderCsvParserTest",
+              "status": "PASS",
+              "seconds": "0.006"
+            }
+          ]
+        },
+        {
+          "name": "com.ecoroute.backend.infrastructure.input.rest.PurchaseValidationTest",
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "rejectEmptySupplierDescriptionAndNonPositiveAmount()",
+              "className": "com.ecoroute.backend.infrastructure.input.rest.PurchaseValidationTest",
+              "status": "PASS",
+              "seconds": "0.068"
+            },
+            {
+              "name": "validPurchaseHasPositiveMoneyAndKnownStatus()",
+              "className": "com.ecoroute.backend.infrastructure.input.rest.PurchaseValidationTest",
+              "status": "PASS",
+              "seconds": "0.007"
+            }
+          ]
+        },
+        {
+          "name": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsGpsQualityIntegrationTest",
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 7,
+          "cases": [
+            {
+              "name": "zeroOrOneSampleIsUnavailableAndOutsideWindowPointsAreNotCounted()",
+              "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsGpsQualityIntegrationTest",
+              "status": "SKIP",
+              "seconds": "0.0"
+            },
+            {
+              "name": "invalidReportingConfigurationCannotCreateAnApparentlyValidDistance()",
+              "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsGpsQualityIntegrationTest",
+              "status": "SKIP",
+              "seconds": "0.0"
+            },
+            {
+              "name": "plausibleTraceAndStationaryTraceRemainAvailableWithoutPlanFallback()",
+              "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsGpsQualityIntegrationTest",
+              "status": "SKIP",
+              "seconds": "0.0"
+            },
+            {
+              "name": "gapsTimestampsAndInvalidCoordinatesHaveDistinctQualityReasons()",
+              "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsGpsQualityIntegrationTest",
+              "status": "SKIP",
+              "seconds": "0.0"
+            },
+            {
+              "name": "configuredBoundsAreAppliedAndReportedSeparatelyFromViewDefaults()",
+              "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsGpsQualityIntegrationTest",
+              "status": "SKIP",
+              "seconds": "0.0"
+            },
+            {
+              "name": "jumpsInvalidateWholeTraceRatherThanPublishingASumOfAcceptedSegments()",
+              "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsGpsQualityIntegrationTest",
+              "status": "SKIP",
+              "seconds": "0.0"
+            },
+            {
+              "name": "v15JumpIsReproducedAndV16LeavesAllOperationalRowsIntact()",
+              "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsGpsQualityIntegrationTest",
+              "status": "SKIP",
+              "seconds": "0.0"
+            }
+          ]
+        },
+        {
+          "name": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+          "tests": 10,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 10,
+          "cases": [
+            {
+              "name": "goalsPersistAndAuditEveryChangeWithActorAndTime()",
+              "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+              "status": "SKIP",
+              "seconds": "0.0"
+            },
+            {
+              "name": "goalHttpPutPersistsAndRejectsOutOfRangeValues()",
+              "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+              "status": "SKIP",
+              "seconds": "0.0"
+            },
+            {
+              "name": "fullBiReportUsesRealCountersAndQuality()",
+              "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+              "status": "SKIP",
+              "seconds": "0.0"
+            },
+            {
+              "name": "emptyPeriodProducesFiveNullPercentagesAndNoSyntheticTarget()",
+              "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+              "status": "SKIP",
+              "seconds": "0.0"
+            },
+            {
+              "name": "districtsAndSameNameDriversRemainDistinctAndCausesDoNotMultiply()",
+              "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+              "status": "SKIP",
+              "seconds": "0.0"
+            },
+            {
+              "name": "biReaderCanSelectViewsButCannotReadOrMutateBaseTables()",
+              "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+              "status": "SKIP",
+              "seconds": "0.0"
+            },
+            {
+              "name": "returnedOrdersCountAsTerminalStopsWithoutChangingSharedSeed()",
+              "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+              "status": "SKIP",
+              "seconds": "0.0"
+            },
+            {
+              "name": "httpBiAndSummaryReadActualSqlWithTheSameInclusiveFilters()",
+              "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+              "status": "SKIP",
+              "seconds": "0.0"
+            },
+            {
+              "name": "gpsQualityDoesNotBridgeInvalidSamplesOrUsePlannedDistance()",
+              "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+              "status": "SKIP",
+              "seconds": "0.0"
+            },
+            {
+              "name": "filtersUseRouteDateAndLimaMidnightAndRouteOwner()",
+              "className": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+              "status": "SKIP",
+              "seconds": "0.0"
+            }
+          ]
+        }
+      ],
+      "integrationPolicy": "Unmodified disabledWithoutDocker annotations; no daemon started."
+    },
+    "web_test": {
+      "status": "PASS",
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-27T13:10:17.259641+00:00",
+      "finishedAtUtc": "2026-10-27T13:10:17.710584+00:00",
+      "durationSeconds": 0.453,
+      "command": "<USER>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe --test tests/*.test.mjs",
+      "workingDirectory": "<TEMP_QA>\\web-admin",
+      "log": "web_test.log",
+      "counts": {
+        "tests": 62,
+        "suites": 0,
+        "pass": 62,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "sourceSha256": "15f39947e31bbc0bda2449621c7ea731cd820e18b08619fa87ab4411ccf61ed7",
+      "sharedFixtureSha256": "7cccf3276bea2b54db2124131c28d87361e5f761a32a3d1082eda0facc15fc13",
+      "sourceCopyReverifiedAtUtc": "2026-10-27T13:10:17.711587+00:00",
+      "reasonForRecheck": "Initial audit copy omitted external shared fixture. Sources and tests unchanged.",
+      "previousAttempt": "web_test_initial_copy_incomplete.json"
+    },
+    "web_lint": {
+      "status": "PASS",
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-27T13:08:55.609749+00:00",
+      "finishedAtUtc": "2026-10-27T13:09:12.939788+00:00",
+      "durationSeconds": 17.328,
+      "command": "<USER>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe node_modules/eslint/bin/eslint.js .",
+      "workingDirectory": "<TEMP_QA>\\web-admin",
+      "log": "web_lint.log",
+      "sourceSha256": "15f39947e31bbc0bda2449621c7ea731cd820e18b08619fa87ab4411ccf61ed7",
+      "lintCounts": null
+    },
+    "web_build_typescript": {
+      "status": "PASS",
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-27T13:09:12.940795+00:00",
+      "finishedAtUtc": "2026-10-27T13:09:17.282808+00:00",
+      "durationSeconds": 4.328,
+      "command": "<USER>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe node_modules/typescript/bin/tsc -b",
+      "workingDirectory": "<TEMP_QA>\\web-admin",
+      "log": "web_build_typescript.log",
+      "sourceSha256": "15f39947e31bbc0bda2449621c7ea731cd820e18b08619fa87ab4411ccf61ed7"
+    },
+    "web_build": {
+      "status": "PASS",
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-27T13:09:17.284807+00:00",
+      "finishedAtUtc": "2026-10-27T13:09:25.101335+00:00",
+      "durationSeconds": 7.812,
+      "command": "<USER>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe node_modules/vite/bin/vite.js build",
+      "workingDirectory": "<TEMP_QA>\\web-admin",
+      "log": "web_build.log",
+      "sourceSha256": "15f39947e31bbc0bda2449621c7ea731cd820e18b08619fa87ab4411ccf61ed7"
+    },
+    "flutter_pub_offline": {
+      "status": "PASS",
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-27T13:09:25.102336+00:00",
+      "finishedAtUtc": "2026-10-27T13:09:32.788895+00:00",
+      "durationSeconds": 7.688,
+      "command": "C:\\Windows\\system32\\cmd.exe /d /s /c \"<USER>\\flutter\\bin\\flutter.bat pub get --offline\"",
+      "workingDirectory": "<TEMP_QA>\\mobile-app",
+      "log": "flutter_pub_offline.log"
+    },
+    "flutter_analyze": {
+      "status": "PASS",
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-27T13:09:32.789896+00:00",
+      "finishedAtUtc": "2026-10-27T13:10:06.716444+00:00",
+      "durationSeconds": 33.922,
+      "command": "C:\\Windows\\system32\\cmd.exe /d /s /c \"<USER>\\flutter\\bin\\flutter.bat analyze --no-pub\"",
+      "workingDirectory": "<TEMP_QA>\\mobile-app",
+      "log": "flutter_analyze.log",
+      "sourceSha256": "c54345610b994329d652fd21f400c7a7a84855dbc8549a0397e5248ee85fa94c"
+    },
+    "flutter_test": {
+      "status": "PASS",
+      "exitCode": 0,
+      "startedAtUtc": "2026-10-27T13:10:06.717444+00:00",
+      "finishedAtUtc": "2026-10-27T13:10:22.055589+00:00",
+      "durationSeconds": 15.343,
+      "command": "C:\\Windows\\system32\\cmd.exe /d /s /c \"<USER>\\flutter\\bin\\flutter.bat test --no-pub --machine --concurrency=2\"",
+      "workingDirectory": "<TEMP_QA>\\mobile-app",
+      "log": "flutter_test.log",
+      "sourceSha256": "c54345610b994329d652fd21f400c7a7a84855dbc8549a0397e5248ee85fa94c",
+      "counts": {
+        "passed": 84,
+        "failed": 0,
+        "skipped": 8,
+        "visibleTestDone": 92
+      },
+      "cases": [
+        {
+          "name": "UserModel persists refresh token and authoritative subject",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Login uses /session/me GrantedAuthority and rejects unlinked driver",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Concurrent rejected tokens share one refresh and rotate refresh token",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "exp claim determines refresh for 600 second lifetime",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "exp claim determines refresh for 28800 second lifetime",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Logout during refresh cannot resurrect cached session",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Interceptor retries one request after 401 and blocks cross-account requests",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Logout clears local session, preserves account queue, calls Keycloak logout",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Live mobile/backend contract (no operational data mutations) Session links numeric driver to UUID subject and reads exp TTL",
+          "result": "success",
+          "skipped": true
+        },
+        {
+          "name": "Live mobile/backend contract (no operational data mutations) Reads all own routes and route-filtered orders using mobile models",
+          "result": "success",
+          "skipped": true
+        },
+        {
+          "name": "Live mobile/backend contract (no operational data mutations) Reads review approved/accepted and metadata without accepting real route",
+          "result": "success",
+          "skipped": true
+        },
+        {
+          "name": "Live mobile/backend contract (no operational data mutations) Reads route path from two changing origins and recognizes fallback",
+          "result": "success",
+          "skipped": true
+        },
+        {
+          "name": "Live mobile/backend contract (no operational data mutations) Invalid POD rejected before creating proof for nonexistent order",
+          "result": "success",
+          "skipped": true
+        },
+        {
+          "name": "Live mobile/backend contract (no operational data mutations) History source loads own terminal operation within selected period",
+          "result": "success",
+          "skipped": true
+        },
+        {
+          "name": "Live mobile/backend contract (no operational data mutations) Refresh against real Keycloak rotates session and preserves driver identity",
+          "result": "success",
+          "skipped": true
+        },
+        {
+          "name": "Live mobile/backend contract (no operational data mutations) Keycloak logout rejects subsequent refresh of the test session",
+          "result": "success",
+          "skipped": true
+        },
+        {
+          "name": "GPS rejects missing route, zero, old position; uses selected real vehicle",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Initial GPS ping when routeFirst=true and position become available",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Initial GPS ping when routeFirst=false and position become available",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Permission denial remains visible and GPS never accepts 0 or NaN",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Coordinate-aware path throttle keeps latest moved position eligible",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "All own routes survive filtering; review/acceptance/path honor endpoints",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "History keeps own terminal orders within period; failure is not empty success",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Own missing timestamp raises visible history failure",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Orders cached per account only on transport failure; HTTP errors remain failures",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "native provider identifies EcoRoute and caches the exact viewed tile",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Durable full POD before send; restart, account isolation, orderId first wins",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "4xx remains visible and manual retry preserves payload",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Foreground timer retries and resume replays after restore",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Concurrent queue writes and workers do not lose or duplicate orders",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "BLoC → use case → repository → durable payload includes captured GPS",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Incomplete or zero GPS POD never PATCHes delivered or queues invalid proof",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "failed basemap is explicit; retry preserves the route layer",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "resume retries an errored basemap without recreating the app",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "API 400 without refresh keeps session",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "API 403 without refresh keeps session",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "API 409 without refresh keeps session",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "API 422 without refresh keeps session",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "API 500 without refresh keeps session",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "401 then successful refresh then API 200 preserves its meaning",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "401 then successful refresh then API 400 preserves its meaning",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "401 then successful refresh then API 401 preserves its meaning",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "401 then successful refresh then API 403 preserves its meaning",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "401 then successful refresh then API 409 preserves its meaning",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "401 then successful refresh then API 422 preserves its meaning",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "401 then successful refresh then API 500 preserves its meaning",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Reactive refresh failure 400",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Reactive refresh failure 401",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Reactive refresh failure 403",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Reactive refresh failure 500",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Reactive refresh failure null",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Proactive refresh failure 400",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Proactive refresh failure 401",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Proactive refresh failure 403",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Proactive refresh failure 500",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Proactive refresh failure null",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Late refresh rejection for old account does not expire new account",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Order link recovers safely with null extra",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Order link recovers safely with string extra",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Order link recovers safely with map extra",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Order link recovers safely with wrong order type extra",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Order link recovers safely with wrong permission type extra",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Order link recovers safely with missing permission extra",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Order link rejects incoherent path id 28",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Order link rejects incoherent path id invalid",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Coherent order link preserves canOperate=false",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Saved History center tapped 0ms after Sync Back",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Coherent order link preserves canOperate=true",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Returning after last DELIVERED refreshes selected completed route",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Saved History center tapped 16ms after Sync Back",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Returning after last FAILED refreshes selected completed route",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Saved History center tapped 100ms after Sync Back",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Returning from sync refreshes route and orders once",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Sync confirmation refreshes route without notification loop",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Disposed routes page skips refresh after /orders/27 returns",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Saved History center tapped 300ms after Sync Back",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Disposed routes page skips refresh after /sync returns",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Saved History center tapped 500ms after Sync Back",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Sync Back History with current target keeps actual session",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "History after Sync Back and renewed token returns API 200",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "History after Sync Back and renewed token returns API 400",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "History after Sync Back and renewed token returns API 500",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Refresh invalid_grant actually logs out through AuthBloc/router",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Signature capture Dart error reports failure and keeps page open",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Signature capture timeout does not save or navigate away",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Pending signature capture after clear discards stale image",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Explicit logout button produces login even without HTTP failure",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Pending signature capture after draw discards stale image",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Pending signature capture after unmount discards stale image",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Signature capture success delivers only the encoded image",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Sync page shows pending and rejected without claiming delivery",
+          "result": "success",
+          "skipped": false
+        },
+        {
+          "name": "Empty signature cannot be confirmed and clear invalidates saved value",
+          "result": "success",
+          "skipped": false
+        }
+      ],
+      "completionEvents": [
+        {
+          "success": true,
+          "type": "done",
+          "time": 12054
+        }
+      ],
+      "liveContractEnabled": false
+    }
+  },
+  "sourceIntegrity": {
+    "backend": {
+      "unchanged": true,
+      "modifiedOrDeleted": [],
+      "added": [],
+      "sha256After": "e276adbc402450796ac3881377859accaff5c5f64ed891c00a3686999954955d"
+    },
+    "web-admin": {
+      "unchanged": true,
+      "modifiedOrDeleted": [],
+      "added": [],
+      "sha256After": "15f39947e31bbc0bda2449621c7ea731cd820e18b08619fa87ab4411ccf61ed7"
+    },
+    "mobile-app": {
+      "unchanged": true,
+      "modifiedOrDeleted": [],
+      "added": [],
+      "sha256After": "c54345610b994329d652fd21f400c7a7a84855dbc8549a0397e5248ee85fa94c"
+    }
+  },
+  "previousGuideQa": {
+    "atUtc": "2026-10-27T13:10:29.566065+00:00",
+    "guidePageImages": 113,
+    "requiredReports": {
+      "qa_pages_001_045.json": false,
+      "qa_pages_046_090.json": false
+    },
+    "visualQaPerformedByThisRun": false,
+    "status": "PENDING_ASSIGNMENT",
+    "reason": "Missing prior QA reports; page PNGs do not prove review."
+  },
+  "scope": "Technical verification on SHA-256 verified temporary copies; no production, UAT, device or business acceptance assertion.",
+  "restrictions": {
+    "originalSourcesEdited": false,
+    "gitTouched": false,
+    "envFileRead": false,
+    "infraStarted": false,
+    "appStarted": false,
+    "emulatorStarted": false,
+    "liveDataUsed": false,
+    "automaticBugFixes": false
+  },
+  "notRun": [
+    "18 Docker/Testcontainers integrations: configured Docker Linux engine unavailable on two escalated read-only checks; no Docker Desktop started.",
+    "8 live mobile/backend contract tests: RUN_BACKEND_CONTRACT opt-in disabled; no real credentials or live data used.",
+    "Device/emulator/UI end-to-end, business acceptance and production validation.",
+    "Visual QA of the 113-page guide; qa_pages_001_045.json and qa_pages_046_090.json absent. Requires separate assignment, no duplicate page review performed."
+  ],
+  "testedCopyIntegrity": {
+    "backend": {
+      "originalCopyVerified": true,
+      "postRunComparedFiles": 206,
+      "differences": [],
+      "applicationTestOrDependencyInputDifferences": [],
+      "criticalInputsUnchanged": true
+    },
+    "web-admin": {
+      "originalCopyVerified": true,
+      "postRunComparedFiles": 114,
+      "differences": [],
+      "applicationTestOrDependencyInputDifferences": [],
+      "criticalInputsUnchanged": true
+    },
+    "mobile-app": {
+      "originalCopyVerified": true,
+      "postRunComparedFiles": 195,
+      "differences": [],
+      "applicationTestOrDependencyInputDifferences": [],
+      "criticalInputsUnchanged": true
+    }
+  },
+  "sharedWebFixture": {
+    "file": "tools/control_actualizacion/analytics_gps_contract.json",
+    "sha256": "7cccf3276bea2b54db2124131c28d87361e5f761a32a3d1082eda0facc15fc13",
+    "copyVerified": true,
+    "atUtc": "2026-10-27T13:10:17.256642+00:00",
+    "sharedSourceStillMatches": true
+  },
+  "dockerRecheck": {
+    "startedAtUtc": "2026-10-27T13:12:06.0302146+00:00",
+    "finishedAtUtc": "2026-10-27T13:12:06.6659563+00:00",
+    "sandboxPermissions": "require_escalated",
+    "scope": "READ_ONLY",
+    "commands": [
+      {
+        "command": "docker context show",
+        "exitCode": 0,
+        "context": "desktop-linux"
+      },
+      {
+        "command": "docker ps --format '{{.Names}}|{{.Status}}'",
+        "exitCode": 1
+      },
+      {
+        "command": "docker version --format '{{.Server.Version}}'",
+        "exitCode": 1
+      }
+    ],
+    "status": "SERVER_UNAVAILABLE",
+    "observedError": "The dockerDesktopLinuxEngine named pipe does not exist (Windows: El sistema no puede encontrar el archivo especificado).",
+    "conclusion": "The configured Linux Docker engine is unavailable even outside the default sandbox. This is not a sandbox permission-denied result. No assertion about all Docker contexts or production infrastructure is made.",
+    "integrationRerun": "NOT_RUN",
+    "integrationTestCasesSkipped": 18,
+    "dockerDesktopStarted": false,
+    "containersChanged": false,
+    "provenance": "Observed exec_command output, explicitly require_escalated, after user requested a Docker recheck."
+  },
+  "consolidatedAtUtc": "2026-10-27T13:14:24.736302+00:00",
+  "counts": {
+    "passed": 234,
+    "failed": 0,
+    "skipped": 26,
+    "discovered": 260,
+    "backendPassed": 88,
+    "backendSkippedDocker": 18,
+    "webPassed": 62,
+    "mobilePassed": 84,
+    "mobileSkippedLiveContract": 8
+  },
+  "warnings": [
+    {
+      "component": "web build",
+      "code": "LARGE_CHUNK",
+      "message": "Vite reported a JavaScript chunk of 755.83 kB minified (241.82 kB gzip), exceeding the 500 kB warning threshold; build exit code 0."
+    }
+  ],
+  "auditHarnessIncident": {
+    "initialReport": "web_test_initial_copy_incomplete.json",
+    "initialExitCode": 1,
+    "reason": "Audit copy omitted shared tools/control_actualizacion/analytics_gps_contract.json; not a product failure.",
+    "resolution": "Copied original fixture with SHA-256 verification; rechecked all web sources and reran unchanged suite.",
+    "finalExitCode": 0,
+    "finalPass": 62,
+    "originalProductSourcesChanged": false
+  },
+  "sourceSnapshotAggregateAlgorithm": "SHA256 of sorted lines: repository_relative_path + NUL + file_sha256 + LF. No git state was queried."
+}

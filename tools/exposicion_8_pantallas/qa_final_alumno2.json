@@ -1,0 +1,63 @@
+{
+  "pages": [
+    {
+      "page": 27,
+      "status": "PASS",
+      "notes": "Reabierta page-027.png de render_verified con view_image detail original. El primer test conserva nombre, descripción y fuente juntos; el test siguiente se trasladó completo a 28. Texto y pie legibles, sin recortes ni superposición."
+    },
+    {
+      "page": 28,
+      "status": "PASS",
+      "notes": "Reabierta a resolución original. updateRouteStatus_ToInProgress_SetsStartTime aparece con su descripción y ruta de fuente en la misma página; rejectEmptyDispatch también conserva su fuente. Ya no existe referencia aislada en la primera línea. Entrega al expositor íntegra."
+    },
+    {
+      "page": 29,
+      "status": "PASS",
+      "notes": "Reabierta a resolución original. Proceso y conexión se presenta como prosa con separadores naturales, sin corchetes ni comillas de array. Cabecera de tabla unida a filas de plataforma, actor y proceso; texto completo dentro de las celdas y márgenes. Sin recortes ni solapamientos."
+    },
+    {
+      "page": 31,
+      "status": "PASS",
+      "notes": "Reabierta a resolución original. Demostración paso a paso muestra una sola numeración del 1 al 8, sin ordinales duplicados. Texto, referencias y pie íntegros; espaciado regular y encabezado acompañado de pasos."
+    },
+    {
+      "page": 45,
+      "status": "PASS",
+      "notes": "Reabierta a resolución original. Procesos P03 y P04 se muestran en prosa, sin representación literal del array. Título, introducción y tabla permanecen completos; cabecera junto a sus filas y bordes visibles. Espacio inferior de apertura de pantalla sin contenido perdido ni salto vacío adicional visible."
+    },
+    {
+      "page": 47,
+      "status": "PASS",
+      "notes": "Reabierta a resolución original. Pasos 1 a 8 con numeración simple. Condiciones, fuentes y demostración legibles, sin recortes ni superposición. El paso 8 continúa al siguiente folio, como en la revisión previa, sin pérdida visible en esta página."
+    },
+    {
+      "page": 59,
+      "status": "PASS",
+      "notes": "Reabierta a resolución original. Preguntas y pruebas completas y legibles. Cada prueba visible mantiene nombre, descripción y archivo de fuente agrupados, incluido deliveredRetryReturnsExistingProofWithoutUploads al final. Sin fuente huérfana, recorte ni superposición."
+    },
+    {
+      "page": 60,
+      "status": "PASS",
+      "notes": "Reabierta a resolución original. Los dos tests backend y las dos evidencias históricas conservan descripción y fuente unidas. Entrega al siguiente expositor y pie íntegros. No hay párrafo vacío que genere una página vacía adicional visible ni encabezado separado de su contenido."
+    }
+  ],
+  "summary": {
+    "status": "PASS",
+    "renderDirectory": "docs/exposicion_8_pantallas/_qa/render_verified",
+    "reviewedPages": [27, 28, 29, 31, 45, 47, 59, 60],
+    "reviewedCount": 8,
+    "passed": 8,
+    "pendingIssues": 0,
+    "method": "Inspección visual directa de cada PNG por separado con view_image detail original, a resolución nativa de 850 por 1100 píxeles. No se usaron OCR, contact sheets, COM ni UI.",
+    "previousFindings": [
+      {"id": "QA-A2-01", "status": "RESOLVED", "pages": [29, 45], "verification": "Procesos en prosa, sin corchetes/comillas de array; cabeceras de tabla con filas."},
+      {"id": "QA-A2-02", "status": "RESOLVED", "pages": [31, 47], "verification": "Numeración única del 1 al 8."},
+      {"id": "QA-A2-03", "status": "RESOLVED", "pages": [27, 28], "verification": "Nombre, descripción y fuente del test reunidos en 28."}
+    ],
+    "additionalVerification": "Fuentes y descripciones de pruebas agrupadas en 59 y 60; no se detectaron recortes, superposiciones o nuevos huérfanos en las ocho páginas vistas.",
+    "scope": "Cierre de las ocho páginas cambiadas asignadas. Complementa qa_alumno2.json de la revisión original 27-52. No afirma nueva inspección del resto de las 102 páginas; la identidad de los otros cuerpos por comparación de píxeles fue informada por el principal.",
+    "documentEdited": false,
+    "contentChanged": false
+  },
+  "issues": []
+}

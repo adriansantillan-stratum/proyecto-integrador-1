@@ -1,0 +1,4 @@
+// Isolate generated verification outputs from OneDrive-locked previous classes.
+gradle.projectsLoaded {
+    gradle.rootProject.layout.buildDirectory.set(gradle.rootProject.file('build/verification_20261022'))
+}

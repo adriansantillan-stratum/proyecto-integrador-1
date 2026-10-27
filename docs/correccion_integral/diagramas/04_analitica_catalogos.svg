@@ -1,0 +1,690 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2236" height="2374" viewBox="0 0 2236 2374">
+<title>Vistas analíticas, metas y catálogos</title>
+<desc>ERD de negocio desde catálogo físico PostgreSQL. Sólo constraints FK reales; Keycloak es relación lógica externa.</desc>
+<defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.8" fill="#d4dce6"/></pattern>
+<marker id="arrow0" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#497693"/></marker>
+<marker id="arrow1" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="#9d53a0"/></marker></defs>
+<style>text{font-family:Consolas,"DejaVu Sans Mono",monospace;fill:#25374b}.title{font-size:29px;font-weight:bold}.sub{font-size:15px;fill:#536579}.field{font-size:15px}.dtype{font-size:13px;fill:#5e6b78}.key{font-size:12px;font-weight:bold;fill:#175570}.table{font-size:17px;font-weight:bold;fill:white}.tag{font-size:12px;fill:white}.note{font-size:13px;fill:#536579}.lane{font-size:17px;font-weight:bold;fill:#415870}</style>
+<rect width="2236" height="2374" fill="#f1f4f8"/><rect width="2236" height="2374" fill="url(#grid)"/>
+<text x="36" y="46" class="title">Vistas analíticas, metas y catálogos</text>
+<text x="36" y="75" class="sub">EcoRoute · catálogo físico verificado · 9 objetos · 1 constraints FK visibles · todos los campos físicos</text>
+<text x="36" y="104" class="sub">PK clave primaria · FK real → clave referenciada · UQ UNIQUE · UQ* UNIQUE compuesta · ! NOT NULL · VISTA sin PK/FK inferidas</text>
+<text x="36" y="131" class="sub">SOPORTE = auditoría / eventos / avisos · discontinua violeta = identidad lógica Keycloak, sin FK · gris = catálogo relacional</text>
+<text x="36" y="157" class="note">Fuente SHA256 de35e4f7b42ea6b89d5ea76b… · no incluye CORP, auth legacy, Flyway ni respaldo local de evidencia</text>
+<g><title>FOREIGN KEY (code) REFERENCES analytics_goals(code)</title><path d="M1564.0,611.5 L1541.0,611.5 L1541.0,288.5 L1564.0,288.5" fill="none" stroke="#497693" stroke-width="2"  marker-end="url(#arrow0)"/></g>
+<g id="table-analytics_order_facts"><title>RF81: datos verificables de pedido, operación Lima, RUC P01, evidencia digital y metadatos de integridad. No verifica objetos remotos.</title>
+<rect x="70" y="216" width="602" height="1392" rx="6" fill="#d8dfe9"/>
+<rect x="70" y="213" width="602" height="1392" rx="6" fill="white" stroke="#a7b5c6" stroke-width="1.5"/>
+<path d="M76,213 h590 q6,0 6,6 v56 h-602 v-56 q0,-6 6,-6" fill="#72569b"/>
+<text x="84" y="239" class="table">analytics_order_facts</text>
+<text x="84" y="261" class="tag">VISTA · 48 columnas físicas</text>
+<g><title>{&quot;name&quot;: &quot;order_id&quot;, &quot;type&quot;: &quot;bigint&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="275" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="294" class="key"></text>
+<text x="167" y="294" class="field">order_id</text>
+<text x="637" y="294" class="dtype" text-anchor="end">bigint</text>
+<text x="657" y="294" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;tracking_number&quot;, &quot;type&quot;: &quot;character varying(255)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="302" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="321" class="key"></text>
+<text x="167" y="321" class="field">tracking_number</text>
+<text x="637" y="321" class="dtype" text-anchor="end">varchar(255)</text>
+<text x="657" y="321" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;external_reference&quot;, &quot;type&quot;: &quot;character varying(100)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="329" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="348" class="key"></text>
+<text x="167" y="348" class="field">external_reference</text>
+<text x="637" y="348" class="dtype" text-anchor="end">varchar(100)</text>
+<text x="657" y="348" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;status&quot;, &quot;type&quot;: &quot;character varying(50)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="356" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="375" class="key"></text>
+<text x="167" y="375" class="field">status</text>
+<text x="637" y="375" class="dtype" text-anchor="end">varchar(50)</text>
+<text x="657" y="375" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;route_id&quot;, &quot;type&quot;: &quot;bigint&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="383" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="402" class="key"></text>
+<text x="167" y="402" class="field">route_id</text>
+<text x="637" y="402" class="dtype" text-anchor="end">bigint</text>
+<text x="657" y="402" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;driver_id&quot;, &quot;type&quot;: &quot;bigint&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="410" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="429" class="key"></text>
+<text x="167" y="429" class="field">driver_id</text>
+<text x="637" y="429" class="dtype" text-anchor="end">bigint</text>
+<text x="657" y="429" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;driver_name&quot;, &quot;type&quot;: &quot;text&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="437" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="456" class="key"></text>
+<text x="167" y="456" class="field">driver_name</text>
+<text x="637" y="456" class="dtype" text-anchor="end">text</text>
+<text x="657" y="456" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;operation_date&quot;, &quot;type&quot;: &quot;date&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="464" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="483" class="key"></text>
+<text x="167" y="483" class="field">operation_date</text>
+<text x="637" y="483" class="dtype" text-anchor="end">date</text>
+<text x="657" y="483" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;district&quot;, &quot;type&quot;: &quot;text&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="491" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="510" class="key"></text>
+<text x="167" y="510" class="field">district</text>
+<text x="637" y="510" class="dtype" text-anchor="end">text</text>
+<text x="657" y="510" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;recipient_name&quot;, &quot;type&quot;: &quot;character varying(255)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="518" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="537" class="key"></text>
+<text x="167" y="537" class="field">recipient_name</text>
+<text x="637" y="537" class="dtype" text-anchor="end">varchar(255)</text>
+<text x="657" y="537" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;delivery_address&quot;, &quot;type&quot;: &quot;text&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="545" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="564" class="key"></text>
+<text x="167" y="564" class="field">delivery_address</text>
+<text x="637" y="564" class="dtype" text-anchor="end">text</text>
+<text x="657" y="564" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;latitude&quot;, &quot;type&quot;: &quot;numeric(10,8)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="572" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="591" class="key"></text>
+<text x="167" y="591" class="field">latitude</text>
+<text x="637" y="591" class="dtype" text-anchor="end">numeric(10,8)</text>
+<text x="657" y="591" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;longitude&quot;, &quot;type&quot;: &quot;numeric(11,8)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="599" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="618" class="key"></text>
+<text x="167" y="618" class="field">longitude</text>
+<text x="637" y="618" class="dtype" text-anchor="end">numeric(11,8)</text>
+<text x="657" y="618" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;created_at&quot;, &quot;type&quot;: &quot;timestamp with time zone&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="626" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="645" class="key"></text>
+<text x="167" y="645" class="field">created_at</text>
+<text x="637" y="645" class="dtype" text-anchor="end">timestamptz</text>
+<text x="657" y="645" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;updated_at&quot;, &quot;type&quot;: &quot;timestamp with time zone&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="653" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="672" class="key"></text>
+<text x="167" y="672" class="field">updated_at</text>
+<text x="637" y="672" class="dtype" text-anchor="end">timestamptz</text>
+<text x="657" y="672" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;estimated_delivery_window_start&quot;, &quot;type&quot;: &quot;timestamp with time zone&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="680" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="699" class="key"></text>
+<text x="167" y="699" class="field">estimated_delivery_window_start</text>
+<text x="637" y="699" class="dtype" text-anchor="end">timestamptz</text>
+<text x="657" y="699" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;estimated_delivery_window_end&quot;, &quot;type&quot;: &quot;timestamp with time zone&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="707" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="726" class="key"></text>
+<text x="167" y="726" class="field">estimated_delivery_window_end</text>
+<text x="637" y="726" class="dtype" text-anchor="end">timestamptz</text>
+<text x="657" y="726" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;recipient_ruc&quot;, &quot;type&quot;: &quot;character varying(11)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="734" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="753" class="key"></text>
+<text x="167" y="753" class="field">recipient_ruc</text>
+<text x="637" y="753" class="dtype" text-anchor="end">varchar(11)</text>
+<text x="657" y="753" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;customer_accepted&quot;, &quot;type&quot;: &quot;boolean&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="761" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="780" class="key"></text>
+<text x="167" y="780" class="field">customer_accepted</text>
+<text x="637" y="780" class="dtype" text-anchor="end">boolean</text>
+<text x="657" y="780" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;address_verified&quot;, &quot;type&quot;: &quot;boolean&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="788" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="807" class="key"></text>
+<text x="167" y="807" class="field">address_verified</text>
+<text x="637" y="807" class="dtype" text-anchor="end">boolean</text>
+<text x="657" y="807" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;coverage_verified&quot;, &quot;type&quot;: &quot;boolean&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="815" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="834" class="key"></text>
+<text x="167" y="834" class="field">coverage_verified</text>
+<text x="637" y="834" class="dtype" text-anchor="end">boolean</text>
+<text x="657" y="834" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;agreement_note&quot;, &quot;type&quot;: &quot;text&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="842" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="861" class="key"></text>
+<text x="167" y="861" class="field">agreement_note</text>
+<text x="637" y="861" class="dtype" text-anchor="end">text</text>
+<text x="657" y="861" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;confirmed_by&quot;, &quot;type&quot;: &quot;character varying(100)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="869" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="888" class="key"></text>
+<text x="167" y="888" class="field">confirmed_by</text>
+<text x="637" y="888" class="dtype" text-anchor="end">varchar(100)</text>
+<text x="657" y="888" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;confirmed_at&quot;, &quot;type&quot;: &quot;timestamp with time zone&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="896" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="915" class="key"></text>
+<text x="167" y="915" class="field">confirmed_at</text>
+<text x="637" y="915" class="dtype" text-anchor="end">timestamptz</text>
+<text x="657" y="915" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;proof_id&quot;, &quot;type&quot;: &quot;bigint&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="923" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="942" class="key"></text>
+<text x="167" y="942" class="field">proof_id</text>
+<text x="637" y="942" class="dtype" text-anchor="end">bigint</text>
+<text x="657" y="942" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;image_url&quot;, &quot;type&quot;: &quot;text&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="950" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="969" class="key"></text>
+<text x="167" y="969" class="field">image_url</text>
+<text x="637" y="969" class="dtype" text-anchor="end">text</text>
+<text x="657" y="969" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;signature_data_url&quot;, &quot;type&quot;: &quot;text&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="977" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="996" class="key"></text>
+<text x="167" y="996" class="field">signature_data_url</text>
+<text x="637" y="996" class="dtype" text-anchor="end">text</text>
+<text x="657" y="996" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;receiver_name&quot;, &quot;type&quot;: &quot;character varying(255)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="1004" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="1023" class="key"></text>
+<text x="167" y="1023" class="field">receiver_name</text>
+<text x="637" y="1023" class="dtype" text-anchor="end">varchar(255)</text>
+<text x="657" y="1023" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;receiver_dni&quot;, &quot;type&quot;: &quot;character varying(20)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="1031" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="1050" class="key"></text>
+<text x="167" y="1050" class="field">receiver_dni</text>
+<text x="637" y="1050" class="dtype" text-anchor="end">varchar(20)</text>
+<text x="657" y="1050" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;proof_latitude&quot;, &quot;type&quot;: &quot;numeric(10,8)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="1058" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="1077" class="key"></text>
+<text x="167" y="1077" class="field">proof_latitude</text>
+<text x="637" y="1077" class="dtype" text-anchor="end">numeric(10,8)</text>
+<text x="657" y="1077" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;proof_longitude&quot;, &quot;type&quot;: &quot;numeric(11,8)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="1085" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="1104" class="key"></text>
+<text x="167" y="1104" class="field">proof_longitude</text>
+<text x="637" y="1104" class="dtype" text-anchor="end">numeric(11,8)</text>
+<text x="657" y="1104" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;verified_at&quot;, &quot;type&quot;: &quot;timestamp with time zone&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="1112" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="1131" class="key"></text>
+<text x="167" y="1131" class="field">verified_at</text>
+<text x="637" y="1131" class="dtype" text-anchor="end">timestamptz</text>
+<text x="657" y="1131" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;captured_at&quot;, &quot;type&quot;: &quot;timestamp with time zone&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="1139" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="1158" class="key"></text>
+<text x="167" y="1158" class="field">captured_at</text>
+<text x="637" y="1158" class="dtype" text-anchor="end">timestamptz</text>
+<text x="657" y="1158" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;received_at&quot;, &quot;type&quot;: &quot;timestamp with time zone&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="1166" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="1185" class="key"></text>
+<text x="167" y="1185" class="field">received_at</text>
+<text x="637" y="1185" class="dtype" text-anchor="end">timestamptz</text>
+<text x="657" y="1185" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;image_sha256&quot;, &quot;type&quot;: &quot;character varying(64)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="1193" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="1212" class="key"></text>
+<text x="167" y="1212" class="field">image_sha256</text>
+<text x="637" y="1212" class="dtype" text-anchor="end">varchar(64)</text>
+<text x="657" y="1212" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;signature_sha256&quot;, &quot;type&quot;: &quot;character varying(64)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="1220" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="1239" class="key"></text>
+<text x="167" y="1239" class="field">signature_sha256</text>
+<text x="637" y="1239" class="dtype" text-anchor="end">varchar(64)</text>
+<text x="657" y="1239" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;valid_ruc&quot;, &quot;type&quot;: &quot;boolean&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="1247" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="1266" class="key"></text>
+<text x="167" y="1266" class="field">valid_ruc</text>
+<text x="637" y="1266" class="dtype" text-anchor="end">boolean</text>
+<text x="657" y="1266" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;valid_gps&quot;, &quot;type&quot;: &quot;boolean&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="1274" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="1293" class="key"></text>
+<text x="167" y="1293" class="field">valid_gps</text>
+<text x="637" y="1293" class="dtype" text-anchor="end">boolean</text>
+<text x="657" y="1293" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;has_photo&quot;, &quot;type&quot;: &quot;boolean&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="1301" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="1320" class="key"></text>
+<text x="167" y="1320" class="field">has_photo</text>
+<text x="637" y="1320" class="dtype" text-anchor="end">boolean</text>
+<text x="657" y="1320" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;has_signature&quot;, &quot;type&quot;: &quot;boolean&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="1328" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="1347" class="key"></text>
+<text x="167" y="1347" class="field">has_signature</text>
+<text x="637" y="1347" class="dtype" text-anchor="end">boolean</text>
+<text x="657" y="1347" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;scheduled&quot;, &quot;type&quot;: &quot;boolean&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="1355" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="1374" class="key"></text>
+<text x="167" y="1374" class="field">scheduled</text>
+<text x="637" y="1374" class="dtype" text-anchor="end">boolean</text>
+<text x="657" y="1374" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;delivered&quot;, &quot;type&quot;: &quot;boolean&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="1382" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="1401" class="key"></text>
+<text x="167" y="1401" class="field">delivered</text>
+<text x="637" y="1401" class="dtype" text-anchor="end">boolean</text>
+<text x="657" y="1401" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;iid_valid&quot;, &quot;type&quot;: &quot;boolean&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="1409" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="1428" class="key"></text>
+<text x="167" y="1428" class="field">iid_valid</text>
+<text x="637" y="1428" class="dtype" text-anchor="end">boolean</text>
+<text x="657" y="1428" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;digital_evidence&quot;, &quot;type&quot;: &quot;boolean&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="1436" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="1455" class="key"></text>
+<text x="167" y="1455" class="field">digital_evidence</text>
+<text x="637" y="1455" class="dtype" text-anchor="end">boolean</text>
+<text x="657" y="1455" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;ontime_evaluable&quot;, &quot;type&quot;: &quot;boolean&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="1463" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="1482" class="key"></text>
+<text x="167" y="1482" class="field">ontime_evaluable</text>
+<text x="637" y="1482" class="dtype" text-anchor="end">boolean</text>
+<text x="657" y="1482" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;on_time&quot;, &quot;type&quot;: &quot;boolean&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="1490" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="1509" class="key"></text>
+<text x="167" y="1509" class="field">on_time</text>
+<text x="637" y="1509" class="dtype" text-anchor="end">boolean</text>
+<text x="657" y="1509" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;delayed&quot;, &quot;type&quot;: &quot;boolean&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="1517" width="600" height="27" fill="#ffffff"/>
+<text x="79" y="1536" class="key"></text>
+<text x="167" y="1536" class="field">delayed</text>
+<text x="637" y="1536" class="dtype" text-anchor="end">boolean</text>
+<text x="657" y="1536" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;complete_pod&quot;, &quot;type&quot;: &quot;boolean&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="71" y="1544" width="600" height="27" fill="#f6f8fb"/>
+<text x="79" y="1563" class="key"></text>
+<text x="167" y="1563" class="field">complete_pod</text>
+<text x="637" y="1563" class="dtype" text-anchor="end">boolean</text>
+<text x="657" y="1563" class="key"></text></g>
+<text x="84" y="1592" class="note">PK 0 · FK 0 · UQ 0 · CHECK 0</text></g>
+<g id="table-analytics_route_facts"><title>Distancia GPS Haversine dentro de la ruta; mínimo 2 muestras. Minutos de operación por parada terminal DELIVERED/FAILED/RETURNED, no tiempo de servicio.</title>
+<rect x="817" y="216" width="602" height="663" rx="6" fill="#d8dfe9"/>
+<rect x="817" y="213" width="602" height="663" rx="6" fill="white" stroke="#a7b5c6" stroke-width="1.5"/>
+<path d="M823,213 h590 q6,0 6,6 v56 h-602 v-56 q0,-6 6,-6" fill="#72569b"/>
+<text x="831" y="239" class="table">analytics_route_facts</text>
+<text x="831" y="261" class="tag">VISTA · 21 columnas físicas</text>
+<g><title>{&quot;name&quot;: &quot;route_id&quot;, &quot;type&quot;: &quot;bigint&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="275" width="600" height="27" fill="#ffffff"/>
+<text x="826" y="294" class="key"></text>
+<text x="914" y="294" class="field">route_id</text>
+<text x="1384" y="294" class="dtype" text-anchor="end">bigint</text>
+<text x="1404" y="294" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;label&quot;, &quot;type&quot;: &quot;text&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="302" width="600" height="27" fill="#f6f8fb"/>
+<text x="826" y="321" class="key"></text>
+<text x="914" y="321" class="field">label</text>
+<text x="1384" y="321" class="dtype" text-anchor="end">text</text>
+<text x="1404" y="321" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;driver_id&quot;, &quot;type&quot;: &quot;bigint&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="329" width="600" height="27" fill="#ffffff"/>
+<text x="826" y="348" class="key"></text>
+<text x="914" y="348" class="field">driver_id</text>
+<text x="1384" y="348" class="dtype" text-anchor="end">bigint</text>
+<text x="1404" y="348" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;vehicle_id&quot;, &quot;type&quot;: &quot;bigint&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="356" width="600" height="27" fill="#f6f8fb"/>
+<text x="826" y="375" class="key"></text>
+<text x="914" y="375" class="field">vehicle_id</text>
+<text x="1384" y="375" class="dtype" text-anchor="end">bigint</text>
+<text x="1404" y="375" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;operation_date&quot;, &quot;type&quot;: &quot;date&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="383" width="600" height="27" fill="#ffffff"/>
+<text x="826" y="402" class="key"></text>
+<text x="914" y="402" class="field">operation_date</text>
+<text x="1384" y="402" class="dtype" text-anchor="end">date</text>
+<text x="1404" y="402" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;status&quot;, &quot;type&quot;: &quot;character varying(50)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="410" width="600" height="27" fill="#f6f8fb"/>
+<text x="826" y="429" class="key"></text>
+<text x="914" y="429" class="field">status</text>
+<text x="1384" y="429" class="dtype" text-anchor="end">varchar(50)</text>
+<text x="1404" y="429" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;actual_start_time&quot;, &quot;type&quot;: &quot;timestamp with time zone&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="437" width="600" height="27" fill="#ffffff"/>
+<text x="826" y="456" class="key"></text>
+<text x="914" y="456" class="field">actual_start_time</text>
+<text x="1384" y="456" class="dtype" text-anchor="end">timestamptz</text>
+<text x="1404" y="456" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;actual_end_time&quot;, &quot;type&quot;: &quot;timestamp with time zone&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="464" width="600" height="27" fill="#f6f8fb"/>
+<text x="826" y="483" class="key"></text>
+<text x="914" y="483" class="field">actual_end_time</text>
+<text x="1384" y="483" class="dtype" text-anchor="end">timestamptz</text>
+<text x="1404" y="483" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;planned_distance_km&quot;, &quot;type&quot;: &quot;double precision&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="491" width="600" height="27" fill="#ffffff"/>
+<text x="826" y="510" class="key"></text>
+<text x="914" y="510" class="field">planned_distance_km</text>
+<text x="1384" y="510" class="dtype" text-anchor="end">float8</text>
+<text x="1404" y="510" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;planned_duration_min&quot;, &quot;type&quot;: &quot;double precision&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="518" width="600" height="27" fill="#f6f8fb"/>
+<text x="826" y="537" class="key"></text>
+<text x="914" y="537" class="field">planned_duration_min</text>
+<text x="1384" y="537" class="dtype" text-anchor="end">float8</text>
+<text x="1404" y="537" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;order_count&quot;, &quot;type&quot;: &quot;bigint&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="545" width="600" height="27" fill="#ffffff"/>
+<text x="826" y="564" class="key"></text>
+<text x="914" y="564" class="field">order_count</text>
+<text x="1384" y="564" class="dtype" text-anchor="end">bigint</text>
+<text x="1404" y="564" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;delivered_count&quot;, &quot;type&quot;: &quot;bigint&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="572" width="600" height="27" fill="#f6f8fb"/>
+<text x="826" y="591" class="key"></text>
+<text x="914" y="591" class="field">delivered_count</text>
+<text x="1384" y="591" class="dtype" text-anchor="end">bigint</text>
+<text x="1404" y="591" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;terminal_stop_count&quot;, &quot;type&quot;: &quot;bigint&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="599" width="600" height="27" fill="#ffffff"/>
+<text x="826" y="618" class="key"></text>
+<text x="914" y="618" class="field">terminal_stop_count</text>
+<text x="1384" y="618" class="dtype" text-anchor="end">bigint</text>
+<text x="1404" y="618" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;gps_sample_count&quot;, &quot;type&quot;: &quot;bigint&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="626" width="600" height="27" fill="#f6f8fb"/>
+<text x="826" y="645" class="key"></text>
+<text x="914" y="645" class="field">gps_sample_count</text>
+<text x="1384" y="645" class="dtype" text-anchor="end">bigint</text>
+<text x="1404" y="645" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;first_gps_at&quot;, &quot;type&quot;: &quot;timestamp with time zone&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="653" width="600" height="27" fill="#ffffff"/>
+<text x="826" y="672" class="key"></text>
+<text x="914" y="672" class="field">first_gps_at</text>
+<text x="1384" y="672" class="dtype" text-anchor="end">timestamptz</text>
+<text x="1404" y="672" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;last_gps_at&quot;, &quot;type&quot;: &quot;timestamp with time zone&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="680" width="600" height="27" fill="#f6f8fb"/>
+<text x="826" y="699" class="key"></text>
+<text x="914" y="699" class="field">last_gps_at</text>
+<text x="1384" y="699" class="dtype" text-anchor="end">timestamptz</text>
+<text x="1404" y="699" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;actual_gps_distance_km&quot;, &quot;type&quot;: &quot;double precision&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="707" width="600" height="27" fill="#ffffff"/>
+<text x="826" y="726" class="key"></text>
+<text x="914" y="726" class="field">actual_gps_distance_km</text>
+<text x="1384" y="726" class="dtype" text-anchor="end">float8</text>
+<text x="1404" y="726" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;operation_minutes&quot;, &quot;type&quot;: &quot;double precision&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="734" width="600" height="27" fill="#f6f8fb"/>
+<text x="826" y="753" class="key"></text>
+<text x="914" y="753" class="field">operation_minutes</text>
+<text x="1384" y="753" class="dtype" text-anchor="end">float8</text>
+<text x="1404" y="753" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;km_per_delivery&quot;, &quot;type&quot;: &quot;double precision&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="761" width="600" height="27" fill="#ffffff"/>
+<text x="826" y="780" class="key"></text>
+<text x="914" y="780" class="field">km_per_delivery</text>
+<text x="1384" y="780" class="dtype" text-anchor="end">float8</text>
+<text x="1404" y="780" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;time_per_stop_min&quot;, &quot;type&quot;: &quot;double precision&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="788" width="600" height="27" fill="#f6f8fb"/>
+<text x="826" y="807" class="key"></text>
+<text x="914" y="807" class="field">time_per_stop_min</text>
+<text x="1384" y="807" class="dtype" text-anchor="end">float8</text>
+<text x="1404" y="807" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;distance_source&quot;, &quot;type&quot;: &quot;text&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="815" width="600" height="27" fill="#ffffff"/>
+<text x="826" y="834" class="key"></text>
+<text x="914" y="834" class="field">distance_source</text>
+<text x="1384" y="834" class="dtype" text-anchor="end">text</text>
+<text x="1404" y="834" class="key"></text></g>
+<text x="831" y="863" class="note">PK 0 · FK 0 · UQ 0 · CHECK 0</text></g>
+<g id="table-analytics_goal_facts"><title>analytics_goal_facts</title>
+<rect x="817" y="971" width="602" height="204" rx="6" fill="#d8dfe9"/>
+<rect x="817" y="968" width="602" height="204" rx="6" fill="white" stroke="#a7b5c6" stroke-width="1.5"/>
+<path d="M823,968 h590 q6,0 6,6 v56 h-602 v-56 q0,-6 6,-6" fill="#72569b"/>
+<text x="831" y="994" class="table">analytics_goal_facts</text>
+<text x="831" y="1016" class="tag">VISTA · 4 columnas físicas</text>
+<g><title>{&quot;name&quot;: &quot;code&quot;, &quot;type&quot;: &quot;text&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="1030" width="600" height="27" fill="#ffffff"/>
+<text x="826" y="1049" class="key"></text>
+<text x="914" y="1049" class="field">code</text>
+<text x="1384" y="1049" class="dtype" text-anchor="end">text</text>
+<text x="1404" y="1049" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;target&quot;, &quot;type&quot;: &quot;numeric&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="1057" width="600" height="27" fill="#f6f8fb"/>
+<text x="826" y="1076" class="key"></text>
+<text x="914" y="1076" class="field">target</text>
+<text x="1384" y="1076" class="dtype" text-anchor="end">numeric</text>
+<text x="1404" y="1076" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;updated_by&quot;, &quot;type&quot;: &quot;character varying(100)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="1084" width="600" height="27" fill="#ffffff"/>
+<text x="826" y="1103" class="key"></text>
+<text x="914" y="1103" class="field">updated_by</text>
+<text x="1384" y="1103" class="dtype" text-anchor="end">varchar(100)</text>
+<text x="1404" y="1103" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;updated_at&quot;, &quot;type&quot;: &quot;timestamp with time zone&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="1111" width="600" height="27" fill="#f6f8fb"/>
+<text x="826" y="1130" class="key"></text>
+<text x="914" y="1130" class="field">updated_at</text>
+<text x="1384" y="1130" class="dtype" text-anchor="end">timestamptz</text>
+<text x="1404" y="1130" class="key"></text></g>
+<text x="831" y="1159" class="note">PK 0 · FK 0 · UQ 0 · CHECK 0</text></g>
+<g id="table-analytics_goal_history_facts"><title>analytics_goal_history_facts</title>
+<rect x="817" y="1267" width="602" height="258" rx="6" fill="#d8dfe9"/>
+<rect x="817" y="1264" width="602" height="258" rx="6" fill="white" stroke="#a7b5c6" stroke-width="1.5"/>
+<path d="M823,1264 h590 q6,0 6,6 v56 h-602 v-56 q0,-6 6,-6" fill="#606e7a"/>
+<text x="831" y="1290" class="table">analytics_goal_history_facts</text>
+<text x="831" y="1312" class="tag">VISTA · 6 columnas físicas</text>
+<g><title>{&quot;name&quot;: &quot;id&quot;, &quot;type&quot;: &quot;bigint&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="1326" width="600" height="27" fill="#ffffff"/>
+<text x="826" y="1345" class="key"></text>
+<text x="914" y="1345" class="field">id</text>
+<text x="1384" y="1345" class="dtype" text-anchor="end">bigint</text>
+<text x="1404" y="1345" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;code&quot;, &quot;type&quot;: &quot;character varying(10)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="1353" width="600" height="27" fill="#f6f8fb"/>
+<text x="826" y="1372" class="key"></text>
+<text x="914" y="1372" class="field">code</text>
+<text x="1384" y="1372" class="dtype" text-anchor="end">varchar(10)</text>
+<text x="1404" y="1372" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;previous_target&quot;, &quot;type&quot;: &quot;numeric&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="1380" width="600" height="27" fill="#ffffff"/>
+<text x="826" y="1399" class="key"></text>
+<text x="914" y="1399" class="field">previous_target</text>
+<text x="1384" y="1399" class="dtype" text-anchor="end">numeric</text>
+<text x="1404" y="1399" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;target&quot;, &quot;type&quot;: &quot;numeric&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="1407" width="600" height="27" fill="#f6f8fb"/>
+<text x="826" y="1426" class="key"></text>
+<text x="914" y="1426" class="field">target</text>
+<text x="1384" y="1426" class="dtype" text-anchor="end">numeric</text>
+<text x="1404" y="1426" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;changed_by&quot;, &quot;type&quot;: &quot;character varying(100)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="1434" width="600" height="27" fill="#ffffff"/>
+<text x="826" y="1453" class="key"></text>
+<text x="914" y="1453" class="field">changed_by</text>
+<text x="1384" y="1453" class="dtype" text-anchor="end">varchar(100)</text>
+<text x="1404" y="1453" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;effective_at&quot;, &quot;type&quot;: &quot;timestamp with time zone&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="818" y="1461" width="600" height="27" fill="#f6f8fb"/>
+<text x="826" y="1480" class="key"></text>
+<text x="914" y="1480" class="field">effective_at</text>
+<text x="1384" y="1480" class="dtype" text-anchor="end">timestamptz</text>
+<text x="1404" y="1480" class="key"></text></g>
+<text x="831" y="1509" class="note">PK 0 · FK 0 · UQ 0 · CHECK 0</text></g>
+<g id="table-analytics_goals"><title>analytics_goals</title>
+<rect x="1564" y="216" width="602" height="204" rx="6" fill="#d8dfe9"/>
+<rect x="1564" y="213" width="602" height="204" rx="6" fill="white" stroke="#a7b5c6" stroke-width="1.5"/>
+<path d="M1570,213 h590 q6,0 6,6 v56 h-602 v-56 q0,-6 6,-6" fill="#72569b"/>
+<text x="1578" y="239" class="table">analytics_goals</text>
+<text x="1578" y="261" class="tag">TABLA · 4 columnas físicas</text>
+<g><title>{&quot;name&quot;: &quot;code&quot;, &quot;type&quot;: &quot;character varying(10)&quot;, &quot;nullable&quot;: false, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="275" width="600" height="27" fill="#e8f2fb"/>
+<text x="1573" y="294" class="key">PK</text>
+<text x="1661" y="294" class="field">code</text>
+<text x="2131" y="294" class="dtype" text-anchor="end">varchar(10)</text>
+<text x="2151" y="294" class="key">!</text></g>
+<g><title>{&quot;name&quot;: &quot;target&quot;, &quot;type&quot;: &quot;numeric&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="302" width="600" height="27" fill="#f6f8fb"/>
+<text x="1573" y="321" class="key"></text>
+<text x="1661" y="321" class="field">target</text>
+<text x="2131" y="321" class="dtype" text-anchor="end">numeric</text>
+<text x="2151" y="321" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;updated_by&quot;, &quot;type&quot;: &quot;character varying(100)&quot;, &quot;nullable&quot;: false, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="329" width="600" height="27" fill="#ffffff"/>
+<text x="1573" y="348" class="key"></text>
+<text x="1661" y="348" class="field">updated_by</text>
+<text x="2131" y="348" class="dtype" text-anchor="end">varchar(100)</text>
+<text x="2151" y="348" class="key">!</text></g>
+<g><title>{&quot;name&quot;: &quot;updated_at&quot;, &quot;type&quot;: &quot;timestamp with time zone&quot;, &quot;nullable&quot;: false, &quot;default&quot;: &quot;clock_timestamp()&quot;, &quot;comment&quot;: null}</title><rect x="1565" y="356" width="600" height="27" fill="#f6f8fb"/>
+<text x="1573" y="375" class="key"></text>
+<text x="1661" y="375" class="field">updated_at</text>
+<text x="2131" y="375" class="dtype" text-anchor="end">timestamptz</text>
+<text x="2151" y="375" class="key">!</text></g>
+<text x="1578" y="404" class="note">PK 1 · FK 0 · UQ 0 · CHECK 3</text></g>
+<g id="table-analytics_goal_history"><title>Historial de metas efectivas, actor autenticado y fecha. Sin metas precargadas.</title>
+<rect x="1564" y="512" width="602" height="258" rx="6" fill="#d8dfe9"/>
+<rect x="1564" y="509" width="602" height="258" rx="6" fill="white" stroke="#a7b5c6" stroke-width="1.5"/>
+<path d="M1570,509 h590 q6,0 6,6 v56 h-602 v-56 q0,-6 6,-6" fill="#606e7a"/>
+<text x="1578" y="535" class="table">analytics_goal_history</text>
+<text x="1578" y="557" class="tag">SOPORTE · 6 columnas físicas</text>
+<g><title>{&quot;name&quot;: &quot;id&quot;, &quot;type&quot;: &quot;bigint&quot;, &quot;nullable&quot;: false, &quot;default&quot;: &quot;nextval(&#x27;analytics_goal_history_id_seq&#x27;::regclass)&quot;, &quot;comment&quot;: null}</title><rect x="1565" y="571" width="600" height="27" fill="#e8f2fb"/>
+<text x="1573" y="590" class="key">PK</text>
+<text x="1661" y="590" class="field">id</text>
+<text x="2131" y="590" class="dtype" text-anchor="end">bigint</text>
+<text x="2151" y="590" class="key">!</text></g>
+<g><title>{&quot;name&quot;: &quot;code&quot;, &quot;type&quot;: &quot;character varying(10)&quot;, &quot;nullable&quot;: false, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="598" width="600" height="27" fill="#e9f6f0"/>
+<text x="1573" y="617" class="key">FK</text>
+<text x="1661" y="617" class="field">code</text>
+<text x="2131" y="617" class="dtype" text-anchor="end">varchar(10)</text>
+<text x="2151" y="617" class="key">!</text></g>
+<g><title>{&quot;name&quot;: &quot;previous_target&quot;, &quot;type&quot;: &quot;numeric&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="625" width="600" height="27" fill="#ffffff"/>
+<text x="1573" y="644" class="key"></text>
+<text x="1661" y="644" class="field">previous_target</text>
+<text x="2131" y="644" class="dtype" text-anchor="end">numeric</text>
+<text x="2151" y="644" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;target&quot;, &quot;type&quot;: &quot;numeric&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="652" width="600" height="27" fill="#f6f8fb"/>
+<text x="1573" y="671" class="key"></text>
+<text x="1661" y="671" class="field">target</text>
+<text x="2131" y="671" class="dtype" text-anchor="end">numeric</text>
+<text x="2151" y="671" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;changed_by&quot;, &quot;type&quot;: &quot;character varying(100)&quot;, &quot;nullable&quot;: false, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="679" width="600" height="27" fill="#ffffff"/>
+<text x="1573" y="698" class="key"></text>
+<text x="1661" y="698" class="field">changed_by</text>
+<text x="2131" y="698" class="dtype" text-anchor="end">varchar(100)</text>
+<text x="2151" y="698" class="key">!</text></g>
+<g><title>{&quot;name&quot;: &quot;effective_at&quot;, &quot;type&quot;: &quot;timestamp with time zone&quot;, &quot;nullable&quot;: false, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="706" width="600" height="27" fill="#f6f8fb"/>
+<text x="1573" y="725" class="key"></text>
+<text x="1661" y="725" class="field">effective_at</text>
+<text x="2131" y="725" class="dtype" text-anchor="end">timestamptz</text>
+<text x="2151" y="725" class="key">!</text></g>
+<text x="1578" y="754" class="note">PK 1 · FK 1 · UQ 0 · CHECK 0</text></g>
+<g id="table-improvement_actions"><title>improvement_actions</title>
+<rect x="1564" y="862" width="602" height="501" rx="6" fill="#d8dfe9"/>
+<rect x="1564" y="859" width="602" height="501" rx="6" fill="white" stroke="#a7b5c6" stroke-width="1.5"/>
+<path d="M1570,859 h590 q6,0 6,6 v56 h-602 v-56 q0,-6 6,-6" fill="#a35929"/>
+<text x="1578" y="885" class="table">improvement_actions</text>
+<text x="1578" y="907" class="tag">TABLA · 15 columnas físicas</text>
+<g><title>{&quot;name&quot;: &quot;id&quot;, &quot;type&quot;: &quot;bigint&quot;, &quot;nullable&quot;: false, &quot;default&quot;: &quot;nextval(&#x27;improvement_actions_id_seq&#x27;::regclass)&quot;, &quot;comment&quot;: null}</title><rect x="1565" y="921" width="600" height="27" fill="#e8f2fb"/>
+<text x="1573" y="940" class="key">PK</text>
+<text x="1661" y="940" class="field">id</text>
+<text x="2131" y="940" class="dtype" text-anchor="end">bigint</text>
+<text x="2151" y="940" class="key">!</text></g>
+<g><title>{&quot;name&quot;: &quot;title&quot;, &quot;type&quot;: &quot;character varying(255)&quot;, &quot;nullable&quot;: false, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="948" width="600" height="27" fill="#f6f8fb"/>
+<text x="1573" y="967" class="key"></text>
+<text x="1661" y="967" class="field">title</text>
+<text x="2131" y="967" class="dtype" text-anchor="end">varchar(255)</text>
+<text x="2151" y="967" class="key">!</text></g>
+<g><title>{&quot;name&quot;: &quot;cause&quot;, &quot;type&quot;: &quot;text&quot;, &quot;nullable&quot;: false, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="975" width="600" height="27" fill="#ffffff"/>
+<text x="1573" y="994" class="key"></text>
+<text x="1661" y="994" class="field">cause</text>
+<text x="2131" y="994" class="dtype" text-anchor="end">text</text>
+<text x="2151" y="994" class="key">!</text></g>
+<g><title>{&quot;name&quot;: &quot;owner_name&quot;, &quot;type&quot;: &quot;character varying(150)&quot;, &quot;nullable&quot;: false, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="1002" width="600" height="27" fill="#f6f8fb"/>
+<text x="1573" y="1021" class="key"></text>
+<text x="1661" y="1021" class="field">owner_name</text>
+<text x="2131" y="1021" class="dtype" text-anchor="end">varchar(150)</text>
+<text x="2151" y="1021" class="key">!</text></g>
+<g><title>{&quot;name&quot;: &quot;due_date&quot;, &quot;type&quot;: &quot;date&quot;, &quot;nullable&quot;: false, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="1029" width="600" height="27" fill="#ffffff"/>
+<text x="1573" y="1048" class="key"></text>
+<text x="1661" y="1048" class="field">due_date</text>
+<text x="2131" y="1048" class="dtype" text-anchor="end">date</text>
+<text x="2151" y="1048" class="key">!</text></g>
+<g><title>{&quot;name&quot;: &quot;metric_code&quot;, &quot;type&quot;: &quot;character varying(30)&quot;, &quot;nullable&quot;: false, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="1056" width="600" height="27" fill="#f6f8fb"/>
+<text x="1573" y="1075" class="key"></text>
+<text x="1661" y="1075" class="field">metric_code</text>
+<text x="2131" y="1075" class="dtype" text-anchor="end">varchar(30)</text>
+<text x="2151" y="1075" class="key">!</text></g>
+<g><title>{&quot;name&quot;: &quot;baseline_value&quot;, &quot;type&quot;: &quot;numeric(14,4)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="1083" width="600" height="27" fill="#ffffff"/>
+<text x="1573" y="1102" class="key"></text>
+<text x="1661" y="1102" class="field">baseline_value</text>
+<text x="2131" y="1102" class="dtype" text-anchor="end">numeric(14,4)</text>
+<text x="2151" y="1102" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;target_value&quot;, &quot;type&quot;: &quot;numeric(14,4)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="1110" width="600" height="27" fill="#f6f8fb"/>
+<text x="1573" y="1129" class="key"></text>
+<text x="1661" y="1129" class="field">target_value</text>
+<text x="2131" y="1129" class="dtype" text-anchor="end">numeric(14,4)</text>
+<text x="2151" y="1129" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;result_value&quot;, &quot;type&quot;: &quot;numeric(14,4)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="1137" width="600" height="27" fill="#ffffff"/>
+<text x="1573" y="1156" class="key"></text>
+<text x="1661" y="1156" class="field">result_value</text>
+<text x="2131" y="1156" class="dtype" text-anchor="end">numeric(14,4)</text>
+<text x="2151" y="1156" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;status&quot;, &quot;type&quot;: &quot;character varying(30)&quot;, &quot;nullable&quot;: false, &quot;default&quot;: &quot;&#x27;OPEN&#x27;::character varying&quot;, &quot;comment&quot;: null}</title><rect x="1565" y="1164" width="600" height="27" fill="#f6f8fb"/>
+<text x="1573" y="1183" class="key"></text>
+<text x="1661" y="1183" class="field">status</text>
+<text x="2131" y="1183" class="dtype" text-anchor="end">varchar(30)</text>
+<text x="2151" y="1183" class="key">!</text></g>
+<g><title>{&quot;name&quot;: &quot;note&quot;, &quot;type&quot;: &quot;text&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="1191" width="600" height="27" fill="#ffffff"/>
+<text x="1573" y="1210" class="key"></text>
+<text x="1661" y="1210" class="field">note</text>
+<text x="2131" y="1210" class="dtype" text-anchor="end">text</text>
+<text x="2151" y="1210" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;created_by&quot;, &quot;type&quot;: &quot;character varying(100)&quot;, &quot;nullable&quot;: false, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="1218" width="600" height="27" fill="#f6f8fb"/>
+<text x="1573" y="1237" class="key"></text>
+<text x="1661" y="1237" class="field">created_by</text>
+<text x="2131" y="1237" class="dtype" text-anchor="end">varchar(100)</text>
+<text x="2151" y="1237" class="key">!</text></g>
+<g><title>{&quot;name&quot;: &quot;verified_by&quot;, &quot;type&quot;: &quot;character varying(100)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="1245" width="600" height="27" fill="#ffffff"/>
+<text x="1573" y="1264" class="key"></text>
+<text x="1661" y="1264" class="field">verified_by</text>
+<text x="2131" y="1264" class="dtype" text-anchor="end">varchar(100)</text>
+<text x="2151" y="1264" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;created_at&quot;, &quot;type&quot;: &quot;timestamp with time zone&quot;, &quot;nullable&quot;: false, &quot;default&quot;: &quot;now()&quot;, &quot;comment&quot;: null}</title><rect x="1565" y="1272" width="600" height="27" fill="#f6f8fb"/>
+<text x="1573" y="1291" class="key"></text>
+<text x="1661" y="1291" class="field">created_at</text>
+<text x="2131" y="1291" class="dtype" text-anchor="end">timestamptz</text>
+<text x="2151" y="1291" class="key">!</text></g>
+<g><title>{&quot;name&quot;: &quot;updated_at&quot;, &quot;type&quot;: &quot;timestamp with time zone&quot;, &quot;nullable&quot;: false, &quot;default&quot;: &quot;now()&quot;, &quot;comment&quot;: null}</title><rect x="1565" y="1299" width="600" height="27" fill="#ffffff"/>
+<text x="1573" y="1318" class="key"></text>
+<text x="1661" y="1318" class="field">updated_at</text>
+<text x="2131" y="1318" class="dtype" text-anchor="end">timestamptz</text>
+<text x="2151" y="1318" class="key">!</text></g>
+<text x="1578" y="1347" class="note">PK 1 · FK 0 · UQ 0 · CHECK 2</text></g>
+<g id="table-purchases"><title>purchases</title>
+<rect x="1564" y="1455" width="602" height="339" rx="6" fill="#d8dfe9"/>
+<rect x="1564" y="1452" width="602" height="339" rx="6" fill="white" stroke="#a7b5c6" stroke-width="1.5"/>
+<path d="M1570,1452 h590 q6,0 6,6 v56 h-602 v-56 q0,-6 6,-6" fill="#697235"/>
+<text x="1578" y="1478" class="table">purchases</text>
+<text x="1578" y="1500" class="tag">TABLA · 9 columnas físicas</text>
+<g><title>{&quot;name&quot;: &quot;id&quot;, &quot;type&quot;: &quot;bigint&quot;, &quot;nullable&quot;: false, &quot;default&quot;: &quot;nextval(&#x27;purchases_id_seq&#x27;::regclass)&quot;, &quot;comment&quot;: null}</title><rect x="1565" y="1514" width="600" height="27" fill="#e8f2fb"/>
+<text x="1573" y="1533" class="key">PK</text>
+<text x="1661" y="1533" class="field">id</text>
+<text x="2131" y="1533" class="dtype" text-anchor="end">bigint</text>
+<text x="2151" y="1533" class="key">!</text></g>
+<g><title>{&quot;name&quot;: &quot;description&quot;, &quot;type&quot;: &quot;character varying(500)&quot;, &quot;nullable&quot;: false, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="1541" width="600" height="27" fill="#f6f8fb"/>
+<text x="1573" y="1560" class="key"></text>
+<text x="1661" y="1560" class="field">description</text>
+<text x="2131" y="1560" class="dtype" text-anchor="end">varchar(500)</text>
+<text x="2151" y="1560" class="key">!</text></g>
+<g><title>{&quot;name&quot;: &quot;supplier&quot;, &quot;type&quot;: &quot;character varying(255)&quot;, &quot;nullable&quot;: false, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="1568" width="600" height="27" fill="#ffffff"/>
+<text x="1573" y="1587" class="key"></text>
+<text x="1661" y="1587" class="field">supplier</text>
+<text x="2131" y="1587" class="dtype" text-anchor="end">varchar(255)</text>
+<text x="2151" y="1587" class="key">!</text></g>
+<g><title>{&quot;name&quot;: &quot;amount&quot;, &quot;type&quot;: &quot;numeric(12,2)&quot;, &quot;nullable&quot;: false, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="1595" width="600" height="27" fill="#f6f8fb"/>
+<text x="1573" y="1614" class="key"></text>
+<text x="1661" y="1614" class="field">amount</text>
+<text x="2131" y="1614" class="dtype" text-anchor="end">numeric(12,2)</text>
+<text x="2151" y="1614" class="key">!</text></g>
+<g><title>{&quot;name&quot;: &quot;status&quot;, &quot;type&quot;: &quot;character varying(50)&quot;, &quot;nullable&quot;: false, &quot;default&quot;: &quot;&#x27;PENDING&#x27;::character varying&quot;, &quot;comment&quot;: null}</title><rect x="1565" y="1622" width="600" height="27" fill="#ffffff"/>
+<text x="1573" y="1641" class="key"></text>
+<text x="1661" y="1641" class="field">status</text>
+<text x="2131" y="1641" class="dtype" text-anchor="end">varchar(50)</text>
+<text x="2151" y="1641" class="key">!</text></g>
+<g><title>{&quot;name&quot;: &quot;category&quot;, &quot;type&quot;: &quot;character varying(100)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="1649" width="600" height="27" fill="#f6f8fb"/>
+<text x="1573" y="1668" class="key"></text>
+<text x="1661" y="1668" class="field">category</text>
+<text x="2131" y="1668" class="dtype" text-anchor="end">varchar(100)</text>
+<text x="2151" y="1668" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;notes&quot;, &quot;type&quot;: &quot;text&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="1676" width="600" height="27" fill="#ffffff"/>
+<text x="1573" y="1695" class="key"></text>
+<text x="1661" y="1695" class="field">notes</text>
+<text x="2131" y="1695" class="dtype" text-anchor="end">text</text>
+<text x="2151" y="1695" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;created_at&quot;, &quot;type&quot;: &quot;timestamp with time zone&quot;, &quot;nullable&quot;: true, &quot;default&quot;: &quot;now()&quot;, &quot;comment&quot;: null}</title><rect x="1565" y="1703" width="600" height="27" fill="#f6f8fb"/>
+<text x="1573" y="1722" class="key"></text>
+<text x="1661" y="1722" class="field">created_at</text>
+<text x="2131" y="1722" class="dtype" text-anchor="end">timestamptz</text>
+<text x="2151" y="1722" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;updated_at&quot;, &quot;type&quot;: &quot;timestamp with time zone&quot;, &quot;nullable&quot;: true, &quot;default&quot;: &quot;now()&quot;, &quot;comment&quot;: null}</title><rect x="1565" y="1730" width="600" height="27" fill="#ffffff"/>
+<text x="1573" y="1749" class="key"></text>
+<text x="1661" y="1749" class="field">updated_at</text>
+<text x="2131" y="1749" class="dtype" text-anchor="end">timestamptz</text>
+<text x="2151" y="1749" class="key"></text></g>
+<text x="1578" y="1778" class="note">PK 1 · FK 0 · UQ 0 · CHECK 0</text></g>
+<g id="table-hubs"><title>Almacenes y centros de distribución.</title>
+<rect x="1564" y="1886" width="602" height="339" rx="6" fill="#d8dfe9"/>
+<rect x="1564" y="1883" width="602" height="339" rx="6" fill="white" stroke="#a7b5c6" stroke-width="1.5"/>
+<path d="M1570,1883 h590 q6,0 6,6 v56 h-602 v-56 q0,-6 6,-6" fill="#697235"/>
+<text x="1578" y="1909" class="table">hubs</text>
+<text x="1578" y="1931" class="tag">TABLA · 9 columnas físicas</text>
+<g><title>{&quot;name&quot;: &quot;id&quot;, &quot;type&quot;: &quot;bigint&quot;, &quot;nullable&quot;: false, &quot;default&quot;: &quot;nextval(&#x27;hubs_id_seq&#x27;::regclass)&quot;, &quot;comment&quot;: null}</title><rect x="1565" y="1945" width="600" height="27" fill="#e8f2fb"/>
+<text x="1573" y="1964" class="key">PK</text>
+<text x="1661" y="1964" class="field">id</text>
+<text x="2131" y="1964" class="dtype" text-anchor="end">bigint</text>
+<text x="2151" y="1964" class="key">!</text></g>
+<g><title>{&quot;name&quot;: &quot;name&quot;, &quot;type&quot;: &quot;character varying(100)&quot;, &quot;nullable&quot;: false, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="1972" width="600" height="27" fill="#f6f8fb"/>
+<text x="1573" y="1991" class="key"></text>
+<text x="1661" y="1991" class="field">name</text>
+<text x="2131" y="1991" class="dtype" text-anchor="end">varchar(100)</text>
+<text x="2151" y="1991" class="key">!</text></g>
+<g><title>{&quot;name&quot;: &quot;code&quot;, &quot;type&quot;: &quot;character varying(20)&quot;, &quot;nullable&quot;: false, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="1999" width="600" height="27" fill="#ffffff"/>
+<text x="1573" y="2018" class="key">UQ</text>
+<text x="1661" y="2018" class="field">code</text>
+<text x="2131" y="2018" class="dtype" text-anchor="end">varchar(20)</text>
+<text x="2151" y="2018" class="key">!</text></g>
+<g><title>{&quot;name&quot;: &quot;address&quot;, &quot;type&quot;: &quot;text&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="2026" width="600" height="27" fill="#f6f8fb"/>
+<text x="1573" y="2045" class="key"></text>
+<text x="1661" y="2045" class="field">address</text>
+<text x="2131" y="2045" class="dtype" text-anchor="end">text</text>
+<text x="2151" y="2045" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;city&quot;, &quot;type&quot;: &quot;character varying(50)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="2053" width="600" height="27" fill="#ffffff"/>
+<text x="1573" y="2072" class="key"></text>
+<text x="1661" y="2072" class="field">city</text>
+<text x="2131" y="2072" class="dtype" text-anchor="end">varchar(50)</text>
+<text x="2151" y="2072" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;latitude&quot;, &quot;type&quot;: &quot;numeric(10,8)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="2080" width="600" height="27" fill="#f6f8fb"/>
+<text x="1573" y="2099" class="key"></text>
+<text x="1661" y="2099" class="field">latitude</text>
+<text x="2131" y="2099" class="dtype" text-anchor="end">numeric(10,8)</text>
+<text x="2151" y="2099" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;longitude&quot;, &quot;type&quot;: &quot;numeric(11,8)&quot;, &quot;nullable&quot;: true, &quot;default&quot;: null, &quot;comment&quot;: null}</title><rect x="1565" y="2107" width="600" height="27" fill="#ffffff"/>
+<text x="1573" y="2126" class="key"></text>
+<text x="1661" y="2126" class="field">longitude</text>
+<text x="2131" y="2126" class="dtype" text-anchor="end">numeric(11,8)</text>
+<text x="2151" y="2126" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;is_active&quot;, &quot;type&quot;: &quot;boolean&quot;, &quot;nullable&quot;: true, &quot;default&quot;: &quot;true&quot;, &quot;comment&quot;: null}</title><rect x="1565" y="2134" width="600" height="27" fill="#f6f8fb"/>
+<text x="1573" y="2153" class="key"></text>
+<text x="1661" y="2153" class="field">is_active</text>
+<text x="2131" y="2153" class="dtype" text-anchor="end">boolean</text>
+<text x="2151" y="2153" class="key"></text></g>
+<g><title>{&quot;name&quot;: &quot;created_at&quot;, &quot;type&quot;: &quot;timestamp with time zone&quot;, &quot;nullable&quot;: true, &quot;default&quot;: &quot;CURRENT_TIMESTAMP&quot;, &quot;comment&quot;: null}</title><rect x="1565" y="2161" width="600" height="27" fill="#ffffff"/>
+<text x="1573" y="2180" class="key"></text>
+<text x="1661" y="2180" class="field">created_at</text>
+<text x="2131" y="2180" class="dtype" text-anchor="end">timestamptz</text>
+<text x="2151" y="2180" class="key"></text></g>
+<text x="1578" y="2209" class="note">PK 1 · FK 0 · UQ 1 · CHECK 0</text></g>
+<text x="36" y="2301" class="note">Las vistas muestran nulabilidad del catálogo; no se infieren restricciones de tablas fuente. No se dibujan dependencias de vistas no exportadas.</text>
+<text x="36" y="2326" class="note">orders.driver_id, improvement_actions.metric_code y referencias polimórficas de auditoría carecen de FK: no se inventan enlaces.</text>
+<text x="36" y="2351" class="note">0 FK hacia objetos fuera de esta vista; consultar manifiesto y ERD global. Fuente: esquema_fisico_verificado.json.</text></svg>

@@ -1,0 +1,91 @@
+# Java
+build/
+.gradle/
+*.class
+*.jar
+*.war
+*.ear
+!gradle/wrapper/gradle-wrapper.jar
+
+# Node
+web-admin/node_modules/
+web-admin/dist/
+web-admin/.env
+
+# Environment
+.env
+.env.*
+!.env.example
+!**/.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+.aws/
+.codex/
+.claude/
+bin/
+**/__pycache__/
+*.pyc
+**/node_modules/
+**/.dart_tool/
+**/.runtime/
+**/_qa*/
+**/.pytest_cache/
+*.log
+entregas/
+**/raw/
+docs/historico/
+tools/entrega_capitulo3/audit_json.json
+docs/Integrador I_Grupo3_Capitulo3_Completo.docx
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Docker
+postgres_data/
+keycloak_data/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# OSRM: datos de mapa preprocesados (regenerables, ~1GB)
+infra/osrm/
+backups/
+
+# Renderizados de revisión regenerables y registro del AVD temporal local
+docs/correccion_integral/_qa/**/*.png
+docs/correccion_integral/_qa/**/*.webp
+docs/correccion_integral/_qa/**/*.pdf
+docs/correccion_integral/_qa/ppt/build/
+docs/correccion_integral/_qa/ppt/validated/
+tools/audit_e2e/android_avd/
+docs/correccion_integral/capturas/mobile/current-ui.xml
+
+# Documentación sustituida conservada solo en este equipo
+/G1_SISTEMA_WEB_DE_GESTIÓN_DE_COMUNICACIÓN_INTERNA_EMPRESARIAL_PARA_LA_EMPRESA_COVISIAN.pdf
+/GEMINI.md
+/GUIA_COMPLETA.md
+/docs/Capitulo2_Indice_Version_Vigente.md
+/docs/Carta_Autorizacion_MICOTRANS_Grupo3.docx
+/docs/EcoRoute_Presentacion_Grupo3.pptx
+/docs/Guion_Exposicion_EcoRoute_Grupo3.docx
+/docs/Integrador I_Grupo3_Correccion_Integral.docx
+/docs/analisis-brecha-vision-objetivo.xlsx
+/docs/correccion_integral/CIERRE_TECNICO.md
+/docs/correccion_integral/EcoRoute_Arquitectura_y_Flujos_Verificados.pptx
+/docs/correccion_integral/EcoRoute_Guion_Tecnico_Exposicion.docx
+/docs/correccion_integral/EcoRoute_Manual_Integral_Implementacion_y_Pruebas.docx
+/docs/ecoroute-tour.html
+/docs/plan_correccion_integral.md
+/mobile-app/build_logs.txt
+/pdf
+/receipt.pdf
+/docs/screenshots/
+/docs/presentacion_capitulo2/

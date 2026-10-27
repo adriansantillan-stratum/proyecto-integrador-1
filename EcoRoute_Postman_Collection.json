@@ -1,0 +1,280 @@
+{
+	"info": {
+		"_postman_id": "ecoroute-api-collection",
+		"name": "EcoRoute API - Logistics Management",
+		"description": "Complete collection for EcoRoute Logistics Backend (Orders, Routes, GPS, Proofs, Dashboard)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Drivers",
+			"item": [
+				{
+					"name": "Create Driver",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Juan\",\n    \"lastName\": \"Perez\",\n    \"licenseNumber\": \"A1-123456\",\n    \"phoneNumber\": \"999888777\",\n    \"email\": \"juan.perez@ecoroute.pe\",\n    \"isActive\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/drivers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"drivers"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Drivers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/drivers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"drivers"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Vehicles",
+			"item": [
+				{
+					"name": "Create Vehicle",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"plateNumber\": \"ABC-123\",\n    \"model\": \"F-150\",\n    \"brand\": \"Ford\",\n    \"capacityKg\": 1500.0,\n    \"capacityM3\": 12.5,\n    \"isActive\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/vehicles",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"vehicles"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Routes",
+			"item": [
+				{
+					"name": "Create Route",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"driverId\": 1,\n    \"vehicleId\": 1,\n    \"routeDate\": \"2026-02-21\",\n    \"estimatedStartTime\": \"2026-02-21T08:00:00Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/routes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"routes"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Route Status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/routes/1/status?status=IN_PROGRESS",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"routes",
+								"1",
+								"status"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "IN_PROGRESS"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Create Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"trackingNumber\": \"TRK-10001\",\n    \"externalReference\": \"REF-ABC\",\n    \"routeId\": 1,\n    \"status\": \"PENDING\",\n    \"recipientName\": \"Maria Garcia\",\n    \"recipientPhone\": \"987654321\",\n    \"recipientEmail\": \"m.garcia@gmail.com\",\n    \"deliveryAddress\": \"Av. Javier Prado Este 1234\",\n    \"deliveryCity\": \"Lima\",\n    \"deliveryDistrict\": \"San Borja\",\n    \"latitude\": -12.086,\n    \"longitude\": -77.012,\n    \"priority\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "GPS",
+			"item": [
+				{
+					"name": "Send GPS Ping",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"vehicleId\": 1,\n    \"driverId\": 1,\n    \"latitude\": -12.0867,\n    \"longitude\": -77.0125,\n    \"speedKmh\": 45.5,\n    \"headingDegrees\": 90\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/gps/ping",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"gps",
+								"ping"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Delivery Proofs",
+			"item": [
+				{
+					"name": "Submit Delivery Proof",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"orderId\": 1,\n    \"imageUrl\": \"https://storage.ecoroute.pe/proofs/order-1.jpg\",\n    \"signatureDataUrl\": \"data:image/png;base64,...\",\n    \"receiverName\": \"Maria Garcia\",\n    \"receiverDni\": \"44556677\",\n    \"latitude\": -12.0867,\n    \"longitude\": -77.0125\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/delivery-proofs",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"delivery-proofs"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "Get Stats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/dashboard/orders-by-status",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"dashboard",
+								"orders-by-status"
+							]
+						}
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8081",
+			"type": "string"
+		}
+	]
+}

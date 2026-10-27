@@ -1,0 +1,4 @@
+// Isolated test products; this worker never runs Testcontainers or a live API.
+gradle.projectsLoaded {
+    gradle.rootProject.layout.buildDirectory.set(gradle.rootProject.file('build/exceptions_actualizacion'))
+}

@@ -1,0 +1,29 @@
+{
+  "startedAtUtc": "2026-10-27T13:12:06.0302146+00:00",
+  "finishedAtUtc": "2026-10-27T13:12:06.6659563+00:00",
+  "sandboxPermissions": "require_escalated",
+  "scope": "READ_ONLY",
+  "commands": [
+    {
+      "command": "docker context show",
+      "exitCode": 0,
+      "context": "desktop-linux"
+    },
+    {
+      "command": "docker ps --format '{{.Names}}|{{.Status}}'",
+      "exitCode": 1
+    },
+    {
+      "command": "docker version --format '{{.Server.Version}}'",
+      "exitCode": 1
+    }
+  ],
+  "status": "SERVER_UNAVAILABLE",
+  "observedError": "The dockerDesktopLinuxEngine named pipe does not exist (Windows: El sistema no puede encontrar el archivo especificado).",
+  "conclusion": "The configured Linux Docker engine is unavailable even outside the default sandbox. This is not a sandbox permission-denied result. No assertion about all Docker contexts or production infrastructure is made.",
+  "integrationRerun": "NOT_RUN",
+  "integrationTestCasesSkipped": 18,
+  "dockerDesktopStarted": false,
+  "containersChanged": false,
+  "provenance": "Observed exec_command output, explicitly require_escalated, after user requested a Docker recheck."
+}

@@ -1,0 +1,487 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "startedAtUtc": "2026-10-27T13:10:06.717444+00:00",
+  "finishedAtUtc": "2026-10-27T13:10:22.055589+00:00",
+  "durationSeconds": 15.343,
+  "command": "C:\\Windows\\system32\\cmd.exe /d /s /c \"<USER>\\flutter\\bin\\flutter.bat test --no-pub --machine --concurrency=2\"",
+  "workingDirectory": "<TEMP_QA>\\mobile-app",
+  "log": "flutter_test.log",
+  "sourceSha256": "c54345610b994329d652fd21f400c7a7a84855dbc8549a0397e5248ee85fa94c",
+  "counts": {
+    "passed": 84,
+    "failed": 0,
+    "skipped": 8,
+    "visibleTestDone": 92
+  },
+  "cases": [
+    {
+      "name": "UserModel persists refresh token and authoritative subject",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Login uses /session/me GrantedAuthority and rejects unlinked driver",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Concurrent rejected tokens share one refresh and rotate refresh token",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "exp claim determines refresh for 600 second lifetime",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "exp claim determines refresh for 28800 second lifetime",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Logout during refresh cannot resurrect cached session",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Interceptor retries one request after 401 and blocks cross-account requests",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Logout clears local session, preserves account queue, calls Keycloak logout",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Live mobile/backend contract (no operational data mutations) Session links numeric driver to UUID subject and reads exp TTL",
+      "result": "success",
+      "skipped": true
+    },
+    {
+      "name": "Live mobile/backend contract (no operational data mutations) Reads all own routes and route-filtered orders using mobile models",
+      "result": "success",
+      "skipped": true
+    },
+    {
+      "name": "Live mobile/backend contract (no operational data mutations) Reads review approved/accepted and metadata without accepting real route",
+      "result": "success",
+      "skipped": true
+    },
+    {
+      "name": "Live mobile/backend contract (no operational data mutations) Reads route path from two changing origins and recognizes fallback",
+      "result": "success",
+      "skipped": true
+    },
+    {
+      "name": "Live mobile/backend contract (no operational data mutations) Invalid POD rejected before creating proof for nonexistent order",
+      "result": "success",
+      "skipped": true
+    },
+    {
+      "name": "Live mobile/backend contract (no operational data mutations) History source loads own terminal operation within selected period",
+      "result": "success",
+      "skipped": true
+    },
+    {
+      "name": "Live mobile/backend contract (no operational data mutations) Refresh against real Keycloak rotates session and preserves driver identity",
+      "result": "success",
+      "skipped": true
+    },
+    {
+      "name": "Live mobile/backend contract (no operational data mutations) Keycloak logout rejects subsequent refresh of the test session",
+      "result": "success",
+      "skipped": true
+    },
+    {
+      "name": "GPS rejects missing route, zero, old position; uses selected real vehicle",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Initial GPS ping when routeFirst=true and position become available",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Initial GPS ping when routeFirst=false and position become available",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Permission denial remains visible and GPS never accepts 0 or NaN",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Coordinate-aware path throttle keeps latest moved position eligible",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "All own routes survive filtering; review/acceptance/path honor endpoints",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "History keeps own terminal orders within period; failure is not empty success",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Own missing timestamp raises visible history failure",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Orders cached per account only on transport failure; HTTP errors remain failures",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "native provider identifies EcoRoute and caches the exact viewed tile",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Durable full POD before send; restart, account isolation, orderId first wins",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "4xx remains visible and manual retry preserves payload",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Foreground timer retries and resume replays after restore",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Concurrent queue writes and workers do not lose or duplicate orders",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "BLoC → use case → repository → durable payload includes captured GPS",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Incomplete or zero GPS POD never PATCHes delivered or queues invalid proof",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "failed basemap is explicit; retry preserves the route layer",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "resume retries an errored basemap without recreating the app",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "API 400 without refresh keeps session",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "API 403 without refresh keeps session",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "API 409 without refresh keeps session",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "API 422 without refresh keeps session",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "API 500 without refresh keeps session",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "401 then successful refresh then API 200 preserves its meaning",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "401 then successful refresh then API 400 preserves its meaning",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "401 then successful refresh then API 401 preserves its meaning",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "401 then successful refresh then API 403 preserves its meaning",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "401 then successful refresh then API 409 preserves its meaning",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "401 then successful refresh then API 422 preserves its meaning",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "401 then successful refresh then API 500 preserves its meaning",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Reactive refresh failure 400",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Reactive refresh failure 401",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Reactive refresh failure 403",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Reactive refresh failure 500",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Reactive refresh failure null",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Proactive refresh failure 400",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Proactive refresh failure 401",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Proactive refresh failure 403",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Proactive refresh failure 500",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Proactive refresh failure null",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Late refresh rejection for old account does not expire new account",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Order link recovers safely with null extra",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Order link recovers safely with string extra",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Order link recovers safely with map extra",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Order link recovers safely with wrong order type extra",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Order link recovers safely with wrong permission type extra",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Order link recovers safely with missing permission extra",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Order link rejects incoherent path id 28",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Order link rejects incoherent path id invalid",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Coherent order link preserves canOperate=false",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Saved History center tapped 0ms after Sync Back",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Coherent order link preserves canOperate=true",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Returning after last DELIVERED refreshes selected completed route",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Saved History center tapped 16ms after Sync Back",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Returning after last FAILED refreshes selected completed route",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Saved History center tapped 100ms after Sync Back",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Returning from sync refreshes route and orders once",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Sync confirmation refreshes route without notification loop",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Disposed routes page skips refresh after /orders/27 returns",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Saved History center tapped 300ms after Sync Back",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Disposed routes page skips refresh after /sync returns",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Saved History center tapped 500ms after Sync Back",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Sync Back History with current target keeps actual session",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "History after Sync Back and renewed token returns API 200",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "History after Sync Back and renewed token returns API 400",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "History after Sync Back and renewed token returns API 500",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Refresh invalid_grant actually logs out through AuthBloc/router",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Signature capture Dart error reports failure and keeps page open",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Signature capture timeout does not save or navigate away",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Pending signature capture after clear discards stale image",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Explicit logout button produces login even without HTTP failure",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Pending signature capture after draw discards stale image",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Pending signature capture after unmount discards stale image",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Signature capture success delivers only the encoded image",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Sync page shows pending and rejected without claiming delivery",
+      "result": "success",
+      "skipped": false
+    },
+    {
+      "name": "Empty signature cannot be confirmed and clear invalidates saved value",
+      "result": "success",
+      "skipped": false
+    }
+  ],
+  "completionEvents": [
+    {
+      "success": true,
+      "type": "done",
+      "time": 12054
+    }
+  ],
+  "liveContractEnabled": false
+}

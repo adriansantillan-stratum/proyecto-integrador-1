@@ -1,0 +1,125 @@
+{
+  "scope": "H08/H09/H18 backend analytics only",
+  "command": ".\\gradlew.bat test --tests '*Analytics*Test' --console=plain",
+  "result": "BUILD SUCCESSFUL in 17s",
+  "tests": 22,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "sqlEnvironment": "disposable Testcontainers postgres:14-alpine; PostgreSQL 14.21; all 11 migrations through V12 applied",
+  "authentication": "mocked JWT for security tests; synthetic principal for HTTP-to-SQL test; no Keycloak end-to-end claim",
+  "operationalDatabaseModified": false,
+  "humanUatPerformed": false,
+  "powerBiClientTested": false,
+  "originMaster": "7b84070a7e529fa8f0773dac5d6c9361bee3a983",
+  "suites": [
+    {
+      "name": "com.ecoroute.backend.application.services.DashboardAnalyticsServiceTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestampUtc": "2026-10-20T02:07:26",
+      "seconds": 0.447,
+      "cases": [
+        "invalidFiltersAndGoalsAreRejectedBeforePersistence()",
+        "formulasUseDifferentUniversesAndTrendsUseTheSameFormula()",
+        "goalBoundaryValuesAndClearingArePersistedWithActor()",
+        "biUsesIdenticalFilterAndZeroDenominatorsStayNull()",
+        "summaryAndLegacyMethodsPassAllFilters()"
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsControllerTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestampUtc": "2026-10-20T02:07:27",
+      "seconds": 1.391,
+      "cases": [
+        "allExistingRoutesBindIsoDatesAndPreserveWireFields()",
+        "optionalFiltersBindNull()",
+        "invalidRangeIsBadRequest()"
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.infrastructure.input.rest.AnalyticsSecurityTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestampUtc": "2026-10-20T02:07:29",
+      "seconds": 0.181,
+      "cases": [
+        "adminGoalWriteUsesAuthenticatedSubject()",
+        "anonymousCannotReadBiOrGoals()",
+        "adminCanReadAnUnconfiguredGoalAsNull()",
+        "driverCannotReadOrChangeGlobalAnalytics()",
+        "dispatcherCannotReadGlobalAnalytics()"
+      ]
+    },
+    {
+      "name": "com.ecoroute.backend.infrastructure.output.persistence.R2dbcAnalyticsIntegrationTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "timestampUtc": "2026-10-20T02:07:33",
+      "seconds": 1.113,
+      "cases": [
+        "goalsPersistAndAuditEveryChangeWithActorAndTime()",
+        "goalHttpPutPersistsAndRejectsOutOfRangeValues()",
+        "haversineUsesOnlyValidPointsInsideRouteAndNeverPlannedDistance()",
+        "fullBiReportUsesRealCountersAndQuality()",
+        "emptyPeriodProducesFiveNullPercentagesAndNoSyntheticTarget()",
+        "districtsAndSameNameDriversRemainDistinctAndCausesDoNotMultiply()",
+        "biReaderCanSelectViewsButCannotReadOrMutateBaseTables()",
+        "httpBiAndSummaryReadActualSqlWithTheSameInclusiveFilters()",
+        "filtersUseRouteDateAndLimaMidnightAndRouteOwner()"
+      ]
+    }
+  ],
+  "sourceHashes": [
+    {
+      "Path": "C:\\Users\\USUARIO\\OneDrive\\Escritorio\\Proyecto Integrador Desarrollo de Software 3\\src\\main\\java\\com\\ecoroute\\backend\\application\\services\\DashboardService.java",
+      "Hash": "655B028FF8288AB870EC46D1E7C4CD9FD598D728CC44013EACFAA93145899C58"
+    },
+    {
+      "Path": "C:\\Users\\USUARIO\\OneDrive\\Escritorio\\Proyecto Integrador Desarrollo de Software 3\\src\\main\\java\\com\\ecoroute\\backend\\infrastructure\\input\\rest\\DashboardController.java",
+      "Hash": "C0A7775D2FF9473A919AF363A44E5077C49A45E4E9214A03A475492860673243"
+    },
+    {
+      "Path": "C:\\Users\\USUARIO\\OneDrive\\Escritorio\\Proyecto Integrador Desarrollo de Software 3\\src\\main\\java\\com\\ecoroute\\backend\\infrastructure\\input\\rest\\ReportController.java",
+      "Hash": "363BF8657E6984D7CA838AFFFE42B431EC98422D38C8C679B5FB00547C727855"
+    },
+    {
+      "Path": "C:\\Users\\USUARIO\\OneDrive\\Escritorio\\Proyecto Integrador Desarrollo de Software 3\\src\\main\\java\\com\\ecoroute\\backend\\domain\\model\\analytics\\AnalyticsFilter.java",
+      "Hash": "5437D7C7493E38701F167C151FBF7EF7CC15017CE64FE82CF9B4DBFFBA5B9F82"
+    },
+    {
+      "Path": "C:\\Users\\USUARIO\\OneDrive\\Escritorio\\Proyecto Integrador Desarrollo de Software 3\\src\\main\\java\\com\\ecoroute\\backend\\domain\\model\\analytics\\AnalyticsModels.java",
+      "Hash": "DD8E6F9A2778E69B846C3435BBC6DC095E233A78B3806E047EF47402F02177E5"
+    },
+    {
+      "Path": "C:\\Users\\USUARIO\\OneDrive\\Escritorio\\Proyecto Integrador Desarrollo de Software 3\\src\\main\\java\\com\\ecoroute\\backend\\domain\\ports\\out\\AnalyticsQueryPort.java",
+      "Hash": "2BD008E8801B8805A077FE781751E287661A24C06091D7D30AA7C0C35B4D8519"
+    },
+    {
+      "Path": "C:\\Users\\USUARIO\\OneDrive\\Escritorio\\Proyecto Integrador Desarrollo de Software 3\\src\\main\\java\\com\\ecoroute\\backend\\infrastructure\\output\\persistence\\R2dbcAnalyticsAdapter.java",
+      "Hash": "4BA5CED51267B0349C12DFA409F254BAB5D5E453B081C2CECFA6FC45212AA0D6"
+    },
+    {
+      "Path": "C:\\Users\\USUARIO\\OneDrive\\Escritorio\\Proyecto Integrador Desarrollo de Software 3\\src\\main\\resources\\db\\migration\\V12__analytics_views.sql",
+      "Hash": "8E75EB94871C940C9266DB9447D1DDFAFA690C7E0F78D14DD11073B249962578"
+    },
+    {
+      "Path": "C:\\Users\\USUARIO\\OneDrive\\Escritorio\\Proyecto Integrador Desarrollo de Software 3\\src\\main\\resources\\db\\migration\\V10__business_workflow.sql",
+      "Hash": "94D4C8F953C40EBCBA370FCBE345324B2FB0DBE05C4597405E102BDB2F861664"
+    },
+    {
+      "Path": "C:\\Users\\USUARIO\\OneDrive\\Escritorio\\Proyecto Integrador Desarrollo de Software 3\\src\\main\\resources\\db\\migration\\V9__operational_integrity.sql",
+      "Hash": "34F85C35B9A7E033F5EC43A6B86E7E4F20BEBFFCF477D1B04F40044C8A36D611"
+    }
+  ]
+}

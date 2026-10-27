@@ -1,0 +1,129 @@
+services:
+  postgres:
+    image: postgres:14-alpine
+    container_name: ecoroute-db
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=${DB_USER:-user}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-password}
+      - POSTGRES_DB=${DB_NAME:-ecoroute}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-user} -d ${DB_NAME:-ecoroute}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - ecoroute-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: ecoroute-redis
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    volumes:
+      - redis_data:/data
+    networks:
+      - ecoroute-network
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0.0
+    container_name: ecoroute-keycloak
+    command: start-dev
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      # Issuer fijo: los tokens siempre dicen "localhost" aunque el emulador
+      # Android pida por 10.0.2.2, así el backend puede validar el iss real.
+      - KC_HOSTNAME=localhost
+      - KC_HOSTNAME_STRICT=true
+      - KC_HOSTNAME_STRICT_BACKCHANNEL=true
+    ports:
+      - "8080:8080"
+    volumes:
+      - keycloak_data:/opt/keycloak/data
+    networks:
+      - ecoroute-network
+
+  localstack:
+    image: localstack/localstack:3.8
+    container_name: ecoroute-localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3,sqs,sns
+      - DEFAULT_REGION=us-east-1
+      - EDGE_PORT=4566
+      - DEBUG=1
+      - LOCALSTACK_ACKNOWLEDGE_ACCOUNT_REQUIREMENT=1
+      - PERSISTENCE=1
+    volumes:
+      - "./infra/localstack/init-aws.sh:/etc/localstack/init/ready.d/10-ecoroute.sh:ro"
+      - localstack_data:/var/lib/localstack
+    networks:
+      - ecoroute-network
+
+  osrm:
+    image: osrm/osrm-backend
+    container_name: ecoroute-osrm
+    command: osrm-routed --algorithm mld /data/peru-latest.osrm
+    ports:
+      - "5000:5000"
+    volumes:
+      - "./infra/osrm:/data"
+    networks:
+      - ecoroute-network
+    restart: unless-stopped
+
+  ecoroute-backend:
+    build: .
+    container_name: ecoroute-backend
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB_NAME=${DB_NAME:-ecoroute}
+      - DB_USER=${DB_USER:-user}
+      - DB_PASSWORD=${DB_PASSWORD:-password}
+      - SPRING_DATA_REDIS_HOST=redis
+      - KEYCLOAK_ADMIN_CLIENT_SECRET=${KEYCLOAK_ADMIN_CLIENT_SECRET:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      localstack:
+        condition: service_started
+      redis:
+        condition: service_healthy
+    networks:
+      - ecoroute-network
+
+  ecoroute-web-admin:
+    build:
+      context: ./web-admin
+      dockerfile: Dockerfile
+    container_name: ecoroute-web-admin
+    ports:
+      - "3000:80"
+    depends_on:
+      - ecoroute-backend
+    networks:
+      - ecoroute-network
+
+networks:
+  ecoroute-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  keycloak_data:
+  redis_data:
+  localstack_data:

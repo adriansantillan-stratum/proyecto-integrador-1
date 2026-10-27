@@ -1,0 +1,9 @@
+{
+  "folders":[{"name":"EcoRoute App Flutter","path":"mobile-app"}],
+  "settings":{"java.import.gradle.enabled":false,"java.import.exclusions":["**/android/**"]},
+  "extensions":{"recommendations":["Dart-Code.flutter"]},
+  "launch": {
+    "version":"0.2.0",
+    "configurations":[{"type":"dart","request":"attach","debuggerType":"dart","name":"EcoRoute Flutter conectar aplicación en ejecución","vmServiceInfoFile":"${workspaceFolder}/../docs/guia_total_ide/.runtime/flutter_service.json","deleteServiceInfoFile":false,"cwd":"${workspaceFolder}"}]
+  }
+}

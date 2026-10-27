@@ -1,0 +1,252 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_P08" targetNamespace="https://ecoroute.pe/procesos-negocio">
+  <bpmn:process id="Process_P08" name="Administrar accesos" isExecutable="false">
+    <bpmn:documentation>Modelo de negocio MICOTRANS. La Jefatura justifica la necesidad del acceso y el Administrador asigna los permisos autorizados. Keycloak es la autoridad de identidad y roles. El backend valida firma, emisor, vigencia y revocación del JWT. Para un conductor compara el sub validado con drivers.external_id; no confía en un driverId elegido libremente por la aplicación. El panel modifica roles efectivos y habilitación en Keycloak mediante un cliente de servicio local autorizado. Las cuentas técnicas no son administrables como personas desde ese panel y se impide que un administrador se retire su propio acceso. Los cambios revocan tokens anteriores y sesiones y dejan auditoría. Las tablas auth_* heredadas no gobiernan estos permisos. Keycloak mantiene una base distinta de la base logística.</bpmn:documentation>
+    <bpmn:laneSet id="LaneSet_P08">
+      <bpmn:lane id="Lane_P08_0" name="Jefatura logística">
+        <bpmn:flowNodeRef>P08_S</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P08_A1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P08_G1</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_P08_1" name="Administrador">
+        <bpmn:flowNodeRef>P08_A2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P08_E1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P08_A3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P08_G2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P08_A4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P08_E2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P08_A5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P08_A6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P08_G3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P08_A7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P08_A8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P08_E3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>P08_M_A5</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="P08_S" name="Solicitud de acceso">
+      <bpmn:outgoing>Flow_P08_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="P08_A1" name="Precisar cargo y necesidad">
+      <bpmn:incoming>Flow_P08_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_P08_2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="P08_G1" name="¿Solicitud autorizada?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_P08_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_P08_3</bpmn:outgoing>
+      <bpmn:outgoing>Flow_P08_4</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="P08_A2" name="Informar rechazo">
+      <bpmn:incoming>Flow_P08_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_P08_5</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="P08_E1" name="Acceso denegado">
+      <bpmn:incoming>Flow_P08_5</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="P08_A3" name="Definir rol mínimo necesario">
+      <bpmn:incoming>Flow_P08_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_P08_6</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="P08_G2" name="¿Es baja o revocación?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_P08_6</bpmn:incoming>
+      <bpmn:outgoing>Flow_P08_7</bpmn:outgoing>
+      <bpmn:outgoing>Flow_P08_8</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="P08_A4" name="Revocar acceso y sesiones">
+      <bpmn:incoming>Flow_P08_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_P08_9</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="P08_E2" name="Acceso revocado">
+      <bpmn:incoming>Flow_P08_9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="P08_A5" name="Crear o ajustar acceso y rol">
+      <bpmn:incoming>Flow_P08_16</bpmn:incoming>
+      <bpmn:outgoing>Flow_P08_10</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="P08_A6" name="Comprobar acceso permitido">
+      <bpmn:incoming>Flow_P08_10</bpmn:incoming>
+      <bpmn:outgoing>Flow_P08_11</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="P08_G3" name="¿Permisos correctos?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_P08_11</bpmn:incoming>
+      <bpmn:outgoing>Flow_P08_12</bpmn:outgoing>
+      <bpmn:outgoing>Flow_P08_13</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="P08_A7" name="Corregir rol y registrar cambio">
+      <bpmn:incoming>Flow_P08_13</bpmn:incoming>
+      <bpmn:outgoing>Flow_P08_14</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="P08_A8" name="Confirmar activación al solicitante">
+      <bpmn:incoming>Flow_P08_12</bpmn:incoming>
+      <bpmn:outgoing>Flow_P08_15</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="P08_E3" name="Acceso habilitado">
+      <bpmn:incoming>Flow_P08_15</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="P08_M_A5" name="" gatewayDirection="Converging">
+      <bpmn:incoming>Flow_P08_8</bpmn:incoming>
+      <bpmn:incoming>Flow_P08_14</bpmn:incoming>
+      <bpmn:outgoing>Flow_P08_16</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_P08_1" sourceRef="P08_S" targetRef="P08_A1"/>
+    <bpmn:sequenceFlow id="Flow_P08_2" sourceRef="P08_A1" targetRef="P08_G1"/>
+    <bpmn:sequenceFlow id="Flow_P08_3" sourceRef="P08_G1" targetRef="P08_A3" name="Sí">
+      <bpmn:documentation>Rama de decisión: Sí</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_P08_4" sourceRef="P08_G1" targetRef="P08_A2" name="No">
+      <bpmn:documentation>Rama de decisión: No</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_P08_5" sourceRef="P08_A2" targetRef="P08_E1"/>
+    <bpmn:sequenceFlow id="Flow_P08_6" sourceRef="P08_A3" targetRef="P08_G2"/>
+    <bpmn:sequenceFlow id="Flow_P08_7" sourceRef="P08_G2" targetRef="P08_A4" name="Sí">
+      <bpmn:documentation>Rama de decisión: Sí</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_P08_8" sourceRef="P08_G2" targetRef="P08_M_A5" name="No">
+      <bpmn:documentation>Rama de decisión: No</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_P08_9" sourceRef="P08_A4" targetRef="P08_E2"/>
+    <bpmn:sequenceFlow id="Flow_P08_10" sourceRef="P08_A5" targetRef="P08_A6"/>
+    <bpmn:sequenceFlow id="Flow_P08_11" sourceRef="P08_A6" targetRef="P08_G3"/>
+    <bpmn:sequenceFlow id="Flow_P08_12" sourceRef="P08_G3" targetRef="P08_A8" name="Sí">
+      <bpmn:documentation>Rama de decisión: Sí</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_P08_13" sourceRef="P08_G3" targetRef="P08_A7" name="No">
+      <bpmn:documentation>Rama de decisión: No</bpmn:documentation>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_P08_14" sourceRef="P08_A7" targetRef="P08_M_A5"/>
+    <bpmn:sequenceFlow id="Flow_P08_15" sourceRef="P08_A8" targetRef="P08_E3"/>
+    <bpmn:sequenceFlow id="Flow_P08_16" sourceRef="P08_M_A5" targetRef="P08_A5"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_P08">
+    <bpmndi:BPMNPlane id="Plane_P08" bpmnElement="Process_P08">
+      <bpmndi:BPMNShape id="Shape_Lane_P08_0" bpmnElement="Lane_P08_0" isHorizontal="true">
+        <dc:Bounds x="24" y="148" width="3614" height="300"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_P08_1" bpmnElement="Lane_P08_1" isHorizontal="true">
+        <dc:Bounds x="24" y="448" width="3614" height="300"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P08_S" bpmnElement="P08_S">
+        <dc:Bounds x="232" y="270" width="56" height="56"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P08_A1" bpmnElement="P08_A1">
+        <dc:Bounds x="491" y="246" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P08_G1" bpmnElement="P08_G1">
+        <dc:Bounds x="897" y="255" width="86" height="86"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P08_A2" bpmnElement="P08_A2">
+        <dc:Bounds x="1171" y="621" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P08_E1" bpmnElement="P08_E1">
+        <dc:Bounds x="1592" y="645" width="56" height="56"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P08_A3" bpmnElement="P08_A3">
+        <dc:Bounds x="1171" y="471" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P08_G2" bpmnElement="P08_G2">
+        <dc:Bounds x="1577" y="480" width="86" height="86"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P08_A4" bpmnElement="P08_A4">
+        <dc:Bounds x="1851" y="621" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P08_E2" bpmnElement="P08_E2">
+        <dc:Bounds x="2272" y="645" width="56" height="56"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P08_A5" bpmnElement="P08_A5">
+        <dc:Bounds x="1851" y="471" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P08_A6" bpmnElement="P08_A6">
+        <dc:Bounds x="2191" y="471" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P08_G3" bpmnElement="P08_G3">
+        <dc:Bounds x="2597" y="480" width="86" height="86"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P08_A7" bpmnElement="P08_A7">
+        <dc:Bounds x="2871" y="621" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P08_A8" bpmnElement="P08_A8">
+        <dc:Bounds x="2871" y="471" width="218" height="104"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P08_E3" bpmnElement="P08_E3">
+        <dc:Bounds x="3292" y="495" width="56" height="56"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_P08_M_A5" bpmnElement="P08_M_A5">
+        <dc:Bounds x="1747.0" y="480" width="86.0" height="86"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_P08_1" bpmnElement="Flow_P08_1">
+        <di:waypoint x="288" y="298"/>
+        <di:waypoint x="491" y="298"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P08_2" bpmnElement="Flow_P08_2">
+        <di:waypoint x="709" y="298"/>
+        <di:waypoint x="897" y="298"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P08_3" bpmnElement="Flow_P08_3">
+        <di:waypoint x="983" y="298"/>
+        <di:waypoint x="1077" y="298"/>
+        <di:waypoint x="1077" y="523"/>
+        <di:waypoint x="1171" y="523"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P08_4" bpmnElement="Flow_P08_4">
+        <di:waypoint x="983" y="298"/>
+        <di:waypoint x="1077" y="298"/>
+        <di:waypoint x="1077" y="673"/>
+        <di:waypoint x="1171" y="673"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P08_5" bpmnElement="Flow_P08_5">
+        <di:waypoint x="1389" y="673"/>
+        <di:waypoint x="1592" y="673"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P08_6" bpmnElement="Flow_P08_6">
+        <di:waypoint x="1389" y="523"/>
+        <di:waypoint x="1577" y="523"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P08_7" bpmnElement="Flow_P08_7">
+        <di:waypoint x="1663" y="523"/>
+        <di:waypoint x="1757" y="523"/>
+        <di:waypoint x="1757" y="673"/>
+        <di:waypoint x="1851" y="673"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P08_8" bpmnElement="Flow_P08_8">
+        <di:waypoint x="1663" y="523"/>
+        <di:waypoint x="1747" y="523"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P08_9" bpmnElement="Flow_P08_9">
+        <di:waypoint x="2069" y="673"/>
+        <di:waypoint x="2272" y="673"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P08_10" bpmnElement="Flow_P08_10">
+        <di:waypoint x="2069" y="523"/>
+        <di:waypoint x="2191" y="523"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P08_11" bpmnElement="Flow_P08_11">
+        <di:waypoint x="2409" y="523"/>
+        <di:waypoint x="2597" y="523"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P08_12" bpmnElement="Flow_P08_12">
+        <di:waypoint x="2683" y="523"/>
+        <di:waypoint x="2871" y="523"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P08_13" bpmnElement="Flow_P08_13">
+        <di:waypoint x="2683" y="523"/>
+        <di:waypoint x="2777" y="523"/>
+        <di:waypoint x="2777" y="673"/>
+        <di:waypoint x="2871" y="673"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P08_14" bpmnElement="Flow_P08_14">
+        <di:waypoint x="2980" y="725"/>
+        <di:waypoint x="2980" y="782"/>
+        <di:waypoint x="1790" y="782"/>
+        <di:waypoint x="1790" y="575"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P08_15" bpmnElement="Flow_P08_15">
+        <di:waypoint x="3089" y="523"/>
+        <di:waypoint x="3292" y="523"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_P08_16" bpmnElement="Flow_P08_16">
+        <di:waypoint x="1833" y="523"/>
+        <di:waypoint x="1851" y="523"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

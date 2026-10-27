@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1505" height="907" viewBox="0 0 1505 907" role="img" aria-label="ERD 3 · RBAC local">
+<rect width="1505" height="907" fill="#F8FAFC"/>
+<text x="48" y="55" font-family="Arial,sans-serif" font-size="29" font-weight="700" fill="#102A43">ERD 3 · RBAC local</text>
+<text x="48" y="82" font-family="Arial,sans-serif" font-size="17" fill="#496275">Tablas auth_* de EcoRoute; Keycloak conserva su propia base</text>
+<path d="M 465 210 L 502 210 L 502 222 L 540 222" fill="none" stroke="#8AA3B6" stroke-width="2"/>
+<text x="475" y="202" font-family="Arial,sans-serif" font-size="13" fill="#496275">||</text>
+<text x="507" y="215" font-family="Arial,sans-serif" font-size="13" fill="#496275">o{</text>
+<path d="M 955 572 L 992 572 L 992 307 L 1030 307" fill="none" stroke="#8AA3B6" stroke-width="2"/>
+<text x="965" y="565" font-family="Arial,sans-serif" font-size="13" fill="#496275">||</text>
+<text x="997" y="300" font-family="Arial,sans-serif" font-size="13" fill="#496275">o{</text>
+<path d="M 955 222 L 992 222 L 992 307 L 1030 307" fill="none" stroke="#8AA3B6" stroke-width="2"/>
+<text x="965" y="215" font-family="Arial,sans-serif" font-size="13" fill="#496275">||</text>
+<text x="997" y="300" font-family="Arial,sans-serif" font-size="13" fill="#496275">o{</text>
+<path d="M 465 560 L 748 560 L 748 307 L 1030 307" fill="none" stroke="#8AA3B6" stroke-width="2"/>
+<text x="475" y="552" font-family="Arial,sans-serif" font-size="13" fill="#496275">||</text>
+<text x="997" y="300" font-family="Arial,sans-serif" font-size="13" fill="#496275">o{</text>
+<path d="M 955 572 L 992 572 L 992 724 L 1030 724" fill="none" stroke="#8AA3B6" stroke-width="2"/>
+<text x="965" y="565" font-family="Arial,sans-serif" font-size="13" fill="#496275">||</text>
+<text x="997" y="718" font-family="Arial,sans-serif" font-size="13" fill="#496275">o{</text>
+<rect x="50" y="135" width="415" height="149" rx="9" fill="#FFFFFF" stroke="#CBD7E0"/>
+<path d="M 59 135 H 456 Q 465 135 465 144 V 174 H 50 V 144 Q 50 135 59 135" fill="#6B50A1"/>
+<text x="66" y="162" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#FFFFFF">auth_module</text>
+<rect x="55" y="178" width="405" height="25" fill="#E6F1FA"/>
+<text x="66" y="196" font-family="Arial,sans-serif" font-size="15" fill="#102A43">module_id</text>
+<text x="320" y="196" font-family="Arial,sans-serif" font-size="13" fill="#496275">BIGSERIAL</text>
+<text x="451" y="196" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#6B50A1">PK</text>
+<text x="66" y="221" font-family="Arial,sans-serif" font-size="15" fill="#102A43">module_name</text>
+<text x="320" y="221" font-family="Arial,sans-serif" font-size="13" fill="#496275">VARCHAR(50)</text>
+<text x="451" y="221" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#6B50A1">UQ</text>
+<text x="66" y="246" font-family="Arial,sans-serif" font-size="15" fill="#102A43">description</text>
+<text x="320" y="246" font-family="Arial,sans-serif" font-size="13" fill="#496275">VARCHAR(255)</text>
+<text x="66" y="271" font-family="Arial,sans-serif" font-size="15" fill="#102A43">created_at</text>
+<text x="320" y="271" font-family="Arial,sans-serif" font-size="13" fill="#496275">TIMESTAMPTZ</text>
+<rect x="540" y="135" width="415" height="174" rx="9" fill="#FFFFFF" stroke="#CBD7E0"/>
+<path d="M 549 135 H 946 Q 955 135 955 144 V 174 H 540 V 144 Q 540 135 549 135" fill="#6B50A1"/>
+<text x="556" y="162" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#FFFFFF">auth_resource</text>
+<rect x="545" y="178" width="405" height="25" fill="#E6F1FA"/>
+<text x="556" y="196" font-family="Arial,sans-serif" font-size="15" fill="#102A43">resource_id</text>
+<text x="810" y="196" font-family="Arial,sans-serif" font-size="13" fill="#496275">BIGSERIAL</text>
+<text x="941" y="196" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#6B50A1">PK</text>
+<text x="556" y="221" font-family="Arial,sans-serif" font-size="15" fill="#102A43">resource_name</text>
+<text x="810" y="221" font-family="Arial,sans-serif" font-size="13" fill="#496275">VARCHAR(50)</text>
+<text x="556" y="246" font-family="Arial,sans-serif" font-size="15" fill="#102A43">description</text>
+<text x="810" y="246" font-family="Arial,sans-serif" font-size="13" fill="#496275">VARCHAR(255)</text>
+<rect x="545" y="253" width="405" height="25" fill="#EFF7F5"/>
+<text x="556" y="271" font-family="Arial,sans-serif" font-size="15" fill="#102A43">module_id</text>
+<text x="810" y="271" font-family="Arial,sans-serif" font-size="13" fill="#496275">BIGINT</text>
+<text x="941" y="271" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#6B50A1">FK</text>
+<text x="556" y="296" font-family="Arial,sans-serif" font-size="15" fill="#102A43">created_at</text>
+<text x="810" y="296" font-family="Arial,sans-serif" font-size="13" fill="#496275">TIMESTAMPTZ</text>
+<rect x="50" y="485" width="415" height="149" rx="9" fill="#FFFFFF" stroke="#CBD7E0"/>
+<path d="M 59 485 H 456 Q 465 485 465 494 V 524 H 50 V 494 Q 50 485 59 485" fill="#6B50A1"/>
+<text x="66" y="512" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#FFFFFF">auth_action</text>
+<rect x="55" y="528" width="405" height="25" fill="#E6F1FA"/>
+<text x="66" y="546" font-family="Arial,sans-serif" font-size="15" fill="#102A43">action_id</text>
+<text x="320" y="546" font-family="Arial,sans-serif" font-size="13" fill="#496275">BIGSERIAL</text>
+<text x="451" y="546" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#6B50A1">PK</text>
+<text x="66" y="571" font-family="Arial,sans-serif" font-size="15" fill="#102A43">action_name</text>
+<text x="320" y="571" font-family="Arial,sans-serif" font-size="13" fill="#496275">VARCHAR(50)</text>
+<text x="451" y="571" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#6B50A1">UQ</text>
+<text x="66" y="596" font-family="Arial,sans-serif" font-size="15" fill="#102A43">description</text>
+<text x="320" y="596" font-family="Arial,sans-serif" font-size="13" fill="#496275">VARCHAR(255)</text>
+<text x="66" y="621" font-family="Arial,sans-serif" font-size="15" fill="#102A43">created_at</text>
+<text x="320" y="621" font-family="Arial,sans-serif" font-size="13" fill="#496275">TIMESTAMPTZ</text>
+<rect x="540" y="485" width="415" height="174" rx="9" fill="#FFFFFF" stroke="#CBD7E0"/>
+<path d="M 549 485 H 946 Q 955 485 955 494 V 524 H 540 V 494 Q 540 485 549 485" fill="#6B50A1"/>
+<text x="556" y="512" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#FFFFFF">auth_role</text>
+<rect x="545" y="528" width="405" height="25" fill="#E6F1FA"/>
+<text x="556" y="546" font-family="Arial,sans-serif" font-size="15" fill="#102A43">role_id</text>
+<text x="810" y="546" font-family="Arial,sans-serif" font-size="13" fill="#496275">BIGSERIAL</text>
+<text x="941" y="546" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#6B50A1">PK</text>
+<text x="556" y="571" font-family="Arial,sans-serif" font-size="15" fill="#102A43">role_name</text>
+<text x="810" y="571" font-family="Arial,sans-serif" font-size="13" fill="#496275">VARCHAR(50)</text>
+<text x="556" y="596" font-family="Arial,sans-serif" font-size="15" fill="#102A43">description</text>
+<text x="810" y="596" font-family="Arial,sans-serif" font-size="13" fill="#496275">VARCHAR(255)</text>
+<text x="556" y="621" font-family="Arial,sans-serif" font-size="15" fill="#102A43">country_code</text>
+<text x="810" y="621" font-family="Arial,sans-serif" font-size="13" fill="#496275">VARCHAR(5)</text>
+<text x="556" y="646" font-family="Arial,sans-serif" font-size="15" fill="#102A43">created_at</text>
+<text x="810" y="646" font-family="Arial,sans-serif" font-size="13" fill="#496275">TIMESTAMPTZ</text>
+<rect x="1030" y="220" width="415" height="174" rx="9" fill="#FFFFFF" stroke="#CBD7E0"/>
+<path d="M 1039 220 H 1436 Q 1445 220 1445 229 V 259 H 1030 V 229 Q 1030 220 1039 220" fill="#6B50A1"/>
+<text x="1046" y="247" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#FFFFFF">auth_permission</text>
+<rect x="1035" y="263" width="405" height="25" fill="#E6F1FA"/>
+<text x="1046" y="281" font-family="Arial,sans-serif" font-size="15" fill="#102A43">permission_id</text>
+<text x="1300" y="281" font-family="Arial,sans-serif" font-size="13" fill="#496275">BIGSERIAL</text>
+<text x="1431" y="281" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#6B50A1">PK</text>
+<rect x="1035" y="288" width="405" height="25" fill="#EFF7F5"/>
+<text x="1046" y="306" font-family="Arial,sans-serif" font-size="15" fill="#102A43">role_id</text>
+<text x="1300" y="306" font-family="Arial,sans-serif" font-size="13" fill="#496275">BIGINT</text>
+<text x="1431" y="306" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#6B50A1">FK</text>
+<rect x="1035" y="313" width="405" height="25" fill="#EFF7F5"/>
+<text x="1046" y="331" font-family="Arial,sans-serif" font-size="15" fill="#102A43">resource_id</text>
+<text x="1300" y="331" font-family="Arial,sans-serif" font-size="13" fill="#496275">BIGINT</text>
+<text x="1431" y="331" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#6B50A1">FK</text>
+<rect x="1035" y="338" width="405" height="25" fill="#EFF7F5"/>
+<text x="1046" y="356" font-family="Arial,sans-serif" font-size="15" fill="#102A43">action_id</text>
+<text x="1300" y="356" font-family="Arial,sans-serif" font-size="13" fill="#496275">BIGINT</text>
+<text x="1431" y="356" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#6B50A1">FK</text>
+<text x="1046" y="381" font-family="Arial,sans-serif" font-size="15" fill="#102A43">granted_at</text>
+<text x="1300" y="381" font-family="Arial,sans-serif" font-size="13" fill="#496275">TIMESTAMPTZ</text>
+<rect x="1030" y="650" width="415" height="149" rx="9" fill="#FFFFFF" stroke="#CBD7E0"/>
+<path d="M 1039 650 H 1436 Q 1445 650 1445 659 V 689 H 1030 V 659 Q 1030 650 1039 650" fill="#6B50A1"/>
+<text x="1046" y="677" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#FFFFFF">auth_user_role</text>
+<rect x="1035" y="693" width="405" height="25" fill="#E6F1FA"/>
+<text x="1046" y="711" font-family="Arial,sans-serif" font-size="15" fill="#102A43">id</text>
+<text x="1300" y="711" font-family="Arial,sans-serif" font-size="13" fill="#496275">BIGSERIAL</text>
+<text x="1431" y="711" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#6B50A1">PK</text>
+<text x="1046" y="736" font-family="Arial,sans-serif" font-size="15" fill="#102A43">user_external_id</text>
+<text x="1300" y="736" font-family="Arial,sans-serif" font-size="13" fill="#496275">VARCHAR(50)</text>
+<rect x="1035" y="743" width="405" height="25" fill="#EFF7F5"/>
+<text x="1046" y="761" font-family="Arial,sans-serif" font-size="15" fill="#102A43">role_id</text>
+<text x="1300" y="761" font-family="Arial,sans-serif" font-size="13" fill="#496275">BIGINT</text>
+<text x="1431" y="761" text-anchor="end" font-family="Arial,sans-serif" font-size="12" font-weight="700" fill="#6B50A1">FK</text>
+<text x="1046" y="786" font-family="Arial,sans-serif" font-size="15" fill="#102A43">assigned_at</text>
+<text x="1300" y="786" font-family="Arial,sans-serif" font-size="13" fill="#496275">TIMESTAMPTZ</text>
+<text x="48" y="860" font-family="Arial,sans-serif" font-size="14" fill="#496275">FK físicas: 5   ·   Cardinalidad: || exactamente uno, o| cero o uno, o{ cero a muchos   ·   Fuente: Flyway V1–V8</text>
+</svg>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1155" viewBox="0 0 1800 1155"><defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto"><path d="M0 0 L9 4 L0 8" fill="none" stroke="#315675" stroke-width="1.6"/></marker></defs><rect width="100%" height="100%" fill="white"/>
+<text x="35" y="48" font-family="Arial" font-size="30" font-weight="700" fill="#1c3448" text-anchor="start">Inteligencia de negocios y seguimiento de decisiones</text>
+<text x="130.0" y="100" font-family="Arial" font-size="20" font-weight="700" fill="#1c3448" text-anchor="middle">Jefatura web</text>
+<line x1="130.0" y1="150" x2="130.0" y2="1130" stroke="#b1bdc8" stroke-dasharray="6 5"/>
+<text x="515.0" y="100" font-family="Arial" font-size="20" font-weight="700" fill="#1c3448" text-anchor="middle">ReportController</text>
+<line x1="515.0" y1="150" x2="515.0" y2="1130" stroke="#b1bdc8" stroke-dasharray="6 5"/>
+<text x="900.0" y="100" font-family="Arial" font-size="20" font-weight="700" fill="#1c3448" text-anchor="middle">Servicio analítico</text>
+<line x1="900.0" y1="150" x2="900.0" y2="1130" stroke="#b1bdc8" stroke-dasharray="6 5"/>
+<text x="1285.0" y="100" font-family="Arial" font-size="20" font-weight="700" fill="#1c3448" text-anchor="middle">Vistas PostgreSQL</text>
+<line x1="1285.0" y1="150" x2="1285.0" y2="1130" stroke="#b1bdc8" stroke-dasharray="6 5"/>
+<text x="1670.0" y="100" font-family="Arial" font-size="20" font-weight="700" fill="#1c3448" text-anchor="middle">Acción P05</text>
+<line x1="1670.0" y1="150" x2="1670.0" y2="1130" stroke="#b1bdc8" stroke-dasharray="6 5"/>
+<polyline points="130.0,210 515.0,210" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="142.0" y="192" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">1. Solicita fecha inicial, final y conductor</text>
+<polyline points="515.0,315 900.0,315" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="527.0" y="297" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">2. Valida filtros y propaga el mismo alcance</text>
+<polyline points="900.0,420 1285.0,420" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="912.0" y="402" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">3. Lee pedidos por fecha operativa America/Lima</text>
+<polyline points="1285.0,525 900.0,525" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="912.0" y="507" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">4. Devuelve población, evidencias, ventanas, causas y muestras GPS</text>
+<polyline points="900.0,630 130.0,630" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="142.0" y="612" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">5. Calcula IID, CHR, TDE, SUCCESS y ONTIME con denominadores explícitos</text>
+<polyline points="130.0,735 1670.0,735" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="142.0" y="717" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">6. Documenta causa, responsable, fecha y meta de la acción</text>
+<polyline points="1670.0,840 1285.0,840" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1297.0" y="822" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">7. Persiste OPEN y luego IN_PROGRESS con nota</text>
+<polyline points="130.0,945 1670.0,945" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="142.0" y="927" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">8. Verifica resultado declarado y evidencia de la decisión</text>
+<polyline points="1670.0,1050 1285.0,1050" fill="none" stroke="#315675" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1131.015625" y="1007" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">9. VERIFIED exige valor, actor y nota; la causalidad se valida fuera del</text>
+<text x="1131.015625" y="1032" font-family="Arial" font-size="20" font-weight="400" fill="#1c3448" text-anchor="start">registro</text></svg>

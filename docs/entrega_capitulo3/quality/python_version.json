@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "exitCode": 0,
+  "startedAtUtc": "2026-10-27T13:08:26.915725+00:00",
+  "finishedAtUtc": "2026-10-27T13:08:26.935727+00:00",
+  "durationSeconds": 0.015,
+  "command": "<USER>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe --version",
+  "workingDirectory": "<WORKSPACE>",
+  "log": "python_version.log"
+}

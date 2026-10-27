@@ -1,0 +1,3981 @@
+{
+  "generatedAtUtc": "2026-10-20T13:01:38Z",
+  "source": "docs\\correccion_integral\\evidencias\\esquema_fisico_verificado.json",
+  "sourceSha256": "de35e4f7b42ea6b89d5ea76bea424cac8c5aaff4a412f303a0ba4cfc4c5fbed3",
+  "database": "ecoroute",
+  "serverVersion": "14.21",
+  "migrations": [
+    {
+      "version": "1",
+      "description": "create orders table",
+      "success": true
+    },
+    {
+      "version": "2",
+      "description": "create additional tables",
+      "success": true
+    },
+    {
+      "version": "3",
+      "description": "create rbac tables",
+      "success": true
+    },
+    {
+      "version": "4",
+      "description": "corporate erp schema",
+      "success": true
+    },
+    {
+      "version": "5",
+      "description": "fix schema and add routes",
+      "success": true
+    },
+    {
+      "version": "6",
+      "description": "enterprise logistics expansion",
+      "success": true
+    },
+    {
+      "version": "7",
+      "description": "feature expansion",
+      "success": true
+    },
+    {
+      "version": "8",
+      "description": "route geometry and stop sequence",
+      "success": true
+    },
+    {
+      "version": "9",
+      "description": "operational integrity",
+      "success": true
+    },
+    {
+      "version": "10",
+      "description": "business workflow",
+      "success": true
+    },
+    {
+      "version": "12",
+      "description": "analytics views",
+      "success": true
+    },
+    {
+      "version": "13",
+      "description": "incident resolution",
+      "success": true
+    },
+    {
+      "version": "14",
+      "description": "local evidence durability",
+      "success": true
+    },
+    {
+      "version": "15",
+      "description": "analytics returned terminal",
+      "success": true
+    }
+  ],
+  "sourceObjectCount": 46,
+  "businessObjectCount": 30,
+  "tableCount": 26,
+  "viewCount": 4,
+  "objects": {
+    "hubs": {
+      "name": "hubs",
+      "kind": "r",
+      "comment": "Almacenes y centros de distribución.",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('hubs_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "name",
+          "type": "character varying(100)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "code",
+          "type": "character varying(20)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "address",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "city",
+          "type": "character varying(50)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "latitude",
+          "type": "numeric(10,8)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "longitude",
+          "type": "numeric(11,8)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "is_active",
+          "type": "boolean",
+          "nullable": true,
+          "default": "true",
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "hubs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "hubs_code_key",
+          "type": "u",
+          "definition": "UNIQUE (code)"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "name": [],
+        "code": [
+          "UQ"
+        ],
+        "address": [],
+        "city": [],
+        "latitude": [],
+        "longitude": [],
+        "is_active": [],
+        "created_at": []
+      }
+    },
+    "vehicle_gps_history": {
+      "name": "vehicle_gps_history",
+      "kind": "r",
+      "comment": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('vehicle_gps_history_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "vehicle_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "driver_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "latitude",
+          "type": "numeric(10,8)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "longitude",
+          "type": "numeric(11,8)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "speed_kmh",
+          "type": "numeric(10,2)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "heading_degrees",
+          "type": "integer",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "ping_time",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "vehicle_gps_history_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "vehicle_gps_history_vehicle_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (vehicle_id) REFERENCES vehicles(id)"
+        },
+        {
+          "name": "vehicle_gps_history_driver_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (driver_id) REFERENCES drivers(id)"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "vehicle_id": [
+          "FK"
+        ],
+        "driver_id": [
+          "FK"
+        ],
+        "latitude": [],
+        "longitude": [],
+        "speed_kmh": [],
+        "heading_degrees": [],
+        "ping_time": []
+      }
+    },
+    "order_status_history": {
+      "name": "order_status_history",
+      "kind": "r",
+      "comment": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('order_status_history_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "order_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "status",
+          "type": "character varying(50)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "location_lat",
+          "type": "numeric(10,8)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "location_lon",
+          "type": "numeric(11,8)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "changed_by",
+          "type": "character varying(100)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "order_status_history_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "order_status_history_order_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "order_id": [
+          "FK"
+        ],
+        "status": [],
+        "reason": [],
+        "location_lat": [],
+        "location_lon": [],
+        "changed_by": [],
+        "created_at": []
+      }
+    },
+    "order_items": {
+      "name": "order_items",
+      "kind": "r",
+      "comment": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('order_items_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "order_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "product_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "quantity",
+          "type": "integer",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "unit_price",
+          "type": "numeric(12,2)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "total_price",
+          "type": "numeric(12,2)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "order_items_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "order_items_order_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE"
+        },
+        {
+          "name": "order_items_product_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (product_id) REFERENCES products(id)"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "order_id": [
+          "FK"
+        ],
+        "product_id": [
+          "FK"
+        ],
+        "quantity": [],
+        "unit_price": [],
+        "total_price": []
+      }
+    },
+    "products": {
+      "name": "products",
+      "kind": "r",
+      "comment": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('products_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "sku",
+          "type": "character varying(50)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "name",
+          "type": "character varying(255)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "category",
+          "type": "character varying(50)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "unit_weight_kg",
+          "type": "numeric(10,2)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "unit_volume_m3",
+          "type": "numeric(10,4)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "price",
+          "type": "numeric(12,2)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "products_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "products_sku_key",
+          "type": "u",
+          "definition": "UNIQUE (sku)"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "sku": [
+          "UQ"
+        ],
+        "name": [],
+        "description": [],
+        "category": [],
+        "unit_weight_kg": [],
+        "unit_volume_m3": [],
+        "price": [],
+        "created_at": []
+      }
+    },
+    "routes": {
+      "name": "routes",
+      "kind": "r",
+      "comment": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('routes_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "driver_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "vehicle_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "route_date",
+          "type": "date",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "status",
+          "type": "character varying(50)",
+          "nullable": true,
+          "default": "'PLANNED'::character varying",
+          "comment": null
+        },
+        {
+          "name": "estimated_start_time",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "actual_start_time",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "actual_end_time",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "total_distance_km",
+          "type": "numeric(10,2)",
+          "nullable": true,
+          "default": "0.0",
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "comment": null
+        },
+        {
+          "name": "geometry",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "total_duration_min",
+          "type": "double precision",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "routes_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "routes_driver_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (driver_id) REFERENCES drivers(id)"
+        },
+        {
+          "name": "routes_vehicle_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (vehicle_id) REFERENCES vehicles(id)"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "driver_id": [
+          "FK"
+        ],
+        "vehicle_id": [
+          "FK"
+        ],
+        "route_date": [],
+        "status": [],
+        "estimated_start_time": [],
+        "actual_start_time": [],
+        "actual_end_time": [],
+        "total_distance_km": [],
+        "created_at": [],
+        "geometry": [],
+        "total_duration_min": []
+      }
+    },
+    "orders": {
+      "name": "orders",
+      "kind": "r",
+      "comment": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('orders_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "tracking_number",
+          "type": "character varying(255)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "status",
+          "type": "character varying(50)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "driver_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "external_reference",
+          "type": "character varying(100)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "route_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "recipient_name",
+          "type": "character varying(255)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "recipient_phone",
+          "type": "character varying(20)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "recipient_email",
+          "type": "character varying(100)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "delivery_address",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "delivery_city",
+          "type": "character varying(100)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "delivery_district",
+          "type": "character varying(100)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "latitude",
+          "type": "numeric(10,8)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "longitude",
+          "type": "numeric(11,8)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "priority",
+          "type": "integer",
+          "nullable": true,
+          "default": "0",
+          "comment": null
+        },
+        {
+          "name": "estimated_delivery_window_start",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "estimated_delivery_window_end",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "comment": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "comment": null
+        },
+        {
+          "name": "stop_sequence",
+          "type": "integer",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "orders_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "orders_route_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (route_id) REFERENCES routes(id)"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "tracking_number": [],
+        "status": [],
+        "driver_id": [],
+        "external_reference": [],
+        "route_id": [
+          "FK"
+        ],
+        "recipient_name": [],
+        "recipient_phone": [],
+        "recipient_email": [],
+        "delivery_address": [],
+        "delivery_city": [],
+        "delivery_district": [],
+        "latitude": [],
+        "longitude": [],
+        "priority": [],
+        "estimated_delivery_window_start": [],
+        "estimated_delivery_window_end": [],
+        "created_at": [],
+        "updated_at": [],
+        "stop_sequence": []
+      }
+    },
+    "drivers": {
+      "name": "drivers",
+      "kind": "r",
+      "comment": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('drivers_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "external_id",
+          "type": "character varying(50)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "first_name",
+          "type": "character varying(100)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "last_name",
+          "type": "character varying(100)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "license_number",
+          "type": "character varying(50)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "phone_number",
+          "type": "character varying(20)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "email",
+          "type": "character varying(100)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "is_active",
+          "type": "boolean",
+          "nullable": true,
+          "default": "true",
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "comment": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "drivers_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "drivers_external_id_key",
+          "type": "u",
+          "definition": "UNIQUE (external_id)"
+        },
+        {
+          "name": "drivers_license_number_key",
+          "type": "u",
+          "definition": "UNIQUE (license_number)"
+        },
+        {
+          "name": "drivers_email_key",
+          "type": "u",
+          "definition": "UNIQUE (email)"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "external_id": [
+          "UQ"
+        ],
+        "first_name": [],
+        "last_name": [],
+        "license_number": [
+          "UQ"
+        ],
+        "phone_number": [],
+        "email": [
+          "UQ"
+        ],
+        "is_active": [],
+        "created_at": [],
+        "updated_at": []
+      }
+    },
+    "vehicles": {
+      "name": "vehicles",
+      "kind": "r",
+      "comment": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('vehicles_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "plate_number",
+          "type": "character varying(20)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "model",
+          "type": "character varying(100)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "brand",
+          "type": "character varying(100)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "capacity_kg",
+          "type": "numeric(10,2)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "capacity_m3",
+          "type": "numeric(10,2)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "is_active",
+          "type": "boolean",
+          "nullable": true,
+          "default": "true",
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "vehicles_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "vehicles_plate_number_key",
+          "type": "u",
+          "definition": "UNIQUE (plate_number)"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "plate_number": [
+          "UQ"
+        ],
+        "model": [],
+        "brand": [],
+        "capacity_kg": [],
+        "capacity_m3": [],
+        "is_active": [],
+        "created_at": []
+      }
+    },
+    "delivery_proofs": {
+      "name": "delivery_proofs",
+      "kind": "r",
+      "comment": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('delivery_proofs_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "order_id",
+          "type": "bigint",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "image_url",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "signature_data_url",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "receiver_name",
+          "type": "character varying(255)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "receiver_dni",
+          "type": "character varying(20)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "verified_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "comment": null
+        },
+        {
+          "name": "latitude",
+          "type": "numeric(10,8)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "longitude",
+          "type": "numeric(11,8)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "image_sha256",
+          "type": "character varying(64)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "signature_sha256",
+          "type": "character varying(64)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "received_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "default": "now()",
+          "comment": null
+        },
+        {
+          "name": "captured_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "delivery_proofs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "delivery_proofs_order_id_key",
+          "type": "u",
+          "definition": "UNIQUE (order_id)"
+        },
+        {
+          "name": "delivery_proofs_order_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "order_id": [
+          "UQ",
+          "FK"
+        ],
+        "image_url": [],
+        "signature_data_url": [],
+        "receiver_name": [],
+        "receiver_dni": [],
+        "verified_at": [],
+        "latitude": [],
+        "longitude": [],
+        "image_sha256": [],
+        "signature_sha256": [],
+        "received_at": [],
+        "captured_at": []
+      }
+    },
+    "vehicle_maintenance_logs": {
+      "name": "vehicle_maintenance_logs",
+      "kind": "r",
+      "comment": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('vehicle_maintenance_logs_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "vehicle_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "service_date",
+          "type": "date",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "service_type",
+          "type": "character varying(50)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "odometer_reading",
+          "type": "integer",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "cost",
+          "type": "numeric(12,2)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "workshop_name",
+          "type": "character varying(100)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "next_service_date",
+          "type": "date",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "vehicle_maintenance_logs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "vehicle_maintenance_logs_vehicle_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (vehicle_id) REFERENCES vehicles(id)"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "vehicle_id": [
+          "FK"
+        ],
+        "service_date": [],
+        "service_type": [],
+        "description": [],
+        "odometer_reading": [],
+        "cost": [],
+        "workshop_name": [],
+        "next_service_date": []
+      }
+    },
+    "fuel_logs": {
+      "name": "fuel_logs",
+      "kind": "r",
+      "comment": "Registro detallado de consumo de combustible por unidad y conductor.",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('fuel_logs_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "vehicle_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "driver_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "fuel_date",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "comment": null
+        },
+        {
+          "name": "liters",
+          "type": "numeric(10,2)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "total_cost",
+          "type": "numeric(12,2)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "odometer_reading",
+          "type": "integer",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "gas_station",
+          "type": "character varying(100)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "fuel_logs_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "fuel_logs_vehicle_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (vehicle_id) REFERENCES vehicles(id)"
+        },
+        {
+          "name": "fuel_logs_driver_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (driver_id) REFERENCES drivers(id)"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "vehicle_id": [
+          "FK"
+        ],
+        "driver_id": [
+          "FK"
+        ],
+        "fuel_date": [],
+        "liters": [],
+        "total_cost": [],
+        "odometer_reading": [],
+        "gas_station": []
+      }
+    },
+    "purchases": {
+      "name": "purchases",
+      "kind": "r",
+      "comment": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('purchases_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "description",
+          "type": "character varying(500)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "supplier",
+          "type": "character varying(255)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "amount",
+          "type": "numeric(12,2)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "status",
+          "type": "character varying(50)",
+          "nullable": false,
+          "default": "'PENDING'::character varying",
+          "comment": null
+        },
+        {
+          "name": "category",
+          "type": "character varying(100)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": "now()",
+          "comment": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": "now()",
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "purchases_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "description": [],
+        "supplier": [],
+        "amount": [],
+        "status": [],
+        "category": [],
+        "notes": [],
+        "created_at": [],
+        "updated_at": []
+      }
+    },
+    "route_expenses": {
+      "name": "route_expenses",
+      "kind": "r",
+      "comment": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('route_expenses_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "route_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "expense_type",
+          "type": "character varying(50)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "amount",
+          "type": "numeric(10,2)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "receipt_url",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "route_expenses_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "route_expenses_route_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (route_id) REFERENCES routes(id)"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "route_id": [
+          "FK"
+        ],
+        "expense_type": [],
+        "amount": [],
+        "description": [],
+        "receipt_url": [],
+        "created_at": []
+      }
+    },
+    "driver_contracts": {
+      "name": "driver_contracts",
+      "kind": "r",
+      "comment": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('driver_contracts_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "driver_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "contract_type",
+          "type": "character varying(50)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "start_date",
+          "type": "date",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "end_date",
+          "type": "date",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "base_salary",
+          "type": "numeric(12,2)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "driver_contracts_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "driver_contracts_driver_id_key",
+          "type": "u",
+          "definition": "UNIQUE (driver_id)"
+        },
+        {
+          "name": "driver_contracts_driver_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (driver_id) REFERENCES drivers(id)"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "driver_id": [
+          "UQ",
+          "FK"
+        ],
+        "contract_type": [],
+        "start_date": [],
+        "end_date": [],
+        "base_salary": []
+      }
+    },
+    "driver_shifts": {
+      "name": "driver_shifts",
+      "kind": "r",
+      "comment": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('driver_shifts_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "driver_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "shift_start",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "shift_end",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "status",
+          "type": "character varying(20)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "driver_shifts_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "driver_shifts_driver_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (driver_id) REFERENCES drivers(id)"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "driver_id": [
+          "FK"
+        ],
+        "shift_start": [],
+        "shift_end": [],
+        "status": []
+      }
+    },
+    "notifications": {
+      "name": "notifications",
+      "kind": "r",
+      "comment": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('notifications_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "type",
+          "type": "character varying(50)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "title",
+          "type": "character varying(255)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "order_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "is_read",
+          "type": "boolean",
+          "nullable": true,
+          "default": "false",
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": "now()",
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "notifications_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "notifications_order_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "type": [],
+        "title": [],
+        "message": [],
+        "order_id": [
+          "FK"
+        ],
+        "is_read": [],
+        "created_at": []
+      }
+    },
+    "delivery_outbox": {
+      "name": "delivery_outbox",
+      "kind": "r",
+      "comment": "Eventos de entrega escritos en la misma transacción que la prueba y publicados con reintento.",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('delivery_outbox_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "order_id",
+          "type": "bigint",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "event_type",
+          "type": "character varying(50)",
+          "nullable": false,
+          "default": "'DELIVERY_CONFIRMED'::character varying",
+          "comment": null
+        },
+        {
+          "name": "payload",
+          "type": "text",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "default": "now()",
+          "comment": null
+        },
+        {
+          "name": "sent_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "attempts",
+          "type": "integer",
+          "nullable": false,
+          "default": "0",
+          "comment": null
+        },
+        {
+          "name": "last_error",
+          "type": "character varying(300)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "delivery_outbox_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "delivery_outbox_order_id_event_type_key",
+          "type": "u",
+          "definition": "UNIQUE (order_id, event_type)"
+        },
+        {
+          "name": "delivery_outbox_order_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "order_id": [
+          "UQ*",
+          "FK"
+        ],
+        "event_type": [
+          "UQ*"
+        ],
+        "payload": [],
+        "created_at": [],
+        "sent_at": [],
+        "attempts": [],
+        "last_error": []
+      }
+    },
+    "order_business_data": {
+      "name": "order_business_data",
+      "kind": "r",
+      "comment": null,
+      "columns": [
+        {
+          "name": "order_id",
+          "type": "bigint",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "recipient_ruc",
+          "type": "character varying(11)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "customer_accepted",
+          "type": "boolean",
+          "nullable": false,
+          "default": "false",
+          "comment": "Declaración del operador sobre la aceptación del cliente; no es firma certificada del cliente."
+        },
+        {
+          "name": "address_verified",
+          "type": "boolean",
+          "nullable": false,
+          "default": "false",
+          "comment": null
+        },
+        {
+          "name": "coverage_verified",
+          "type": "boolean",
+          "nullable": false,
+          "default": "false",
+          "comment": null
+        },
+        {
+          "name": "agreement_note",
+          "type": "text",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "confirmed_by",
+          "type": "character varying(100)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "confirmed_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "order_business_data_recipient_ruc_check",
+          "type": "c",
+          "definition": "CHECK (((recipient_ruc IS NULL) OR ((recipient_ruc)::text ~ '^[0-9]{11}$'::text)))"
+        },
+        {
+          "name": "order_business_data_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (order_id)"
+        },
+        {
+          "name": "order_business_data_order_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)"
+        }
+      ],
+      "keys": {
+        "order_id": [
+          "PK",
+          "FK"
+        ],
+        "recipient_ruc": [],
+        "customer_accepted": [],
+        "address_verified": [],
+        "coverage_verified": [],
+        "agreement_note": [],
+        "confirmed_by": [],
+        "confirmed_at": []
+      }
+    },
+    "incidents": {
+      "name": "incidents",
+      "kind": "r",
+      "comment": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('incidents_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "route_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "incident_type",
+          "type": "character varying(50)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "severity",
+          "type": "character varying(20)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "location_lat",
+          "type": "numeric(10,8)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "location_lon",
+          "type": "numeric(11,8)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "reported_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "comment": null
+        },
+        {
+          "name": "resolved_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "order_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "status",
+          "type": "character varying(30)",
+          "nullable": false,
+          "default": "'OPEN'::character varying",
+          "comment": null
+        },
+        {
+          "name": "outcome",
+          "type": "character varying(30)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "resolution_reason",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "resolved_by",
+          "type": "character varying(100)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "reported_by",
+          "type": "character varying(100)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "next_route_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "retry_order_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": "New linked attempt. Original terminal order and POD are never rewritten."
+        }
+      ],
+      "constraints": [
+        {
+          "name": "incidents_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "incidents_route_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (route_id) REFERENCES routes(id)"
+        },
+        {
+          "name": "incidents_order_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)"
+        },
+        {
+          "name": "incidents_next_route_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (next_route_id) REFERENCES routes(id)"
+        },
+        {
+          "name": "incidents_retry_order_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (retry_order_id) REFERENCES orders(id)"
+        },
+        {
+          "name": "ck_incident_resolution",
+          "type": "c",
+          "definition": "CHECK (((((status)::text = 'OPEN'::text) AND (resolved_at IS NULL)) OR (((status)::text = 'RESOLVED'::text) AND ((outcome)::text = ANY ((ARRAY['RETRY'::character varying, 'REPLAN'::character varying, 'CLOSE_FAILED'::character varying, 'CLOSE_CASE'::character varying])::text[])) AND (resolution_reason IS NOT NULL) AND (resolved_at IS NOT NULL) AND (resolved_by IS NOT NULL))))"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "route_id": [
+          "FK"
+        ],
+        "incident_type": [],
+        "severity": [],
+        "description": [],
+        "location_lat": [],
+        "location_lon": [],
+        "reported_at": [],
+        "resolved_at": [],
+        "order_id": [
+          "FK"
+        ],
+        "status": [],
+        "outcome": [],
+        "resolution_reason": [],
+        "resolved_by": [],
+        "reported_by": [],
+        "next_route_id": [
+          "FK"
+        ],
+        "retry_order_id": [
+          "FK"
+        ]
+      }
+    },
+    "route_dispatch_reviews": {
+      "name": "route_dispatch_reviews",
+      "kind": "r",
+      "comment": null,
+      "columns": [
+        {
+          "name": "route_id",
+          "type": "bigint",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "load_weight_kg",
+          "type": "numeric(12,2)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "approved_by",
+          "type": "character varying(100)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "approved_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "default": "now()",
+          "comment": null
+        },
+        {
+          "name": "accepted_by",
+          "type": "character varying(100)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "accepted_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "note",
+          "type": "text",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "route_dispatch_reviews_load_weight_kg_check",
+          "type": "c",
+          "definition": "CHECK ((load_weight_kg > (0)::numeric))"
+        },
+        {
+          "name": "route_dispatch_reviews_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (route_id)"
+        },
+        {
+          "name": "route_dispatch_reviews_route_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (route_id) REFERENCES routes(id)"
+        }
+      ],
+      "keys": {
+        "route_id": [
+          "PK",
+          "FK"
+        ],
+        "load_weight_kg": [],
+        "approved_by": [],
+        "approved_at": [],
+        "accepted_by": [],
+        "accepted_at": [],
+        "note": []
+      }
+    },
+    "improvement_actions": {
+      "name": "improvement_actions",
+      "kind": "r",
+      "comment": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('improvement_actions_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "title",
+          "type": "character varying(255)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "cause",
+          "type": "text",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "owner_name",
+          "type": "character varying(150)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "due_date",
+          "type": "date",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "metric_code",
+          "type": "character varying(30)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "baseline_value",
+          "type": "numeric(14,4)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "target_value",
+          "type": "numeric(14,4)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "result_value",
+          "type": "numeric(14,4)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "status",
+          "type": "character varying(30)",
+          "nullable": false,
+          "default": "'OPEN'::character varying",
+          "comment": null
+        },
+        {
+          "name": "note",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "created_by",
+          "type": "character varying(100)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "verified_by",
+          "type": "character varying(100)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "default": "now()",
+          "comment": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "default": "now()",
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "improvement_actions_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "ck_improvement_status",
+          "type": "c",
+          "definition": "CHECK (((status)::text = ANY ((ARRAY['OPEN'::character varying, 'IN_PROGRESS'::character varying, 'VERIFIED'::character varying, 'DISCARDED'::character varying])::text[])))"
+        },
+        {
+          "name": "ck_improvement_verification",
+          "type": "c",
+          "definition": "CHECK ((((status)::text <> 'VERIFIED'::text) OR ((result_value IS NOT NULL) AND (verified_by IS NOT NULL) AND (note IS NOT NULL))))"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "title": [],
+        "cause": [],
+        "owner_name": [],
+        "due_date": [],
+        "metric_code": [],
+        "baseline_value": [],
+        "target_value": [],
+        "result_value": [],
+        "status": [],
+        "note": [],
+        "created_by": [],
+        "verified_by": [],
+        "created_at": [],
+        "updated_at": []
+      }
+    },
+    "order_attempts": {
+      "name": "order_attempts",
+      "kind": "r",
+      "comment": "Un reintento crea un pedido nuevo vinculado; nunca modifica el resultado histórico original.",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('order_attempts_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "original_order_id",
+          "type": "bigint",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "retry_order_id",
+          "type": "bigint",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "incident_id",
+          "type": "bigint",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "default": "now()",
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "order_attempts_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "order_attempts_retry_order_id_key",
+          "type": "u",
+          "definition": "UNIQUE (retry_order_id)"
+        },
+        {
+          "name": "order_attempts_incident_id_key",
+          "type": "u",
+          "definition": "UNIQUE (incident_id)"
+        },
+        {
+          "name": "order_attempts_original_order_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (original_order_id) REFERENCES orders(id)"
+        },
+        {
+          "name": "order_attempts_retry_order_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (retry_order_id) REFERENCES orders(id)"
+        },
+        {
+          "name": "order_attempts_incident_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (incident_id) REFERENCES incidents(id)"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "original_order_id": [
+          "FK"
+        ],
+        "retry_order_id": [
+          "UQ",
+          "FK"
+        ],
+        "incident_id": [
+          "UQ",
+          "FK"
+        ],
+        "created_at": []
+      }
+    },
+    "business_audit_events": {
+      "name": "business_audit_events",
+      "kind": "r",
+      "comment": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('business_audit_events_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "process_id",
+          "type": "character varying(10)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "entity_type",
+          "type": "character varying(40)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "entity_id",
+          "type": "bigint",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "action",
+          "type": "character varying(80)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "actor",
+          "type": "character varying(100)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "details",
+          "type": "text",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "default": "now()",
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "business_audit_events_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "process_id": [],
+        "entity_type": [],
+        "entity_id": [],
+        "action": [],
+        "actor": [],
+        "details": [],
+        "created_at": []
+      }
+    },
+    "analytics_goals": {
+      "name": "analytics_goals",
+      "kind": "r",
+      "comment": null,
+      "columns": [
+        {
+          "name": "code",
+          "type": "character varying(10)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "target",
+          "type": "numeric",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "updated_by",
+          "type": "character varying(100)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "default": "clock_timestamp()",
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "analytics_goals_code_check",
+          "type": "c",
+          "definition": "CHECK (((code)::text = ANY ((ARRAY['IID'::character varying, 'CHR'::character varying, 'TDE'::character varying, 'SUCCESS'::character varying, 'ONTIME'::character varying])::text[])))"
+        },
+        {
+          "name": "analytics_goals_target_check",
+          "type": "c",
+          "definition": "CHECK (((target >= (0)::numeric) AND (target <= (100)::numeric)))"
+        },
+        {
+          "name": "analytics_goals_updated_by_check",
+          "type": "c",
+          "definition": "CHECK ((btrim((updated_by)::text) <> ''::text))"
+        },
+        {
+          "name": "analytics_goals_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (code)"
+        }
+      ],
+      "keys": {
+        "code": [
+          "PK"
+        ],
+        "target": [],
+        "updated_by": [],
+        "updated_at": []
+      }
+    },
+    "analytics_goal_history": {
+      "name": "analytics_goal_history",
+      "kind": "r",
+      "comment": "Historial de metas efectivas, actor autenticado y fecha. Sin metas precargadas.",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": false,
+          "default": "nextval('analytics_goal_history_id_seq'::regclass)",
+          "comment": null
+        },
+        {
+          "name": "code",
+          "type": "character varying(10)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "previous_target",
+          "type": "numeric",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "target",
+          "type": "numeric",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "changed_by",
+          "type": "character varying(100)",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "effective_at",
+          "type": "timestamp with time zone",
+          "nullable": false,
+          "default": null,
+          "comment": null
+        }
+      ],
+      "constraints": [
+        {
+          "name": "analytics_goal_history_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "analytics_goal_history_code_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (code) REFERENCES analytics_goals(code)"
+        }
+      ],
+      "keys": {
+        "id": [
+          "PK"
+        ],
+        "code": [
+          "FK"
+        ],
+        "previous_target": [],
+        "target": [],
+        "changed_by": [],
+        "effective_at": []
+      }
+    },
+    "analytics_order_facts": {
+      "name": "analytics_order_facts",
+      "kind": "v",
+      "comment": "RF81: datos verificables de pedido, operación Lima, RUC P01, evidencia digital y metadatos de integridad. No verifica objetos remotos.",
+      "columns": [
+        {
+          "name": "order_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "tracking_number",
+          "type": "character varying(255)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "external_reference",
+          "type": "character varying(100)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "status",
+          "type": "character varying(50)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "route_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "driver_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "driver_name",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "operation_date",
+          "type": "date",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "district",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "recipient_name",
+          "type": "character varying(255)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "delivery_address",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "latitude",
+          "type": "numeric(10,8)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "longitude",
+          "type": "numeric(11,8)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "estimated_delivery_window_start",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "estimated_delivery_window_end",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "recipient_ruc",
+          "type": "character varying(11)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "customer_accepted",
+          "type": "boolean",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "address_verified",
+          "type": "boolean",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "coverage_verified",
+          "type": "boolean",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "agreement_note",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "confirmed_by",
+          "type": "character varying(100)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "confirmed_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "proof_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "image_url",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "signature_data_url",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "receiver_name",
+          "type": "character varying(255)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "receiver_dni",
+          "type": "character varying(20)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "proof_latitude",
+          "type": "numeric(10,8)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "proof_longitude",
+          "type": "numeric(11,8)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "verified_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "captured_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "received_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "image_sha256",
+          "type": "character varying(64)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "signature_sha256",
+          "type": "character varying(64)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "valid_ruc",
+          "type": "boolean",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "valid_gps",
+          "type": "boolean",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "has_photo",
+          "type": "boolean",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "has_signature",
+          "type": "boolean",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "scheduled",
+          "type": "boolean",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "delivered",
+          "type": "boolean",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "iid_valid",
+          "type": "boolean",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "digital_evidence",
+          "type": "boolean",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "ontime_evaluable",
+          "type": "boolean",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "on_time",
+          "type": "boolean",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "delayed",
+          "type": "boolean",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "complete_pod",
+          "type": "boolean",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        }
+      ],
+      "constraints": [],
+      "keys": {
+        "order_id": [],
+        "tracking_number": [],
+        "external_reference": [],
+        "status": [],
+        "route_id": [],
+        "driver_id": [],
+        "driver_name": [],
+        "operation_date": [],
+        "district": [],
+        "recipient_name": [],
+        "delivery_address": [],
+        "latitude": [],
+        "longitude": [],
+        "created_at": [],
+        "updated_at": [],
+        "estimated_delivery_window_start": [],
+        "estimated_delivery_window_end": [],
+        "recipient_ruc": [],
+        "customer_accepted": [],
+        "address_verified": [],
+        "coverage_verified": [],
+        "agreement_note": [],
+        "confirmed_by": [],
+        "confirmed_at": [],
+        "proof_id": [],
+        "image_url": [],
+        "signature_data_url": [],
+        "receiver_name": [],
+        "receiver_dni": [],
+        "proof_latitude": [],
+        "proof_longitude": [],
+        "verified_at": [],
+        "captured_at": [],
+        "received_at": [],
+        "image_sha256": [],
+        "signature_sha256": [],
+        "valid_ruc": [],
+        "valid_gps": [],
+        "has_photo": [],
+        "has_signature": [],
+        "scheduled": [],
+        "delivered": [],
+        "iid_valid": [],
+        "digital_evidence": [],
+        "ontime_evaluable": [],
+        "on_time": [],
+        "delayed": [],
+        "complete_pod": []
+      }
+    },
+    "analytics_goal_facts": {
+      "name": "analytics_goal_facts",
+      "kind": "v",
+      "comment": null,
+      "columns": [
+        {
+          "name": "code",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "target",
+          "type": "numeric",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "updated_by",
+          "type": "character varying(100)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        }
+      ],
+      "constraints": [],
+      "keys": {
+        "code": [],
+        "target": [],
+        "updated_by": [],
+        "updated_at": []
+      }
+    },
+    "analytics_goal_history_facts": {
+      "name": "analytics_goal_history_facts",
+      "kind": "v",
+      "comment": null,
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "code",
+          "type": "character varying(10)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "previous_target",
+          "type": "numeric",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "target",
+          "type": "numeric",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "changed_by",
+          "type": "character varying(100)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "effective_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        }
+      ],
+      "constraints": [],
+      "keys": {
+        "id": [],
+        "code": [],
+        "previous_target": [],
+        "target": [],
+        "changed_by": [],
+        "effective_at": []
+      }
+    },
+    "analytics_route_facts": {
+      "name": "analytics_route_facts",
+      "kind": "v",
+      "comment": "Distancia GPS Haversine dentro de la ruta; mínimo 2 muestras. Minutos de operación por parada terminal DELIVERED/FAILED/RETURNED, no tiempo de servicio.",
+      "columns": [
+        {
+          "name": "route_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "driver_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "vehicle_id",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "operation_date",
+          "type": "date",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "status",
+          "type": "character varying(50)",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "actual_start_time",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "actual_end_time",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "planned_distance_km",
+          "type": "double precision",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "planned_duration_min",
+          "type": "double precision",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "order_count",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "delivered_count",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "terminal_stop_count",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "gps_sample_count",
+          "type": "bigint",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "first_gps_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "last_gps_at",
+          "type": "timestamp with time zone",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "actual_gps_distance_km",
+          "type": "double precision",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "operation_minutes",
+          "type": "double precision",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "km_per_delivery",
+          "type": "double precision",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "time_per_stop_min",
+          "type": "double precision",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        },
+        {
+          "name": "distance_source",
+          "type": "text",
+          "nullable": true,
+          "default": null,
+          "comment": null
+        }
+      ],
+      "constraints": [],
+      "keys": {
+        "route_id": [],
+        "label": [],
+        "driver_id": [],
+        "vehicle_id": [],
+        "operation_date": [],
+        "status": [],
+        "actual_start_time": [],
+        "actual_end_time": [],
+        "planned_distance_km": [],
+        "planned_duration_min": [],
+        "order_count": [],
+        "delivered_count": [],
+        "terminal_stop_count": [],
+        "gps_sample_count": [],
+        "first_gps_at": [],
+        "last_gps_at": [],
+        "actual_gps_distance_km": [],
+        "operation_minutes": [],
+        "km_per_delivery": [],
+        "time_per_stop_min": [],
+        "distance_source": []
+      }
+    }
+  },
+  "excluded": {
+    "corp_invoices": "legacy / fuera del alcance",
+    "auth_module": "legacy / fuera del alcance",
+    "auth_resource": "legacy / fuera del alcance",
+    "auth_role": "legacy / fuera del alcance",
+    "auth_permission": "legacy / fuera del alcance",
+    "auth_action": "legacy / fuera del alcance",
+    "auth_user_role": "legacy / fuera del alcance",
+    "corp_branches": "legacy / fuera del alcance",
+    "corp_departments": "legacy / fuera del alcance",
+    "corp_employees": "legacy / fuera del alcance",
+    "corp_fleet_types": "legacy / fuera del alcance",
+    "corp_maintenance_logs": "legacy / fuera del alcance",
+    "corp_customers": "legacy / fuera del alcance",
+    "corp_contracts": "legacy / fuera del alcance",
+    "corp_warehouses": "legacy / fuera del alcance",
+    "local_evidence_backups": "soporte técnico de evidencia local; fuera del ERD de negocio"
+  },
+  "foreignKeys": [
+    {
+      "name": "vehicle_gps_history_vehicle_id_fkey",
+      "child": "vehicle_gps_history",
+      "childColumns": [
+        "vehicle_id"
+      ],
+      "parent": "vehicles",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (vehicle_id) REFERENCES vehicles(id)"
+    },
+    {
+      "name": "vehicle_gps_history_driver_id_fkey",
+      "child": "vehicle_gps_history",
+      "childColumns": [
+        "driver_id"
+      ],
+      "parent": "drivers",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (driver_id) REFERENCES drivers(id)"
+    },
+    {
+      "name": "order_status_history_order_id_fkey",
+      "child": "order_status_history",
+      "childColumns": [
+        "order_id"
+      ],
+      "parent": "orders",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)"
+    },
+    {
+      "name": "order_items_order_id_fkey",
+      "child": "order_items",
+      "childColumns": [
+        "order_id"
+      ],
+      "parent": "orders",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE"
+    },
+    {
+      "name": "order_items_product_id_fkey",
+      "child": "order_items",
+      "childColumns": [
+        "product_id"
+      ],
+      "parent": "products",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (product_id) REFERENCES products(id)"
+    },
+    {
+      "name": "routes_driver_id_fkey",
+      "child": "routes",
+      "childColumns": [
+        "driver_id"
+      ],
+      "parent": "drivers",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (driver_id) REFERENCES drivers(id)"
+    },
+    {
+      "name": "routes_vehicle_id_fkey",
+      "child": "routes",
+      "childColumns": [
+        "vehicle_id"
+      ],
+      "parent": "vehicles",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (vehicle_id) REFERENCES vehicles(id)"
+    },
+    {
+      "name": "orders_route_id_fkey",
+      "child": "orders",
+      "childColumns": [
+        "route_id"
+      ],
+      "parent": "routes",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (route_id) REFERENCES routes(id)"
+    },
+    {
+      "name": "delivery_proofs_order_id_fkey",
+      "child": "delivery_proofs",
+      "childColumns": [
+        "order_id"
+      ],
+      "parent": "orders",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)"
+    },
+    {
+      "name": "vehicle_maintenance_logs_vehicle_id_fkey",
+      "child": "vehicle_maintenance_logs",
+      "childColumns": [
+        "vehicle_id"
+      ],
+      "parent": "vehicles",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (vehicle_id) REFERENCES vehicles(id)"
+    },
+    {
+      "name": "fuel_logs_vehicle_id_fkey",
+      "child": "fuel_logs",
+      "childColumns": [
+        "vehicle_id"
+      ],
+      "parent": "vehicles",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (vehicle_id) REFERENCES vehicles(id)"
+    },
+    {
+      "name": "fuel_logs_driver_id_fkey",
+      "child": "fuel_logs",
+      "childColumns": [
+        "driver_id"
+      ],
+      "parent": "drivers",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (driver_id) REFERENCES drivers(id)"
+    },
+    {
+      "name": "route_expenses_route_id_fkey",
+      "child": "route_expenses",
+      "childColumns": [
+        "route_id"
+      ],
+      "parent": "routes",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (route_id) REFERENCES routes(id)"
+    },
+    {
+      "name": "driver_contracts_driver_id_fkey",
+      "child": "driver_contracts",
+      "childColumns": [
+        "driver_id"
+      ],
+      "parent": "drivers",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (driver_id) REFERENCES drivers(id)"
+    },
+    {
+      "name": "driver_shifts_driver_id_fkey",
+      "child": "driver_shifts",
+      "childColumns": [
+        "driver_id"
+      ],
+      "parent": "drivers",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (driver_id) REFERENCES drivers(id)"
+    },
+    {
+      "name": "notifications_order_id_fkey",
+      "child": "notifications",
+      "childColumns": [
+        "order_id"
+      ],
+      "parent": "orders",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)"
+    },
+    {
+      "name": "delivery_outbox_order_id_fkey",
+      "child": "delivery_outbox",
+      "childColumns": [
+        "order_id"
+      ],
+      "parent": "orders",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)"
+    },
+    {
+      "name": "order_business_data_order_id_fkey",
+      "child": "order_business_data",
+      "childColumns": [
+        "order_id"
+      ],
+      "parent": "orders",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)"
+    },
+    {
+      "name": "incidents_route_id_fkey",
+      "child": "incidents",
+      "childColumns": [
+        "route_id"
+      ],
+      "parent": "routes",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (route_id) REFERENCES routes(id)"
+    },
+    {
+      "name": "incidents_order_id_fkey",
+      "child": "incidents",
+      "childColumns": [
+        "order_id"
+      ],
+      "parent": "orders",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (order_id) REFERENCES orders(id)"
+    },
+    {
+      "name": "incidents_next_route_id_fkey",
+      "child": "incidents",
+      "childColumns": [
+        "next_route_id"
+      ],
+      "parent": "routes",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (next_route_id) REFERENCES routes(id)"
+    },
+    {
+      "name": "incidents_retry_order_id_fkey",
+      "child": "incidents",
+      "childColumns": [
+        "retry_order_id"
+      ],
+      "parent": "orders",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (retry_order_id) REFERENCES orders(id)"
+    },
+    {
+      "name": "route_dispatch_reviews_route_id_fkey",
+      "child": "route_dispatch_reviews",
+      "childColumns": [
+        "route_id"
+      ],
+      "parent": "routes",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (route_id) REFERENCES routes(id)"
+    },
+    {
+      "name": "order_attempts_original_order_id_fkey",
+      "child": "order_attempts",
+      "childColumns": [
+        "original_order_id"
+      ],
+      "parent": "orders",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (original_order_id) REFERENCES orders(id)"
+    },
+    {
+      "name": "order_attempts_retry_order_id_fkey",
+      "child": "order_attempts",
+      "childColumns": [
+        "retry_order_id"
+      ],
+      "parent": "orders",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (retry_order_id) REFERENCES orders(id)"
+    },
+    {
+      "name": "order_attempts_incident_id_fkey",
+      "child": "order_attempts",
+      "childColumns": [
+        "incident_id"
+      ],
+      "parent": "incidents",
+      "parentColumns": [
+        "id"
+      ],
+      "definition": "FOREIGN KEY (incident_id) REFERENCES incidents(id)"
+    },
+    {
+      "name": "analytics_goal_history_code_fkey",
+      "child": "analytics_goal_history",
+      "childColumns": [
+        "code"
+      ],
+      "parent": "analytics_goals",
+      "parentColumns": [
+        "code"
+      ],
+      "definition": "FOREIGN KEY (code) REFERENCES analytics_goals(code)"
+    }
+  ],
+  "logicalIdentity": {
+    "external": "Keycloak sub UUID",
+    "local": "drivers.external_id varchar(50)",
+    "physicalForeignKey": false
+  },
+  "diagrams": [
+    {
+      "file": "00_erd_negocio_global.svg",
+      "width": 4477,
+      "height": 2468,
+      "objects": [
+        "drivers",
+        "driver_contracts",
+        "driver_shifts",
+        "vehicles",
+        "vehicle_maintenance_logs",
+        "routes",
+        "route_dispatch_reviews",
+        "vehicle_gps_history",
+        "fuel_logs",
+        "route_expenses",
+        "orders",
+        "order_business_data",
+        "delivery_proofs",
+        "order_items",
+        "products",
+        "incidents",
+        "order_attempts",
+        "improvement_actions",
+        "business_audit_events",
+        "hubs",
+        "purchases",
+        "order_status_history",
+        "delivery_outbox",
+        "notifications",
+        "analytics_goals",
+        "analytics_goal_history",
+        "analytics_order_facts",
+        "analytics_route_facts",
+        "analytics_goal_facts",
+        "analytics_goal_history_facts"
+      ],
+      "fkConstraints": [
+        "vehicle_gps_history_vehicle_id_fkey",
+        "vehicle_gps_history_driver_id_fkey",
+        "order_status_history_order_id_fkey",
+        "order_items_order_id_fkey",
+        "order_items_product_id_fkey",
+        "routes_driver_id_fkey",
+        "routes_vehicle_id_fkey",
+        "orders_route_id_fkey",
+        "delivery_proofs_order_id_fkey",
+        "vehicle_maintenance_logs_vehicle_id_fkey",
+        "fuel_logs_vehicle_id_fkey",
+        "fuel_logs_driver_id_fkey",
+        "route_expenses_route_id_fkey",
+        "driver_contracts_driver_id_fkey",
+        "driver_shifts_driver_id_fkey",
+        "notifications_order_id_fkey",
+        "delivery_outbox_order_id_fkey",
+        "order_business_data_order_id_fkey",
+        "incidents_route_id_fkey",
+        "incidents_order_id_fkey",
+        "incidents_next_route_id_fkey",
+        "incidents_retry_order_id_fkey",
+        "route_dispatch_reviews_route_id_fkey",
+        "order_attempts_original_order_id_fkey",
+        "order_attempts_retry_order_id_fkey",
+        "order_attempts_incident_id_fkey",
+        "analytics_goal_history_code_fkey"
+      ],
+      "outsideView": [],
+      "allColumns": false,
+      "logicalKeycloak": true,
+      "textOverlapChecks": "PASS",
+      "connectorTableCollisionChecks": "PASS",
+      "sha256": "40b64714f7fdf068bf772a37c4d77f77281c96e8ad012073804e01d8e09e4137",
+      "png": {
+        "file": "00_erd_negocio_global.png",
+        "width": 4477,
+        "height": 2468,
+        "sha256": "90aa409b1185837ed784c05c6bad09467cb0de9968c5bb3bbe560d23f9cd491b"
+      }
+    },
+    {
+      "file": "01_recursos_planificacion.svg",
+      "width": 2236,
+      "height": 1947,
+      "objects": [
+        "drivers",
+        "driver_contracts",
+        "driver_shifts",
+        "routes",
+        "route_dispatch_reviews",
+        "route_expenses",
+        "vehicles",
+        "vehicle_maintenance_logs",
+        "fuel_logs",
+        "vehicle_gps_history"
+      ],
+      "fkConstraints": [
+        "vehicle_gps_history_vehicle_id_fkey",
+        "vehicle_gps_history_driver_id_fkey",
+        "routes_driver_id_fkey",
+        "routes_vehicle_id_fkey",
+        "vehicle_maintenance_logs_vehicle_id_fkey",
+        "fuel_logs_vehicle_id_fkey",
+        "fuel_logs_driver_id_fkey",
+        "route_expenses_route_id_fkey",
+        "driver_contracts_driver_id_fkey",
+        "driver_shifts_driver_id_fkey",
+        "route_dispatch_reviews_route_id_fkey"
+      ],
+      "outsideView": [],
+      "allColumns": true,
+      "logicalKeycloak": true,
+      "textOverlapChecks": "PASS",
+      "connectorTableCollisionChecks": "PASS",
+      "sha256": "19124bb019279278804d8da12a6c42f9d57b4f460be8c919fafc76afab54e3fa",
+      "png": {
+        "file": "01_recursos_planificacion.png",
+        "width": 2236,
+        "height": 1947,
+        "sha256": "2adf9f9f369d1996e0ecd995fdf1f7442fd588efa07b024ca8ffe9a11f6c0609"
+      }
+    },
+    {
+      "file": "02_pedidos_evidencias.svg",
+      "width": 2236,
+      "height": 1997,
+      "objects": [
+        "routes",
+        "products",
+        "order_items",
+        "orders",
+        "order_business_data",
+        "delivery_proofs",
+        "order_status_history",
+        "delivery_outbox",
+        "notifications"
+      ],
+      "fkConstraints": [
+        "order_status_history_order_id_fkey",
+        "order_items_order_id_fkey",
+        "order_items_product_id_fkey",
+        "orders_route_id_fkey",
+        "delivery_proofs_order_id_fkey",
+        "notifications_order_id_fkey",
+        "delivery_outbox_order_id_fkey",
+        "order_business_data_order_id_fkey"
+      ],
+      "outsideView": [
+        "routes.driver_id → drivers.id",
+        "routes.vehicle_id → vehicles.id"
+      ],
+      "allColumns": true,
+      "logicalKeycloak": false,
+      "textOverlapChecks": "PASS",
+      "connectorTableCollisionChecks": "PASS",
+      "sha256": "bf22dddc310bf2db7f16c90cceb203017bdea48a56f374915cc007d78464d526",
+      "png": {
+        "file": "02_pedidos_evidencias.png",
+        "width": 2236,
+        "height": 1997,
+        "sha256": "1bbd635465577ea08b225144229291467fc7fb5947b96833c06d164bd66cbe78"
+      }
+    },
+    {
+      "file": "03_incidencias_mejora.svg",
+      "width": 2236,
+      "height": 1647,
+      "objects": [
+        "routes",
+        "analytics_goals",
+        "analytics_goal_history",
+        "orders",
+        "improvement_actions",
+        "incidents",
+        "order_attempts",
+        "business_audit_events"
+      ],
+      "fkConstraints": [
+        "orders_route_id_fkey",
+        "incidents_route_id_fkey",
+        "incidents_order_id_fkey",
+        "incidents_next_route_id_fkey",
+        "incidents_retry_order_id_fkey",
+        "order_attempts_original_order_id_fkey",
+        "order_attempts_retry_order_id_fkey",
+        "order_attempts_incident_id_fkey",
+        "analytics_goal_history_code_fkey"
+      ],
+      "outsideView": [
+        "routes.driver_id → drivers.id",
+        "routes.vehicle_id → vehicles.id"
+      ],
+      "allColumns": true,
+      "logicalKeycloak": false,
+      "textOverlapChecks": "PASS",
+      "connectorTableCollisionChecks": "PASS",
+      "sha256": "7b9ff33bee6becf8595aca62a1c2f44eba99b21a4ea1b7d6e4a81e798af769af",
+      "png": {
+        "file": "03_incidencias_mejora.png",
+        "width": 2236,
+        "height": 1647,
+        "sha256": "c413606adfd35d1f4d0a6430fa8623c9f3e4d90b086ce2436cee6cc7b3914396"
+      }
+    },
+    {
+      "file": "04_analitica_catalogos.svg",
+      "width": 2236,
+      "height": 2374,
+      "objects": [
+        "analytics_order_facts",
+        "analytics_route_facts",
+        "analytics_goal_facts",
+        "analytics_goal_history_facts",
+        "analytics_goals",
+        "analytics_goal_history",
+        "improvement_actions",
+        "purchases",
+        "hubs"
+      ],
+      "fkConstraints": [
+        "analytics_goal_history_code_fkey"
+      ],
+      "outsideView": [],
+      "allColumns": true,
+      "logicalKeycloak": false,
+      "textOverlapChecks": "PASS",
+      "connectorTableCollisionChecks": "PASS",
+      "sha256": "4253f89234c992905d9beda4584b759e59bcfc4bc8d8c0baf37b2f5edc36a128",
+      "png": {
+        "file": "04_analitica_catalogos.png",
+        "width": 2236,
+        "height": 2374,
+        "sha256": "a15ce15215a12d61c96cec0b95cf9439bac1f38895be0fc0f4e5e89fe167a57b"
+      }
+    }
+  ],
+  "checks": {
+    "allPhysicalObjectsAccountedFor": true,
+    "allBusinessColumnsInDetails": true,
+    "foreignKeysOnlyFromExportedConstraints": true,
+    "svgXmlParsed": true,
+    "textFitsChecked": true,
+    "connectorsAvoidTableRectangles": true
+  },
+  "limits": [
+    "No se infieren FK por nombres de columnas ni dependencias de vistas.",
+    "No se exportaron índices; UQ sólo identifica constraints UNIQUE del JSON.",
+    "Nulabilidad de vistas es la del catálogo, no garantía sobre sus tablas fuente.",
+    "Keycloak es externo, no tabla local; conexión discontinua es lógica.",
+    "Respaldo local de evidencia excluido del negocio; volumen LocalStack no demuestra durabilidad."
+  ]
+}

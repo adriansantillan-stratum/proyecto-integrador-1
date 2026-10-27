@@ -1,0 +1,56 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  r2dbc:
+    url: r2dbc:postgresql://${DB_HOST}:${DB_PORT:5432}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+
+  flyway:
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT:5432}/${DB_NAME}
+    user: ${DB_USER}
+    password: ${DB_PASSWORD}
+    enabled: true
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER_URI}
+          jwk-set-uri: ${KEYCLOAK_JWK_SET_URI}
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD}
+      ssl:
+        enabled: ${REDIS_SSL:true}
+
+management:
+  endpoint:
+    health:
+      show-details: when-authorized
+
+logging:
+  level:
+    root: INFO
+    com.ecoroute.backend: INFO
+
+keycloak:
+  admin-base-url: ${KEYCLOAK_ADMIN_BASE_URL}
+  admin-client-secret: ${KEYCLOAK_ADMIN_CLIENT_SECRET}
+
+aws:
+  s3:
+    bucket-name: ${S3_BUCKET_NAME}
+    local-durable-backup: false
+  sqs:
+    queue-url: ${SQS_QUEUE_URL}
+
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false

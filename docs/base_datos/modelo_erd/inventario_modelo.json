@@ -1,0 +1,2611 @@
+{
+  "source": [
+    "V1__create_orders_table.sql",
+    "V2__create_additional_tables.sql",
+    "V3__create_rbac_tables.sql",
+    "V4__corporate_erp_schema.sql",
+    "V5__fix_schema_and_add_routes.sql",
+    "V6__enterprise_logistics_expansion.sql",
+    "V7__feature_expansion.sql",
+    "V8__route_geometry_and_stop_sequence.sql"
+  ],
+  "table_count": 33,
+  "column_count": 239,
+  "foreign_key_count": 27,
+  "tables": {
+    "orders": {
+      "name": "orders",
+      "migration": "V1__create_orders_table.sql",
+      "columns": [
+        {
+          "name": "id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "tracking_number",
+          "datatype": "VARCHAR(255)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "status",
+          "datatype": "VARCHAR(50)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "driver_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "external_reference",
+          "datatype": "VARCHAR(100)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "route_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "recipient_name",
+          "datatype": "VARCHAR(255)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "recipient_phone",
+          "datatype": "VARCHAR(20)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "recipient_email",
+          "datatype": "VARCHAR(100)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "delivery_address",
+          "datatype": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "delivery_city",
+          "datatype": "VARCHAR(100)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "delivery_district",
+          "datatype": "VARCHAR(100)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "latitude",
+          "datatype": "DECIMAL(10, 8)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "longitude",
+          "datatype": "DECIMAL(11, 8)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "priority",
+          "datatype": "INTEGER",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "0"
+        },
+        {
+          "name": "estimated_delivery_window_start",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "estimated_delivery_window_end",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "stop_sequence",
+          "datatype": "INT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        }
+      ],
+      "unique_constraints": []
+    },
+    "drivers": {
+      "name": "drivers",
+      "migration": "V2__create_additional_tables.sql",
+      "columns": [
+        {
+          "name": "id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "external_id",
+          "datatype": "VARCHAR(50)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "first_name",
+          "datatype": "VARCHAR(100)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "last_name",
+          "datatype": "VARCHAR(100)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "license_number",
+          "datatype": "VARCHAR(50)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "phone_number",
+          "datatype": "VARCHAR(20)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "email",
+          "datatype": "VARCHAR(100)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "is_active",
+          "datatype": "BOOLEAN",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "TRUE"
+        },
+        {
+          "name": "created_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "updated_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "unique_constraints": []
+    },
+    "vehicles": {
+      "name": "vehicles",
+      "migration": "V2__create_additional_tables.sql",
+      "columns": [
+        {
+          "name": "id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "plate_number",
+          "datatype": "VARCHAR(20)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "model",
+          "datatype": "VARCHAR(100)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "brand",
+          "datatype": "VARCHAR(100)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "capacity_kg",
+          "datatype": "DECIMAL(10,2)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "capacity_m3",
+          "datatype": "DECIMAL(10,2)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "is_active",
+          "datatype": "BOOLEAN",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "TRUE"
+        },
+        {
+          "name": "created_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "unique_constraints": []
+    },
+    "delivery_proofs": {
+      "name": "delivery_proofs",
+      "migration": "V2__create_additional_tables.sql",
+      "columns": [
+        {
+          "name": "id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "order_id",
+          "datatype": "BIGINT",
+          "nullable": false,
+          "primary_key": false,
+          "unique": true,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "image_url",
+          "datatype": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "signature_data_url",
+          "datatype": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "receiver_name",
+          "datatype": "VARCHAR(255)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "receiver_dni",
+          "datatype": "VARCHAR(20)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "verified_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "latitude",
+          "datatype": "DECIMAL(10, 8)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "longitude",
+          "datatype": "DECIMAL(11, 8)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        }
+      ],
+      "unique_constraints": []
+    },
+    "auth_module": {
+      "name": "auth_module",
+      "migration": "V3__create_rbac_tables.sql",
+      "columns": [
+        {
+          "name": "module_id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "module_name",
+          "datatype": "VARCHAR(50)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "description",
+          "datatype": "VARCHAR(255)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "unique_constraints": []
+    },
+    "auth_resource": {
+      "name": "auth_resource",
+      "migration": "V3__create_rbac_tables.sql",
+      "columns": [
+        {
+          "name": "resource_id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "resource_name",
+          "datatype": "VARCHAR(50)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "description",
+          "datatype": "VARCHAR(255)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "module_id",
+          "datatype": "BIGINT",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "unique_constraints": [
+        [
+          "module_id",
+          "resource_name"
+        ]
+      ]
+    },
+    "auth_action": {
+      "name": "auth_action",
+      "migration": "V3__create_rbac_tables.sql",
+      "columns": [
+        {
+          "name": "action_id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "action_name",
+          "datatype": "VARCHAR(50)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "description",
+          "datatype": "VARCHAR(255)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "unique_constraints": []
+    },
+    "auth_role": {
+      "name": "auth_role",
+      "migration": "V3__create_rbac_tables.sql",
+      "columns": [
+        {
+          "name": "role_id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "role_name",
+          "datatype": "VARCHAR(50)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "description",
+          "datatype": "VARCHAR(255)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "country_code",
+          "datatype": "VARCHAR(5)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "'PE'"
+        },
+        {
+          "name": "created_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "unique_constraints": [
+        [
+          "country_code",
+          "role_name"
+        ]
+      ]
+    },
+    "auth_permission": {
+      "name": "auth_permission",
+      "migration": "V3__create_rbac_tables.sql",
+      "columns": [
+        {
+          "name": "permission_id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "role_id",
+          "datatype": "BIGINT",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "resource_id",
+          "datatype": "BIGINT",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "action_id",
+          "datatype": "BIGINT",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "granted_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "unique_constraints": [
+        [
+          "role_id",
+          "resource_id",
+          "action_id"
+        ]
+      ]
+    },
+    "auth_user_role": {
+      "name": "auth_user_role",
+      "migration": "V3__create_rbac_tables.sql",
+      "columns": [
+        {
+          "name": "id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "user_external_id",
+          "datatype": "VARCHAR(50)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "role_id",
+          "datatype": "BIGINT",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "assigned_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "unique_constraints": [
+        [
+          "user_external_id",
+          "role_id"
+        ]
+      ]
+    },
+    "corp_branches": {
+      "name": "corp_branches",
+      "migration": "V4__corporate_erp_schema.sql",
+      "columns": [
+        {
+          "name": "branch_id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "name",
+          "datatype": "VARCHAR(100)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "address",
+          "datatype": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "city",
+          "datatype": "VARCHAR(50)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "is_active",
+          "datatype": "BOOLEAN",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "TRUE"
+        },
+        {
+          "name": "created_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "unique_constraints": []
+    },
+    "corp_departments": {
+      "name": "corp_departments",
+      "migration": "V4__corporate_erp_schema.sql",
+      "columns": [
+        {
+          "name": "dept_id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "name",
+          "datatype": "VARCHAR(100)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "branch_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        }
+      ],
+      "unique_constraints": []
+    },
+    "corp_employees": {
+      "name": "corp_employees",
+      "migration": "V4__corporate_erp_schema.sql",
+      "columns": [
+        {
+          "name": "emp_id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "first_name",
+          "datatype": "VARCHAR(100)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "last_name",
+          "datatype": "VARCHAR(100)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "dni",
+          "datatype": "VARCHAR(20)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "email",
+          "datatype": "VARCHAR(100)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "hire_date",
+          "datatype": "DATE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "dept_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "salary",
+          "datatype": "DECIMAL(12,2)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "status",
+          "datatype": "VARCHAR(20)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "'ACTIVE'"
+        }
+      ],
+      "unique_constraints": []
+    },
+    "corp_fleet_types": {
+      "name": "corp_fleet_types",
+      "migration": "V4__corporate_erp_schema.sql",
+      "columns": [
+        {
+          "name": "type_id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "category",
+          "datatype": "VARCHAR(50)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "description",
+          "datatype": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        }
+      ],
+      "unique_constraints": []
+    },
+    "corp_maintenance_logs": {
+      "name": "corp_maintenance_logs",
+      "migration": "V4__corporate_erp_schema.sql",
+      "columns": [
+        {
+          "name": "log_id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "vehicle_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "maintenance_date",
+          "datatype": "DATE",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "description",
+          "datatype": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "cost",
+          "datatype": "DECIMAL(10,2)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "provider_name",
+          "datatype": "VARCHAR(100)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        }
+      ],
+      "unique_constraints": []
+    },
+    "corp_customers": {
+      "name": "corp_customers",
+      "migration": "V4__corporate_erp_schema.sql",
+      "columns": [
+        {
+          "name": "customer_id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "company_name",
+          "datatype": "VARCHAR(200)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "ruc",
+          "datatype": "VARCHAR(20)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "contact_person",
+          "datatype": "VARCHAR(100)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "contact_email",
+          "datatype": "VARCHAR(100)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "billing_address",
+          "datatype": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "segment",
+          "datatype": "VARCHAR(50)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "unique_constraints": []
+    },
+    "corp_contracts": {
+      "name": "corp_contracts",
+      "migration": "V4__corporate_erp_schema.sql",
+      "columns": [
+        {
+          "name": "contract_id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "customer_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "start_date",
+          "datatype": "DATE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "end_date",
+          "datatype": "DATE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "pricing_model",
+          "datatype": "VARCHAR(50)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "is_active",
+          "datatype": "BOOLEAN",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "TRUE"
+        }
+      ],
+      "unique_constraints": []
+    },
+    "corp_warehouses": {
+      "name": "corp_warehouses",
+      "migration": "V4__corporate_erp_schema.sql",
+      "columns": [
+        {
+          "name": "warehouse_id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "branch_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "total_capacity_m3",
+          "datatype": "DECIMAL(12,2)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "security_level",
+          "datatype": "INTEGER",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        }
+      ],
+      "unique_constraints": []
+    },
+    "corp_invoices": {
+      "name": "corp_invoices",
+      "migration": "V4__corporate_erp_schema.sql",
+      "columns": [
+        {
+          "name": "invoice_id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "customer_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "invoice_number",
+          "datatype": "VARCHAR(50)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "amount",
+          "datatype": "DECIMAL(15,2)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "tax",
+          "datatype": "DECIMAL(15,2)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "issue_date",
+          "datatype": "DATE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "due_date",
+          "datatype": "DATE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "payment_status",
+          "datatype": "VARCHAR(20)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "'PENDING'"
+        }
+      ],
+      "unique_constraints": []
+    },
+    "routes": {
+      "name": "routes",
+      "migration": "V5__fix_schema_and_add_routes.sql",
+      "columns": [
+        {
+          "name": "id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "driver_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "vehicle_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "route_date",
+          "datatype": "DATE",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "status",
+          "datatype": "VARCHAR(50)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "'PLANNED'"
+        },
+        {
+          "name": "estimated_start_time",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "actual_start_time",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "actual_end_time",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "total_distance_km",
+          "datatype": "DECIMAL(10,2)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "0.0"
+        },
+        {
+          "name": "created_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "geometry",
+          "datatype": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "total_duration_min",
+          "datatype": "DOUBLE PRECISION",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        }
+      ],
+      "unique_constraints": []
+    },
+    "vehicle_gps_history": {
+      "name": "vehicle_gps_history",
+      "migration": "V5__fix_schema_and_add_routes.sql",
+      "columns": [
+        {
+          "name": "id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "vehicle_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "driver_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "latitude",
+          "datatype": "DECIMAL(10, 8)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "longitude",
+          "datatype": "DECIMAL(11, 8)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "speed_kmh",
+          "datatype": "DECIMAL(10, 2)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "heading_degrees",
+          "datatype": "INTEGER",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "ping_time",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "unique_constraints": []
+    },
+    "order_status_history": {
+      "name": "order_status_history",
+      "migration": "V5__fix_schema_and_add_routes.sql",
+      "columns": [
+        {
+          "name": "id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "order_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "status",
+          "datatype": "VARCHAR(50)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "reason",
+          "datatype": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "location_lat",
+          "datatype": "DECIMAL(10, 8)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "location_lon",
+          "datatype": "DECIMAL(11, 8)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "changed_by",
+          "datatype": "VARCHAR(100)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "unique_constraints": []
+    },
+    "hubs": {
+      "name": "hubs",
+      "migration": "V6__enterprise_logistics_expansion.sql",
+      "columns": [
+        {
+          "name": "id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "name",
+          "datatype": "VARCHAR(100)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "code",
+          "datatype": "VARCHAR(20)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "address",
+          "datatype": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "city",
+          "datatype": "VARCHAR(50)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "latitude",
+          "datatype": "DECIMAL(10, 8)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "longitude",
+          "datatype": "DECIMAL(11, 8)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "is_active",
+          "datatype": "BOOLEAN",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "TRUE"
+        },
+        {
+          "name": "created_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "unique_constraints": []
+    },
+    "products": {
+      "name": "products",
+      "migration": "V6__enterprise_logistics_expansion.sql",
+      "columns": [
+        {
+          "name": "id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "sku",
+          "datatype": "VARCHAR(50)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "name",
+          "datatype": "VARCHAR(255)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "description",
+          "datatype": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "category",
+          "datatype": "VARCHAR(50)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "unit_weight_kg",
+          "datatype": "DECIMAL(10, 2)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "unit_volume_m3",
+          "datatype": "DECIMAL(10, 4)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "price",
+          "datatype": "DECIMAL(12, 2)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "unique_constraints": []
+    },
+    "order_items": {
+      "name": "order_items",
+      "migration": "V6__enterprise_logistics_expansion.sql",
+      "columns": [
+        {
+          "name": "id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "order_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "product_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "quantity",
+          "datatype": "INTEGER",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "unit_price",
+          "datatype": "DECIMAL(12, 2)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "total_price",
+          "datatype": "DECIMAL(12, 2)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        }
+      ],
+      "unique_constraints": []
+    },
+    "vehicle_maintenance_logs": {
+      "name": "vehicle_maintenance_logs",
+      "migration": "V6__enterprise_logistics_expansion.sql",
+      "columns": [
+        {
+          "name": "id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "vehicle_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "service_date",
+          "datatype": "DATE",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "service_type",
+          "datatype": "VARCHAR(50)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "description",
+          "datatype": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "odometer_reading",
+          "datatype": "INTEGER",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "cost",
+          "datatype": "DECIMAL(12, 2)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "workshop_name",
+          "datatype": "VARCHAR(100)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "next_service_date",
+          "datatype": "DATE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        }
+      ],
+      "unique_constraints": []
+    },
+    "fuel_logs": {
+      "name": "fuel_logs",
+      "migration": "V6__enterprise_logistics_expansion.sql",
+      "columns": [
+        {
+          "name": "id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "vehicle_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "driver_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "fuel_date",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "liters",
+          "datatype": "DECIMAL(10, 2)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "total_cost",
+          "datatype": "DECIMAL(12, 2)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "odometer_reading",
+          "datatype": "INTEGER",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "gas_station",
+          "datatype": "VARCHAR(100)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        }
+      ],
+      "unique_constraints": []
+    },
+    "route_expenses": {
+      "name": "route_expenses",
+      "migration": "V6__enterprise_logistics_expansion.sql",
+      "columns": [
+        {
+          "name": "id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "route_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "expense_type",
+          "datatype": "VARCHAR(50)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "amount",
+          "datatype": "DECIMAL(10, 2)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "description",
+          "datatype": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "receipt_url",
+          "datatype": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      ],
+      "unique_constraints": []
+    },
+    "incidents": {
+      "name": "incidents",
+      "migration": "V6__enterprise_logistics_expansion.sql",
+      "columns": [
+        {
+          "name": "id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "route_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "incident_type",
+          "datatype": "VARCHAR(50)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "severity",
+          "datatype": "VARCHAR(20)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "description",
+          "datatype": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "location_lat",
+          "datatype": "DECIMAL(10, 8)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "location_lon",
+          "datatype": "DECIMAL(11, 8)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "reported_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        {
+          "name": "resolved_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        }
+      ],
+      "unique_constraints": []
+    },
+    "driver_contracts": {
+      "name": "driver_contracts",
+      "migration": "V6__enterprise_logistics_expansion.sql",
+      "columns": [
+        {
+          "name": "id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "driver_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": true,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "contract_type",
+          "datatype": "VARCHAR(50)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "start_date",
+          "datatype": "DATE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "end_date",
+          "datatype": "DATE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "base_salary",
+          "datatype": "DECIMAL(12, 2)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        }
+      ],
+      "unique_constraints": []
+    },
+    "driver_shifts": {
+      "name": "driver_shifts",
+      "migration": "V6__enterprise_logistics_expansion.sql",
+      "columns": [
+        {
+          "name": "id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "driver_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "shift_start",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "shift_end",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "status",
+          "datatype": "VARCHAR(20)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        }
+      ],
+      "unique_constraints": []
+    },
+    "purchases": {
+      "name": "purchases",
+      "migration": "V7__feature_expansion.sql",
+      "columns": [
+        {
+          "name": "id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "description",
+          "datatype": "VARCHAR(500)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "supplier",
+          "datatype": "VARCHAR(255)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "amount",
+          "datatype": "DECIMAL(12,2)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "status",
+          "datatype": "VARCHAR(50)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "'PENDING'"
+        },
+        {
+          "name": "category",
+          "datatype": "VARCHAR(100)",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "notes",
+          "datatype": "TEXT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "created_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "NOW()"
+        },
+        {
+          "name": "updated_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "NOW()"
+        }
+      ],
+      "unique_constraints": []
+    },
+    "notifications": {
+      "name": "notifications",
+      "migration": "V7__feature_expansion.sql",
+      "columns": [
+        {
+          "name": "id",
+          "datatype": "BIGSERIAL",
+          "nullable": false,
+          "primary_key": true,
+          "unique": true,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "type",
+          "datatype": "VARCHAR(50)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "title",
+          "datatype": "VARCHAR(255)",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "message",
+          "datatype": "TEXT",
+          "nullable": false,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": null
+        },
+        {
+          "name": "order_id",
+          "datatype": "BIGINT",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": true,
+          "default": null
+        },
+        {
+          "name": "is_read",
+          "datatype": "BOOLEAN",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "FALSE"
+        },
+        {
+          "name": "created_at",
+          "datatype": "TIMESTAMP WITH TIME ZONE",
+          "nullable": true,
+          "primary_key": false,
+          "unique": false,
+          "foreign_key": false,
+          "default": "NOW()"
+        }
+      ],
+      "unique_constraints": []
+    }
+  },
+  "foreign_keys": [
+    {
+      "child": "delivery_proofs",
+      "child_column": "order_id",
+      "parent": "orders",
+      "parent_column": "id",
+      "on_delete": null
+    },
+    {
+      "child": "auth_resource",
+      "child_column": "module_id",
+      "parent": "auth_module",
+      "parent_column": "module_id",
+      "on_delete": null
+    },
+    {
+      "child": "auth_permission",
+      "child_column": "role_id",
+      "parent": "auth_role",
+      "parent_column": "role_id",
+      "on_delete": null
+    },
+    {
+      "child": "auth_permission",
+      "child_column": "resource_id",
+      "parent": "auth_resource",
+      "parent_column": "resource_id",
+      "on_delete": null
+    },
+    {
+      "child": "auth_permission",
+      "child_column": "action_id",
+      "parent": "auth_action",
+      "parent_column": "action_id",
+      "on_delete": null
+    },
+    {
+      "child": "auth_user_role",
+      "child_column": "role_id",
+      "parent": "auth_role",
+      "parent_column": "role_id",
+      "on_delete": null
+    },
+    {
+      "child": "corp_departments",
+      "child_column": "branch_id",
+      "parent": "corp_branches",
+      "parent_column": "branch_id",
+      "on_delete": null
+    },
+    {
+      "child": "corp_employees",
+      "child_column": "dept_id",
+      "parent": "corp_departments",
+      "parent_column": "dept_id",
+      "on_delete": null
+    },
+    {
+      "child": "corp_contracts",
+      "child_column": "customer_id",
+      "parent": "corp_customers",
+      "parent_column": "customer_id",
+      "on_delete": null
+    },
+    {
+      "child": "corp_warehouses",
+      "child_column": "branch_id",
+      "parent": "corp_branches",
+      "parent_column": "branch_id",
+      "on_delete": null
+    },
+    {
+      "child": "corp_invoices",
+      "child_column": "customer_id",
+      "parent": "corp_customers",
+      "parent_column": "customer_id",
+      "on_delete": null
+    },
+    {
+      "child": "routes",
+      "child_column": "driver_id",
+      "parent": "drivers",
+      "parent_column": "id",
+      "on_delete": null
+    },
+    {
+      "child": "routes",
+      "child_column": "vehicle_id",
+      "parent": "vehicles",
+      "parent_column": "id",
+      "on_delete": null
+    },
+    {
+      "child": "vehicle_gps_history",
+      "child_column": "vehicle_id",
+      "parent": "vehicles",
+      "parent_column": "id",
+      "on_delete": null
+    },
+    {
+      "child": "vehicle_gps_history",
+      "child_column": "driver_id",
+      "parent": "drivers",
+      "parent_column": "id",
+      "on_delete": null
+    },
+    {
+      "child": "order_status_history",
+      "child_column": "order_id",
+      "parent": "orders",
+      "parent_column": "id",
+      "on_delete": null
+    },
+    {
+      "child": "orders",
+      "child_column": "route_id",
+      "parent": "routes",
+      "parent_column": "id",
+      "on_delete": null
+    },
+    {
+      "child": "order_items",
+      "child_column": "order_id",
+      "parent": "orders",
+      "parent_column": "id",
+      "on_delete": "CASCADE"
+    },
+    {
+      "child": "order_items",
+      "child_column": "product_id",
+      "parent": "products",
+      "parent_column": "id",
+      "on_delete": null
+    },
+    {
+      "child": "vehicle_maintenance_logs",
+      "child_column": "vehicle_id",
+      "parent": "vehicles",
+      "parent_column": "id",
+      "on_delete": null
+    },
+    {
+      "child": "fuel_logs",
+      "child_column": "vehicle_id",
+      "parent": "vehicles",
+      "parent_column": "id",
+      "on_delete": null
+    },
+    {
+      "child": "fuel_logs",
+      "child_column": "driver_id",
+      "parent": "drivers",
+      "parent_column": "id",
+      "on_delete": null
+    },
+    {
+      "child": "route_expenses",
+      "child_column": "route_id",
+      "parent": "routes",
+      "parent_column": "id",
+      "on_delete": null
+    },
+    {
+      "child": "incidents",
+      "child_column": "route_id",
+      "parent": "routes",
+      "parent_column": "id",
+      "on_delete": null
+    },
+    {
+      "child": "driver_contracts",
+      "child_column": "driver_id",
+      "parent": "drivers",
+      "parent_column": "id",
+      "on_delete": null
+    },
+    {
+      "child": "driver_shifts",
+      "child_column": "driver_id",
+      "parent": "drivers",
+      "parent_column": "id",
+      "on_delete": null
+    },
+    {
+      "child": "notifications",
+      "child_column": "order_id",
+      "parent": "orders",
+      "parent_column": "id",
+      "on_delete": null
+    }
+  ]
+}

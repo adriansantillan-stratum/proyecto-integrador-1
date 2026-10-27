@@ -1,0 +1,62 @@
+{
+  "scope": "BACKEND_ANALYTICS_ONLY",
+  "businessAcceptance": "NOT_ATTESTED",
+  "timezone": "America/Lima",
+  "problem": "V15 sums adjacent in-window coordinates without checking elapsed time or implied speed. Simulated location changes can therefore appear as thousands of travelled kilometres.",
+  "deployment": {
+    "newMigration": "V16__analytics_gps_quality.sql",
+    "projectDatabaseApplied": false,
+    "projectServicesRebuilt": false,
+    "coordinationRequired": "Principal must coordinate applying V16 and backend deployment together; new adapter requires the V16 function.",
+    "historicalRows": "No INSERT/UPDATE/DELETE in V16. Only a new SQL function and replacement analytics view. V1-V15 sources preserved."
+  },
+  "policy": {
+    "minimumSamples": 2,
+    "maxSpeedKmh": {"default": 160, "springProperty": "analytics.gps.max-speed-kmh", "environmentVariable": "ANALYTICS_GPS_MAX_SPEED_KMH", "rationale": "Conservative local reporting ceiling, allowing ordinary road movement while flagging teleport-scale sample changes. Requires operational calibration; not a legal limit, standard or vehicle capability claim."},
+    "maxGapSeconds": {"default": 900, "springProperty": "analytics.gps.max-gap-seconds", "environmentVariable": "ANALYTICS_GPS_MAX_GAP_SECONDS", "rationale": "Fifteen-minute local continuity bound to avoid presenting a sparse straight-line connection as a supported trace. Long stops/gaps can cause distance to be unavailable; configurable after sampling cadence is measured."},
+    "comparison": "Strictly greater than configured bounds is rejected; equality is accepted. Finite positive bounds required.",
+    "sampleOrder": "ping_time,id inside actual_start_time..actual_end_time, or current timestamp only for IN_PROGRESS",
+    "coordinateValidity": "Finite range latitude [-90,90], longitude [-180,180]; (0,0) is the local missing-position sentinel. Other points on equator/meridian remain valid. Does not change IID's existing order-coordinate definition.",
+    "continuity": "LAG over all in-window samples, before coordinate validation. Never reconnects points across an invalid sample.",
+    "rejection": "Any invalid coordinate, non-positive segment time, over-limit speed or over-limit gap makes actualGpsDistanceKm and kmPerDelivery null for the whole route. Accepted fragments are not published as the full distance.",
+    "zero": "Two or more valid stationary samples with positive times and acceptable gaps may produce zero; zero is never a missing-data fallback.",
+    "rawAuditValue": "observedDistanceKm is the unvalidated sum of adjacent valid-coordinate segments, including rejected speed/time/gap segments. Null when there are no such segments. It is not travelled distance and is not an alternate KPI."
+  },
+  "quality": {
+    "jsonField": "efficiency[].gpsQuality (also /reports/route-efficiency[].gpsQuality)",
+    "fields": ["status", "sampleCount", "validSampleCount", "invalidSampleCount", "segmentCount", "rejectedSegmentCount", "implausibleSpeedSegmentCount", "nonPositiveTimeSegmentCount", "excessiveGapSegmentCount", "observedDistanceKm", "maxSpeedKmh", "maxGapSeconds"],
+    "statusPrecedence": ["INVALID_CONFIGURATION", "INSUFFICIENT_SAMPLES", "INVALID_COORDINATES", "NON_POSITIVE_TIME", "IMPLAUSIBLE_SPEED", "EXCESSIVE_GAP", "AVAILABLE"],
+    "counts": "All reason counters exposed even when one status takes precedence. Segment rejection counts each segment once.",
+    "legacyFields": "Existing route fields remain; distanceSource is UNAVAILABLE for rejected/insufficient traces and GPS_HAVERSINE for available traces. plannedDistanceKm stays separate. routesWithoutGps also includes unusable traces because it counts null actual distance."
+  },
+  "sqlConsumers": {
+    "defaultPolicy": "analytics_route_facts uses 160 km/h,900 seconds defaults and appends quality columns after existing columns.",
+    "configuredPolicy": "analytics_route_gps_quality(max_speed_kmh,max_gap_seconds) for explicit SQL policy; adapter calls it with Spring-configured values. If API overrides defaults, SQL comparisons must use the same function arguments.",
+    "permissions": "Existing analytics_route_facts view identity/SELECT grant retained via CREATE OR REPLACE VIEW. Static SECURITY DEFINER function with fixed pg_catalog,public,pg_temp path and qualified base relations; EXECUTE revoked from PUBLIC and granted to existing ecoroute_bi_reader. No base-table privileges added."
+  },
+  "kpis": {
+    "IID": "iid_valid / total",
+    "CHR": "scheduled AND delivered / scheduled",
+    "TDE": "scheduled AND digital_evidence / scheduled; evidence metadata is photo OR signature, not verified remote availability",
+    "SUCCESS": "delivered / total",
+    "ONTIME": "on_time / ontime_evaluable; evaluable requires DELIVERED with verified_at and window end",
+    "zeroDenominator": "percentage null and NO_DATA; no synthetic percentage/target",
+    "rounding": "Two decimals HALF_UP; target read from analytics_goal_facts, null when unset",
+    "filters": "Same driverId,startDate,endDate inclusive for BI/dashboard; route owner/date prevail, otherwise order driver/creation date America/Lima",
+    "RETURNED": "Included in total/scheduled denominators and terminal_stop_count, never delivered numerator. Included in STATUS_HISTORY causes alongside FAILED/CANCELLED. Not relabelled as FAILED."
+  },
+  "validation": {
+    "command": "node tools/control_actualizacion/analytics_verify.mjs",
+    "gradle": "gradlew.bat test --tests '*Analytics*Test' --rerun-tasks --no-daemon --console=plain -I tools/control_actualizacion/analytics_verification.init.gradle",
+    "evidenceFiles": "analytics_verification_<timestampLima>.json: exact command, stdout/stderr, JUnit results, source hashes, protected migration hashes; skipped tests do not count as PASS",
+    "regression": "Disposable V15 trace with a jump exceeding 6000 km upgraded to V16; verify null actual distance, retained observed sum and unchanged operational-row digest.",
+    "additionalCases": ["Plausible movement", "Stationary zero", "No samples", "One sample", "Samples outside route window", "Gap at bound", "Gap over bound", "Duplicate timestamps", "Invalid coordinates and no bridging", "Equator", "Partial plausible trace with jump", "Configured bounds", "Invalid configuration", "RETURNED denominators/causes", "Five KPI formulas", "Open/closed driver/date filters and Lima midnight", "Null targets and denominators", "HTTP contracts and analytics authorization"]
+  },
+  "limitations": [
+    "Plausible simulated or spoofed GPS cannot be distinguished from physical movement from coordinates/time alone. AVAILABLE means passed configured checks, not independently verified travel.",
+    "Sparse traces, stops longer than the gap bound, GPS jitter or uncertain clocks may be marked unavailable. Thresholds require operational calibration; they are not certified standards.",
+    "Haversine remains the sum of straight-line sample distances, not a reconstructed road itinerary or service time.",
+    "No production/project DB migration or service rebuild performed. Route20 has not been remeasured with deployed V16 by this worker.",
+    "Synthetic disposable tests do not establish MICOTRANS acceptance, operational effectiveness or causal improvement."
+  ]
+}

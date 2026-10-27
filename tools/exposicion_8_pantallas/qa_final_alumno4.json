@@ -1,0 +1,66 @@
+{
+  "pages": [
+    {
+      "page": 81,
+      "status": "PASS",
+      "notes": "Proceso y conexión aparece como prosa, sin corchetes ni comillas de lista. Tabla, captura y pie completos y legibles; folio simple."
+    },
+    {
+      "page": 83,
+      "status": "PASS",
+      "notes": "Flujo y numeración 1–5 correctos. Ya no hay encabezado ni cabecera de tabla aislados al pie; sin recortes ni superposición."
+    },
+    {
+      "page": 84,
+      "status": "PASS",
+      "notes": "Peticiones que deben reconocer inicia con cabecera y todas sus filas de datos en la misma página. Tabla y texto legibles, sin desbordamiento."
+    },
+    {
+      "page": 85,
+      "status": "PASS",
+      "notes": "Backend y persistencia comienzan con sus encabezados y párrafos completos. Fuentes legibles; sin encabezados huérfanos ni folio duplicado."
+    },
+    {
+      "page": 86,
+      "status": "PASS",
+      "notes": "Mapa de fuentes legible y completo. El espacio inferior precede los fragmentos agrupados de 87; no contiene texto recortado ni título huérfano."
+    },
+    {
+      "page": 87,
+      "status": "PASS",
+      "notes": "Fragmentos 1 y 2 con numeración de líneas simple y código legible. Wrapping dentro de márgenes; sin superposición. Explicaciones continúan en 88."
+    },
+    {
+      "page": 88,
+      "status": "PASS",
+      "notes": "Continuación de explicaciones, validaciones y guion legibles. Párrafo inferior continúa en 89 con dos líneas conservadas, sin línea aislada."
+    },
+    {
+      "page": 89,
+      "status": "PASS",
+      "notes": "Preguntas, pruebas y transición legibles. Los nombres de test, descripción y fuente permanecen agrupados. Sin recortes ni superposición."
+    },
+    {
+      "page": 90,
+      "status": "PASS",
+      "notes": "Proceso y conexión normalizado a prosa; no se ve representación literal del array. Título, tabla, captura y caption legibles y dentro de márgenes."
+    },
+    {
+      "page": 99,
+      "status": "PASS",
+      "notes": "Bloques de pruebas completos con su fuente; el último bloque antes de salto termina unido. Ya no deja el test GPS sin su fuente."
+    },
+    {
+      "page": 100,
+      "status": "PASS",
+      "notes": "Test GPS, descripción y ruta web-admin/tests/gps-quality.test.mjs unidos al principio. Evidencia y cierre completos, sin fuente huérfana ni recortes."
+    },
+    {
+      "page": 101,
+      "status": "PASS",
+      "notes": "Tabla de ensayo con encabezado y filas completas, lista y alcance legibles. Folio 101 simple y sin invasión del texto."
+    }
+  ],
+  "summary": "PASS. Revisión visual final realizada el 26/10/2026 de las 12 páginas solicitadas de docs/exposicion_8_pantallas/_qa/render_verified: 81,83,84,85,86,87,88,89,90,99,100,101. Cada PNG fue abierto individualmente con view_image detail=original al 100%. Confirmadas las correcciones de listas en prosa, cabecera de tabla con filas, fuente de prueba unida y numeración simple. No se observan incidencias pendientes de recorte, superposición o elementos huérfanos en estas páginas. Las tres incidencias de qa_alumno4.json quedan resueltas en este render. Las páginas no solicitadas no se reabrieron; no se realizó comparación de píxeles independiente. No se modificaron contenidos, DOCX ni PNG; sin COM, UI o renderización adicional.",
+  "issues": []
+}

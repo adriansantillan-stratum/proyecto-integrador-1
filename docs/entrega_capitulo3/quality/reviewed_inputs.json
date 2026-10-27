@@ -1,0 +1,51 @@
+{
+  "atUtc": "2026-10-27T13:08:54.886748+00:00",
+  "files": [
+    {
+      "file": "README.md",
+      "sha256": "67689b01907f1929555d7995607519cbb5ecc31ee2bf3f2d1a5c6466a5ad1627"
+    },
+    {
+      "file": "web-admin/README.md",
+      "sha256": "f58b5b17f83db63c09a9f2c059ec435ac8a3feb66f9337391ed5f3f62cff4e63"
+    },
+    {
+      "file": "mobile-app/README.md",
+      "sha256": "df92bede342878bd1c1bfa9e03137a78ff60ea6c0adf9931e398b80b7b7092d5"
+    },
+    {
+      "file": "build.gradle",
+      "sha256": "73bc0106ecd7bb2dd34ef4b85db7b858e7fc40e0893bd983fe22a933a6904eb1"
+    },
+    {
+      "file": "settings.gradle",
+      "sha256": "9812d721ca526ca84938c3a95c713fb3189c4c263ea47cf1373580e78d4dbbcd"
+    },
+    {
+      "file": "web-admin/package.json",
+      "sha256": "d6f6cefc52992cd8fd7654220030e781eafb5b20e9d0acce8e91f79a609a2467"
+    },
+    {
+      "file": "mobile-app/pubspec.yaml",
+      "sha256": "e9a0538795103049226448f62fb3b4b167ce3291fc69797f866c54afaed13ff5"
+    },
+    {
+      "file": "tools/guia_total_ide/Start-EcoRouteIDE.ps1",
+      "sha256": "6834f20f69839383a2068d4fb680b823ca3813b6c922773d7a95d7a0e4e00b4a"
+    },
+    {
+      "file": "tools/guia_total_ide/verify_local_runtime.ps1",
+      "sha256": "0658730dc86d1eddfcbeb0c8ae8e51177aceb24023e569a25a93647824a42bd7"
+    },
+    {
+      "file": "tools/guia_total_ide/prepare_mobile_copy.mjs",
+      "sha256": "e37f527e15622f7f04a3f4cab91c291d8892a09a6356fa4dcb3579d2ed89bba7"
+    },
+    {
+      "file": "tools/guia_total_ide/debug_backend.init.gradle",
+      "sha256": "a75ab12ced511e9dc24a53829aa04d38ef2c60d497880a93f8efb72ada44e31a"
+    }
+  ],
+  "runtimeScriptsExecuted": false,
+  "realEnvRead": false
+}

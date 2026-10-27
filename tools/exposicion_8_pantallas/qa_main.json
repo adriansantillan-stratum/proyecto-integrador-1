@@ -1,0 +1,46 @@
+{
+  "baseline_reviewed_pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26
+  ],
+  "final_reviewed_pages": [
+    2,
+    3,
+    4,
+    6,
+    18,
+    24,
+    25
+  ],
+  "issues": [],
+  "resolved": [
+    "Borde del título retirado",
+    "Cabecera de tabla de arquitectura unida a la primera fila",
+    "Fragmentos de despacho sin líneas ajenas al bloque explicado"
+  ],
+  "method": "PNG individuales a resolución original; el resto se contrasta por igualdad de píxeles del cuerpo."
+}

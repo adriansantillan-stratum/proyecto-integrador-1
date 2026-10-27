@@ -1,0 +1,34 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import {createRequire} from 'node:module';
+import assert from 'node:assert/strict';
+const require=createRequire('C:/Users/USUARIO/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/package.json');
+const {chromium}=require('playwright');
+const root=path.resolve(import.meta.dirname,'../..');
+const out=path.join(root,'docs/correccion_integral/capturas/web_suplementarias');
+await fs.mkdir(out,{recursive:true});
+const browser=await chromium.launch({channel:'msedge',headless:true});
+const page=await browser.newPage({viewport:{width:1440,height:1100},locale:'es-PE',timezoneId:'America/Lima'});
+const writes=[];
+page.on('request',r=>{if(new URL(r.url()).pathname.startsWith('/api/')&&r.method()!=='GET')writes.push({method:r.method(),path:new URL(r.url()).pathname});});
+try{
+ await page.goto('http://localhost:3000/login');
+ await page.getByRole('button',{name:/Iniciar|Ingresar|Keycloak/i}).click();
+ await page.locator('#username').fill('admin');
+ await page.locator('#password').fill('admin123');
+ await page.locator('#kc-login').click();
+ await page.waitForURL('http://localhost:3000/');
+ await page.goto('http://localhost:3000/orders');
+ await page.getByRole('button',{name:/CSV/}).click();
+ const csv='trackingNumber,recipientName,deliveryAddress,latitude,longitude,externalReference,routeId,recipientPhone,recipientEmail,deliveryCity,deliveryDistrict\r\nPREVIEW-SIN-PERSISTIR,"Cliente de ensayo, Lima",Calle de prueba,-12.0464,-77.0428,ENSAYO,,999999999,prueba@example.invalid,Lima,Lima';
+ await page.locator('input[type=file]').setInputFiles({name:'preview-sin-persistir.csv',mimeType:'text/csv',buffer:Buffer.from(csv)});
+ const responsePromise=page.waitForResponse(r=>new URL(r.url()).pathname==='/api/orders/bulk-csv/preview');
+ await page.getByRole('button',{name:/Validar/}).click();
+ const response=await responsePromise;
+ assert.equal(response.status(),200);
+ await page.getByRole('button',{name:/Confirmar/}).waitFor();
+ await page.screenshot({path:path.join(out,'csv_preview_confirmacion.png')});
+ assert.deepEqual(writes,[{method:'POST',path:'/api/orders/bulk-csv/preview'}]);
+ await fs.writeFile(path.join(out,'results.json'),JSON.stringify({at:new Date().toISOString(),result:'PASS',humanAcceptance:'PENDING',writes,importExecuted:false,screenshots:['csv_preview_confirmacion.png']},null,2));
+ console.log('PASS: preview visible sin ejecutar importación');
+}finally{await browser.close();}

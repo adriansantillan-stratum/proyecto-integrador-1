@@ -1,0 +1,81 @@
+{
+  "status": "IMPLEMENTED_AND_TESTED_NOT_DEPLOYED",
+  "timezone": "America/Lima",
+  "businessAcceptance": "NOT_ATTESTED",
+  "worker": "BACKEND_ANALYTICS",
+  "sourceFilesChanged": [
+    "src/main/resources/db/migration/V16__analytics_gps_quality.sql",
+    "src/main/java/com/ecoroute/backend/domain/model/analytics/GpsQualityPolicy.java",
+    "src/main/java/com/ecoroute/backend/domain/model/analytics/AnalyticsModels.java",
+    "src/main/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsAdapter.java",
+    "src/test/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsIntegrationTest.java",
+    "src/test/java/com/ecoroute/backend/infrastructure/output/persistence/R2dbcAnalyticsGpsQualityIntegrationTest.java"
+  ],
+  "toolFilesAdded": [
+    "tools/control_actualizacion/analytics_verify.mjs",
+    "tools/control_actualizacion/analytics_verification.init.gradle",
+    "tools/control_actualizacion/analytics_audit_local.mjs",
+    "tools/control_actualizacion/analytics_gps_contract.json",
+    "tools/control_actualizacion/analytics_handoff.json"
+  ],
+  "validation": {
+    "command": "node tools/control_actualizacion/analytics_verify.mjs",
+    "failedAttempt": {
+      "file": "analytics_verification_2026-10-22T200930-0500.json",
+      "tests": 30,
+      "failures": 1,
+      "cause": "SQL function originally ran with BI reader privileges and could not read base routes through the analytics view.",
+      "fix": "Static SECURITY DEFINER function with fixed search_path, qualified base tables, EXECUTE restricted to existing BI reader, retaining direct base-table access rejection."
+    },
+    "passingAttempt": {
+      "file": "analytics_verification_2026-10-22T201133-0500.json",
+      "finishedAt": "2026-10-22T20:12:13-05:00",
+      "tests": 30,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "V1toV15SourceHashesUnchanged": true
+    },
+    "coverage": "V15->V16 regression >6000 km with unchanged operational-row digest; route GPS quality/boundaries/configuration; five KPI numerators/denominators/nulls/targets; RETURNED terminal divisor and causes; driver/date/Lima-midnight filters; HTTP contract/security; SQL reader privileges."
+  },
+  "realReadOnlyObservation": {
+    "command": "node tools/control_actualizacion/analytics_audit_local.mjs --route-id 20",
+    "file": "analytics_route_20_2026-10-22T201322-0500.json",
+    "routeId": 20,
+    "routeStatus": "COMPLETED",
+    "databaseMigrationVersion": "15",
+    "transactionReadOnly": true,
+    "sampleCount": 4,
+    "currentDistanceKm": 7433.283426462645,
+    "plannedDistanceKm": 7.84,
+    "proposedActualDistanceKm": null,
+    "proposedQuality": "IMPLAUSIBLE_SPEED",
+    "proposedRejectedSegments": 1,
+    "proposedObservedDistanceKm": 7433.283426462645,
+    "proposedCalculationInstalled": false,
+    "kpiScope": "All analytics_order_facts for driver 1 and operation_date 2026-10-22; four orders, not just the two route20 fixture orders.",
+    "sqlKpis": [
+      {"code": "IID", "numerator": 4, "denominator": 4, "percentage": 100},
+      {"code": "CHR", "numerator": 2, "denominator": 4, "percentage": 50},
+      {"code": "TDE", "numerator": 2, "denominator": 4, "percentage": 50},
+      {"code": "SUCCESS", "numerator": 2, "denominator": 4, "percentage": 50},
+      {"code": "ONTIME", "numerator": 2, "denominator": 2, "percentage": 100}
+    ],
+    "claimBoundary": "SQL observation on existing data plus proposed SELECT calculation. Deployed API not changed by this worker; deployed API comparison was not rerun here."
+  },
+  "integration": {
+    "required": "Coordinate applying V16 and rebuilding/restarting backend together; adapter depends on analytics_route_gps_quality function. Not performed by this worker.",
+    "apiAddition": "RouteEfficiency.gpsQuality: status, sample/segment rejection counters, observedDistanceKm and applied bounds. Existing JSON fields preserved; rejected distance/kmPerDelivery null, distanceSource UNAVAILABLE.",
+    "defaultBounds": "160 km/h,900 seconds; local configurable policy, not standards. analytics.gps.max-speed-kmh and analytics.gps.max-gap-seconds.",
+    "sqlPolicy": "analytics_route_facts defaults match API defaults. When configuring API bounds, compare with analytics_route_gps_quality using matching arguments.",
+    "principalUi": "Show missing/rejected actual distance as unavailable with quality explanation; never render raw observed sum as actual distance or substitute planned distance/zero. No UI files modified here.",
+    "historicalIntegrity": "V16 is a read-model change only. No historical business rows edited, deleted or rewritten."
+  },
+  "limitations": [
+    "AVAILABLE only means the trace passed configured checks. Plausible simulator/spoofed GPS remains indistinguishable without provenance data.",
+    "Long gaps/stops, jitter and clock issues can make distance unavailable; policy requires operational calibration.",
+    "Haversine is straight-line sample distance, not certified road travel or service time.",
+    "No performance/load benchmark performed.",
+    "No deployment, business acceptance or MICOTRANS effectiveness claim."
+  ]
+}

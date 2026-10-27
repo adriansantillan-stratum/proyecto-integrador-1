@@ -1,0 +1,324 @@
+{
+  "at": "2026-10-26T14:54:04.3885156-05:00",
+  "mode": "READ_ONLY_SANITIZED",
+  "http": [
+    {
+      "component": "backendHealth",
+      "port": 8081,
+      "path": "/actuator/health",
+      "status": "PASS",
+      "httpStatus": 200,
+      "scope": "HTTP_HEADERS_ONLY",
+      "bodyRead": false
+    },
+    {
+      "component": "web",
+      "port": 3000,
+      "path": "/",
+      "status": "PASS",
+      "httpStatus": 200,
+      "scope": "HTTP_HEADERS_ONLY",
+      "bodyRead": false
+    },
+    {
+      "component": "keycloakRealm",
+      "port": 8080,
+      "path": "/realms/ecoroute/.well-known/openid-configuration",
+      "status": "PASS",
+      "httpStatus": 200,
+      "scope": "HTTP_HEADERS_ONLY",
+      "bodyRead": false
+    }
+  ],
+  "listeners": {
+    "status": "PASS",
+    "rows": [
+      {
+        "port": 8081,
+        "pid": 76568,
+        "processName": "java"
+      },
+      {
+        "port": 8080,
+        "pid": 75812,
+        "processName": "wslrelay"
+      },
+      {
+        "port": 8080,
+        "pid": 46124,
+        "processName": "com.docker.backend"
+      },
+      {
+        "port": 3000,
+        "pid": 50436,
+        "processName": "node"
+      }
+    ]
+  },
+  "sourceProcesses": {
+    "status": "PASS",
+    "backendJava": [
+      {
+        "name": "java.exe",
+        "pid": 79124,
+        "parentPid": 85744
+      },
+      {
+        "name": "java.exe",
+        "pid": 90308,
+        "parentPid": 81808
+      },
+      {
+        "name": "java.exe",
+        "pid": 84812,
+        "parentPid": 90308
+      },
+      {
+        "name": "java.exe",
+        "pid": 69100,
+        "parentPid": 74716
+      },
+      {
+        "name": "java.exe",
+        "pid": 76040,
+        "parentPid": 78888
+      },
+      {
+        "name": "java.exe",
+        "pid": 80472,
+        "parentPid": 76040
+      },
+      {
+        "name": "java.exe",
+        "pid": 76568,
+        "parentPid": 80472
+      },
+      {
+        "name": "java.exe",
+        "pid": 81140,
+        "parentPid": 80964
+      },
+      {
+        "name": "java.exe",
+        "pid": 87912,
+        "parentPid": 89704
+      },
+      {
+        "name": "java.exe",
+        "pid": 82380,
+        "parentPid": 87912
+      }
+    ],
+    "webNodeViteCandidates": [
+      {
+        "name": "node.exe",
+        "pid": 67560,
+        "parentPid": 14640
+      },
+      {
+        "name": "node.exe",
+        "pid": 67996,
+        "parentPid": 48212
+      },
+      {
+        "name": "node.exe",
+        "pid": 68228,
+        "parentPid": 67716
+      },
+      {
+        "name": "node.exe",
+        "pid": 69872,
+        "parentPid": 69804
+      },
+      {
+        "name": "node.exe",
+        "pid": 69880,
+        "parentPid": 69812
+      },
+      {
+        "name": "node.exe",
+        "pid": 71848,
+        "parentPid": 48212
+      },
+      {
+        "name": "node.exe",
+        "pid": 78656,
+        "parentPid": 40056
+      },
+      {
+        "name": "node.exe",
+        "pid": 50436,
+        "parentPid": 70596
+      },
+      {
+        "name": "node.exe",
+        "pid": 62168,
+        "parentPid": 66744
+      },
+      {
+        "name": "node.exe",
+        "pid": 83780,
+        "parentPid": 66008
+      },
+      {
+        "name": "node.exe",
+        "pid": 78160,
+        "parentPid": 48212
+      },
+      {
+        "name": "node.exe",
+        "pid": 73812,
+        "parentPid": 85504
+      }
+    ],
+    "flutterDartCandidates": [
+      {
+        "name": "dart.exe",
+        "pid": 86604,
+        "parentPid": 81808
+      },
+      {
+        "name": "dart.exe",
+        "pid": 64528,
+        "parentPid": 81808
+      },
+      {
+        "name": "dart.exe",
+        "pid": 58760,
+        "parentPid": 81808
+      },
+      {
+        "name": "dart.exe",
+        "pid": 87660,
+        "parentPid": 79748
+      },
+      {
+        "name": "dart.exe",
+        "pid": 77612,
+        "parentPid": 86496
+      },
+      {
+        "name": "dartaotruntime.exe",
+        "pid": 89236,
+        "parentPid": 87608
+      },
+      {
+        "name": "dart.exe",
+        "pid": 89592,
+        "parentPid": 87608
+      },
+      {
+        "name": "dart.exe",
+        "pid": 87472,
+        "parentPid": 89704
+      },
+      {
+        "name": "dart.exe",
+        "pid": 90948,
+        "parentPid": 89704
+      },
+      {
+        "name": "dart.exe",
+        "pid": 85472,
+        "parentPid": 89704
+      },
+      {
+        "name": "dart.exe",
+        "pid": 87208,
+        "parentPid": 87480
+      },
+      {
+        "name": "dart.exe",
+        "pid": 80760,
+        "parentPid": 68632
+      },
+      {
+        "name": "dart.exe",
+        "pid": 102904,
+        "parentPid": 81808
+      }
+    ],
+    "backend8081Owners": [
+      {
+        "port": 8081,
+        "pid": 76568,
+        "processName": "java"
+      }
+    ],
+    "web3000Owners": [
+      {
+        "port": 3000,
+        "pid": 50436,
+        "processName": "node"
+      }
+    ],
+    "javaDebug5005Owners": [],
+    "javaOwns8081": true,
+    "nodeOwns3000": true,
+    "sourceOrIdeLaunchConfirmed": false,
+    "limitation": "PID/name/port evidence only; Vite, source checkout, Flutter session and IDE attachment are not proven without reading private command lines or separate IDE evidence."
+  },
+  "docker": {
+    "status": "PASS",
+    "scope": "EXPECTED_ECOROUTE_CONTAINER_NAMES",
+    "dependencies": [
+      {
+        "name": "ecoroute-db",
+        "state": "running"
+      },
+      {
+        "name": "ecoroute-redis",
+        "state": "running"
+      },
+      {
+        "name": "ecoroute-keycloak",
+        "state": "running"
+      },
+      {
+        "name": "ecoroute-localstack",
+        "state": "running"
+      },
+      {
+        "name": "ecoroute-osrm",
+        "state": "running"
+      }
+    ],
+    "applicationContainers": [
+      {
+        "name": "ecoroute-backend",
+        "state": "exited"
+      },
+      {
+        "name": "ecoroute-web-admin",
+        "state": "exited"
+      }
+    ],
+    "onlyDependenciesRunning": true
+  },
+  "adb": {
+    "status": "FAIL",
+    "package": "com.example.ecoroute_driver_app",
+    "device": "emulator-5556",
+    "devices": [
+      {
+        "serial": "emulator-5556",
+        "state": "device"
+      }
+    ],
+    "packageInstalled": true,
+    "packagePids": [
+      5018
+    ],
+    "forward9006Present": false,
+    "host9006Owners": [],
+    "scope": "DEVICE_LIST_PACKAGE_PATH_PIDOF_EXISTING_FORWARD_LIST_ONLY",
+    "serverAlreadyListening": true
+  },
+  "limitations": [
+    "HTTP 200 verifies endpoint response, not response body or authenticated business flow.",
+    "No secrets, process arguments, VM URI, environment dump, app logs or container inspect data are collected.",
+    "No applications, containers, emulator, ADB server, forwards or sessions are started/modified.",
+    "Docker scope is the seven expected EcoRoute container names; other projects are outside this report.",
+    "An existing tcp:9006 forward does not prove a healthy Dart VM or IDE attachment."
+  ]
+}
